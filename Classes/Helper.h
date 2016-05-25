@@ -29,8 +29,8 @@ extern float (*CC_CONTENT_SCALE_FACTOR)();
 
 //void print(std::map<> tab);
 void radNormalize(float rad);
-Vec2 getPosTable(/*obj*/);
-Vec2 getNextStepPos(Vec2 curPos, Vec2 targetPos , float speed, float dt);
+Vec3 getPosTable(/*obj*/);
+Vec3 getNextStepPos(Vec2 curPos, Vec2 targetPos , float speed, float dt);
 timerange createAnimationStruct(float var1, float var2, float var3);
 Animate3D * createAnimation(std::string file, float begin, float finish, float speed);
 msgStruct createKnockedMsgStruct(/*object*/);
