@@ -38,3 +38,8 @@ msgStruct createKnockedMsgStruct(/*object*/);
 void cclog(...);
 //function CreateEnumTable(tbl, index)
 //function removeAll(table)
+//void copytable()
+void delayExecute(/*target, func,*/float delay);
+
+float DEGREES_TO_RADIANS(float ANGLE);
+float RADIANS_TO_DEGREES(float ANGLE);
