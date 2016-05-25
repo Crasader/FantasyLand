@@ -1,7 +1,9 @@
 ﻿#pragma once
 #include "cocos2d.h"
+#include "ui/CocosGUI.h"
 #include "ParticleManager.h"
 #include "Slime.h"
+#include "MainMenuScene.h"
 
 USING_NS_CC;
 
@@ -21,7 +23,8 @@ private:
 	int _num;
 	int _totalResource;
 	Size size;
-	
+	ParticleManager *_pm;
+
 	String particleRes[6][2] = {
 		{ "FX/iceTrail.plist","iceTrail" },
 		{ "FX/magic.plist","magic" },
