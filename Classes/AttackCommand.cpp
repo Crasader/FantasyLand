@@ -1,5 +1,7 @@
 ﻿#include "AttackCommand.h"
 
+std::list<BasicCollider*> AttackManager;
+
 void solveAttacks(float dt)
 {
 
@@ -10,7 +12,7 @@ BasicCollider::BasicCollider()
 
 };
 
-BasicCollider::BasicCollider(Vec3 pos, int facing, std::string attackInfo)
+void BasicCollider::CreateWithPos(Vec3 pos, int facing, std::string attackInfo)
 {
 
 };
@@ -50,12 +52,36 @@ void BasicCollider::initData(Vec3 pos, int facing, std::string attackInfo)
 
 };
 
+void BasicCollider::setDamage(int damage) {
+	_damage = damage;
+}
+
+int BasicCollider::getDamage() {
+	return _damage;
+}
+
+void BasicCollider::setKnock(int knock) {
+	_knock = knock;
+}
+
+int BasicCollider::getKnock() {
+	return _knock;
+}
+
+void BasicCollider::setCriticalChance(float criticalChance) {
+	_criticalChance = criticalChance;
+}
+
+float BasicCollider::getCriticalChance() {
+	return _criticalChance;
+}
+
 KnightNormalAttack::KnightNormalAttack()
 {
 
 };
 
-KnightNormalAttack::KnightNormalAttack(Vec3 pos, int facing, std::string attackInfo, Actor* knight)
+void KnightNormalAttack::CreateWithPos(Vec3 pos, int facing, std::string attackInfo, Actor* knight)
 {
 
 };
@@ -75,7 +101,7 @@ MageNormalAttack::MageNormalAttack()
 
 };
 
-MageNormalAttack::MageNormalAttack(Vec3 pos, int facing, std::string attackInfo, Actor* target, Actor* owner)
+void MageNormalAttack::CreateWithPos(Vec3 pos, int facing, std::string attackInfo, Actor* target, Actor* owner)
 {
 
 };
@@ -110,7 +136,7 @@ MageIceSpikes::MageIceSpikes()
 
 };
 
-MageIceSpikes::MageIceSpikes(Vec3 pos, int facing, std::string attackInfo, Actor* owner)
+void MageIceSpikes::CreateWithPos(Vec3 pos, int facing, std::string attackInfo, Actor* owner)
 {
 
 };
@@ -140,7 +166,7 @@ ArcherNormalAttack::ArcherNormalAttack()
 
 };
 
-ArcherNormalAttack::ArcherNormalAttack(Vec3 pos, int facing, std::string attackInfo, Actor* owner)
+void ArcherNormalAttack::CreateWithPos(Vec3 pos, int facing, std::string attackInfo, Actor* owner)
 {
 
 };
@@ -170,7 +196,7 @@ ArcherSpecialAttack::ArcherSpecialAttack()
 
 };
 
-ArcherSpecialAttack::ArcherSpecialAttack(Vec3 pos, int facing, std::string attackInfo, Actor* owner)
+void ArcherSpecialAttack::CreateWithPos(Vec3 pos, int facing, std::string attackInfo, Actor* owner)
 {
 
 };
@@ -200,7 +226,7 @@ Nova::Nova()
 
 }; 
 
-Nova::Nova(Vec3 pos, int facing)
+void Nova::CreateWithPos(Vec3 pos, int facing)
 {
 
 };
@@ -230,7 +256,7 @@ DragonAttack::DragonAttack()
 
 };
 
-DragonAttack::DragonAttack(Vec3 pos, int facing, std::string attackInfo)
+void DragonAttack::CreateWithPos(Vec3 pos, int facing, std::string attackInfo)
 {
 
 };
@@ -265,7 +291,7 @@ BossNormal::BossNormal()
 
 };
 
-BossNormal::BossNormal(Vec3 pos, int facing, std::string attackInfo)
+void BossNormal::CreateWithPos(Vec3 pos, int facing, std::string attackInfo)
 {
 
 };
@@ -300,7 +326,7 @@ BossSuper::BossSuper()
 
 };
 
-BossSuper::BossSuper(Vec3 pos, int facing, std::string attackInfo)
+void BossSuper::CreateWithPos(Vec3 pos, int facing, std::string attackInfo)
 {
 
 };
