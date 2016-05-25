@@ -35,6 +35,8 @@ public:
 	void setKnock(int knock);
 	float getCriticalChance();
 	void setCriticalChance(float criticalChance);
+	float getFacing();
+	void setFacing(float facing);
 
 protected:
 	int _minRange;	//the min radius of the fan

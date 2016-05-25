@@ -5,6 +5,9 @@
 #include "HPCounter.h"
 #include "AttackCommand.h"
 #include "ParticleManager.h"
+#include "BattleFieldUI.h"
+#include "MessageDispatchCenter.h"
+#include "AudioEngine.h"
 
 USING_NS_CC;
 
@@ -47,7 +50,7 @@ public:
 	void walkMode();	//switch into walk mode
 	void attackMode();	//switch into attack mode
 	void knockMode(BasicCollider* collider, bool dirKnockMode);
-	void dyingMode(Vec3 knockSource, int knockAmount);
+	void dyingMode(Vec2 knockSource, int knockAmount);
 
 	//Base Update Functions
 	void stateMachineUpdate(float dt);
@@ -81,7 +84,7 @@ protected:
 	float _timeKnocked;	//accumulated timer to recover from knock, in seconds
 	bool _cooldown;	//if its true, then you are currently playing attacking animation
 	int _hp = 1000;	//current hit point
-	bool goRight;
+	bool _goRight;
 	
 	//target variables
 	float _targetFacing;//direction the actor Wants to turn to
@@ -132,6 +135,7 @@ protected:
 
 	int _attackRange;	//distance the actor will stop and commence attack
 
+	/*
 	//attack collider info, it can be customized
 	struct attackColliderInfo {	//data for normal attack
 		int minRange;	//collider inner radius
@@ -144,4 +148,12 @@ protected:
 		int speed;	//speed the collider is traveling;
 		int criticalChance;
 	} _normalAttack;
+	*/
 };
+
+extern BattleFieldUI* uiLayer;
+extern Layer* currentLayer;
+extern int FXZorder;
+
+struct ActorCommonValues;
+struct ActorDefaultValues;

@@ -76,6 +76,14 @@ float BasicCollider::getCriticalChance() {
 	return _criticalChance;
 }
 
+void BasicCollider::setFacing(float facing) {
+	_facing = facing;
+}
+
+float BasicCollider::getFacing() {
+	return _facing;
+}
+
 KnightNormalAttack::KnightNormalAttack()
 {
 
