@@ -1,5 +1,7 @@
 ﻿#include "Piglet.h"
 
+std::string file = "model/piglet/piglet.c3b";
+
 Piglet::Piglet()
 {
 

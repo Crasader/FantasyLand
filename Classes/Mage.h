@@ -6,7 +6,7 @@
 #include "Actor.h"
 #include "AttackCommand.h"
 
-std::string file = "model/mage/mage.c3b";
+
 
 class Mage : public Actor
 {

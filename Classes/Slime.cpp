@@ -1,5 +1,7 @@
 ﻿#include "Slime.h"
 
+std::string file = "model/slime/slime.c3b";
+
 Slime::Slime()
 {
 

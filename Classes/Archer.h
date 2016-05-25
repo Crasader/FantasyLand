@@ -12,7 +12,7 @@ USING_NS_CC;
 
 extern enum EnumRaceType;
 extern enum EnumStateType;
-std::string file = "model/archer/archer.c3b";
+static std::string file = "model/archer/archer.c3b";
 
 class Archer : public Actor
 {

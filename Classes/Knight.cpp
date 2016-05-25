@@ -1,5 +1,7 @@
 ﻿#include "Knight.h"
 
+std::string file = "model/knight/knight.c3b";
+
 Knight::Knight()
 {
 

@@ -6,8 +6,6 @@
 #include "Actor.h"
 #include "AttackCommand.h"
 
-std::string file = "model/slime/slime.c3b";
-
 class Slime : public Actor
 {
 public:
