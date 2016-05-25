@@ -1,5 +1,7 @@
 ﻿#include "Rat.h"
 
+std::string file = "model/rat/rat.c3b";
+
 Rat::Rat()
 {
 

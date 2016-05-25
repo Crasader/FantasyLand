@@ -1,5 +1,7 @@
 ﻿#include "Dragon.h"
 
+static std::string file = "model/dragon/dragon.c3b";
+
 Dragon::Dragon()
 {
 

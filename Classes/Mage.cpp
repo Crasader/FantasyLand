@@ -1,5 +1,7 @@
 ﻿#include "Mage.h"
 
+std::string file = "model/mage/mage.c3b";
+
 Mage::Mage()
 {
 

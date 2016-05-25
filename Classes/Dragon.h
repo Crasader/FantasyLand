@@ -6,9 +6,6 @@
 #include "Actor.h"
 #include "AttackCommand.h"
 
-
-std::string file = "model/dragon/dragon.c3b";
-
 class Dragon : public Actor
 {
 public:

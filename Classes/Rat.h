@@ -6,8 +6,6 @@
 #include "Actor.h"
 #include "AttackCommand.h"
 
-std::string file = "model/rat/rat.c3b";
-
 class Rat : public Actor
 {
 public:
