@@ -4,6 +4,10 @@
 #include "Helper.h"
 #include "HPCounter.h"
 #include "AttackCommand.h"
+#include "ParticleManager.h"
+#include "BattleFieldUI.h"
+#include "MessageDispatchCenter.h"
+#include "AudioEngine.h"
 
 USING_NS_CC;
 
@@ -17,7 +21,7 @@ class Actor : public Node
 public:	
 	CREATE_FUNC(Actor);
 	virtual bool init();
-	void addEffect(Sprite3D* effect);
+	void addEffect(Sprite* effect);
 	void initPuff();
 	void initShadow();
 	void playAnimation(std::string name, bool loop);
@@ -45,8 +49,8 @@ public:
 	void idleMode();	//switch into idle mode
 	void walkMode();	//switch into walk mode
 	void attackMode();	//switch into attack mode
-	void knockMode(Actor* collider, bool dirKnockMode);
-	void dyingMode(Actor* knockSource, int knockAmount);
+	void knockMode(BasicCollider* collider, bool dirKnockMode);
+	void dyingMode(Vec2 knockSource, int knockAmount);
 
 	//Base Update Functions
 	void stateMachineUpdate(float dt);
@@ -64,8 +68,10 @@ public:
 protected:
 	float _aliveTime;	//time the actor is alive in seconds
 	int _curSpeed;	//current speed the actor is traveling in units/seconds
-    Animation* _curAnimation;
-	Animation3D* _curAnimation3d;
+    //Animation* _curAnimation;
+	//Animation3D* _curAnimation3d;
+	std::string _curAnimation;
+	Action* _curAnimation3d;
 
 	std::string _name;
 
@@ -78,10 +84,10 @@ protected:
 	float _timeKnocked;	//accumulated timer to recover from knock, in seconds
 	bool _cooldown;	//if its true, then you are currently playing attacking animation
 	int _hp = 1000;	//current hit point
-	bool goRight;
+	bool _goRight;
 	
 	//target variables
-	int targetFacing;	//direction the actor Wants to turn to
+	float _targetFacing;//direction the actor Wants to turn to
 	Actor* _target;	//the enemy actor;
 	Vec2 _myPos;
 	int _angry;
@@ -92,9 +98,9 @@ protected:
 	Node* _effectNode;
 	int _monsterHeight;
 	int _heroHeight;
-	BillBoard* _puff;
+	ParticleSystem* _puff;
 	Sprite* _circle;
-	Map<std::string, Animate3D*> _action;
+	Map<std::string, ActionInterval*> _action;
 
 	int _useWeaponId;
 	int _useArmourId;
@@ -129,6 +135,7 @@ protected:
 
 	int _attackRange;	//distance the actor will stop and commence attack
 
+	/*
 	//attack collider info, it can be customized
 	struct attackColliderInfo {	//data for normal attack
 		int minRange;	//collider inner radius
@@ -141,4 +148,12 @@ protected:
 		int speed;	//speed the collider is traveling;
 		int criticalChance;
 	} _normalAttack;
+	*/
 };
+
+extern BattleFieldUI* uiLayer;
+extern Layer* currentLayer;
+extern int FXZorder;
+
+struct ActorCommonValues;
+struct ActorDefaultValues;
