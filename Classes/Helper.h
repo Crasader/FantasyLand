@@ -23,10 +23,7 @@ struct
 	target = */
 }msgStruct;
 
-extern float (*CC_CONTENT_SCALE_FACTOR)();
-//extern CC_POINT_PIXELS_TO_POINTS
-//extern CC_POINT_POINTS_TO_PIXELS
-//extern CC_POINT_POINTS_TO_PIXELS
+
 
 //void print(std::map<> tab);
 float radNormalize(float rad);
@@ -36,7 +33,7 @@ timerange createAnimationStruct(float var1, float var2, float var3);
 Animate3D * createAnimation(std::string file, float begin, float finish, float speed);
 msgStruct createKnockedMsgStruct(/*object*/);
 
-void cclog(...);
+//void cclog(...);                                           you can switch to printf or count 
 //function CreateEnumTable(tbl, index)
 //function removeAll(table)
 //void copytable()
