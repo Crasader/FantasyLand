@@ -20,10 +20,10 @@ public:
 	CREATE_FUNC(GameMaster);
 
 	virtual bool init();
-	virtual void uodate(float dt);
+	virtual void update(float dt);
 
 	void logicUpdate();
-	void addHeros();
+	void AddHeros();
 	void addMonsters();
 	void addDragon();
 	void addSlime();
@@ -43,13 +43,6 @@ public:
 	void showVictoryUI();
 
 private:
-	enum monsterCount
-	{
-		dragon = 1,
-		slime = 7,
-		piglet = 2,
-		rat = 0
-	};
 
 	float _totaltime;
 	float _logicFrq;
@@ -65,3 +58,4 @@ extern int frontDistanceWithHeroX;
 extern int backwardDistanceWithHeroX;
 extern int distanceWithHeroX;
 extern int distanceWithHeroY;
+extern Size size;
