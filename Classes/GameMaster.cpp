@@ -162,6 +162,32 @@ void GameMaster::showBoss()
 	/*List.pushlast(MonsterManager, boss)*/
 }
 
+void GameMaster::showWarning()
+{
+	/*Texture2D::setDefaultAlphaPixelFormat(TEXTURE2_D_PIXEL_FORMAT_AUTO);*/
+	auto warning = Layer::create();
+	auto warning_logo = Sprite::createWithSpriteFrameName("caution.png");
+	/*Texture2D::setDefaultAlphaPixelFormat(TEXTURE2_D_PIXEL_FORMAT_RG_B565)*/
+	warning_logo->setPosition(G.winSize.width*0.5, G.winSize.height*0.5);
+	warning_logo->setPositionZ(1);
+
+	auto showdialog = [warning,this]()
+	{
+		warning->removeFromParent();
+		this->showDialog();
+		experimental::AudioEngine::play2d("audios/effects/boss/boss.mp3", false, 1);
+	};
+
+	//warning_logo->runAction(Sequence::create(DelayTime::create(0.5), EaseSineOut::create(Blink::create(1, 5, 3)), CallFunc::create(showdialog)));
+	warning->addChild(warning_logo);
+
+	warning->setScale(0.5);
+	warning->setPositionZ(-Director::getInstance()->getZEye() / 2);
+	warning->ignoreAnchorPointForPosition(false);
+	warning->setLocalZOrder(999);
+	/*camera->addChild(warning, 2);*/
+}
+
 void GameMaster::showVictoryUI()
 {
 	uiLayer->showVictoryUI();
