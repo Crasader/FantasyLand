@@ -37,6 +37,27 @@ void GameMaster::update(float dt)
 	}
 }
 
+void GameMaster::AddHeros()
+{
+	auto knight = Knight::create();
+	knight->setPosition(battleSiteX[1], 10);
+	currentLayer->addChild(knight);
+	knight->idleMode();
+	//List.pushlast(HeroManager, knight)
+	
+	auto mage = Mage::create();
+	mage->setPosition(battleSiteX[1], 100);
+	currentLayer->addChild(mage);
+	mage->idleMode();
+	//List.pushlast(HeroManager, mage)
+
+	auto archer = Archer::create();
+	archer->setPosition(battleSiteX[1], -80);
+	currentLayer->addChild(archer);
+	archer->idleMode();
+	/*List.pushlast(HeroManager, archer)*/
+}
+
 void GameMaster::addMonsters()
 {
 	addDragon();
@@ -93,6 +114,53 @@ void GameMaster::addRat()
 	}
 }
 
+void GameMaster::randomshowMonster(bool isFront)
+{
+	auto random_var = rand();
+
+	if( random_var < 0.15 )
+	{
+		if (/*List.getSize(DragonPool) ~= 0*/)
+			showDragon(isFront);
+		else
+			randomshowMonster(isFront);
+	}
+	else if(random_var < 0.3)
+	{
+		if (/*List.getSize(RatPool) ~= 0*/)
+			showRat(isFront);
+		else
+			randomshowMonster(isFront);
+	}
+	else if (random_var < 0.6)
+	{
+		if (/*List.getSize(PigletPool) ~= 0*/)
+			showPiglet(isFront);
+		else
+			randomshowMonster(isFront);
+	}
+	else
+		showSlime(isFront);
+}
+
+void GameMaster::showBoss()
+{
+	auto boss = Rat::create();
+	currentLayer->addChild(boss);
+	boss->reset();
+
+	auto apperPos = Vec3(500, 200, 300);
+	boss->setPosition3D(apperPos);
+	//boss._myPos = { x = appearPos.x,y = appearPos.y }
+	boss->setFacing(180);
+	//boss->_goRight = false;
+	auto enableAI = [boss]()
+	{
+		boss->setAIEnabled(true);
+	};
+	boss->runAction(Sequence::create(EaseBounceOut::create(MoveBy::create(0.5, Vec3(0, 0, -300))), CallFunc::create(enableAI)));
+	/*List.pushlast(MonsterManager, boss)*/
+}
 
 void GameMaster::showVictoryUI()
 {
