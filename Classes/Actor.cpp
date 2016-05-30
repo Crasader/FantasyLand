@@ -17,7 +17,7 @@ bool Actor::init()
 		currentLayer->addChild(_effectNode);
 	
 	return true;
-};
+}
 
 void Actor::addEffect(Sprite* effect)
 {
@@ -27,7 +27,7 @@ void Actor::addEffect(Sprite* effect)
 	else
 		effect->setPositionZ(this->getPositionZ() + _heroHeight);
 	currentLayer->addChild(effect);
-};
+}
 
 void Actor::initPuff()
 {
@@ -42,7 +42,7 @@ void Actor::initPuff()
 	puff->setPositionZ(10);
 	_puff = puff;
 	_effectNode->addChild(puff);
-};
+}
 
 void Actor::initShadow()
 {
@@ -51,7 +51,7 @@ void Actor::initShadow()
 	_circle->setScale(_shadowSize / 16);
 	_circle->setOpacity(255 * 0.7);
 	this->addChild(_circle);
-};
+}
 
 void Actor::playAnimation(std::string name, bool loop) 
 {
@@ -65,23 +65,28 @@ void Actor::playAnimation(std::string name, bool loop)
 		_sprite3d->runAction(_curAnimation3d);
 		_curAnimation = name;
 	}
-};
+}
 
 //getter & setter
 EnumRaceType Actor::getRaceType()
 {
 	return _racetype;
-};
+}
 
 void Actor::setRaceType(EnumRaceType type)
 {
 	_racetype = type;
-};
+}
+
+int Actor::getRadius() 
+{
+	return _radius;
+}
 
 EnumStateType Actor::getStateType()
 {
 	return _statetype;
-};
+}
 
 void Actor::setStateType(EnumStateType type)
 {
@@ -93,32 +98,52 @@ void Actor::setStateType(EnumStateType type)
 		else
 			_puff->setEmissionRate(0);
 	}
-};
+}
 
 void Actor::setTarget(Actor* target)
 {
 	if (_target != target)
 		_target = target;
-};
+}
 
 void Actor::setFacing(float degrees)
 {
 	_curFacing = DEGREES_TO_RADIANS(degrees);
 	_targetFacing = _curFacing;
 	this->setRotation(degrees);
-};
+}
 
 bool Actor::getAIEnabled()
 {
 	return _AIEnabled;
-};
+}
 
 void Actor::setAIEnabled(bool enable)
 {
 	_AIEnabled = enable;
-};
+}
 
-int Actor::hurt(BasicCollider* collider, bool dirKnockMode)
+void Actor::setAngry(int angry) {
+	_angry = angry;
+}
+
+int Actor::getAngry() {
+	return _angry;
+}
+
+int Actor::getAngryMax() {
+	return _angryMax;
+}
+
+bool Actor::isAlive() {
+	return _isalive;
+}
+
+Vec2 Actor::getMyPos() {
+	return _myPos;
+}
+
+int Actor::hurt(BasicCollider* collider, bool dirKnockMode = false)
 {
     if (_isalive == true) {
 		//TODO add sound effect
@@ -155,27 +180,27 @@ int Actor::hurt(BasicCollider* collider, bool dirKnockMode)
 		return damage;
 	}
 	return 0;
-};
+}
 
 void Actor::hurtSoundEffects()
 {
 	//to override	
-};
+}
 
 void Actor::normalAttackSoundEffects()
 {
 	//to override	
-};
+}
 
 void Actor::specialAttackSoundEffects()
 {
 	//to override	
-};
+}
 
 void Actor::playDyingEffects()
 {
 	//to override	
-};
+}
 
 
 //attacking collision check
@@ -183,13 +208,13 @@ void Actor::normalAttack()
 {
 	BasicCollider::CreateWithPos(_myPos, _curFacing, _normalAttack);
 	normalAttackSoundEffects();
-};
+}
 
 void Actor::specialAttack()
 {
 	BasicCollider::CreateWithPos(_myPos, _curFacing, _specialAttack);
 	specialAttackSoundEffects();
-};
+}
 
 
 //State Machine switching functions
@@ -197,20 +222,20 @@ void Actor::idleMode()
 {
 	setStateType(EnumStateType::IDLE);
 	playAnimation("idle", true);
-};
+}
 
 void Actor::walkMode()
 {
 	setStateType(EnumStateType::WALKING);
 	playAnimation("walk", true);
-};
+}
 
 void Actor::attackMode()
 {
 	setStateType(EnumStateType::ATTACKING);
 	playAnimation("idle", true);
 	_attackTimer = _attackFrequency * 3 / 4;
-};
+}
 
 void Actor::knockMode(BasicCollider* collider, bool dirKnockMode)
 {
@@ -222,7 +247,7 @@ void Actor::knockMode(BasicCollider* collider, bool dirKnockMode)
 	//****** getPosTable should return a Vec2 type.
 	auto newPos = ccpRotateByAngle(ccpAdd(Vec2(collider->getKnock(), 0), p), p, angle);
 	runAction(EaseCubicActionOut::create(MoveTo::create(_action.at("knocked")->getDuration() * 3, newPos)));
-};
+}
 
 void Actor::dyingMode(Vec2 knockSource, int knockAmount)
 {
@@ -259,7 +284,7 @@ void Actor::dyingMode(Vec2 knockSource, int knockAmount)
 		auto newPos = ccpRotateByAngle(ccpAdd(Vec2(knockAmount, 0), p), p, angle);
 	}
 	_AIEnabled = false;
-};
+}
 
 
 //Base Update Functions
@@ -285,7 +310,7 @@ void Actor::stateMachineUpdate(float dt)
 		;
 		//I am dying.. there is not much I can do right?
 
-};
+}
 
 Actor* Actor::_findEnemy(EnumRaceType HeroOrMonster, bool &allDead)
 {
@@ -310,7 +335,7 @@ Actor* Actor::_findEnemy(EnumRaceType HeroOrMonster, bool &allDead)
 		}
 	}
 	return target;
-};
+}
 
 bool Actor::_inRange() 
 {
@@ -322,7 +347,7 @@ bool Actor::_inRange()
 		auto p2 = _target->_myPos;
 		return (ccpDistance(p1, p2) < attackDistance);
 	}
-};
+}
 
 
 //AI function does not run every tick
@@ -363,7 +388,7 @@ void Actor::AI()
 	}
 	else
 		;//logic when I'm dead
-};
+}
 
 void Actor::baseUpdate(float dt)
 {
@@ -376,7 +401,7 @@ void Actor::baseUpdate(float dt)
 			AI();
 		}
 	}
-};
+}
 
 void Actor::knockingUpdate(float dt)
 {
@@ -388,7 +413,7 @@ void Actor::knockingUpdate(float dt)
 		else
 			walkMode();
 	}
-};
+}
 
 void Actor::attackUpdate(float dt)
 {
@@ -430,7 +455,7 @@ void Actor::attackUpdate(float dt)
 			_cooldown = true;	
 		}
 	}
-};
+}
 
 void Actor::walkUpdate(float dt) 
 {
@@ -450,7 +475,7 @@ void Actor::walkUpdate(float dt)
 		else
 			idleMode();
 	}
-};
+}
 
 void Actor::movementUpdate(float dt)
 {
@@ -480,4 +505,4 @@ void Actor::movementUpdate(float dt)
 		Vec2 targetPosition = ccpRotateByAngle(ccpAdd(Vec2(_curSpeed*dt, 0), p1), p1, _curFacing);
 		setPosition(targetPosition);
 	}
-};
+}

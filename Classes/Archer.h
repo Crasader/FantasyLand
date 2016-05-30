@@ -52,7 +52,7 @@ public:
 	int getArmourID();
 	//get helmet id
 	int getHelmetID();
-	int hurt(Actor* collider, bool dirKnockMode);
+	int hurt(BasicCollider* collider, bool dirKnockMode);
 
 
 private:

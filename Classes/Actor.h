@@ -35,7 +35,13 @@ public:
 	void setFacing(float degrees);
 	bool getAIEnabled();
 	void setAIEnabled(bool enable);
-	int hurt(BasicCollider* collider, bool dirKnockMode);
+	int getRadius();
+	int getAngry();
+	void setAngry(int angry);
+	int getAngryMax();
+	bool isAlive();
+	Vec2 getMyPos();
+	int hurt(BasicCollider* collider, bool dirKnockMode = false);
 	void hurtSoundEffects();
 	void normalAttackSoundEffects();
 	void specialAttackSoundEffects();
@@ -49,7 +55,7 @@ public:
 	void idleMode();	//switch into idle mode
 	void walkMode();	//switch into walk mode
 	void attackMode();	//switch into attack mode
-	void knockMode(BasicCollider* collider, bool dirKnockMode);
+	void knockMode(BasicCollider* collider, bool dirKnockMode = false);
 	void dyingMode(Vec2 knockSource, int knockAmount);
 
 	//Base Update Functions

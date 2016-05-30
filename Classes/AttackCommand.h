@@ -18,7 +18,7 @@ class BasicCollider : public Node
 {
 public:
 	BasicCollider();
-	static void CreateWithPos(Vec2 pos, int facing, struct attackInfo);
+	static BasicCollider* CreateWithPos(Vec2 pos, int facing, struct attackInfo);
 	CREATE_FUNC(BasicCollider);
 	virtual bool init();
 	void onTimeOut();
@@ -26,7 +26,7 @@ public:
 	void hurtEffect(Actor* target);
 	void onCollide(Actor* target);
 	void onUpdate();
-	void initData(Vec3 pos, int facing, std::string attackInfo);
+	void initData(Vec2 pos, int facing, std::string attackInfo);
 
 	//set & get
 	int getDamage();
@@ -35,8 +35,15 @@ public:
 	void setKnock(int knock);
 	float getCriticalChance();
 	void setCriticalChance(float criticalChance);
-	float getFacing();
-	void setFacing(float facing);
+	int getFacing();
+	void setFacing(int facing);
+	int getMask();
+	int getMaxRange();
+	int getMinRange();
+	float getAngle();
+	float getDuration();
+	float getCurDuration();
+	void setCurDuration(float curDuration);
 
 protected:
 	int _minRange;	//the min radius of the fan
@@ -45,7 +52,7 @@ protected:
 	int _knock;	//default knock;
 	int _mask;	//1 is Heroes, 2 is enemy, 3 ??
 	int _damage;
-	float _facing;	//this is radians
+	int _facing;	//this is radians
 	float _duration;
 	float _curDuration;
 	int _speed;	//traveling speed;
@@ -56,7 +63,7 @@ class KnightNormalAttack : public BasicCollider
 {
 public:
 	KnightNormalAttack();
-	static void CreateWithPos(Vec2 pos, int facing, std::string attackInfo, Actor* knight);
+	static KnightNormalAttack* CreateWithPos(Vec2 pos, int facing, std::string attackInfo, Actor* knight);
 	CREATE_FUNC(KnightNormalAttack);
 	virtual bool init();
 	void onTimeOut();
@@ -69,7 +76,7 @@ class MageNormalAttack : public BasicCollider
 {
 public:
 	MageNormalAttack();
-	static void CreateWithPos(Vec2 pos, int facing, std::string attackInfo, Actor* target, Actor* owner);
+	static MageNormalAttack* CreateWithPos(Vec2 pos, int facing, std::string attackInfo, Actor* target, Actor* owner);
 	CREATE_FUNC(MageNormalAttack);
 	virtual bool init();
 	void onTimeOut();
@@ -79,6 +86,9 @@ public:
 private:
 	Actor* _owner;
 	Actor* _target;
+	ParticleSystemQuad* _part1;
+	ParticleSystemQuad* _part2;
+	BillBoard* _sp;
 };
 
 class MageIceSpikes : public BasicCollider
@@ -94,6 +104,8 @@ public:
 
 private:
 	Actor* _owner;
+	Sprite* _sp;
+	Node* _spikes;
 };
 
 class ArcherNormalAttack : public BasicCollider
