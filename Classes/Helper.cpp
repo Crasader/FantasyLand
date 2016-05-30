@@ -1,5 +1,7 @@
 ﻿#include "Helper.h"
 
+Camera * camera = Camera::create();
+
 float radNormalize(float rad)
 {
 	float pi2 = 2 * M_PI;

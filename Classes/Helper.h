@@ -6,8 +6,8 @@
 
 USING_NS_CC;
 
-//Camera camera;
-//camera = null
+extern Camera* camera;
+
 typedef
 struct 
 {

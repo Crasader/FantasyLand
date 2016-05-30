@@ -234,7 +234,7 @@ void GameMaster::showDialog()
 
 	auto pausegame = []()
 	{
-		for (int i = 0; i < HeroManager.size() ; i++)
+		for (int i = 0; i < HeroManager.size(); i++)
 		{
 			HeroManager[i]->idleMode();
 			HeroManager[i]->setAIEnabled(false);
@@ -244,37 +244,26 @@ void GameMaster::showDialog()
 	dialog->runAction(Sequence::create(ScaleTo::create(0.5, 0.5), CallFunc::create(pausegame)));
 	uiLayer->setVisible(false);
 
-	auto exitDialog = [dialog,colorLayer]()
+	auto exitDialog = [dialog, colorLayer, this]()
 	{
-		auto removeDialog = [dialog,colorLayer]()
+		auto removeDialog = [dialog, colorLayer, this]()
 		{
 			dialog->removeFromParent();
 			colorLayer->removeFromParent();
-
+			uiLayer->setVisible(true);
+			for (int var = 0; var < HeroManager.size(); var++)
+			{
+				HeroManager[var]->setAIEnabled(true);
+			}
+			this->showBoss();
 		};
+
+		dialog->runAction(Sequence::create(ScaleTo::create(0.5, 0.1), CallFunc::create(removeDialog)));
+		Director::getInstance()->getScheduler()->unscheduleScriptEntry(scheduleid);
 	};
-	/*function GameMaster : showDialog()
 
-	
-	uiLayer : setVisible(false)
-	local function exitDialog()
-		local function removeDialog()
-			dialog : removeFromParent()
-			colorLayer : removeFromParent()
-			uiLayer : setVisible(true)
-			for var = HeroManager.first, HeroManager.last do
-				HeroManager[var] : setAIEnabled(true)
-			end
-			self : showBoss()
-		end
-		dialog : runAction(cc.Sequence:create(cc.ScaleTo:create(0.5, 0.1), cc.CallFunc : create(removeDialog)))
-		cc.Director : getInstance() : getScheduler() : unscheduleScriptEntry(scheduleid)
-	end
-
-	scheduleid = cc.Director : getInstance() : getScheduler() : scheduleScriptFunc(exitDialog, 3, false)
-
-	cc.Texture2D : setDefaultAlphaPixelFormat(cc.TEXTURE2_D_PIXEL_FORMAT_RG_B565)
-	end*/
+	scheduleid = Director::getInstance()->getScheduler()->scheduleScriptFunc(exitDialog, 3, false);//todo
+	Texture2D::setDefaultAlphaPixelFormat(TEXTURE2_D_PIXEL_FORMAT_RG_B565);
 }
 
 void GameMaster::showVictoryUI()
