@@ -20,4 +20,4 @@ void collision(/*object*/);
 void isOutOfBound(/*object*/);
 void collisionDetect(float dt);
 Vec2 getFocusPointOfHeros();
-//std::list<std::string> getPoolByName(std::string name);
+std::vector<Actor *> getPoolByName(std::string name);
