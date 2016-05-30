@@ -334,11 +334,25 @@ void MageIceSpikes::CreateWithPos(Vec2 pos, int facing, std::string attackInfo, 
 			spike->setScale(2);
 		spike->setOpacity(165);
 		spike->setFlippedX(!(floor(CCRANDOM_0_1() * 2)));
-
-
-
-
+		spike->setPosition3D(Vec3(CCRANDOM_MINUS1_1()*ret->getMaxRange() / 1.5, 
+			CCRANDOM_MINUS1_1()*ret->getMaxRange() / 1.5, 1));
+		spike->setGlobalZOrder(-ret->getPositionY() - spike->getPositionY() + FXZorder);
+		x->setScale(0);
+		x->setPositionZ(-210);
 	}
+	x->runAction(EaseBackOut::create(MoveBy::create(0.3, Vec3(0, 0, 200))));
+	x->runAction(EaseBounceOut::create(ScaleTo(0.4, 1)));
+
+	auto magic = ParticleSystemQuad::create(ParticleManager::getInstance()->getPlistData("magic"));
+	auto magicf = SpriteFrameCache::getInstance()->getSpriteFrameByName("particle.png");
+	magic->setTextureWithRect(magicf->getTexture(), magicf->getRect());
+	magic->setCameraMask(camera);
+	magic->setScale(1.5);
+	ret->addChild(magic);
+	magic->setGlobalZOrder(-ret->getPositionY() * 2 + FXZorder);
+	magic->setPositionZ(0);
+
+	return ret;
 };
 
 bool MageIceSpikes::init()
@@ -348,17 +362,42 @@ bool MageIceSpikes::init()
 
 void MageIceSpikes::onTimeOut()
 {
+	_spikes->setVisible(false);
+	auto puff = ParticleSystemQuad::create(ParticleManager::getInstance()->getPlistData("puffRing"));
+	//local puff = cc.ParticleSystemQuad : create("FX/puffRing.plist")
+	auto puffFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName("puff.png");
+	puff->setTextureWithRect(puffFrame->getTexture(), puffFrame->getRect());
+	puff->setCamera(camera);
+	puff->setScale(3);
+	addChild(puff);
+	puff->setGlobalZOrder(-getPositionY() + FXZorder);
+	puff->setPositionZ(20);
 
-};
+	auto magic = ParticleSystemQuad::create(ParticleManager::getInstance()->getPlistData("magic"));
+	//local puff = cc.ParticleSystemQuad : create("FX/puffRing.plist")
+	auto magicf = SpriteFrameCache::getInstance()->getSpriteFrameByName("particle.png");
+	magic->setTextureWithRect(magicf->getTexture(), magicf->getRect());
+	magic->setCamera(camera);
+	magic->setScale(1.5);
+	addChild(magic);
+	puff->setGlobalZOrder(-getPositionY() + FXZorder);
+	puff->setPositionZ(0);
+}
 
 void MageIceSpikes::playHitAudio()
 {
 
-};
+}
 
 void MageIceSpikes::onUpdate(float dt)
 {
-
+	if (_curDOTTime >= _DOTTimer) {
+		hurtEffect(_target);
+		playHitAudio();
+		_owner->setAngry(_owner->getAngry() + _target->hurt(this, true) * 0.3);
+		auto anaryChange = { ArcherValues._name, _owner->getAngry(), _owner->getAngry(), _owner->getAngryMax() };
+		//2016 5 30 21:47
+	}
 };
 
 ArcherNormalAttack::ArcherNormalAttack()

@@ -1,5 +1,8 @@
 ﻿#pragma once
 
+#include <vector>
+#include <algorithm>
+
 #include "cocos2d.h"
 #include "Helper.h"
 #include "HPCounter.h"
