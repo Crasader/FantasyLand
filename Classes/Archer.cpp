@@ -177,25 +177,45 @@ void Archer::updateHelmet()
 
 void Archer::updateArmour()
 {
-
+	if (_useArmourId == 0) {
+		auto armour = _sprite3d->getMeshByName("gongjianshou_shenti01");
+		armour->setVisible(true);
+		armour = _sprite3d->getMeshByName("gongjianshou_shenti02");
+		armour->setVisible(false);
+	}
+	else {
+		auto armour = _sprite3d->getMeshByName("gongjianshou_shenti02");
+		armour->setVisible(true);
+		armour = _sprite3d->getMeshByName("gongjianshou_shenti01");
+		armour->setVisible(false);
+	}
 };
 
 //switth weapon
 void Archer::switchWeapon()
 {
-
+	_useWeaponId++;
+	if (_useWeaponId > 1)
+		_useWeaponId = 0;
+	updateWeapon();
 };
 
 //switch helmet
 void Archer::switchHelmet()
 {
-
+	_useHelmetId++;
+	if (_useHelmetId > 1)
+		_useHelmetId = 0;
+	updateHelmet();
 };
 
 //switch armour
 void Archer::switchArmour()
 {
-
+	_useArmourId++;
+	if (_useArmourId > 1)
+		_useArmourId = 0;
+	updateArmour();
 };
 
 //show/hide arrow
@@ -203,28 +223,82 @@ void Archer::switchArmour()
 //type: 0 : show / hide all 1 : show / hide 1 2 : show / hide 2
 void Archer::showOrHideArrow(bool isShow, int arrowType)
 {
-
+	if (arrowType == 0) {
+		auto arrow = _sprite3d->getMeshByName("gongjianshou_jian01");
+		arrow->setVisible(isShow);
+		arrow = _sprite3d->getMeshByName("gongjianshou_jian02");
+		arrow->setVisible(isShow);
+	}
+	else if (arrowType == 1) {
+		auto arrow = _sprite3d->getMeshByName("gongjianshou_jian01");
+		arrow->setVisible(isShow);
+	}
+	else if (arrowType == 2) {
+		auto arrow = _sprite3d->getMeshByName("gongjianshou_jian02");
+		arrow->setVisible(isShow);
+	};
 };
 
 //get weapon id
 int Archer::getWeaponID()
 {
-
+	return _useWeaponId;
 };
 
 //get armour id
 int Archer::getArmourID()
 {
-
+	return _useArmourId;
 };
 
 //get helmet id
 int Archer::getHelmetID()
 {
-
+	return _useHelmetId;
 };
 
-int Archer::hurt(Actor* collider, bool dirKnockMode)
+int Archer::hurt(BasicCollider* collider, bool dirKnockMode)
 {
+	//TODO add sound effect
+	auto damage = collider->getDamage();
+	//calculate the real damage
+	bool critical = false;
+	auto knock = collider->getKnock();
+	if (CCRANDOM_0_1() < collider->getCriticalChance()) {
+		damage *= 1.5;
+		critical = true;
+		knock *= 2;
+	}
+	damage = damage + damage * CCRANDOM_MINUS1_1() * 0.15 - _defense;
+	damage = floor(damage);
+	if (damage <= 0) damage = 1;
+	_hp -= damage;
+	if (_hp > 0) {
+		if (critical == true) {
+			knockMode(collider, dirKnockMode);
+			hurtSoundEffects();
+		}
+		else hurtSoundEffects();
+	}
+	else {
+		_hp = 0;
+		_isalive = false;
+		dyingMode(getPosTable(collider), knock);
+	}
+
+	//three param judge if crit
+
+	/* 这里需要修改 */
+	Sprite* blood = _hpCounter->showBloodLossNum(damage, this, critical);
+	if (_name == "Rat")
+		setPositionZ(Director::getInstance()->getVisibleSize().height * 0.25);
+	addEffect(blood);
+
+	auto bloodMinus = { _name, _maxhp, _hp, _bloodBar, _bloodBarClone, _avatar };
+	MessageDispatchCenter::dispatchMessage(MessageDispatchCenter::MessageType::BLOOD_MINUS, bloodMinus);
+	auto anaryChange = { _name, _angry,_angryMax };
+	MessageDispatchCenter::dispatchMessage(MessageDispatchCenter::MessageType::ANGRY_CHANCE, anaryChange);
+
+
 
 };

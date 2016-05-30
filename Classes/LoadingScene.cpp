@@ -15,9 +15,9 @@ Scene* LoadingScene::createScene()
 bool LoadingScene::init()
 {
 	Layer::init();
-	_num = ;//need table
+	_num = 6 + 4;//num(particleRes)+num(spriteFrameRes)
 	_totalResource = _num;
-	size = Director::getInstance()->getVisibleSize();
+	size = Director::getInstance()->getWinSize();
 	_pm = ParticleManager::getInstance();
 
 	auto layer = Layer::create();
@@ -30,7 +30,7 @@ bool LoadingScene::init()
 	//add loadingbar
 	auto loadingbar = ui::LoadingBar::create("loadingscene/sliderProgress.png");
 	loadingbar->setDirection(ui::LoadingBarTypeLeft);
-	loadingbar->setPosition(size / 2);
+	loadingbar->setPosition(Vec2(size.width / 2, size.height*0.2));
 	loadingbar->setScale(3, 2);
 	loadingbar->setColor(Color3B(0, 0, 0));
 	loadingbar->setOpacity(70);
@@ -45,7 +45,7 @@ bool LoadingScene::init()
 	slimeAction(layer);
 
 	//update
-	auto update = [this, loadingbar](float dt) {
+	auto update = [this, loadingbar, loadingbarSize](float dt) {
 		_num = _num - 1;
 		loadingbar->setPercent((_totalResource - _num) / _totalResource * 100);
 		//loading text action
@@ -54,10 +54,10 @@ bool LoadingScene::init()
 		//self._loading[loadingIndex>1 and loadingIndex or 1]:runAction(loadingAction)
 
 		//slime action
-		//self._slime:runAction(cc.MoveTo:create(dt, cc.p(self._slimeOriginX + loadingbarSize*loadingbar:getPercent() / 100, self._slimeOriginY)))
+		_slime->runAction(MoveTo::create(dt, ccp(_slimeOriginX + loadingbarSize*loadingbar->getPercent() / 100, _slimeOriginY)));
 
 		//load resource
-		if (_totalResource - _num > 999/*table.getn(particleRes)*/)
+		if (_totalResource - _num > 6/*num(particleRes)*/)
 			cachedTextureRes();
 		else
 			cachedParticleRes();
@@ -66,7 +66,7 @@ bool LoadingScene::init()
 		if (_num == -1)
 		{
 			unschedule("LoadingScene");
-			Director::getInstance()->replaceScene(MainMenuScene::createScene(););
+			Director::getInstance()->replaceScene(MainMenuScene::createScene());
 		}
 	};
 	schedule(update, 0.1, "LoadingScene");
@@ -77,20 +77,26 @@ bool LoadingScene::init()
 void LoadingScene::addLoadingText(Layer* layer)
 {
 	char loadingStr[] = "loading";
-	Label loading[2];
-	for (int i = 0, v = 0; i < 6; ++i, ++v)
+	Label *loading[6];
+	for (int i = 0; i < 6; ++i)//no v
 	{
-		Label::createWithTTF("", "chooseRole/actor_param.ttf", 55);
-
+		loading[i] = Label::createWithTTF(std::to_string(loadingStr[i]), "chooseRole/actor_param.ttf", 55);
+		loading[i]->enableOutline(Color4B(104, 151, 161, 255));
+		loading[i]->setPosition3D(Vec3(size.width*0.13, size.height*0.1*i, size.height*0.6));
+		layer->addChild(loading[i]);
 	}
+	_loading = loading;
 }
 
 void LoadingScene::slimeAction(Layer* layer)
 {
 	auto slime = Slime::create();
 	slime->setAIEnabled(false);
-	slime->setPosition(size.width*0.2, size.height*0.3);
+	_slimeOriginX = size.width*0.2;
+	_slimeOriginY = size.height*0.3;
+	slime->setPosition(_slimeOriginX, _slimeOriginY);
 	slime->setRotation3D(Vec3(-90, -90, 0));
+	_slime = slime;
 	addChild(slime);
 
 	float dur = 0.6;
@@ -115,12 +121,12 @@ void LoadingScene::slimeAction(Layer* layer)
 
 void LoadingScene::cachedParticleRes()
 {
-	//_pm= AddPlistData(particleRes[self._totalResource - self._num][1], particleRes[self._totalResource - self._num][2])
+	_pm->AddPlistData(particleRes[_totalResource - _num][1]._string, particleRes[_totalResource - _num][2]._string);
 }
 
 void LoadingScene::cachedTextureRes()
 {
-	if(_num<0)
+	if (_num < 0)
 		return;
-	SpriteFrameCache::getInstance()->addSpriteFramesWithFile(spriteFrameRes[_totalResource - _num/*-table.getn(particleRes)*/]);
+	SpriteFrameCache::getInstance()->addSpriteFramesWithFile(spriteFrameRes[_totalResource - _num - 6/*num(particleRes)*/]._string);
 }
