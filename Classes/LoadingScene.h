@@ -25,6 +25,12 @@ private:
 	Size size;
 	ParticleManager *_pm;
 
+	Slime *_slime;
+	float _slimeOriginX;
+	float _slimeOriginY;
+
+	Label **_loading;
+
 	String particleRes[6][2] = {
 		{ "FX/iceTrail.plist","iceTrail" },
 		{ "FX/magic.plist","magic" },

@@ -250,7 +250,7 @@ struct MageValues
 		float DOTTimer = 0.75;
 		float curDOTTime = 0.75;
 		bool DOTApplied = false;
-	}_specialAttack；
+	}_specialAttack;
 
 }MageValues;
 
@@ -301,7 +301,7 @@ struct ArcherValues
 		float DOTTimer = 0.3;
 		float curDOTTime = 0.3;
 		bool DOTApplied = false;
-	}_specialAttack；
+	}_specialAttack;
 
 }ArcherValues;
 
@@ -499,7 +499,7 @@ struct BossValues
 		float DOTTimer = 0.3;
 		float curDOTTime = 0.3;
 		bool DOTApplied = false;
-	}nova；
+	}nova;
 
 }BossValues;
 
@@ -567,7 +567,6 @@ struct Archerproperty
 	std::string wounded = "audios/effects/archer/hurt.mp3";
 	std::string normalAttackShout = "audios/effects/archer/normalAttackShout.mp3";
 	std::string specialAttackShout = "audios/effects/archer/specialAttackShout.mp3";
-	std::string wounded = "audios/effects/archer/hurt.mp3";
 	std::string dead = "audios/effects/archer/dead.mp3";
 }Archerproperty;
 
