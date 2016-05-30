@@ -123,23 +123,56 @@ void Archer::init3D()
 
 void Archer::initActions()
 {
-
+	_action.insert("idle", createAnimation(file, 208, 253, 0.7));
+	_action.insert("walk", createAnimation(file, 110, 130, 0.7));
+	_action.insert("attack1", createAnimation(file, 0, 12, 0.7));
+	_action.insert("attack2", createAnimation(file, 12, 24, 0.7));
+	_action.insert("specialattack1", createAnimation(file, 30, 43, 0.2));
+	_action.insert("specialattack2", createAnimation(file, 44, 56, 0.2));
+	_action.insert("defend", createAnimation(file, 70, 95, 0.7));
+	_action.insert("knocked", createAnimation(file, 135, 145, 0.7));
+	_action.insert("dead", createAnimation(file, 150, 196, 0.7));
 };
 
 //set default equipments
 void Archer::setDefaultEqt()
 {
-
+	updateWeapon();
+	updateHelmet();
+	updateArmour();
+	showOrHideArrow(false, 0);
 };
 
-void Archer::updataWeapon()
+void Archer::updateWeapon()
 {
-
+	if (_useWeaponId == 0) {
+		auto weapon = _sprite3d->getMeshByName("gongjianshou_gong01");
+		weapon->setVisible(true);
+		weapon = _sprite3d->getMeshByName("gongjianshou_gong02");
+		weapon->setVisible(false);
+	}
+	else {
+		auto weapon = _sprite3d->getMeshByName("gongjianshou_gong02");
+		weapon->setVisible(true);
+		weapon = _sprite3d->getMeshByName("gongjianshou_gong01");
+		weapon->setVisible(false);
+	}
 };
 
 void Archer::updateHelmet()
 {
-
+	if (_useHelmetId == 0) {
+		auto helmet = _sprite3d->getMeshByName("gongjianshou_tou01");
+		helmet->setVisible(true);
+		helmet = _sprite3d->getMeshByName("gongjianshou_tou02");
+		helmet->setVisible(false);
+	}
+	else {
+		auto helmet = _sprite3d->getMeshByName("gongjianshou_tou02");
+		helmet->setVisible(true);
+		helmet = _sprite3d->getMeshByName("gongjianshou_tou01");
+		helmet->setVisible(false);
+	}
 };
 
 void Archer::updateArmour()
