@@ -10,6 +10,11 @@ public:
 
 	void AddPlistData(std::string fileName, std::string keyName); 
 	ValueMap getPlistData(std::string keyname);
+
 private:
-	std::map<ValueMap, std::string> _plistMap;
+	std::map<std::string,ValueMap> _plistMap;
+
+	static ParticleManager* instance;
+	ParticleManager();
 };
+

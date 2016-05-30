@@ -41,7 +41,7 @@ struct RECTS
 
 struct G
 {
-	Size inSize = Director::getInstance()->getWinSize();
+	Size winSize = Director::getInstance()->getWinSize();
 	float bloodPercentDropSpeed = 2; 
 
 	struct activearea 
@@ -234,7 +234,7 @@ struct MageValues
 		float duration = 2;
 		float speed = 400;
 		float criticalChance = 0.05;
-	}_normalAttack
+	}_normalAttack;
 
 	struct _specialAttack
 	{

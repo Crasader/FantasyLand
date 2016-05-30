@@ -1,1 +1,43 @@
 ﻿#include "Helper.h"
+
+float radNormalize(float rad)
+{
+	float pi2 = 2 * M_PI;
+	rad = fmod(rad, pi2);
+	rad = fmod((rad + pi2), pi2);
+	if( rad > M_PI)
+	{
+		rad = rad - M_PI;
+	}
+	return rad;
+}
+
+timerange createAnimationStruct(float var1, float var2, float var3)
+{
+	timerange buffer = { var1,var2,var3 };
+	return buffer;
+}
+
+Animate3D* createAnimation(std::string file, float begin, float finish, float speed)
+{
+	auto animation3d = Animation3D::create(file);
+	auto animate3d = Animate3D::create(animation3d, begin / 30, (finish - begin) / 30);
+	animate3d->setSpeed(speed);
+	animate3d->retain();
+	return animate3d;
+}
+
+float DEGREES_TO_RADIANS(float _ANGLE)
+{
+	return _ANGLE * 0.01745329252;
+}
+
+float RADIANS_TO_DEGREES(float _ANGLE)
+{
+	return _ANGLE * 57.29577951;
+}
+
+msgStruct createKnockedMsgStruct(/*object*/)
+{
+	msgStruct buffer = {/*object,object._target*/ };
+}
