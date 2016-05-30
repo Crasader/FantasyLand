@@ -32,7 +32,7 @@ public:
 
 	//set default equipments
 	void setDefaultEqt();
-	void updataWeapon();
+	void updateWeapon();
 	void updateHelmet();
 	void updateArmour();
 
