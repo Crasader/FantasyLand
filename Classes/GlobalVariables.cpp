@@ -39,6 +39,7 @@ struct RECTS
 	Rect thunderBall = SpriteFrameCache::getInstance()->getSpriteFrameByName("thunderball.png")->getRect();
 }RECTS;
 
+
 struct G
 {
 	Size winSize = Director::getInstance()->getWinSize();

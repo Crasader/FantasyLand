@@ -10,7 +10,7 @@ extern AnimationCache * animationCache ;
 
 void init();
 
-extern struct RECTS RECTS;
+extern struct RECTS_ RECTS;
 extern struct G G;
 extern struct BGM_RES BGM_RES;
 extern enum AUDIO_ID AUDIO_ID;

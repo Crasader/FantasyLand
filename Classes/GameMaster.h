@@ -10,9 +10,9 @@
 #include "Rat.h"
 #include "Dragon.h"
 #include "Archer.h"
+#include "cocos2d.h"
 
 USING_NS_CC;
-
 
 class GameMaster
 {

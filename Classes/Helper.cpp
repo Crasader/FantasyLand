@@ -12,6 +12,12 @@ float radNormalize(float rad)
 	return rad;
 }
 
+Vec2 getPosTable(Node* obj)
+{
+	Vec2 pos = obj->getPosition();
+	return pos;
+}
+
 timerange createAnimationStruct(float var1, float var2, float var3)
 {
 	timerange buffer = { var1,var2,var3 };

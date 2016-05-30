@@ -5,9 +5,10 @@
 //std::list<std::string> SlimePool;
 //std::list<std::string> RatPool;
 //std::list<std::string> BossPool;
-//std::list<std::string> HeroManager;
-//std::list<std::string> MonsterManager;
 //std::list<std::string> PigletPool;
+std::vector<Actor *> HeroManager;
+std::vector<Actor *> MonsterManager;
+
 
 Size size = Director::getInstance()->getWinSize();
 Scheduler* scheduler = Director::getInstance()->getScheduler();

@@ -1,14 +1,16 @@
 ﻿#pragma once
 #include "Helper.h"
+#include "Actor.h"
 
 //extern std::list<std::string> HeroPool;
 //extern std::list<std::string> DragonPool;
 //extern std::list<std::string> SlimePool;
 //extern std::list<std::string> RatPool;
-//extern std::list<std::string> BossPool;
-//extern std::list<std::string> HeroManager;
-//extern std::list<std::string> MonsterManager;
 //extern std::list<std::string> PigletPool;
+//extern std::list<std::string> BossPool;
+extern std::vector<Actor *> HeroManager;
+extern std::vector<Actor *> MonsterManager;
+
 
 extern Size size ;
 extern Scheduler* scheduler;
