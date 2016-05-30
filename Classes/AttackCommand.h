@@ -9,7 +9,6 @@
 #include "Manager.h"
 #include "GlobalVariables.h"
 
-
 USING_NS_CC;
 
 class Actor;
@@ -57,6 +56,8 @@ protected:
 	float _curDuration;
 	int _speed;	//traveling speed;
 	float _criticalChance;
+	float _curDOTTime;
+	float _DOTTimer;
 };
 
 class KnightNormalAttack : public BasicCollider
