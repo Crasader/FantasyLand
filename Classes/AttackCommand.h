@@ -8,6 +8,7 @@
 #include "Helper.h"
 #include "Manager.h"
 #include "GlobalVariables.h"
+#include "Archer.h"
 
 USING_NS_CC;
 
@@ -52,12 +53,14 @@ protected:
 	int _mask;	//1 is Heroes, 2 is enemy, 3 ??
 	int _damage;
 	int _facing;	//this is radians
+	int _curFacing;
 	float _duration;
 	float _curDuration;
 	int _speed;	//traveling speed;
 	float _criticalChance;
 	float _curDOTTime;
 	float _DOTTimer;
+	bool _DOTApplied;
 };
 
 class KnightNormalAttack : public BasicCollider
@@ -96,16 +99,18 @@ class MageIceSpikes : public BasicCollider
 {
 public:
     MageIceSpikes();
-	static void CreateWithPos(Vec2 pos, int facing, std::string attackInfo, Actor* owner);
+	static MageIceSpikes* CreateWithPos(Vec2 pos, int facing, std::string attackInfo, Actor* owner);
 	CREATE_FUNC(MageIceSpikes);
 	virtual bool init();
 	void playHitAudio();
 	void onTimeOut();
+	void onCollide(Actor* target);
 	void onUpdate(float dt);
 
 private:
 	Actor* _owner;
 	Sprite* _sp;
+	Actor* _target;
 	Node* _spikes;
 };
 
@@ -113,7 +118,7 @@ class ArcherNormalAttack : public BasicCollider
 {
 public:
 	ArcherNormalAttack();
-	static void CreateWithPos(Vec2 pos, int facing, std::string attackInfo, Actor* owner);
+	static ArcherNormalAttack* CreateWithPos(Vec2 pos, int facing, std::string attackInfo, Actor* owner);
 	CREATE_FUNC(ArcherNormalAttack);
 	virtual bool init();
 	void onTimeOut();
@@ -122,13 +127,14 @@ public:
 
 private:
 	Actor* _owner;
+	Sprite* _sp;
 };
 
 class ArcherSpecialAttack : public BasicCollider
 {
 public:
 	ArcherSpecialAttack();
-	static void CreateWithPos(Vec2 pos, int facing, std::string attackInfo, Actor* owner);
+	static ArcherSpecialAttack* CreateWithPos(Vec2 pos, int facing, std::string attackInfo, Actor* owner);
 	CREATE_FUNC(ArcherSpecialAttack);
 	virtual bool init();
 	void onTimeOut();
@@ -143,51 +149,63 @@ class Nova : public BasicCollider
 {
 public:
 	Nova();
-	static void CreateWithPos(Vec2 pos, int facing);
+	static Nova* CreateWithPos(Vec2 pos, int facing);
 	CREATE_FUNC(Nova);
 	virtual bool init();
 	void onTimeOut();
 	void onCollide(Actor* target);
 	void onUpdate(float dt);
+
+private:
+	Sprite* _sp;
 };
 
 class DragonAttack : public BasicCollider
 {
 public:
 	DragonAttack();
-	static void CreateWithPos(Vec2 pos, int facing, std::string attackInfo);
+	static DragonAttack* CreateWithPos(Vec2 pos, int facing, std::string attackInfo);
 	CREATE_FUNC(DragonAttack);
 	virtual bool init();
 	void playHitAudio();
 	void onTimeOut();
 	void onCollide(Actor* target);
 	void onUpdate(float dt);
+
+private:
+	Sprite* _sp;
 };
 
 class BossNormal : public BasicCollider
 {
 public:
 	BossNormal();
-	static void CreateWithPos(Vec2 pos, int facing, std::string attackInfo);
+	static BossNormal* CreateWithPos(Vec2 pos, int facing, std::string attackInfo);
 	CREATE_FUNC(BossNormal);
 	virtual bool init();
 	void playHitAudio();
 	void onTimeOut();
 	void onCollide(Actor* target);
 	void onUpdate(float dt);
+
+private:
+	Sprite* _sp;
 };
 
 class BossSuper : public BasicCollider
 {
 public:
     BossSuper();
-	static void CreateWithPos(Vec2 pos, int facing, std::string attackInfo);
+	static BossSuper* CreateWithPos(Vec2 pos, int facing, std::string attackInfo);
 	CREATE_FUNC(BossSuper);
 	virtual bool init();
 	void playHitAudio();
 	void onTimeOut();
 	void onCollide(Actor* target);
 	void onUpdate(float dt);
+
+private:
+	Sprite* _sp;
 };
 
 void solveAttacks(float dt);

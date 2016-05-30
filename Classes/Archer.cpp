@@ -32,14 +32,15 @@ bool Archer::init()
 
 	init3D();
 	initActions();
-};
+	return true;
+}
 
 void Archer::update(float dt)
 {
 	baseUpdate(dt);
 	stateMachineUpdate(dt);
 	movementUpdate(dt);
-};
+}
 
 Sprite3D* Archer::createArrow()
 {
@@ -49,22 +50,22 @@ Sprite3D* Archer::createArrow()
 	sprite3d->setPosition3D(Vec3(0, 0, 50));
 	sprite3d->setRotation3D(Vec3(-90, 0, 0));
 	return sprite3d;
-};
+}
 
 void Archer::ArcherlAttackCallback(int audioID, std::string filePath)
 {
 	experimental::AudioEngine::play2d(Archerproperty.attack2, false, 1);
-};
+}
 
 void Archer::playDyingEffects()
 {
 	experimental::AudioEngine::play2d(Archerproperty.dead, false, 1);
-};
+}
 
 void Archer::hurtSoundEffects()
 {
 	experimental::AudioEngine::play2d(Archerproperty.wounded, false, 1);
-};
+}
 
 void Archer::normalAttack()
 {
@@ -72,7 +73,7 @@ void Archer::normalAttack()
 	experimental::AudioEngine::play2d(Archerproperty.normalAttackShout, false, 1);
 	AUDIO_ID.ARCHERATTACK = experimental::AudioEngine::play2d(Archerproperty.attack1, false, 1);
 	experimental::AudioEngine::setFinishCallback(AUDIO_ID.ARCHERATTACK, ArcherlAttackCallback);
-};
+}
 
 void Archer::specialAttack()
 {
@@ -106,7 +107,7 @@ void Archer::specialAttack()
 	delayExecute(this, spike2, 0.2);
 	delayExecute(this, spike3, 0.4);
 
-};
+}
 
 void Archer::init3D()
 {
@@ -119,7 +120,7 @@ void Archer::init3D()
 	_sprite3d->setRotation3D(Vec3(90, 0, 0));
 	_sprite3d->setRotation(-90);
 	setDefaultEqt();
-};
+}
 
 void Archer::initActions()
 {
@@ -132,7 +133,7 @@ void Archer::initActions()
 	_action.insert("defend", createAnimation(file, 70, 95, 0.7));
 	_action.insert("knocked", createAnimation(file, 135, 145, 0.7));
 	_action.insert("dead", createAnimation(file, 150, 196, 0.7));
-};
+}
 
 //set default equipments
 void Archer::setDefaultEqt()
@@ -141,7 +142,7 @@ void Archer::setDefaultEqt()
 	updateHelmet();
 	updateArmour();
 	showOrHideArrow(false, 0);
-};
+}
 
 void Archer::updateWeapon()
 {
@@ -157,7 +158,7 @@ void Archer::updateWeapon()
 		weapon = _sprite3d->getMeshByName("gongjianshou_gong01");
 		weapon->setVisible(false);
 	}
-};
+}
 
 void Archer::updateHelmet()
 {
@@ -173,7 +174,7 @@ void Archer::updateHelmet()
 		helmet = _sprite3d->getMeshByName("gongjianshou_tou01");
 		helmet->setVisible(false);
 	}
-};
+}
 
 void Archer::updateArmour()
 {
@@ -189,7 +190,7 @@ void Archer::updateArmour()
 		armour = _sprite3d->getMeshByName("gongjianshou_shenti01");
 		armour->setVisible(false);
 	}
-};
+}
 
 //switth weapon
 void Archer::switchWeapon()
@@ -198,7 +199,7 @@ void Archer::switchWeapon()
 	if (_useWeaponId > 1)
 		_useWeaponId = 0;
 	updateWeapon();
-};
+}
 
 //switch helmet
 void Archer::switchHelmet()
@@ -207,7 +208,7 @@ void Archer::switchHelmet()
 	if (_useHelmetId > 1)
 		_useHelmetId = 0;
 	updateHelmet();
-};
+}
 
 //switch armour
 void Archer::switchArmour()
@@ -216,7 +217,7 @@ void Archer::switchArmour()
 	if (_useArmourId > 1)
 		_useArmourId = 0;
 	updateArmour();
-};
+}
 
 //show/hide arrow
 //isShow: true : Show false : Hide
@@ -237,25 +238,25 @@ void Archer::showOrHideArrow(bool isShow, int arrowType)
 		auto arrow = _sprite3d->getMeshByName("gongjianshou_jian02");
 		arrow->setVisible(isShow);
 	};
-};
+}
 
 //get weapon id
 int Archer::getWeaponID()
 {
 	return _useWeaponId;
-};
+}
 
 //get armour id
 int Archer::getArmourID()
 {
 	return _useArmourId;
-};
+}
 
 //get helmet id
 int Archer::getHelmetID()
 {
 	return _useHelmetId;
-};
+}
 
 int Archer::hurt(BasicCollider* collider, bool dirKnockMode)
 {
@@ -301,4 +302,4 @@ int Archer::hurt(BasicCollider* collider, bool dirKnockMode)
 
 
 
-};
+}
