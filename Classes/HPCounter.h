@@ -20,7 +20,7 @@ class HPCounter :public Layer
 public:
 	CREATE_FUNC(HPCounter);
 	virtual bool init();
-	void showBloodLossNum(float dmage, Actor *racetype, bool atack);
+	void showBloodLossNum(float dmage, Actor *racetype, bool atack){};
 
 private:
 	bool _isBlooding;
@@ -31,7 +31,7 @@ private:
 	float pointZ;
 	float targetScale;
 
-	Vec3 getRandomXYZ();
-	LabelTTF *getBlood(Actor *racetype);
-	Spawn *getAction(float tm, float targetScale, float pointZ);
+	//Vec3 getRandomXYZ();
+	//LabelTTF *getBlood(Actor *racetype);
+	//Spawn *getAction(float tm, float targetScale, float pointZ);
 };
