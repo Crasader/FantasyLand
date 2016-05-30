@@ -188,6 +188,85 @@ void GameMaster::showWarning()
 	/*camera->addChild(warning, 2);*/
 }
 
+void GameMaster::showDialog()
+{
+
+	Texture2D::setDefaultAlphaPixelFormat(/*TEXTURE2_D_PIXEL_FORMAT_AUTO*/);
+	auto colorLayer = LayerColor::create(Color4B(10, 10, 10, 150));
+	colorLayer->ignoreAnchorPointForPosition(false);
+	colorLayer->setPositionZ(-Director::getInstance()->getZEye() / 5);
+	colorLayer->setGlobalZOrder(0);
+	camera->addChild(colorLayer);
+
+	auto dialog = Layer::create();
+	dialog->setPositionX(-G.winSize.width*0.025);
+
+	auto outframe = Sprite::createWithSpriteFrameName("outframe.png");
+	outframe->setPosition(G.winSize.width * 0.55, G.winSize.height * 0.27);
+	outframe->setScale(0.6*resolutionRate);
+	dialog->addChild(outframe);
+
+	auto inframe = Sprite::createWithSpriteFrameName("inframe.png");
+	inframe->setPosition(G.winSize.width * 0.67, G.winSize.height * 0.27);
+	inframe->setScale(0.5*resolutionRate);
+	dialog->addChild(inframe);
+
+	auto bossicon = Sprite::createWithSpriteFrameName("bossicon.png");
+	bossicon->
+
+
+	/*function GameMaster : showDialog()
+	
+	--add boss icon
+	local bossicon = cc.Sprite : createWithSpriteFrameName("bossicon.png")
+	bossicon : setPosition(G.winSize.width*0.42, G.winSize.height*0.46)
+	bossicon : setScale(0.75*resolutionRate)
+	bossicon : setFlippedX(true)
+	dialog : addChild(bossicon)
+	--add boss logo
+	local bosslogo = cc.Sprite : createWithSpriteFrameName("bosslogo.png")
+	bosslogo : setPosition(G.winSize.width*0.417, G.winSize.height*0.265)
+	bosslogo : setScale(0.74*resolutionRate)
+	dialog : addChild(bosslogo)
+	--add text
+	local text = cc.Label : createWithTTF(BossTaunt, "fonts/britanic bold.ttf", 24)
+	--local text = cc.Label : createWithSystemFont(BossTaunt, "arial", 24)
+	text : setPosition(G.winSize.width*0.68, G.winSize.height*0.27)
+	dialog : addChild(text)
+	--set dialog
+	dialog : setScale(0.1)
+	dialog : ignoreAnchorPointForPosition(false)
+	dialog : setPositionZ(-cc.Director:getInstance() : getZEye() / 3)
+	dialog : setGlobalZOrder(0)
+	camera : addChild(dialog)
+	local function pausegame()
+		for var = HeroManager.first, HeroManager.last do
+			HeroManager[var] : idleMode()
+			HeroManager[var] : setAIEnabled(false)
+		end
+	end
+	dialog : runAction(cc.Sequence:create(cc.ScaleTo:create(0.5, 0.5), cc.CallFunc : create(pausegame)))
+	uiLayer : setVisible(false)
+	local function exitDialog()
+			local function removeDialog()
+			dialog : removeFromParent()
+			colorLayer : removeFromParent()
+			uiLayer : setVisible(true)
+			for var = HeroManager.first, HeroManager.last do
+				HeroManager[var] : setAIEnabled(true)
+			end
+			self : showBoss()
+		end
+		dialog : runAction(cc.Sequence:create(cc.ScaleTo:create(0.5, 0.1), cc.CallFunc : create(removeDialog)))
+		cc.Director : getInstance() : getScheduler() : unscheduleScriptEntry(scheduleid)
+	end
+
+	scheduleid = cc.Director : getInstance() : getScheduler() : scheduleScriptFunc(exitDialog, 3, false)
+
+	cc.Texture2D : setDefaultAlphaPixelFormat(cc.TEXTURE2_D_PIXEL_FORMAT_RG_B565)
+	end*/
+}
+
 void GameMaster::showVictoryUI()
 {
 	uiLayer->showVictoryUI();
