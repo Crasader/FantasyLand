@@ -276,7 +276,7 @@ void Actor::dyingMode(Vec2 knockSource, int knockAmount)
 
 		auto recycle = [&]() {
 			setVisible(false);
-		
+			getPoolByName(_name).push_back(this);
 			//List.pushlast(getPoolByName(_name), self);
 			
 		};

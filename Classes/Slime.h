@@ -23,4 +23,7 @@ public:
 	void knockMode(BasicCollider* collider, bool dirKnockMode);
 	void angryFace(bool trueFalse);
 	void initActions();
+
+private:
+	bool _angryFace;
 };

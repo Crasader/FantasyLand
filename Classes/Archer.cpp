@@ -102,7 +102,7 @@ void Archer::specialAttack()
 	auto spike3 = [&]() {
 		ArcherSpecialAttack::create(pos3, _curFacing, attack, this);
 		AUDIO_ID.ARCHERATTACK = ccexp.AudioEngine:play2d(Archerproperty.attack1, false, 1);
-		ccexp.AudioEngine : setFinishCallback(AUDIO_ID.ARCHERATTACK, ArcherlAttackCallback);
+		experimental::AudioEngine::setFinishCallback(AUDIO_ID.ARCHERATTACK, ArcherlAttackCallback);
 	}
 	delayExecute(this, spike2, 0.2);
 	delayExecute(this, spike3, 0.4);
@@ -299,7 +299,4 @@ int Archer::hurt(BasicCollider* collider, bool dirKnockMode)
 	MessageDispatchCenter::dispatchMessage(MessageDispatchCenter::MessageType::BLOOD_MINUS, bloodMinus);
 	auto anaryChange = { _name, _angry,_angryMax };
 	MessageDispatchCenter::dispatchMessage(MessageDispatchCenter::MessageType::ANGRY_CHANCE, anaryChange);
-
-
-
 }

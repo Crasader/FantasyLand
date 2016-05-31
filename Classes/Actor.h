@@ -77,8 +77,8 @@ public:
 protected:
 	float _aliveTime;	//time the actor is alive in seconds
 	int _curSpeed;	//current speed the actor is traveling in units/seconds
-    //Animation* _curAnimation;
-	//Animation3D* _curAnimation3d;
+    Animation* _curAnimation;
+	Animation3D* _curAnimation3d;
 	std::string _curAnimation;
 	Action* _curAnimation3d;
 
@@ -121,6 +121,7 @@ protected:
 	//
 	EnumRaceType _racetype;	//type of the actor
 	EnumStateType _statetype;	//AI state machine
+	Sprite _sprite;
     Sprite3D* _sprite3d;	//place to hold 3d model
 
     int _radius;	//actor collider size
@@ -129,11 +130,11 @@ protected:
 
 	int _maxhp;
 	int _defense;
-	int _specialAttackChance;
+	float _specialAttackChance;
 	float _specialSlowTime;
 	float _recoverTime;	//time takes to recover from knock, in seconds
 
-	int _speed; //actor maximum movement speed in units/seconds
+	float _speed; //actor maximum movement speed in units/seconds
 	float _turnSpeed;	//actor turning speed in radians/seconds
 	int _acceleration;	//actor movement acceleration, in units/seconds
 	int _decceleration;	//actor movement decceleration, in units/seconds
