@@ -30,12 +30,8 @@ void Actor::addEffect(Sprite* effect)
 
 void Actor::initPuff()
 {
-	//auto puff = ParticleSystem3D::create(ParticleManager::getInstance()->getPlistData("walkpuff"));
-	auto puff = ParticleS
-
-	//*** create(a string)
-
-	//ParticleSystem should be BillboardParticleSystem;
+	auto puff = ParticleSystemQuad::create(ParticleManager::getInstance()->getPlistData("walkpuff"));
+	//***ParticleSystem should be BillboardParticleSystem;
 	auto puffFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName("walkingPuff.png");
 	puff->setTextureWithRect(puffFrame->getTexture(), puffFrame->getRect());
 	puff->setScale(1.5);
@@ -56,7 +52,7 @@ void Actor::initShadow()
 
 void Actor::playAnimation(std::string name, bool loop) 
 {
-	if (_curAnimation != name) 
+	if (_curAnimation != name)	//using name to check which animation is playing
 	{
 		_sprite3d->stopAllActions();
 		if (loop)
@@ -69,6 +65,8 @@ void Actor::playAnimation(std::string name, bool loop)
 }
 
 //getter & setter
+
+//get hero type
 EnumRaceType Actor::getRaceType()
 {
 	return _racetype;
@@ -79,11 +77,14 @@ void Actor::setRaceType(EnumRaceType type)
 	_racetype = type;
 }
 
-int Actor::getRadius() 
+float Actor::getRadius() 
 {
 	return _radius;
 }
 
+float Actor::getMass() {
+	return _mass;
+}
 EnumStateType Actor::getStateType()
 {
 	return _statetype;

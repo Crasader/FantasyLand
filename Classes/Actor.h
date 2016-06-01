@@ -39,6 +39,7 @@ public:
 	bool getAIEnabled();
 	void setAIEnabled(bool enable);
 	float getRadius();
+	float getMass();
 	int getAngry();
 	void setAngry(int angry);
 	int getAngryMax();
@@ -127,9 +128,9 @@ protected:
 	Sprite _sprite;
     Sprite3D* _sprite3d;	//place to hold 3d model
 
-    int _radius;	//actor collider size
-	int _shadowSize;	//weight of the role, it affects collision
-	int _mass;	//the size of the shadow under the actor
+    float _radius;	//actor collider size
+	float _shadowSize;	//weight of the role, it affects collision
+	float _mass;	//the size of the shadow under the actor
 
 	int _maxhp;
 	int _defense;
