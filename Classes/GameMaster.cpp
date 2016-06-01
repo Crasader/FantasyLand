@@ -114,27 +114,125 @@ void GameMaster::addRat()
 	}
 }
 
+void GameMaster::showDragon(bool isFront)
+{
+	if(DragonPool.size() != 0 )
+	{
+		auto dragon = DragonPool[0];
+		DragonPool.erase(DragonPool.begin());
+		//dragon->reset();
+
+		auto appearPos = getFocusPointOfHeros();
+		auto randomvarX = random()*0.2 + 1;
+
+		if( stage == 0 )
+		{
+			appearPos.x = appearPos.x + frontDistanceWithHeroX * randomvarX;
+			dragon->setFacing(180);
+		}
+		else
+		{
+			if( isFront )
+			{
+				appearPos.x = appearPos.x + frontDistanceWithHeroX*1.8*randomvarX;
+				dragon->setFacing(180);
+			}
+			else
+			{
+				appearPos.x = appearPos.x - backwardDistanceWithHeroX*1.8*randomvarX;
+				dragon->setFacing(0);
+			}
+		}
+
+		auto  randomvarY = 2 * random() - 1;
+		appearPos.y = appearPos.y + randomvarY*distanceWithHeroY;
+		dragon->setPosition(appearPos);
+		//dragon->_myPos = appearPos;
+		dragon->setVisible(true);
+		//dragon._goRight = false;
+		dragon->setAIEnabled(true);
+		MonsterManager.push_back(dragon);
+	}
+}
+
+void GameMaster::showPiglet(bool isFront)
+{
+	if( PigletPool.size() != 0 )
+	{
+		auto piglet = PigletPool[0];
+		PigletPool.erase(PigletPool.begin());
+		piglet->reset();
+
+		auto appearPos = getFocusPointOfHeros();
+		auto randomvarX = random()*0.2 + 1;
+
+		if (stage == 0)
+		{
+			appearPos.x = appearPos.x + frontDistanceWithHeroX * randomvarX;
+			piglet->setFacing(180);
+		}
+		else
+		{
+			if (isFront)
+			{
+				appearPos.x = appearPos.x + frontDistanceWithHeroX*1.8*randomvarX;
+				piglet->setFacing(180);
+			}
+			else
+			{
+				appearPos.x = appearPos.x - backwardDistanceWithHeroX*1.8*randomvarX;
+				piglet->setFacing(0);
+			}
+		}
+
+		auto  randomvarY = 2 * random() - 1;
+		appearPos.y = appearPos.y + randomvarY*distanceWithHeroY;
+		piglet->setPosition(appearPos);
+		//piglet->_myPos = appearPos;
+		piglet->setVisible(true);
+		//piglet._goRight = false;
+		piglet->setAIEnabled(true);
+		MonsterManager.push_back(piglet);
+	}
+	}
+}
+
+void GameMaster::showSlime(bool isFront)
+{
+	if( SlimePool.size() != 0 )
+	{
+		auto slime = SlimePool[0];
+		SlimePool.erase(SlimePool.begin());
+		//slime->reset();
+		//slime._goRight = false
+		jumpInto(slime, isFront);
+		MonsterManager.push_back(slime);
+	}
+}
+
+
+
 void GameMaster::randomshowMonster(bool isFront)
 {
 	auto random_var = rand();
 
 	if( random_var < 0.15 )
 	{
-		if (/*List.getSize(DragonPool) ~= 0*/)
+		if (DragonPool.size() != 0 )
 			showDragon(isFront);
 		else
 			randomshowMonster(isFront);
 	}
 	else if(random_var < 0.3)
 	{
-		if (/*List.getSize(RatPool) ~= 0*/)
+		if (RatPool.size() != 0 )
 			showRat(isFront);
 		else
 			randomshowMonster(isFront);
 	}
 	else if (random_var < 0.6)
 	{
-		if (/*List.getSize(PigletPool) ~= 0*/)
+		if (PigletPool.size() != 0)
 			showPiglet(isFront);
 		else
 			randomshowMonster(isFront);
@@ -151,7 +249,7 @@ void GameMaster::showBoss()
 
 	auto apperPos = Vec3(500, 200, 300);
 	boss->setPosition3D(apperPos);
-	//boss._myPos = { x = appearPos.x,y = appearPos.y }
+	//boss->_myPos = { x = appearPos.x,y = appearPos.y };
 	boss->setFacing(180);
 	//boss->_goRight = false;
 	auto enableAI = [boss]()
