@@ -50,23 +50,23 @@ public:
 	bool getGoRight();
 	Node* getEffectNode();
 
-	static float hurt(BasicCollider* collider, bool dirKnockMode = false);
-	static void hurtSoundEffects();
-	static void normalAttackSoundEffects();
-	static void specialAttackSoundEffects();
-	static void playDyingEffects();
+	float hurt(BasicCollider* collider, bool dirKnockMode = false);
+	void hurtSoundEffects();
+	void normalAttackSoundEffects();
+	void specialAttackSoundEffects();
+	void playDyingEffects();
 	
 
 	//attacking collision check
-	static void normalAttack();
-	static void specialAttack();
+	void normalAttack();
+	void specialAttack();
 
 	//State Machine switching functions
-	static void idleMode();	//switch into idle mode
-	static void walkMode();	//switch into walk mode
-	static void attackMode();	//switch into attack mode
-	static void knockMode(BasicCollider* collider, bool dirKnockMode = false);
-	static void dyingMode(Vec2 knockSource, int knockAmount);
+	void idleMode();	//switch into idle mode
+	void walkMode();	//switch into walk mode
+	void attackMode();	//switch into attack mode
+	void knockMode(BasicCollider* collider, bool dirKnockMode = false);
+	void dyingMode(Vec2 knockSource, int knockAmount);
 
 	//Base Update Functions
 	void stateMachineUpdate(float dt);

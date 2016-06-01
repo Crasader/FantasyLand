@@ -344,14 +344,14 @@ Actor* Actor::_findEnemy(EnumRaceType HeroOrMonster, bool &allDead)
 {
 	auto shortest = _searchDistance;
 	allDead = true;
-	Actor* target = NULL;
-	std::list<Actor*>* manager;
+	Actor* target = nullptr;
+	std::vector<Actor*>* manager;
 	//error in delaration in Manager.h
-	//if (HeroOrMonster == EnumRaceType::MONSTER)
-	//	manager = &HeroManager;
-	//else
-	//	manager = &MonsterManager;
-	for (auto val = manager->begin(); val != manager->end(); val++) {
+	if (HeroOrMonster == EnumRaceType::MONSTER)
+		manager = &HeroManager;
+	else
+		manager = &MonsterManager;
+	for (auto val = manager->begin(); val != manager->end(); ++val) {
 		auto temp = *val;
 		auto dis = ccpDistance(_myPos, temp->_myPos);
 		if (temp->_isalive) {
@@ -497,7 +497,7 @@ void Actor::walkUpdate(float dt)
 			attackMode();
 	}
 	else {
-		Vec2 cur = this->getPosition();
+		auto cur = this->getPosition();
 		if (_goRight)
 			_targetFacing = 0;
 		else
@@ -510,8 +510,8 @@ void Actor::movementUpdate(float dt)
 	if (_curFacing != _targetFacing) {
 		auto angleDt = _curFacing - _targetFacing;
 		angleDt = angleDt - int(angleDt / (MATH_PIOVER2 * 4)) * (MATH_PIOVER2 * 4);
-		bool turnleft = (angleDt - MATH_PIOVER2 * 2) < 0;
-		float turnby = _turnSpeed*dt;
+		auto turnleft = (angleDt - MATH_PIOVER2 * 2) < 0;
+		auto turnby = _turnSpeed * dt;
 
 		//right
 		if (turnby > angleDt)
@@ -524,13 +524,13 @@ void Actor::movementUpdate(float dt)
 	//position update
 	if (getStateType() != EnumStateType::WALKING)
 		//If I am not walking, I need to slow down;
-		_curSpeed = clampf(_curSpeed - _decceleration*dt, 0, _speed);
+		_curSpeed = clampf(_curSpeed - _decceleration * dt, 0, _speed);
 	else if (_curSpeed < _speed)
 		//I am in walk mode, if I can speed up, then speed up
-		_curSpeed = clampf(_curSpeed + _decceleration*dt, 0, _speed);
+		_curSpeed = clampf(_curSpeed + _decceleration * dt, 0, _speed);
 	if (_curSpeed > 0) {
-		Vec2 p1 = _myPos;
-		Vec2 targetPosition = ccpRotateByAngle(ccpAdd(Vec2(_curSpeed*dt, 0), p1), p1, _curFacing);
+		auto p1 = _myPos;
+		auto targetPosition = ccpRotateByAngle(ccpAdd(Vec2(_curSpeed * dt, 0), p1), p1, _curFacing);
 		setPosition(targetPosition);
 	}
 }
