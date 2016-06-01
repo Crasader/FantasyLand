@@ -37,7 +37,7 @@ public:
 	void randomshowMonster(bool isFront);
 	void showBoss();
 
-	void jumpInto( /*obj */ bool isFront);// 不知道obj的类型
+	void jumpInto( /*obj */ bool isFront);
 	void showWarning();
 	void showDialog();
 	void showVictoryUI();

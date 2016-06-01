@@ -20,6 +20,15 @@ Vec2 getPosTable(Node* obj)
 	return pos;
 }
 
+Vec2 getNextStepPos(Vec2 curPos, Vec2 targetPos, float speed, float dt)
+{
+	auto angel = atan2(targetPos.y - curPos.y, targetPos.x - curPos.x);
+	Vec2 buffer;
+	buffer.x = curPos.x + cos(angel)*speed*dt;
+	buffer.y = curPos.y + sin(angel)*speed*dt;
+	return buffer;
+}
+
 timerange createAnimationStruct(float var1, float var2, float var3)
 {
 	timerange buffer = { var1,var2,var3 };
@@ -45,7 +54,14 @@ float RADIANS_TO_DEGREES(float _ANGLE)
 	return _ANGLE * 57.29577951;
 }
 
-msgStruct createKnockedMsgStruct(/*object*/)
+msgStruct createKnockedMsgStruct(Actor * object)
 {
-	msgStruct buffer = {/*object,object._target*/ };
+	msgStruct buffer = { object , object->getTarget()};
+	return buffer;
+}
+
+void delayExecute(Actor* target, void(* func)(), float delay)
+{
+	auto wait = DelayTime::create(delay);
+	target->runAction(Sequence::create(wait, CallFunc::create(func)));
 }

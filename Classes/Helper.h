@@ -3,6 +3,7 @@
 #include <math/Vec2.h>
 #include "cocos2d.h"
 #include <cmath>
+#include "Actor.h"
 
 USING_NS_CC;
 
@@ -19,25 +20,26 @@ struct
 typedef
 struct 
 {
-	/*attacker =
-	target = */
+	Actor * attacker;
+	Actor * target;
 }msgStruct;
 
 
 
-//void print(std::map<> tab);
+
 float radNormalize(float rad);
 Vec2 getPosTable(Node *obj);
 Vec2 getNextStepPos(Vec2 curPos, Vec2 targetPos , float speed, float dt);
 timerange createAnimationStruct(float var1, float var2, float var3);
 Animate3D * createAnimation(std::string file, float begin, float finish, float speed);
-msgStruct createKnockedMsgStruct(/*object*/);
+msgStruct createKnockedMsgStruct(Actor * object);
 
-//void cclog(...);                                           you can switch to printf or count 
 //function CreateEnumTable(tbl, index)
 //function removeAll(table)
 //void copytable()
-void delayExecute(/*target, func,*/float delay);
+void delayExecute(Actor * target, void (*func)() ,float delay);
 
 float DEGREES_TO_RADIANS(float _ANGLE);
 float RADIANS_TO_DEGREES(float _ANGLE);
+
+//void print(std::map<> tab);
