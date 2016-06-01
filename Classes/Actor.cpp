@@ -13,7 +13,7 @@ bool Actor::init()
 	_effectNode = Node::create();
 	_monsterHeight = 70;
 	_heroHeight = 150;
-	if (uiLayer != NULL)
+	if (uiLayer != nullptr)
 		currentLayer->addChild(_effectNode);
 	return true;
 }
@@ -148,6 +148,17 @@ Actor* Actor::getTarget() {
 Vec2 Actor::getMyPos() {
 	return _myPos;
 }
+
+void Actor::setMyPos(Vec2 pos)
+{
+	_myPos = pos;
+}
+
+bool Actor::getGoRight()
+{
+	return _goRight;
+}
+
 
 Node* Actor::getEffectNode() {
 	return _effectNode;
@@ -373,12 +384,12 @@ void Actor::AI()
 	if (_isalive) {
 		auto state = getStateType();
 		bool allDead;
-		_target = _findEnemy(_racetype, &allDead);
+		_target = _findEnemy(_racetype, allDead);
 		//if I can find a target
 		if (_target) {
 			auto p1 = _myPos;
 			auto p2 = _target->_myPos;
-			_targetFacing = ccpAngle(ccpSub(p2, p1));
+			_targetFacing = ccpToAngle(ccpSub(p2, p1));
 			auto isInRange = _inRange();
 			//if I'm (not attacking, or not walking) and my target is not in range
 			if ((!_cooldown || state != EnumStateType::WALKING) && !isInRange) {

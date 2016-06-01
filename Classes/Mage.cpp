@@ -85,6 +85,7 @@ void Mage::specialAttack()
 	auto spike3 = [&]() {
 		MageIceSpikes::CreateWithPos(pos3, _curFacing, _specialAttack, this);
 	};
+	
 	delayExecute(this, spike2, 0.25);
 	delayExecute(this, spike3, 0.5);
 }
