@@ -31,12 +31,12 @@ void Actor::addEffect(Sprite* effect)
 
 void Actor::initPuff()
 {
-	auto puff = ParticleSystem::create(ParticleManager::getInstance()->getPlistData("walkpuff"));
+	auto puff = ParticleSystemQuad::create(ParticleManager::getInstance()->getPlistData("walkpuff"));
 	//*** create(a string)
 
 	//ParticleSystem should be BillboardParticleSystem;
 	auto puffFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName("walkingPuff.png");
-	puff->setTexture(puffFrame->getTexture());
+	puff->setTextureWithRect(puffFrame->getTexture(), puffFrame->getRect());
 	puff->setScale(1.5);
 	puff->setGlobalZOrder(-getPositionZ() + FXZorder);
 	puff->setPositionZ(10);
@@ -256,7 +256,10 @@ void Actor::dyingMode(Vec2 knockSource, int knockAmount)
 	playDyingEffects();
 	if (_racetype == EnumRaceType::HERO) {
 		uiLayer->heroDead(this);
-		//list.removeObj(HeroManager, this);
+		//自己修改的Erase，下面还有一个
+		std::vector<Actor*>::iterator it = std::find(HeroManager.begin(), HeroManager.end(), this);
+		HeroManager.erase(it);
+
 		runAction(Sequence::create(DelayTime::create(3), 
 			MoveBy::create(1.0, Vec3(0, 0, -50)), 
 			RemoveSelf::create(), NULL));
@@ -265,13 +268,17 @@ void Actor::dyingMode(Vec2 knockSource, int knockAmount)
 		//AUTO???!!!
 		auto angryChange = { _name, _angry, _angryMax };
 		MessageDispatchCenter::dispatchMessage(MessageDispatchCenter::MessageType::ANGRY_CHANGE, angryChange);
-//CallFunc::create(recycle)
+    //CallFunc::create(recycle)
 	}
 	else {
-		//list.removeObj(HeroManager, this);
+		std::vector<Actor*>::iterator it = std::find(HeroManager.begin(), HeroManager.end(), this);
+		HeroManager.erase(it);
+
 		auto recycle = [&]() {
 			setVisible(false);
-			List.pushlast(getPoolByName(_name), self);
+			getPoolByName(_name).push_back(this);
+			//List.pushlast(getPoolByName(_name), self);
+			
 		};
 		runAction(Sequence::create(DelayTime::create(3),
 			MoveBy::create(1.0, Vec3(0, 0, -50)),
@@ -325,7 +332,7 @@ Actor* Actor::_findEnemy(EnumRaceType HeroOrMonster, bool &allDead)
 		//manager = &MonsterManager;
 	for (auto val = manager->begin(); val != manager->end(); val++) {
 		auto temp = *val;
-		float dis == ccpDistance(_myPos, temp->_myPos);
+		float dis = ccpDistance(_myPos, temp->_myPos);
 		if (temp->_isalive) {
 			if (dis < shortest) {
 				shortest = dis;

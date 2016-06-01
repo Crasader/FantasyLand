@@ -14,7 +14,7 @@ public:
 	virtual bool init();
 	void reset();
 	virtual void update(float dt);
-	void dyingMode(Actor* knockSource, int knockAmount);
+	void dyingMode(Vec2 knockSource, int knockAmount);
 	void normalAttackSoundEffects();
 	void playDyingEffects();
 	void hurtSoundEffects();

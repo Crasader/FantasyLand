@@ -2,6 +2,8 @@
 #include "cocos2d.h"
 #include "Helper.h"
 #include "GlobalVariables.h"
+#include "audio/win32/AudioEngine-win32.h"
+#include <ui/CocosGUI.h>
 
 USING_NS_CC;
 
@@ -24,5 +26,9 @@ private:
 	Size size;
 	bool _isBloodLabelShowing;
 
-
+	Size _logoSize;
+	Sprite *_logo;
+	Sprite *_lightSprite;
+	PointLight *_pointLight;
+	Vec2 _prePosition;
 };

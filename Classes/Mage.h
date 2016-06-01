@@ -28,8 +28,8 @@ public:
 	void switchWeapon();
 	void switchHelmet();
 	void switchArmour();
-	void getWeaponID();
-	void getHelmetID();
-	void getArmourID();
-	void hurt(BasicCollider* collider, bool dirKnockMode);
+	int getWeaponID();
+	int getHelmetID();
+	int getArmourID();
+	int hurt(BasicCollider* collider, bool dirKnockMode);
 };

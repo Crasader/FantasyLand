@@ -285,7 +285,7 @@ void MageNormalAttack::onCollide(Actor* target)
     MessageDispatchCenter::dispatchMessage(MessageDispatchCenter::MessageType::ANGRY_CHANGE, anaryChange);
 	//set cur duration to its max duration, so it will be removed when checking time out
 	_curDuration++;
-};
+}
 
 void MageNormalAttack::onUpdate(float dt)
 {
@@ -300,13 +300,13 @@ void MageNormalAttack::onUpdate(float dt)
 		Vec2 selfPos = getPosTable(this);
 		nextPos = ccpRotateByAngle(ccpAdd(Vec2(_speed*dt, 0), selfPos), selfPos, _facing);
 	}
-};
+}
 
 MageIceSpikes::MageIceSpikes()
 {
-};
+}
 
-void MageIceSpikes::CreateWithPos(Vec2 pos, int facing, std::string attackInfo, Actor* owner)
+MageIceSpikes* MageIceSpikes::CreateWithPos(Vec2 pos, int facing, std::string attackInfo, Actor* owner)
 {
 	MageIceSpikes* ret = MageIceSpikes::create();
 	ret->initData(pos, facing, attackInfo);
@@ -334,224 +334,404 @@ void MageIceSpikes::CreateWithPos(Vec2 pos, int facing, std::string attackInfo, 
 			spike->setScale(2);
 		spike->setOpacity(165);
 		spike->setFlippedX(!(floor(CCRANDOM_0_1() * 2)));
-
-
-
-
+		spike->setPosition3D(Vec3(CCRANDOM_MINUS1_1()*ret->getMaxRange() / 1.5, 
+			CCRANDOM_MINUS1_1()*ret->getMaxRange() / 1.5, 1));
+		spike->setGlobalZOrder(-ret->getPositionY() - spike->getPositionY() + FXZorder);
+		x->setScale(0);
+		x->setPositionZ(-210);
 	}
-};
+	x->runAction(EaseBackOut::create(MoveBy::create(0.3, Vec3(0, 0, 200))));
+	x->runAction(EaseBounceOut::create(ScaleTo(0.4, 1)));
+
+	auto magic = ParticleSystemQuad::create(ParticleManager::getInstance()->getPlistData("magic"));
+	auto magicf = SpriteFrameCache::getInstance()->getSpriteFrameByName("particle.png");
+	magic->setTextureWithRect(magicf->getTexture(), magicf->getRect());
+	magic->setCameraMask(camera);
+	magic->setScale(1.5);
+	ret->addChild(magic);
+	magic->setGlobalZOrder(-ret->getPositionY() * 2 + FXZorder);
+	magic->setPositionZ(0);
+
+	return ret;
+}
 
 bool MageIceSpikes::init()
 {
 
-};
+}
 
 void MageIceSpikes::onTimeOut()
 {
+	_spikes->setVisible(false);
+	auto puff = ParticleSystemQuad::create(ParticleManager::getInstance()->getPlistData("puffRing"));
+	//local puff = cc.ParticleSystemQuad : create("FX/puffRing.plist")
+	auto puffFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName("puff.png");
+	puff->setTextureWithRect(puffFrame->getTexture(), puffFrame->getRect());
+	puff->setCamera(camera);
+	puff->setScale(3);
+	addChild(puff);
+	puff->setGlobalZOrder(-getPositionY() + FXZorder);
+	puff->setPositionZ(20);
 
-};
+	auto magic = ParticleSystemQuad::create(ParticleManager::getInstance()->getPlistData("magic"));
+	//local puff = cc.ParticleSystemQuad : create("FX/puffRing.plist")
+	auto magicf = SpriteFrameCache::getInstance()->getSpriteFrameByName("particle.png");
+	magic->setTextureWithRect(magicf->getTexture(), magicf->getRect());
+	magic->setCamera(camera);
+	magic->setScale(1.5);
+	addChild(magic);
+	puff->setGlobalZOrder(-getPositionY() + FXZorder);
+	puff->setPositionZ(0);
+}
 
 void MageIceSpikes::playHitAudio()
 {
 
-};
+}
+
+void MageIceSpikes::onCollide(Actor* target)
+{
+	if (_curDOTTime >= _DOTTimer) {
+		hurtEffect(target);
+		playHitAudio();
+		_owner->setAngry(_owner->getAngry() + target->hurt(this, true) * 0.3);
+		auto anaryChange = { ArcherValues._name, _owner->getAngry(), _owner->getAngry(), _owner->getAngryMax() };
+		MessageDispatchCenter::dispatchMessage(MessageDispatchCenter::MessageType::ANGRY_CHANGE, anaryChange);
+		_DOTApplied = true;
+	}
+}
 
 void MageIceSpikes::onUpdate(float dt)
 {
-
-};
+	//implement this function if this is a projectile
+	_curDOTTime += dt;
+	if (_DOTApplied) {
+		_DOTApplied = false;
+		_curDOTTime = 0;
+	}
+}
 
 ArcherNormalAttack::ArcherNormalAttack()
 {
+	
+}
 
-};
-
-void ArcherNormalAttack::CreateWithPos(Vec3 pos, int facing, std::string attackInfo, Actor* owner)
+ArcherNormalAttack* ArcherNormalAttack::CreateWithPos(Vec2 pos, int facing, std::string attackInfo, Actor* owner)
 {
-
-};
+    auto ret = ArcherNormalAttack::create();
+	ret->initData(pos, facing, attackInfo);
+	ret->_owner = owner;
+	ret->_sp = Archer::createArrow();
+	ret->_sp->setRotation(RADIANS_TO_DEGREES(-facing) - 90);
+	ret->addChild(ret->_sp);
+	return ret;
+}
 
 bool ArcherNormalAttack::init()
 {
 
-};
+}
 
 void ArcherNormalAttack::onTimeOut()
 {
-
-};
+	runAction(RemoveSelf::create());
+}
 
 void ArcherNormalAttack::onCollide(Actor* target)
 {
-
-};
+	hurtEffect(target);
+	playHitAudio();
+	_owner->setAngry(_owner->getAngry() + target->hurt(this, true) * 0.3);
+	auto anaryChange = { ArcherValues._name, _owner->getAngry(), _owner->getAngry(), _owner->getAngryMax() };
+	MessageDispatchCenter::dispatchMessage(MessageDispatchCenter::MessageType::ANGRY_CHANGE, anaryChange);
+	//set cur duration to its max duration, so it will be removed when checking time out
+	_curDuration = _duration + 1;
+}
 
 void ArcherNormalAttack::onUpdate(float dt)
 {
-
-};
+	auto selfPos = getPosTable(this);
+	auto nextPos = ccpRotateByAngle(ccpAdd(Vec2(_speed*dt, 0), selfPos), selfPos, _facing);
+	setPosition(nextPos);
+}
 
 ArcherSpecialAttack::ArcherSpecialAttack()
 {
 
-};
+}
 
-void ArcherSpecialAttack::CreateWithPos(Vec3 pos, int facing, std::string attackInfo, Actor* owner)
+ArcherSpecialAttack* ArcherSpecialAttack::CreateWithPos(Vec2 pos, int facing, std::string attackInfo, Actor* owner)
 {
-
-};
+	auto ret = ArcherSpecialAttack::create();
+	ret->initData(pos, facing, attackInfo);
+	ret->_owner = owner;
+	ret->_sp = Archer::createArrow();
+	ret->_sp->setRotation(RADIANS_TO_DEGREES(-facing) - 90);
+	ret->addChild(ret->_sp);
+	return ret;
+}
 
 bool ArcherSpecialAttack::init()
 {
 
-};
+}
 
 void ArcherSpecialAttack::onTimeOut()
 {
-
-};
+	runAction(RemoveSelf::create());
+}
 
 void ArcherSpecialAttack::onCollide(Actor* target)
 {
-
-};
+	if (_curDOTTime >= _DOTTimer) {
+		hurtEffect(target);
+		playHitAudio();
+		_owner->setAngry(_owner->getAngry() + target->hurt(this, true) * 0.3);
+		auto anaryChange = { ArcherValues._name, _owner->getAngry(), _owner->getAngry(), _owner->getAngryMax() };
+		MessageDispatchCenter::dispatchMessage(MessageDispatchCenter::MessageType::ANGRY_CHANGE, anaryChange);
+		_DOTApplied = true;
+	}
+}
 
 void ArcherSpecialAttack::onUpdate(float dt)
 {
-
-};
+	auto selfPos = getPosTable(this);
+	auto nextPos = ccpRotateByAngle(ccpAdd(Vec2(_speed*dt, 0), selfPos), selfPos, _facing);
+	setPosition(nextPos);
+	_curDOTTime += dt;
+	if (_DOTApplied) {
+		_DOTApplied = false;
+		_curDOTTime = 0;
+	}
+}
 
 Nova::Nova()
 {
 
-}; 
+}
 
-void Nova::CreateWithPos(Vec3 pos, int facing)
+Nova* Nova::CreateWithPos(Vec3 pos, int facing)
 {
-
-};
+	auto ret = Nova::create();
+	ret->initData(pos, facing, BossValues.nova);
+	ret->_sp = Sprite::createWithSpriteFrameName("nova1.png");
+	ret->_sp->setGlobalZOrder(-ret->getPositionY() + FXZorder);
+	ret->_sp->setPosition(Vec3(0, 0, 1));
+	ret->addChild(ret->_sp);
+	ret->_sp->setScale(0);
+	ret->_sp->runAction(EaseCircleActionOut::create(ScaleTo::create(0.3, 3)));
+	ret->_sp->runAction(FadeOut::create(0.7));
+	return ret;
+}
 
 bool Nova::init()
 {
 
-};
+}
 
 void Nova::onTimeOut()
 {
-
-};
+	runAction(Sequence::create(DelayTime::create(1), RemoveSelf::create(),NULL));
+}
 
 void Nova::onCollide(Actor* target)
 {
-
-};
+	if (_curDOTTime >= _DOTTimer) {
+		hurtEffect(target);
+		playHitAudio();
+		_DOTApplied = true;
+		target->hurt(this);
+	}
+}
 
 void Nova::onUpdate(float dt)
 {
-
-};
+	//implement this function if this is a projectile
+	if (_DOTApplied) {
+		_DOTApplied = false;
+		_curDOTTime = 0;
+	}
+}
 
 DragonAttack::DragonAttack()
 {
 
-};
+}
 
-void DragonAttack::CreateWithPos(Vec3 pos, int facing, std::string attackInfo)
+DragonAttack* DragonAttack::CreateWithPos(Vec2 pos, int facing, std::string attackInfo)
 {
-
-};
+	auto ret = DragonAttack::create();
+	ret->initData(pos, facing, attackInfo);
+	ret->_sp = BillBoard::create("FX/FX.png", RECTS.fireBall);
+	ret->_sp->setPosition(Vec3(0, 0, 48));
+	ret->addChild(ret->_sp);
+	ret->_sp->setScale(1.7);
+	return ret;
+}
 
 bool DragonAttack::init()
 {
 
-};
+}
 
 void DragonAttack::onTimeOut()
 {
+	runAction(Sequence::create(DelayTime::create(0.5), RemoveSelf::create(),NULL));
 
-};
+	auto magic = ParticleSystemQuad::create(ParticleManager::getInstance()->getPlistData("magic"));
+	auto magicf = SpriteFrameCache::getInstance()->getSpriteFrameByName("particle.png");
+	magic->setTextureWithRect(magicf->getTexture(), magicf->getRect());
+	magic->setScale(1.5);
+	magic->setRotation3D(Vec3(90, 0, 0));
+	addChild(magic);
+	magic->setGlobalZOrder(-getPositionY()*2 + FXZorder);
+	magic->setPositionZ(0);
+	magic->setEndColor(ccc4f(1,0.5,0,1));
+
+	auto fireballAction = Animate::create(AnimationCache::getAnimation("fireBallAnim"));
+	_sp->runAction(fireballAction);
+	_sp->setScale(2);
+}
 
 void DragonAttack::playHitAudio()
 {
-
-};
+	experimental::AudioEngine::play2d(MonsterDragonValues.fireHit, false, 0.6);
+}
 
 void DragonAttack::onCollide(Actor* target)
 {
-
-};
+	hurtEffect(target);
+	playHitAudio();
+	target->hurt(this);
+	MessageDispatchCenter::dispatchMessage(MessageDispatchCenter::MessageType::ANGRY_CHANGE, anaryChange);
+	//set cur duration to its max duration, so it will be removed when checking time out
+	_curDuration = _duration + 1;
+}
 
 void DragonAttack::onUpdate(float dt)
 {
-
-};
+	auto selfPos = getPosTable(this);
+	auto nextPos = ccpRotateByAngle(ccpAdd(Vec2(_speed*dt, 0), selfPos), selfPos, _facing);
+	setPosition(nextPos);
+}
 
 BossNormal::BossNormal()
 {
 
-};
+}
 
-void BossNormal::CreateWithPos(Vec3 pos, int facing, std::string attackInfo)
+BossNormal* BossNormal::CreateWithPos(Vec2 pos, int facing, std::string attackInfo)
 {
-
-};
+	auto ret = BossNormal::create();
+	ret->initData(pos, facing, attackInfo);
+	ret->_sp = BillBoard::create("FX/FX.png", RECTS.fireBall);
+	ret->_sp->setPosition(Vec3(0, 0, 48));
+	ret->addChild(ret->_sp);
+	ret->_sp->setScale(1.7);
+	return ret;
+}
 
 bool BossNormal::init()
 {
 
-};
+}
 
 void BossNormal::onTimeOut()
 {
+	runAction(Sequence::create(DelayTime::create(0.5), RemoveSelf::create(), NULL));
 
-};
+	auto magic = ParticleSystemQuad::create(ParticleManager::getInstance()->getPlistData("magic"));
+	auto magicf = SpriteFrameCache::getInstance()->getSpriteFrameByName("particle.png");
+	magic->setTextureWithRect(magicf->getTexture(), magicf->getRect());
+	magic->setScale(1.5);
+	magic->setRotation3D(Vec3(90, 0, 0));
+	addChild(magic);
+	magic->setGlobalZOrder(-getPositionY() * 2 + FXZorder);
+	magic->setPositionZ(0);
+	magic->setEndColor(ccc4f(1, 0.5, 0, 1));
+
+	auto fireballAction = Animate::create(AnimationCache::getAnimation("fireBallAnim"));
+	_sp->runAction(fireballAction);
+	_sp->setScale(2);
+
+	Nova::create(getPosTable(this), _curFacing);
+}
 
 void BossNormal::playHitAudio()
 {
-
-};
+	experimental::AudioEngine::play2d(MonsterDragonValues.fireHit, false, 0.6);
+}
 
 void BossNormal::onCollide(Actor* target)
 {
-
-};
+	//set cur duration to its max duration, so it will be removed when checking time out
+	_curDuration = _duration + 1;
+}
 
 void BossNormal::onUpdate(float dt)
 {
-
-};
+	auto selfPos = getPosTable(this);
+	auto nextPos = ccpRotateByAngle(ccpAdd(Vec2(_speed*dt, 0), selfPos), selfPos, _facing);
+	setPosition(nextPos);
+}
 
 BossSuper::BossSuper()
 {
 
-};
+}
 
-void BossSuper::CreateWithPos(Vec3 pos, int facing, std::string attackInfo)
+BossSuper* BossSuper::CreateWithPos(Vec2 pos, int facing, std::string attackInfo)
 {
-
-};
+	auto ret = BossSuper::create();
+	ret->initData(pos, facing, attackInfo);
+	ret->_sp = BillBoard::create("FX/FX.png", RECTS.fireBall);
+	ret->_sp->setPosition(Vec3(0, 0, 48));
+	ret->addChild(ret->_sp);
+	ret->_sp->setScale(1.7);
+	return ret;
+}
 
 bool BossSuper::init()
 {
 
-};
+}
 
 void BossSuper::onTimeOut()
 {
+	runAction(Sequence::create(DelayTime::create(0.5), RemoveSelf::create(), NULL));
 
-};
+	auto magic = ParticleSystemQuad::create(ParticleManager::getInstance()->getPlistData("magic"));
+	auto magicf = SpriteFrameCache::getInstance()->getSpriteFrameByName("particle.png");
+	magic->setTextureWithRect(magicf->getTexture(), magicf->getRect());
+	magic->setScale(1.5);
+	magic->setRotation3D(Vec3(90, 0, 0));
+	addChild(magic);
+	magic->setGlobalZOrder(-getPositionY() * 2 + FXZorder);
+	magic->setPositionZ(0);
+	magic->setEndColor(ccc4f(1, 0.5, 0, 1));
+
+	auto fireballAction = Animate::create(AnimationCache::getAnimation("fireBallAnim"));
+	_sp->runAction(fireballAction);
+	_sp->setScale(2);
+
+
+	Nova::create(getPosTable(this), _curFacing);
+}
 
 void BossSuper::playHitAudio()
 {
-
-};
+	experimental::AudioEngine::play2d(MonsterDragonValues.fireHit, false, 0.6);
+}
 
 void BossSuper::onCollide(Actor* target)
 {
-
-};
+	//set cur duration to its max duration, so it will be removed when checking time out
+	_curDuration = _duration + 1;
+}
 
 void BossSuper::onUpdate(float dt)
 {
-
+	auto selfPos = getPosTable(this);
+	auto nextPos = ccpRotateByAngle(ccpAdd(Vec2(_speed*dt, 0), selfPos), selfPos, _facing);
+	setPosition(nextPos);
 };

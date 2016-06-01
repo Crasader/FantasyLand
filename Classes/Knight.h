@@ -29,7 +29,7 @@ public:
 	void switchWeapon();
 	void switchHelmet();
 	void switchArmour();
-	void getWeaponID();
-	void getHelmetID();
-	void getArmourID();
+	int getWeaponID();
+	int getHelmetID();
+	int getArmourID();
 };

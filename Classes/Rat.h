@@ -19,6 +19,6 @@ public:
 	void normalAttackSoundEffects();
 	void init3D();
 	void initActions();
-	void dyingMode(Actor* knockSource, int knockAmount);
-	void hurt(BasicCollider* collider, bool dirKnockMode);
+	void dyingMode(Vec2 knockSource, int knockAmount);
+	int hurt(BasicCollider* collider, bool dirKnockMode);
 };
