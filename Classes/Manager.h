@@ -2,12 +2,13 @@
 #include "Helper.h"
 #include "Actor.h"
 
-//extern std::list<std::string> HeroPool;
-//extern std::list<std::string> DragonPool;
-//extern std::list<std::string> SlimePool;
-//extern std::list<std::string> RatPool;
-//extern std::list<std::string> PigletPool;
-//extern std::list<std::string> BossPool;
+
+extern std::vector<Actor *> HeroPool;
+extern std::vector<Actor *> DragonPool;
+extern std::vector<Actor *> SlimePool;
+extern std::vector<Actor *> RatPool;
+extern std::vector<Actor *> BossPool;
+extern std::vector<Actor *> PigletPool;
 extern std::vector<Actor *> HeroManager;
 extern std::vector<Actor *> MonsterManager;
 

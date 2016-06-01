@@ -10,30 +10,30 @@ extern AnimationCache * animationCache ;
 
 void init();
 
-extern struct RECTS RECTS;
-extern struct G G;
-extern struct BGM_RES BGM_RES;
-extern enum AUDIO_ID AUDIO_ID;
+extern struct RECTS_d RECTS;
+extern struct G_d G;
+extern struct BGM_RES_d BGM_RES;
+extern enum AUDIO_ID_d AUDIO_ID;
 
 //
 
-extern struct ActorCommonValues ActorCommonValues;
-extern struct ActorDefaultValues ActorDefaultValues;
-extern struct KnightValues KnightValues;
-extern struct MageValues MageValues;
-extern struct ArcherValues ArcherValues;
-extern struct DragonValues DragonValues;
-extern struct SlimeValues SlimeValues;
-extern struct PigletValues PigletValues;
-extern struct RatValues  RatValues;
-extern struct BossValues BossValues;
-extern struct CommonAudios CommonAudios;
-extern struct MonsterSlimeValues MonsterSlimeValues;
-extern struct MonsterDragonValues MonsterDragonValues;
-extern struct MonsterRatValues MonsterRatValues;
-extern struct MonsterPigletValues MonsterPigletValues;
-extern struct WarriorProperty WarriorProperty;
-extern struct Archerproperty Archerproperty;
-extern struct MageProperty MageProperty;
-extern struct ReSkin ReSkin;
+extern struct ActorCommonValues_d ActorCommonValues;
+extern struct ActorDefaultValues_d ActorDefaultValues;
+extern struct KnightValues_d KnightValues;
+extern struct MageValues_d MageValues;
+extern struct ArcherValues_d ArcherValues;
+extern struct DragonValues_d DragonValues;
+extern struct SlimeValues_d SlimeValues;
+extern struct PigletValues_d PigletValues;
+extern struct RatValues_d  RatValues;
+extern struct BossValues_d BossValues;
+extern struct CommonAudios_d CommonAudios;
+extern struct MonsterSlimeValues_d MonsterSlimeValues;
+extern struct MonsterDragonValues_d MonsterDragonValues;
+extern struct MonsterRatValues_d MonsterRatValues;
+extern struct MonsterPigletValues_d MonsterPigletValues;
+extern struct WarriorProperty_d WarriorProperty;
+extern struct Archerproperty_d Archerproperty;
+extern struct MageProperty_d MageProperty;
+extern struct ReSkin_d ReSkin;
 

@@ -190,7 +190,6 @@ void GameMaster::showWarning()
 
 void GameMaster::showDialog()
 {
-
 	Texture2D::setDefaultAlphaPixelFormat(/*TEXTURE2_D_PIXEL_FORMAT_AUTO*/);
 	auto colorLayer = LayerColor::create(Color4B(10, 10, 10, 150));
 	colorLayer->ignoreAnchorPointForPosition(false);
