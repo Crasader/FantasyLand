@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "Helper.h"
 #include "Actor.h"
-
+#include "GlobalVariables.h"
 
 extern std::vector<Actor *> HeroPool;
 extern std::vector<Actor *> DragonPool;
@@ -17,8 +17,8 @@ extern Size size ;
 extern Scheduler* scheduler;
 
 void solveCollision(/*object1, object2*/);
-void collision(/*object*/);
-void isOutOfBound(/*object*/);
+void collision(Actor* object);
+void isOutOfBound(Actor *object);
 void collisionDetect(float dt);
 Vec2 getFocusPointOfHeros();
 std::vector<Actor *> getPoolByName(std::string name);
