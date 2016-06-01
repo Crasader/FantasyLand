@@ -14,8 +14,8 @@
 
 USING_NS_CC;
 
-extern enum EnumRaceType;
-extern enum EnumStateType;
+//extern enum EnumRaceType;
+//extern enum EnumStateType;
 
 class BasicCollider;
 
@@ -38,17 +38,20 @@ public:
 	void setFacing(float degrees);
 	bool getAIEnabled();
 	void setAIEnabled(bool enable);
-	int getRadius();
+	float getRadius();
 	int getAngry();
 	void setAngry(int angry);
 	int getAngryMax();
 	bool isAlive();
 	Vec2 getMyPos();
+	Node* getEffectNode();
+
 	int hurt(BasicCollider* collider, bool dirKnockMode = false);
 	void hurtSoundEffects();
 	void normalAttackSoundEffects();
 	void specialAttackSoundEffects();
 	void playDyingEffects();
+	
 
 	//attacking collision check
 	void normalAttack();
@@ -76,7 +79,7 @@ public:
 
 protected:
 	float _aliveTime;	//time the actor is alive in seconds
-	int _curSpeed;	//current speed the actor is traveling in units/seconds
+	float _curSpeed;	//current speed the actor is traveling in units/seconds
     Animation* _curAnimation;
 	Animation3D* _curAnimation3d;
 	std::string _curAnimation;
@@ -85,7 +88,7 @@ protected:
 	std::string _name;
 
 	//runtime modified values
-	int _curFacing;	//current direction the actor is facing, in radians, 0 is to the right
+	float _curFacing;	//current direction the actor is facing, in radians, 0 is to the right
 	bool _isalive;
 	float _AITimer;	//accumulated timer before AI will execute, in seconds
 	bool _AIEnabled; //if false, AI will not run
@@ -159,11 +162,11 @@ protected:
 		int criticalChance;
 	} _normalAttack;
 	*/
+	
 };
 
 extern BattleFieldUI* uiLayer;
 extern Layer* currentLayer;
-extern int FXZorder;
 
 struct ActorCommonValues;
 struct ActorDefaultValues;

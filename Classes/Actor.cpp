@@ -15,7 +15,6 @@ bool Actor::init()
 	_heroHeight = 150;
 	if (uiLayer != NULL)
 		currentLayer->addChild(_effectNode);
-	
 	return true;
 }
 
@@ -31,7 +30,9 @@ void Actor::addEffect(Sprite* effect)
 
 void Actor::initPuff()
 {
-	auto puff = ParticleSystemQuad::create(ParticleManager::getInstance()->getPlistData("walkpuff"));
+	//auto puff = ParticleSystem3D::create(ParticleManager::getInstance()->getPlistData("walkpuff"));
+	auto puff = ParticleS
+
 	//*** create(a string)
 
 	//ParticleSystem should be BillboardParticleSystem;
@@ -141,6 +142,10 @@ bool Actor::isAlive() {
 
 Vec2 Actor::getMyPos() {
 	return _myPos;
+}
+
+Node* Actor::getEffectNode() {
+	return _effectNode;
 }
 
 int Actor::hurt(BasicCollider* collider, bool dirKnockMode = false)
