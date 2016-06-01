@@ -16,7 +16,7 @@ extern std::vector<Actor *> MonsterManager;
 extern Size size ;
 extern Scheduler* scheduler;
 
-void solveCollision(/*object1, object2*/);
+void solveCollision(Actor *object1,Actor * object2);
 void collision(Actor* object);
 void isOutOfBound(Actor *object);
 void collisionDetect(float dt);

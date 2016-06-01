@@ -14,6 +14,31 @@ std::vector<Actor *> MonsterManager;
 Size size = Director::getInstance()->getWinSize();
 Scheduler* scheduler = Director::getInstance()->getScheduler();
 
+void solveCollision(Actor* object1, Actor* object2)
+{
+	auto miniDistance = object1->getRadius() + object2->getRadius();
+	auto obj1Pos = object1->getPosition();
+	auto obj2Pos = object2->getPosition();
+	auto tempDistance = ccpDistance(obj1Pos, obj2Pos);
+
+	if( tempDistance < miniDistance )
+	{
+		auto angle = ccpToAngle(ccpSub(obj1Pos, obj2Pos));
+		auto distance = miniDistance - tempDistance + 1;
+		auto distance1 = (1 - object1);
+		auto distance2 = distance - distance1;
+
+		object1->setPosition(ccpRotateByAngle(ccpAdd(ccp(distance1, 0), obj1Pos), obj1Pos, angle));
+		object2->setPosition(ccpRotateByAngle(ccpAdd(ccp(-distance2, 0), obj2Pos), obj2Pos, angle));
+	}
+
+	//if tempDistance < miniDistance then
+	//	local angle = cc.pToAngleSelf(cc.pSub(obj1Pos, obj2Pos))
+	//	local distance = miniDistance - tempDistance + 1 --Add extra 1 to avoid 'tempDistance < miniDistance' is always true
+	//	local distance1 = (1 - object1._mass / (object1._mass + object2._mass)) * distance
+	//	local distance2 = distance - distance1
+}
+
 void collision(Actor* object)
 {
 	for (int var = 0; var < HeroManager.size(); var++)
@@ -67,29 +92,29 @@ void collisionDetect(float dt)
 		{
 			collision(sprite);
 			isOutOfBound(sprite);
-			(sprite->getMyPos());
+			sprite->getEffectNode()->setPosition(sprite->getMyPos());
+		}
+		else
+		{
+			delete HeroManager[val];
+			HeroManager.erase(HeroManager.begin() + val);
 		}
 	}
-	//for val = HeroManager.last, HeroManager.first, -1 do
-	//	local sprite = HeroManager[val]
-	//	if sprite._isalive == true then
-	//		collision(sprite)
-	//		isOutOfBound(sprite)
-	//		sprite._effectNode:setPosition(sprite._myPos)
-	//	else
-	//		List.remove(HeroManager, val)
-	//	end
-	//end
-
-	//for val = MonsterManager.last, MonsterManager.first, -1 do
-	//	local sprite = MonsterManager[val]
-	//	if sprite._isalive == true then
-	//		collision(sprite)
-	//		isOutOfBound(sprite)
-	//	else
-	//		List.remove(MonsterManager, val)
-	//	end
-	//end
+	
+	for (int val = MonsterManager.size(); val >= 0; val--)
+	{
+		auto sprite = MonsterManager[val];
+		if (sprite->isAlive())
+		{
+			collision(sprite);
+			isOutOfBound(sprite);
+		}
+		else
+		{
+			delete MonsterManager[val];
+			MonsterManager.erase(MonsterManager.begin() + val);
+		}
+	}
 }
 
 Vec2 getFocusPointOfHeros()
@@ -105,6 +130,7 @@ Vec2 getFocusPointOfHeros()
 	}
 	ptFocus.x = ptFocus.x / HeroManager.size();
 	ptFocus.y = ptFocus.y / HeroManager.size();
+	return ptFocus;
 }
 
 std::vector<Actor *> getPoolByName(std::string name)
