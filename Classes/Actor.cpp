@@ -50,7 +50,7 @@ void Actor::initShadow()
 	this->addChild(_circle);
 }
 
-void Actor::playAnimation(std::string name, bool loop) 
+void Actor::playAnimation(std::string name, bool loop = false) 
 {
 	if (_curAnimation != name)	//using name to check which animation is playing
 	{
@@ -125,15 +125,15 @@ void Actor::setAIEnabled(bool enable)
 	_AIEnabled = enable;
 }
 
-void Actor::setAngry(int angry) {
+void Actor::setAngry(float angry) {
 	_angry = angry;
 }
 
-int Actor::getAngry() {
+float Actor::getAngry() {
 	return _angry;
 }
 
-int Actor::getAngryMax() {
+float Actor::getAngryMax() {
 	return _angryMax;
 }
 
@@ -149,13 +149,13 @@ Node* Actor::getEffectNode() {
 	return _effectNode;
 }
 
-int Actor::hurt(BasicCollider* collider, bool dirKnockMode = false)
+float Actor::hurt(BasicCollider* collider, bool dirKnockMode = false)
 {
     if (_isalive == true) {
 		//TODO add sound effect
-		float damage = collider->getDamage();
-		bool critical = false;
-		int knock = collider->getKnock();
+		auto damage = collider->getDamage();
+		auto critical = false;
+		auto knock = collider->getKnock();
 		if (CCRANDOM_0_1() < collider->getCriticalChance()) {
 			damage *= 1.5;
 			critical = true;
@@ -181,8 +181,8 @@ int Actor::hurt(BasicCollider* collider, bool dirKnockMode = false)
 			_isalive = false;
 			dyingMode(getPosTable(collider), knock);
 		}
-		auto blood = _hpCounter->showBloodLossNum(damage, this, critical);
-		addEffect(blood);
+		//auto blood = _hpCounter->showBloodLossNum(damage, this, critical);
+		//addEffect(blood);
 		return damage;
 	}
 	return 0;
@@ -224,19 +224,19 @@ void Actor::specialAttack()
 
 
 //State Machine switching functions
-void Actor::idleMode()
+void Actor::idleMode()	//switch into idle mode
 {
 	setStateType(EnumStateType::IDLE);
 	playAnimation("idle", true);
 }
 
-void Actor::walkMode()
+void Actor::walkMode()	//switch into walk mode
 {
 	setStateType(EnumStateType::WALKING);
 	playAnimation("walk", true);
 }
 
-void Actor::attackMode()
+void Actor::attackMode()	//switch into walk mode
 {
 	setStateType(EnumStateType::ATTACKING);
 	playAnimation("idle", true);
@@ -249,10 +249,10 @@ void Actor::knockMode(BasicCollider* collider, bool dirKnockMode)
 	playAnimation("knocked", false);
 	_timeKnocked = _aliveTime;
 	auto p = _myPos;
-	float angel = dirKnockMode ? collider->getFacing() : ccpToAngle(ccpSub(p, getPosTable(collider)));
-	//****** getPosTable should return a Vec2 type.
+	auto angle = dirKnockMode?collider->getFacing():ccpToAngle(ccpSub(p, getPosTable(collider)));
 	auto newPos = ccpRotateByAngle(ccpAdd(Vec2(collider->getKnock(), 0), p), p, angle);
 	runAction(EaseCubicActionOut::create(MoveTo::create(_action.at("knocked")->getDuration() * 3, newPos)));
+	////self:setCascadeColorEnabled(true)--if special attack is interrupted then change the value to true
 }
 
 void Actor::dyingMode(Vec2 knockSource, int knockAmount)
@@ -272,8 +272,8 @@ void Actor::dyingMode(Vec2 knockSource, int knockAmount)
 		_angry = 0;
 
 		//AUTO???!!!
-		auto angryChange = { _name, _angry, _angryMax };
-		MessageDispatchCenter::dispatchMessage(MessageDispatchCenter::MessageType::ANGRY_CHANGE, angryChange);
+		auto anaryChange = { _name, _angry, _angryMax };
+		MessageDispatchCenter::dispatchMessage(MessageDispatchCenter::MessageType::ANARY_CHANGE, angryChange);
     //CallFunc::create(recycle)
 	}
 	else {
@@ -333,12 +333,12 @@ Actor* Actor::_findEnemy(EnumRaceType HeroOrMonster, bool &allDead)
 	std::list<Actor*>* manager;
 	//error in delaration in Manager.h
 	//if (HeroOrMonster == EnumRaceType::MONSTER)
-		//manager = &HeroManager;
+	//	manager = &HeroManager;
 	//else
-		//manager = &MonsterManager;
+	//	manager = &MonsterManager;
 	for (auto val = manager->begin(); val != manager->end(); val++) {
 		auto temp = *val;
-		float dis = ccpDistance(_myPos, temp->_myPos);
+		auto dis = ccpDistance(_myPos, temp->_myPos);
 		if (temp->_isalive) {
 			if (dis < shortest) {
 				shortest = dis;

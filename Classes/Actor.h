@@ -27,7 +27,7 @@ public:
 	void addEffect(Sprite* effect);
 	void initPuff();
 	void initShadow();
-	void playAnimation(std::string name, bool loop);
+	void playAnimation(std::string name, bool loop = false);
 
 	//getter & setter
 	EnumRaceType getRaceType();
@@ -40,14 +40,14 @@ public:
 	void setAIEnabled(bool enable);
 	float getRadius();
 	float getMass();
-	int getAngry();
-	void setAngry(int angry);
-	int getAngryMax();
+	float getAngry();
+	void setAngry(float angry);
+	float getAngryMax();
 	bool isAlive();
 	Vec2 getMyPos();
 	Node* getEffectNode();
 
-	int hurt(BasicCollider* collider, bool dirKnockMode = false);
+	float hurt(BasicCollider* collider, bool dirKnockMode = false);
 	void hurtSoundEffects();
 	void normalAttackSoundEffects();
 	void specialAttackSoundEffects();
@@ -96,15 +96,15 @@ protected:
 	float _attackTimer;	//accumulated timer to decide when to attack, in seconds
 	float _timeKnocked;	//accumulated timer to recover from knock, in seconds
 	bool _cooldown;	//if its true, then you are currently playing attacking animation
-	int _hp = 1000;	//current hit point
+	float _hp = 1000;	//current hit point
 	bool _goRight;
 	
 	//target variables
 	float _targetFacing;//direction the actor Wants to turn to
 	Actor* _target;	//the enemy actor;
 	Vec2 _myPos;
-	int _angry;
-	int _angryMax;
+	float _angry;
+	float _angryMax;
 
 	//other variables
 	HPCounter* _hpCounter;
@@ -132,22 +132,22 @@ protected:
 	float _shadowSize;	//weight of the role, it affects collision
 	float _mass;	//the size of the shadow under the actor
 
-	int _maxhp;
-	int _defense;
+	float _maxhp;
+	float _defense;
 	float _specialAttackChance;
 	float _specialSlowTime;
 	float _recoverTime;	//time takes to recover from knock, in seconds
 
 	float _speed; //actor maximum movement speed in units/seconds
 	float _turnSpeed;	//actor turning speed in radians/seconds
-	int _acceleration;	//actor movement acceleration, in units/seconds
-	int _decceleration;	//actor movement decceleration, in units/seconds
+	float _acceleration;	//actor movement acceleration, in units/seconds
+	float _decceleration;	//actor movement decceleration, in units/seconds
 
 	float _AIFrequency;	//how often AI executes in seconds
 	float _attackFrequency;	//an attack move every few seconds
-	int _searchDistance;	//distance which enemy can be found
+	float _searchDistance;	//distance which enemy can be found
 
-	int _attackRange;	//distance the actor will stop and commence attack
+	float _attackRange;	//distance the actor will stop and commence attack
 
 	/*
 	//attack collider info, it can be customized
