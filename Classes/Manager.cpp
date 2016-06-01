@@ -25,18 +25,12 @@ void solveCollision(Actor* object1, Actor* object2)
 	{
 		auto angle = ccpToAngle(ccpSub(obj1Pos, obj2Pos));
 		auto distance = miniDistance - tempDistance + 1;
-		auto distance1 = (1 - object1);
+		auto distance1 = (1 - object1->getMass() / (object1->getMass() + object2->getMass())) * distance;
 		auto distance2 = distance - distance1;
 
 		object1->setPosition(ccpRotateByAngle(ccpAdd(ccp(distance1, 0), obj1Pos), obj1Pos, angle));
 		object2->setPosition(ccpRotateByAngle(ccpAdd(ccp(-distance2, 0), obj2Pos), obj2Pos, angle));
 	}
-
-	//if tempDistance < miniDistance then
-	//	local angle = cc.pToAngleSelf(cc.pSub(obj1Pos, obj2Pos))
-	//	local distance = miniDistance - tempDistance + 1 --Add extra 1 to avoid 'tempDistance < miniDistance' is always true
-	//	local distance1 = (1 - object1._mass / (object1._mass + object2._mass)) * distance
-	//	local distance2 = distance - distance1
 }
 
 void collision(Actor* object)
@@ -48,7 +42,7 @@ void collision(Actor* object)
 			solveCollision(sprite,object);
 	}
 
-	for (int var = 0; var < MonsterManager; var++)
+	for (int var = 0; var < MonsterManager.size(); var++)
 	{
 		auto sprite = MonsterManager[var];
 		if (sprite->isAlive() && sprite != object)
