@@ -9,5 +9,11 @@ bool MessageDispatchCenter::init()
 		"KNOCKEDAOE",	"SPECIAL_PERSPECTIVE","SPECIAL_KNIGHT",
 		"SPECIAL_ARCHER","SPECIAL_MAGE","ANGRY_CHANGE" };
 	MessageType.insert(buffer.begin(), buffer.end());
+
 	return true;
+}
+
+void MessageDispatchCenter::registerMessage(std::string messageType)
+{
+
 }
