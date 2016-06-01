@@ -41,6 +41,7 @@ public:
 	float getRadius();
 	float getMass();
 	float getAngry();
+	Actor* getTarget();
 	void setAngry(float angry);
 	float getAngryMax();
 	bool isAlive();

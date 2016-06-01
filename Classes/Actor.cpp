@@ -141,6 +141,10 @@ bool Actor::isAlive() {
 	return _isalive;
 }
 
+Actor* Actor::getTarget() {
+	return _target;
+}
+
 Vec2 Actor::getMyPos() {
 	return _myPos;
 }
@@ -385,7 +389,7 @@ void Actor::AI()
 				attackMode();
 				return;
 				//else
-				//Since im attacking, i cant just switch to another mode immediately
+				//Since im attacking, I cant just switch to another mode immediately
 				//print(self._name, "says : what should I do?", self._statetype)	
 			}
 		}
