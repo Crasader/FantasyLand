@@ -54,7 +54,7 @@ void isOutOfBound(Actor* object)
 {
 	auto currentPos = ccp(object->getPositionX(),object->getPositionY());
 
-	if(currentPos.x < G.activera.left)
+	if(currentPos.x < G.activearea.left)
 	{
 		currentPos.x = G.activearea.left;
 	}

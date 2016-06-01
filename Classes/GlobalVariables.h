@@ -56,6 +56,7 @@ struct G_d
 		int top = 700;
 	}activearea;
 };
+
 struct BGM_RES_d
 {
 	std::string MAINMENUBGM = "audios/01 Beast Hunt.mp3";
@@ -63,6 +64,7 @@ struct BGM_RES_d
 	std::string BATTLEFIELDBGM = "audios/The_Last_Encounter_Short_Loop.mp3";
 	std::string CHOOSEROLESCENEBGM = "audios/Imminent Threat Beat B FULL Loop.mp3";
 };
+
 enum AUDIO_ID_d
 {
 	MAINMENUBGM,
@@ -72,6 +74,7 @@ enum AUDIO_ID_d
 	KNIGHTSPECIALATTACK,
 	ARCHERATTACK
 };
+
 struct ActorCommonValues_d
 {
 	float _aliveTime = 0,
@@ -99,6 +102,7 @@ struct ActorCommonValues_d
 	float _angry = 0;
 	float _angryMax = 500;
 };
+
 struct ActorDefaultValues_d
 {
 	//_racetype = EnumRaceType.HERO;
@@ -139,6 +143,7 @@ struct ActorDefaultValues_d
 		float criticalChance = 0;
 	}_normalAttack;
 };
+
 struct KnightValues_d
 {
 	//_racetype = EnumRaceType.HERO,
@@ -184,6 +189,7 @@ struct KnightValues_d
 	}_specialAttack;
 
 };
+
 struct MageValues_d
 {
 	//_racetype = EnumRaceType.HERO,
@@ -232,6 +238,7 @@ struct MageValues_d
 	}_specialAttack;
 
 };
+
 struct ArcherValues_d
 {
 	//_racetype = EnumRaceType.HERO,
@@ -281,6 +288,7 @@ struct ArcherValues_d
 	}_specialAttack;
 
 };
+
 struct DragonValues_d
 {
 	//_racetype = EnumRaceType.MONSTER,
@@ -316,6 +324,7 @@ struct DragonValues_d
 	}_normalAttack;
 
 };
+
 struct SlimeValues_d
 {
 	//_racetype = EnumRaceType.MONSTER,
@@ -385,6 +394,7 @@ struct PigletValues_d
 	}_normalAttack;
 
 };
+
 struct RatValues_d
 {
 	//_racetype = EnumRaceType.MONSTER,
@@ -420,6 +430,7 @@ struct RatValues_d
 	}_normalAttack;
 
 };
+
 struct BossValues_d
 {
 	//_racetype = EnumRaceType.HERO,
@@ -471,15 +482,18 @@ struct BossValues_d
 	}nova;
 
 };
+
 struct CommonAudios_d
 {
 	std::string hit = "audios/effects/hit20.mp3";
 };
+
 struct MonsterSlimeValues_d
 {
 	std::string fileNameNormal = "model/slime/slimeAnger.c3b";
 	std::string fileNameAnger = "model/slime/slimeAnger.c3b";
 };
+
 struct MonsterDragonValues_d
 {
 	std::string fileName = "model/dragon/dragon.c3b";
@@ -519,6 +533,7 @@ struct WarriorProperty_d
 	std::string	wounded = "audios/effects/knight/wounded.mp3";
 	std::string	dead = "audios/effects/knight/dead.mp3";
 };
+
 struct Archerproperty_d
 {
 	std::string attack1 = "audios/effects/archer/swish-3.mp3";
@@ -529,6 +544,7 @@ struct Archerproperty_d
 	std::string specialAttackShout = "audios/effects/archer/specialAttackShout.mp3";
 	std::string dead = "audios/effects/archer/dead.mp3";
 };
+
 struct MageProperty_d
 {
 	float blood = 1000;
@@ -547,6 +563,7 @@ struct MageProperty_d
 	std::string dead = "audios/effects/mage/dead.mp3";
 
 };
+
 struct ReSkin_d
 {
 	struct knight
