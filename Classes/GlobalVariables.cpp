@@ -31,16 +31,17 @@ void init()
 	animationCache->addAnimation(fireBallAnim, "fireBallAnim");
 }
 
-struct RECTS
+struct RECTS_d
 {
 	Rect iceBolt = SpriteFrameCache::getInstance()->getSpriteFrameByName("icebolt.png")->getRect();
 	Rect iceSpike = SpriteFrameCache::getInstance()->getSpriteFrameByName("iceSpike1.png")->getRect();
 	Rect fireBall = SpriteFrameCache::getInstance()->getSpriteFrameByName("fireball1.png")->getRect();
 	Rect thunderBall = SpriteFrameCache::getInstance()->getSpriteFrameByName("thunderball.png")->getRect();
-}RECTS;
+};
 
+struct RECTS_d RECTS;
 
-struct G
+struct G_d
 {
 	Size winSize = Director::getInstance()->getWinSize();
 	float bloodPercentDropSpeed = 2; 
@@ -52,17 +53,21 @@ struct G
 		 int bottom = 100;
 		 int top = 700;
 	}activearea;
-}G;
+};
 
-struct BGM_RES
+struct G_d G;
+
+struct BGM_RES_d
 {
 	std::string MAINMENUBGM = "audios/01 Beast Hunt.mp3";
 	std::string MAINMENUSTART = "audios/effects/magical_3.mp3";
 	std::string BATTLEFIELDBGM = "audios/The_Last_Encounter_Short_Loop.mp3";
 	std::string CHOOSEROLESCENEBGM = "audios/Imminent Threat Beat B FULL Loop.mp3";
-}BGM_RES;
+};
+struct BGM_RES_d BGM_RES;
 
-enum AUDIO_ID
+
+enum AUDIO_ID_d
 {
 	MAINMENUBGM,
 	BATTLEFIELDBGM,
@@ -70,7 +75,9 @@ enum AUDIO_ID
 	KNIGHTNORMALATTACK,
 	KNIGHTSPECIALATTACK,
 	ARCHERATTACK
-}AUDIO_ID; 
+}; 
+
+enum AUDIO_ID_d AUDIO_ID;
 
 //EnumRaceType =
 //{
@@ -90,7 +97,7 @@ enum AUDIO_ID
 //}
 //EnumStateType = CreateEnumTable(EnumStateType)
 
-struct ActorCommonValues
+struct ActorCommonValues_d
 {
 	float _aliveTime = 0,
 	_curSpeed = 0;
@@ -116,9 +123,11 @@ struct ActorCommonValues
 
 	float _angry = 0;
 	float _angryMax = 500;
-}ActorCommonValues;
+};
 
-struct ActorDefaultValues 
+struct ActorCommonValues_d ActorCommonValues;
+
+struct ActorDefaultValues_d
 {
 	//_racetype = EnumRaceType.HERO;
 	//_statetype = nil;
@@ -157,10 +166,12 @@ struct ActorDefaultValues
 		float speed = 0; 
 		float criticalChance = 0;
 	}_normalAttack;
-}ActorDefaultValues;
+};
+
+struct ActorDefaultValues_d ActorDefaultValues;
 
 
-struct KnightValues 
+struct KnightValues_d 
 {
 	//_racetype = EnumRaceType.HERO,
 	std::string _name = "Knight";
@@ -204,9 +215,11 @@ struct KnightValues
 		float criticalChance = 0.35;
 	}_specialAttack;
 
-}KnightValues;
+};
 
-struct MageValues
+struct KnightValues_d KnightValues;
+
+struct MageValues_d
 {
 	//_racetype = EnumRaceType.HERO,
 	std::string _name = "Mage";
@@ -253,10 +266,11 @@ struct MageValues
 		bool DOTApplied = false;
 	}_specialAttack;
 
-}MageValues;
+};
 
+struct MageValues_d MageValues;
 
-struct ArcherValues
+struct ArcherValues_d
 {
 	//_racetype = EnumRaceType.HERO,
 	std::string _name = "Archer";
@@ -304,10 +318,12 @@ struct ArcherValues
 		bool DOTApplied = false;
 	}_specialAttack;
 
-}ArcherValues;
+};
+
+struct ArcherValues_d ArcherValues;
 
 
-struct DragonValues
+struct DragonValues_d
 {
 	//_racetype = EnumRaceType.MONSTER,
 	std::string _name = "Dragon";
@@ -341,10 +357,11 @@ struct DragonValues
 		float criticalChance = 0.15;
 	}_normalAttack;
 
-}DragonValues;
+};
 
+struct DragonValues_d DragonValues;
 
-struct SlimeValues
+struct SlimeValues_d
 {
 	//_racetype = EnumRaceType.MONSTER,
 	std::string _name = "Slime";
@@ -378,9 +395,11 @@ struct SlimeValues
 		float criticalChance = 0.13;
 	}_normalAttack;
 
-}SlimeVaules;
+};
 
-struct PigletValues
+struct SlimeValues_d SlimeVaules;
+
+struct PigletValues_d
 {
 	//_racetype = EnumRaceType.MONSTER,
 	std::string _name = "Piglet";
@@ -412,10 +431,12 @@ struct PigletValues
 		float criticalChance = 0.15;
 	}_normalAttack;
 
-}PigletVaules;
+};
+
+struct PigletValues_d PigletVaules;
 
 
-struct RatValues
+struct RatValues_d
 {
 	//_racetype = EnumRaceType.MONSTER,
 	std::string _name = "Rat";
@@ -449,10 +470,12 @@ struct RatValues
 		float criticalChance = 1;
 	}_normalAttack;
 
-}RatVaules;
+};
+
+struct RatValues_d RatVaules;
 
 
-struct BossValues
+struct BossValues_d
 {
 	//_racetype = EnumRaceType.HERO,
 	std::string _name = "Boss";
@@ -502,21 +525,27 @@ struct BossValues
 		bool DOTApplied = false;
 	}nova;
 
-}BossValues;
+};
 
-struct CommonAudios 
+struct BossValues_d BossValues;
+
+struct CommonAudios_d 
 {
 	std::string hit = "audios/effects/hit20.mp3";
-}CommonAudios;
+};
 
-struct MonsterSlimeValues
+struct CommonAudios_d CommonAudios;
+
+struct MonsterSlimeValues_d
 {
 	std::string fileNameNormal = "model/slime/slimeAnger.c3b";
 	std::string fileNameAnger = "model/slime/slimeAnger.c3b";
-}MonsterSlimeValues;
+};
+
+struct MonsterSlimeValues_d MonsterSlimeValues;
 
 
-struct MonsterDragonValues
+struct MonsterDragonValues_d
 {
 	std::string fileName = "model/dragon/dragon.c3b";
 	std::string attack = "audios/effects/dragon/Fire.mp3";
@@ -525,17 +554,21 @@ struct MonsterDragonValues
 	std::string dead = "audios/effects/dragon/dead.mp3";
 }MonsterDragonValues;
 
+struct MonsterDragonValues_d MonsterDragonValues;
 
-struct MonsterRatValues 
+
+struct MonsterRatValues_d 
 {
 	std::string fileName = "model/rat/rat.c3b";
 	std::string attack = "audios/effects/rat/attack.mp3";
 	std::string dead = "aduios/effects/rat/dead.mp3";
 	std::string wounded = "audios/effects/rat/ratHurt.mp3";
-}MonsterRatValues;
+};
+
+struct MonsterRatValues_d MonsterRatValues;
 
 
-struct MonsterPigletValues
+struct MonsterPigletValues_d
 {
 	std::string fileName = "model/piglet/piglet.c3b";
 	std::string attack1 = "audios/effects/piglet/piglet1.mp3";
@@ -543,10 +576,12 @@ struct MonsterPigletValues
 	std::string attack3 = "audios/effects/piglet/piglet3.mp3";
 	std::string dead = "audios/effects/piglet/dead.mp3";
 	std::string hurt = "audios/effects/piglet/hurt.mp3";
-}MonsterPigletValues;
+};
+
+struct MonsterPigletValues_d MonsterPigletValues;
 
 
-struct WarriorProperty
+struct WarriorProperty_d
 {
 	std::string normalAttack1 = "audios/effects/knight/swish-1.mp3";
 	std::string normalAttack2 = "audios/effects/knight/swish-2.mp3";
@@ -557,10 +592,12 @@ struct WarriorProperty
 	std::string	specialAttackShout = "audios/effects/knight/specialAttackShout.mp3";
 	std::string	wounded = "audios/effects/knight/wounded.mp3";
 	std::string	dead = "audios/effects/knight/dead.mp3";
-}WarriorProperty;
+};
+struct WarriorProperty_d WarriorProperty;
 
 
-struct Archerproperty
+
+struct Archerproperty_d
 {
 	std::string attack1 = "audios/effects/archer/swish-3.mp3";
 	std::string attack2 = "audios/effects/archer/swish-4.mp3";
@@ -569,9 +606,11 @@ struct Archerproperty
 	std::string normalAttackShout = "audios/effects/archer/normalAttackShout.mp3";
 	std::string specialAttackShout = "audios/effects/archer/specialAttackShout.mp3";
 	std::string dead = "audios/effects/archer/dead.mp3";
-}Archerproperty;
+};
 
-struct MageProperty
+struct Archerproperty_d Archerproperty;
+
+struct MageProperty_d
 {
 	float blood = 1000;
 	float attack = 100;
@@ -588,10 +627,12 @@ struct MageProperty
 	std::string wounded = "audios/effects/mage/hurt.mp3";
 	std::string dead = "audios/effects/mage/dead.mp3";
 
-}MageProperty;
+};
+
+struct MageProperty_d MageProperty;
 
 
-struct ReSkin 
+struct ReSkin_d 
 {
 	struct knight 
 	{ 
@@ -614,3 +655,5 @@ struct ReSkin
 		float helmet = 0;
 	}mage;
 };
+
+struct ReSkin_d ReSkin;
