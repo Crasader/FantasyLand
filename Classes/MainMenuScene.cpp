@@ -266,23 +266,26 @@ void MainMenuScene::addCloud(Layer* layer)
 	layer->addChild(cloud3, 2);
 	auto clouds = { cloud0,cloud1,cloud3 };
 
-	//move cloud
-	auto cloud_move = []()
-	{
-		//set cloud move speed
-		auto offset = { -0.5,-1.0,-1.2 };
-		for (int i; i < 3;++i)
-		{
+	////move cloud
+	//auto cloud_move = []()
+	//{
+	//	//set cloud move speed
+	//	auto offset = { -0.5,-1.0,-1.2 };
+	//	for (int i; i < 3;++i)
+	//	{
 	//		auto point = v:getPositionX() + offset[i];
 	//	if (point < -v:getContentSize().width*scale / 2)
 	//		point = size.width + v : getContentSize().width*scale / 2;
 	//	}
 	//v: setPositionX(point);
-	};
+	//};
 	//auto scheduleCloudMove = Director::getInstance()->getScheduler()->scheduleScriptFunc(cloud_move, 1 / 60, false);
 }
 
 void MainMenuScene::addBg(Layer* layer)
 {
-
+	//background
+	auto bg_back = Sprite::create("mainmenuscene/bg.jpg");
+	bg_back->setPosition(size / 2);
+	layer->addChild(bg_back, 1);
 }
