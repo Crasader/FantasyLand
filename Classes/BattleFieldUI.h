@@ -23,5 +23,10 @@ public:
 	void showVictoryUI();
 
 protected:
-
+	Sprite *MagePng;
+	Sprite *MagePngFrame;
+	Sprite *KnightPng;
+	Sprite *KnightPngFrame;
+	Sprite *ArcherPng;
+	Sprite *ArcherPngFrame;
 };
