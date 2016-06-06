@@ -37,7 +37,7 @@ public:
 	void randomshowMonster(bool isFront);
 	void showBoss();
 
-	void jumpInto( /*obj */ bool isFront);
+	void jumpInto( Actor *obj , bool isFront);
 	void showWarning();
 	void showDialog();
 	void showVictoryUI();
@@ -59,3 +59,11 @@ extern int backwardDistanceWithHeroX;
 extern int distanceWithHeroX;
 extern int distanceWithHeroY;
 extern Size size;
+
+enum monsterCount
+{
+	dragon = 1,
+	slime = 7,
+	piglet = 2,
+	rat = 0
+};

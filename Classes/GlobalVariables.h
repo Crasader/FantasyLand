@@ -216,7 +216,7 @@ struct MageValues_d
 		float angle = DEGREES_TO_RADIANS(360);
 		float knock = 10;
 		float damage = 280;
-		int mask = EnumRaceType.HERO;
+		int mask = EnumRaceType::HERO;
 		float duration = 2;
 		float speed = 400;
 		float criticalChance = 0.05;

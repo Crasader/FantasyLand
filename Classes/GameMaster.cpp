@@ -1,7 +1,6 @@
 ﻿#include "GameMaster.h"
 
 int gloableZOrder = 1;
-enum { dragon = 1, slime = 7, piglet = 2, rat = 0 } monsterCount;
 int EXIST_MIN_MONSTER = 4;
 unsigned int scheduleid;
 int stage = 0;
@@ -20,7 +19,7 @@ bool GameMaster::init()
 	AddHeros();
 	stage = 0;
 
-	srand(time(NULL));//math.randomseed(tostring(os.time()):reverse():sub(1, 6))
+	srand(time(NULL));
 	for (int i = 1; i <= 4; i++)
 		randomshowMonster(true);
 
@@ -37,25 +36,92 @@ void GameMaster::update(float dt)
 	}
 }
 
+void GameMaster::logicUpdate()
+{
+	if (stage == 1)
+	{
+		if (MonsterManager.size() < EXIST_MIN_MONSTER)
+		{
+			srand(time(NULL));
+			for (int i = 1; i <= 4; i++)
+			{
+				randomshowMonster(true);
+			}
+			stage = 2;
+		}
+	}
+	else if (stage == 2)
+	{
+		if (MonsterManager.size() < EXIST_MIN_MONSTER)
+		{
+			srand(time(NULL));
+			for (int i = 1; i <= 4; i++)
+			{
+				randomshowMonster(true);
+			}
+			stage = 3;
+		}
+	}
+	else if (stage == 3)
+	{
+		if (MonsterManager.size() == 0)
+		{
+			for (int i = 0; i < HeroManager.size(); i++)
+			{
+				auto hero = HeroManager[i];
+				if (hero != NULL)
+				{
+					hero->_goRight = true;
+				}
+			}
+			stage = 4;
+		}
+	}
+	else if (stage == 4)
+	{
+		if (getFocusPointOfHeros().x > battleSiteX[2])
+		{
+			srand(time(NULL));
+			for (int i = 1; i <= 3; i++)
+			{
+				randomshowMonster(true);
+			}
+			for (int i = 1; i <= 4; i++)
+			{
+				randomshowMonster(false);
+			}
+			stage = 5;
+		}
+	}
+	else if (stage == 5)
+	{
+		if (MonsterManager.size() < EXIST_MIN_MONSTER)
+		{
+
+		}
+	}
+}
+
 void GameMaster::AddHeros()
 {
 	auto knight = Knight::create();
 	knight->setPosition(battleSiteX[1], 10);
 	currentLayer->addChild(knight);
 	knight->idleMode();
-	//List.pushlast(HeroManager, knight)
+	HeroManager.push_back(knight);
+	
 	
 	auto mage = Mage::create();
 	mage->setPosition(battleSiteX[1], 100);
 	currentLayer->addChild(mage);
 	mage->idleMode();
-	//List.pushlast(HeroManager, mage)
+	HeroManager.push_back(mage);
 
 	auto archer = Archer::create();
 	archer->setPosition(battleSiteX[1], -80);
 	currentLayer->addChild(archer);
 	archer->idleMode();
-	/*List.pushlast(HeroManager, archer)*/
+	HeroManager.push_back(archer);
 }
 
 void GameMaster::addMonsters()
@@ -68,49 +134,49 @@ void GameMaster::addMonsters()
 
 void GameMaster::addDragon()
 {
-	for (int var = 1; var <= monsterCount.dragon ; var++)
+	for (int var = 1; var <= monsterCount::dragon ; var++)
 	{
 		auto dragon = Dragon::create();
 		currentLayer->addChild(dragon);
 		dragon->setVisible(false);
 		dragon->setAIEnabled(false);
-		//	List.pushlast(DragonPool, dragon)
+		DragonPool.push_back(dragon);
 	}
 }
 
 void GameMaster::addSlime()
 {
-	for (int i = 1; i <= monsterCount.slime ; i++)
+	for (int i = 1; i <= monsterCount::slime ; i++)
 	{
 		auto slime = Slime::create();
 		currentLayer->addChild(slime);
 		slime->setVisible(false);
 		slime->setAIEnabled(false);
-		/*List.pushlast(SlimePool, slime)*/
+		SlimePool.push_back(slime);
 	}
 }
 
 void GameMaster::addPiglet()
 {
-	for (int i = 1; i <= monsterCount.piglet; i++)
+	for (int i = 1; i <= monsterCount::piglet ; i++)
 	{
 		auto piglet = Piglet::create();
 		currentLayer->addChild(piglet);
 		piglet->setVisible(false);
 		piglet->setAIEnabled(false);
-		/*List.pushlast(PigletPool, piglet)*/
+		PigletPool.push_back(piglet);
 	}
 }
 
 void GameMaster::addRat()
 {
-	for (int i = 1; i <= monsterCount.rat; i++)
+	for (int i = 1; i <= monsterCount::rat; i++)
 	{
 		auto rat = Rat::create();
 		currentLayer->addChild(rat);
 		rat->setVisible(false);
 		rat->setAIEnabled(false);
-		/*List.pushlast(RatPool, rat)*/
+		RatPool.push_back(rat);
 	}
 }
 
@@ -120,7 +186,7 @@ void GameMaster::showDragon(bool isFront)
 	{
 		auto dragon = DragonPool[0];
 		DragonPool.erase(DragonPool.begin());
-		//dragon->reset();
+		dragon->reset();
 
 		auto appearPos = getFocusPointOfHeros();
 		auto randomvarX = random()*0.2 + 1;
@@ -147,9 +213,9 @@ void GameMaster::showDragon(bool isFront)
 		auto  randomvarY = 2 * random() - 1;
 		appearPos.y = appearPos.y + randomvarY*distanceWithHeroY;
 		dragon->setPosition(appearPos);
-		//dragon->_myPos = appearPos;
+		dragon->getMyPos() = appearPos;
 		dragon->setVisible(true);
-		//dragon._goRight = false;
+		dragon->_goRight = false;
 		dragon->setAIEnabled(true);
 		MonsterManager.push_back(dragon);
 	}
@@ -188,9 +254,9 @@ void GameMaster::showPiglet(bool isFront)
 		auto  randomvarY = 2 * random() - 1;
 		appearPos.y = appearPos.y + randomvarY*distanceWithHeroY;
 		piglet->setPosition(appearPos);
-		//piglet->_myPos = appearPos;
+		piglet->getMyPos() = appearPos;
 		piglet->setVisible(true);
-		//piglet._goRight = false;
+		piglet._goRight = false;
 		piglet->setAIEnabled(true);
 		MonsterManager.push_back(piglet);
 	}
@@ -203,13 +269,26 @@ void GameMaster::showSlime(bool isFront)
 	{
 		auto slime = SlimePool[0];
 		SlimePool.erase(SlimePool.begin());
-		//slime->reset();
-		//slime._goRight = false
+		slime->reset();
+		slime._goRight = false
 		jumpInto(slime, isFront);
 		MonsterManager.push_back(slime);
 	}
 }
 
+void GameMaster::showRat(bool isFront)
+{
+	if (RatPool.size() != 0)
+	{
+		auto rat = RatPool[0];
+
+		RatPool.erase(RatPool.begin());
+		rat->reset();
+		rat->_goRight = false;
+		jumpInto(rat, isFront);
+		MonsterManager.push_back(rat);
+	}
+}
 
 
 void GameMaster::randomshowMonster(bool isFront)
@@ -249,15 +328,63 @@ void GameMaster::showBoss()
 
 	auto apperPos = Vec3(500, 200, 300);
 	boss->setPosition3D(apperPos);
-	//boss->_myPos = { x = appearPos.x,y = appearPos.y };
+	boss->setMyPos(Vec2(apperPos.x,apperPos.y));
 	boss->setFacing(180);
-	//boss->_goRight = false;
+	boss->_goRight = false;
 	auto enableAI = [boss]()
 	{
 		boss->setAIEnabled(true);
 	};
 	boss->runAction(Sequence::create(EaseBounceOut::create(MoveBy::create(0.5, Vec3(0, 0, -300))), CallFunc::create(enableAI)));
-	/*List.pushlast(MonsterManager, boss)*/
+	MonsterManager.push_back(boss); 
+}
+
+void GameMaster::jumpInto(Actor* obj, bool isFront)
+{
+	auto appearPos = getFocusPointOfHeros();
+	auto randomvar = 2 * rand() - 1;
+
+	if (isFront)
+	{
+		appearPos.x = appearPos.x + frontDistanceWithHeroX + randomvar*distanceWithHeroX;
+	}
+	else
+	{
+		appearPos.x = appearPos.x - backwardDistanceWithHeroX + randomvar*distanceWithHeroX;
+	}
+
+	appearPos.y += 1500;
+	obj->setPosition(appearPos);
+	obj->setMyPos(appearPos);
+
+	auto enableAI = [obj]() 
+	{
+		obj->setAIEnabled(true);
+	};
+
+	auto visibleMonster = [obj]()
+	{
+		obj->setVisible(true);
+	};
+
+	if ( stage == 0 )
+	{
+		//obj->runAction(Sequence::create(DelayTime::create(rand()), CallFunc::create(visibleMonster), JumpBy::create(0.5, Vec3(-200 * (rand()*0.6 + 0.7), -400 * (rand()*0.4 + 0.8), 0), 150, 1), CallFunc::create(enableAI)));
+		obj->setFacing(135);
+	}
+	else
+	{
+		if (isFront)
+		{
+			//obj->runAction(Sequence::create(DelayTime::create(rand()), CallFunc::create(visibleMonster), JumpBy3D::create(0.5, Vec3(0, -400 * (rand()*0.4 + 0.8), 0), 150, 1), CallFunc::create(enableAI)));
+			obj->setFacing(135);
+		}
+		else
+		{
+			//obj:runAction(cc.Sequence:create(cc.DelayTime:create(math.random()), cc.CallFunc : create(visibleMonster), cc.JumpBy3D : create(0.5, cc.V3(200 * (math.random()*0.6 + 0.7), -400 * (math.random()*0.4 + 0.8), 0), 150, 1), cc.CallFunc : create(enableAI)))
+			obj->setFacing(45);
+		}
+	}
 }
 
 void GameMaster::showWarning()
@@ -325,7 +452,7 @@ void GameMaster::showDialog()
 
 	dialog->setScale(0.1);
 	dialog->ignoreAnchorPointForPosition(false);
-	dialog->setPositionZ(-cc.Director:getInstance() : getZEye() / 3);
+	dialog->setPositionZ(Director::getInstance()->getZEye() / 3);
 	dialog->setGlobalZOrder(0);
 	camera->addChild(dialog);
 
