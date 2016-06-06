@@ -15,6 +15,7 @@ extern struct G_d G;
 extern struct BGM_RES_d BGM_RES;
 extern enum AUDIO_ID_d AUDIO_ID;
 
+
 extern struct ActorCommonValues_d ActorCommonValues;
 extern struct ActorDefaultValues_d ActorDefaultValues;
 extern struct KnightValues_d KnightValues;
@@ -79,8 +80,8 @@ struct ActorCommonValues_d
 {
 	float _aliveTime = 0,
 		_curSpeed = 0;
-	/*_curAnimation = nil;
-	_curAnimation3d = nil;*/
+	Animation * _curAnimation = NULL;
+	Animation3D* _curAnimation3d = NULL;
 
 
 	float _curFacing = 0;
@@ -95,7 +96,7 @@ struct ActorCommonValues_d
 
 	float _targetFacing = 0;
 
-	//_target = nil,
+	Actor *_target = NULL;
 
 	Vec2 _myPos = ccp(0, 0);
 
@@ -105,7 +106,7 @@ struct ActorCommonValues_d
 
 struct ActorDefaultValues_d
 {
-	//_racetype = EnumRaceType.HERO;
+	 int _racetype = EnumRaceType::HERO;
 	//_statetype = nil;
 	//_sprite3d = nil;
 
@@ -137,7 +138,7 @@ struct ActorDefaultValues_d
 		float angle = DEGREES_TO_RADIANS(30);
 		float knock = 50;
 		float damage = 800;
-		//mask = EnumRaceType.HERO
+		int mask = EnumRaceType::HERO;
 		float duration = 0;
 		float speed = 0;
 		float criticalChance = 0;
@@ -146,7 +147,7 @@ struct ActorDefaultValues_d
 
 struct KnightValues_d
 {
-	//_racetype = EnumRaceType.HERO,
+	int _racetype = EnumRaceType::HERO;
 	std::string _name = "Knight";
 	float _radius = 50;
 	float _mass = 1000;
@@ -169,7 +170,7 @@ struct KnightValues_d
 		float angle = DEGREES_TO_RADIANS(70);
 		float knock = 60;
 		float damage = 250;
-		//float mask = EnumRaceType.HERO,
+		int mask = EnumRaceType::HERO;
 		float duration = 0;
 		float speed = 0;
 		float criticalChance = 0.15;
@@ -182,7 +183,7 @@ struct KnightValues_d
 		float angle = DEGREES_TO_RADIANS(160);
 		float knock = 150;
 		float damage = 350;
-		//mask = EnumRaceType.HERO;
+		int mask = EnumRaceType::HERO;
 		float duration = 0;
 		float speed = 0;
 		float criticalChance = 0.35;
@@ -192,7 +193,7 @@ struct KnightValues_d
 
 struct MageValues_d
 {
-	//_racetype = EnumRaceType.HERO,
+	int _racetype = EnumRaceType::HERO;
 	std::string _name = "Mage";
 	float _radius = 50;
 	float _mass = 800;
@@ -215,7 +216,7 @@ struct MageValues_d
 		float angle = DEGREES_TO_RADIANS(360);
 		float knock = 10;
 		float damage = 280;
-		//mask = EnumRaceType.HERO,
+		int mask = EnumRaceType.HERO;
 		float duration = 2;
 		float speed = 400;
 		float criticalChance = 0.05;
@@ -228,7 +229,7 @@ struct MageValues_d
 		float angle = DEGREES_TO_RADIANS(360);
 		float knock = 75;
 		float damage = 250;
-		//mask = EnumRaceType.HERO,
+		int mask = EnumRaceType::HERO;
 		float duration = 4.5;
 		float speed = 0;
 		float criticalChance = 0.05;
@@ -241,7 +242,7 @@ struct MageValues_d
 
 struct ArcherValues_d
 {
-	//_racetype = EnumRaceType.HERO,
+	int _racetype = EnumRaceType::HERO;
 	std::string _name = "Archer";
 	float _radius = 50;
 	float _mass = 800;
@@ -265,7 +266,7 @@ struct ArcherValues_d
 		float angle = DEGREES_TO_RADIANS(360);
 		float knock = 100;
 		float damage = 200;
-		//mask = EnumRaceType.HERO,
+		int mask = EnumRaceType::HERO;
 		float duration = 1.3;
 		float speed = 900;
 		float criticalChance = 0.33;
@@ -278,7 +279,7 @@ struct ArcherValues_d
 		float angle = DEGREES_TO_RADIANS(360);
 		float knock = 100;
 		float damage = 200;
-		//mask = EnumRaceType.HERO,
+		int mask = EnumRaceType::HERO;
 		float duration = 1.5;
 		float speed = 850;
 		float criticalChance = 0.5;
@@ -291,7 +292,7 @@ struct ArcherValues_d
 
 struct DragonValues_d
 {
-	//_racetype = EnumRaceType.MONSTER,
+	int _racetype = EnumRaceType::MONSTER;
 	std::string _name = "Dragon";
 	float _radius = 50;
 	float _mass = 100;
@@ -317,7 +318,7 @@ struct DragonValues_d
 		float angle = DEGREES_TO_RADIANS(360);
 		float knock = 50;
 		float damage = 400;
-		//mask = EnumRaceType.HERO,
+		int mask = EnumRaceType::HERO;
 		float duration = 1;
 		float speed = 350;
 		float criticalChance = 0.15;
@@ -327,7 +328,7 @@ struct DragonValues_d
 
 struct SlimeValues_d
 {
-	//_racetype = EnumRaceType.MONSTER,
+	int _racetype = EnumRaceType::MONSTER;
 	std::string _name = "Slime";
 	float _radius = 35;
 	float _mass = 20;
@@ -353,7 +354,7 @@ struct SlimeValues_d
 		float angle = DEGREES_TO_RADIANS(360);
 		float knock = 0;
 		float damage = 135;
-		//mask = EnumRaceType.Monster,
+		int mask = EnumRaceType::MONSTER;
 		float duration = 0;
 		float speed = 0;
 		float criticalChance = 0.13;
@@ -363,7 +364,7 @@ struct SlimeValues_d
 
 struct PigletValues_d
 {
-	//_racetype = EnumRaceType.MONSTER,
+	int _racetype = EnumRaceType::MONSTER;
 	std::string _name = "Piglet";
 	float _radius = 50;
 	float _mass = 69;
@@ -387,7 +388,7 @@ struct PigletValues_d
 		float angle = DEGREES_TO_RADIANS(50);
 		float knock = 0;
 		float damage = 150;
-		//mask = EnumRaceType.Monster,
+		int mask = EnumRaceType::MONSTER;
 		float duration = 0;
 		float speed = 0;
 		float criticalChance = 0.15;
@@ -397,7 +398,7 @@ struct PigletValues_d
 
 struct RatValues_d
 {
-	//_racetype = EnumRaceType.MONSTER,
+	int _racetype = EnumRaceType::MONSTER;
 	std::string _name = "Rat";
 	float _radius = 70;
 	float _mass = 990;
@@ -423,7 +424,7 @@ struct RatValues_d
 		float angle = DEGREES_TO_RADIANS(100);
 		float knock = 250;
 		float damage = 210;
-		//mask = EnumRaceType.Monster,
+		int mask = EnumRaceType::MONSTER;
 		float duration = 0;
 		float speed = 0;
 		float criticalChance = 1;
@@ -433,7 +434,7 @@ struct RatValues_d
 
 struct BossValues_d
 {
-	//_racetype = EnumRaceType.HERO,
+	int _racetype = EnumRaceType::MONSTER;
 	std::string _name = "Boss";
 	float _radius = 50;
 	float _mass = 100;
@@ -459,7 +460,7 @@ struct BossValues_d
 		float angle = DEGREES_TO_RADIANS(100);
 		float knock = 50;
 		float damage = 200;
-		//mask = EnumRaceType.MONSTER,
+		int mask = EnumRaceType::MONSTER;
 		float duration = 0;
 		float speed = 0;
 		float criticalChance = 0.15;
@@ -472,7 +473,7 @@ struct BossValues_d
 		float angle = DEGREES_TO_RADIANS(360);
 		float knock = 120;
 		float damage = 250;
-		//mask = EnumRaceType.HERO,
+		int mask = EnumRaceType::HERO;
 		float duration = 0.5;
 		float speed = 0;
 		float criticalChance = 0.15;

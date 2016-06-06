@@ -36,23 +36,6 @@ struct G_d G;
 struct BGM_RES_d BGM_RES;
 enum AUDIO_ID_d AUDIO_ID;
 
-//EnumRaceType =
-//{
-//	"HERO",  --only this
-//	"MONSTER", --and this
-//}
-//EnumRaceType = CreateEnumTable(EnumRaceType)
-//EnumStateType =
-//{
-//	"IDLE",
-//	"WALKING",
-//	"ATTACKING",
-//	"DEFENDING",
-//	"KNOCKING",
-//	"DYING",
-//	"DEAD"
-//}
-//EnumStateType = CreateEnumTable(EnumStateType)
 
 struct ActorCommonValues_d ActorCommonValues;
 struct ActorDefaultValues_d ActorDefaultValues;
