@@ -111,7 +111,7 @@ void Slime::initActions()
 	auto walk = Spawn::create(
 		Sequence::create(
 			DelayTime::create(dur / 8),
-			JumpBy::create(dur * 7 / 8, Vec3(0, 0, 0), 30, 1),
+			JumpTiles3D::create(dur * 7 / 8, Size(0,0), 30, 1),
 			NULL
 			),
 		Sequence::create(
@@ -126,8 +126,8 @@ void Slime::initActions()
 		);
 	walk->retain();
 	auto idle = Sequence::create(
-		ScaleTo::create(dur / 2, bsc*1.1, bsc*1.1, bsc*0.8),
-		ScaleTo::create(dur / 2, bsc,bsc,bsc),
+		ScaleTo::create(dur / 2, bsc * 1.1, bsc * 1.1, bsc * 0.8),
+		ScaleTo::create(dur / 2, bsc, bsc, bsc),
 		NULL
 		);
 	idle->retain();

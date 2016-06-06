@@ -27,7 +27,7 @@ public:
 	void addEffect(Sprite* effect);
 	void initPuff();
 	void initShadow();
-	void playAnimation(std::string name, bool loop = false);
+	static void playAnimation(std::string name, bool loop = false);
 
 	//getter & setter
 	EnumRaceType getRaceType();
@@ -46,6 +46,8 @@ public:
 	float getAngryMax();
 	bool isAlive();
 	Vec2 getMyPos();
+	void setMyPos(Vec2 pos);
+	bool getGoRight();
 	Node* getEffectNode();
 
 	float hurt(BasicCollider* collider, bool dirKnockMode = false);
@@ -82,8 +84,6 @@ public:
 protected:
 	float _aliveTime;	//time the actor is alive in seconds
 	float _curSpeed;	//current speed the actor is traveling in units/seconds
-    Animation* _curAnimation;
-	Animation3D* _curAnimation3d;
 	std::string _curAnimation;
 	Action* _curAnimation3d;
 
