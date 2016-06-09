@@ -9,7 +9,7 @@ USING_NS_CC;
 class MessageDispatchCenter
 {
 public:
-	CREATE_FUNC(MessageDispatchCenter);
+	//CREATE_FUNC(MessageDispatchCenter);
 	virtual bool init();
 
 	void registerMessage(std::string messageType /*callback*/);

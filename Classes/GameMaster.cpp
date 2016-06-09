@@ -71,7 +71,7 @@ void GameMaster::logicUpdate()
 				auto hero = HeroManager[i];
 				if (hero != NULL)
 				{
-					hero->_goRight = true;
+					//hero->_goRight = true;
 				}
 			}
 			stage = 4;
@@ -126,7 +126,7 @@ void GameMaster::logicUpdate()
 				auto hero = HeroManager[i];
 				if (hero != NULL)
 				{
-					hero->_goRight = true;
+					//hero->_goRight = true;
 				}
 			}
 			for (int i = 0; i < PigletPool.size(); i++)
@@ -191,9 +191,9 @@ void GameMaster::AddHeros()
 
 	auto archer = Archer::create();
 	archer->setPosition(battleSiteX[1], -80);
-	currentLayer->addChild(archer);
+	//currentLayer->addChild(archer);
 	archer->idleMode();
-	HeroManager.push_back(archer);
+	//HeroManager.push_back(archer);
 }
 
 void GameMaster::addMonsters()
@@ -258,7 +258,7 @@ void GameMaster::showDragon(bool isFront)
 	{
 		auto dragon = DragonPool[0];
 		DragonPool.erase(DragonPool.begin());
-		dragon->reset();
+		//dragon->reset();
 
 		auto appearPos = getFocusPointOfHeros();
 		auto randomvarX = random()*0.2 + 1;
@@ -287,7 +287,7 @@ void GameMaster::showDragon(bool isFront)
 		dragon->setPosition(appearPos);
 		dragon->getMyPos() = appearPos;
 		dragon->setVisible(true);
-		dragon->_goRight = false;
+		//dragon->_goRight = false;
 		dragon->setAIEnabled(true);
 		MonsterManager.push_back(dragon);
 	}
@@ -299,7 +299,7 @@ void GameMaster::showPiglet(bool isFront)
 	{
 		auto piglet = PigletPool[0];
 		PigletPool.erase(PigletPool.begin());
-		piglet->reset();
+		//piglet->reset();
 
 		auto appearPos = getFocusPointOfHeros();
 		auto randomvarX = random()*0.2 + 1;
@@ -328,10 +328,9 @@ void GameMaster::showPiglet(bool isFront)
 		piglet->setPosition(appearPos);
 		piglet->getMyPos() = appearPos;
 		piglet->setVisible(true);
-		piglet._goRight = false;
+		//piglet._goRight = false;
 		piglet->setAIEnabled(true);
 		MonsterManager.push_back(piglet);
-	}
 	}
 }
 
@@ -339,12 +338,12 @@ void GameMaster::showSlime(bool isFront)
 {
 	if( SlimePool.size() != 0 )
 	{
-		auto slime = SlimePool[0];
+		auto Slime = SlimePool[0];
 		SlimePool.erase(SlimePool.begin());
-		slime->reset();
-		slime._goRight = false
-		jumpInto(slime, isFront);
-		MonsterManager.push_back(slime);
+		//slime->reset();
+		//slime._goRight = false;
+		jumpInto(Slime, isFront);
+		MonsterManager.push_back(Slime);
 	}
 }
 
@@ -352,13 +351,13 @@ void GameMaster::showRat(bool isFront)
 {
 	if (RatPool.size() != 0)
 	{
-		auto rat = RatPool[0];
+		auto Rat = RatPool[0];
 
 		RatPool.erase(RatPool.begin());
-		rat->reset();
-		rat->_goRight = false;
-		jumpInto(rat, isFront);
-		MonsterManager.push_back(rat);
+		//rat->reset();
+		//rat->_goRight = false;
+		jumpInto(Rat, isFront);
+		MonsterManager.push_back(Rat);
 	}
 }
 
@@ -402,7 +401,7 @@ void GameMaster::showBoss()
 	boss->setPosition3D(apperPos);
 	boss->setMyPos(Vec2(apperPos.x,apperPos.y));
 	boss->setFacing(180);
-	boss->_goRight = false;
+	//boss->_goRight = false;
 	auto enableAI = [boss]()
 	{
 		boss->setAIEnabled(true);
@@ -487,7 +486,7 @@ void GameMaster::showWarning()
 
 void GameMaster::showDialog()
 {
-	Texture2D::setDefaultAlphaPixelFormat(/*TEXTURE2_D_PIXEL_FORMAT_AUTO*/);
+	//Texture2D::setDefaultAlphaPixelFormat(/*TEXTURE2_D_PIXEL_FORMAT_AUTO*/);
 	auto colorLayer = LayerColor::create(Color4B(10, 10, 10, 150));
 	colorLayer->ignoreAnchorPointForPosition(false);
 	colorLayer->setPositionZ(-Director::getInstance()->getZEye() / 5);
@@ -499,23 +498,23 @@ void GameMaster::showDialog()
 
 	auto outframe = Sprite::createWithSpriteFrameName("outframe.png");
 	outframe->setPosition(G.winSize.width * 0.55, G.winSize.height * 0.27);
-	outframe->setScale(0.6*resolutionRate);
+	//outframe->setScale(0.6*resolutionRate);
 	dialog->addChild(outframe);
 
 	auto inframe = Sprite::createWithSpriteFrameName("inframe.png");
 	inframe->setPosition(G.winSize.width * 0.67, G.winSize.height * 0.27);
-	inframe->setScale(0.5*resolutionRate);
+	//inframe->setScale(0.5*resolutionRate);
 	dialog->addChild(inframe);
 
 	auto bossicon = Sprite::createWithSpriteFrameName("bossicon.png");
 	bossicon->setPosition(G.winSize.width*0.42, G.winSize.height*0.46);
-	bossicon->setScale(0.75*resolutionRate);
+	//bossicon->setScale(0.75*resolutionRate);
 	bossicon->setFlippedX(true);
 	dialog->addChild(bossicon);
 
 	auto bosslogo = Sprite::createWithSpriteFrameName("bosslogo.png");
 	bosslogo->setPosition(G.winSize.width*0.417, G.winSize.height*0.265);
-	bosslogo->setScale(0.74*resolutionRate);
+	//bosslogo->setScale(0.74*resolutionRate);
 	dialog->addChild(bosslogo);
 
 	auto text = Label::createWithTTF(BossTaunt, "fonts/britanic bold.ttf", 24);
@@ -558,8 +557,8 @@ void GameMaster::showDialog()
 		Director::getInstance()->getScheduler()->unscheduleScriptEntry(scheduleid);
 	};
 
-	scheduleid = Director::getInstance()->getScheduler()->scheduleScriptFunc(exitDialog, 3, false);//todo
-	Texture2D::setDefaultAlphaPixelFormat(TEXTURE2_D_PIXEL_FORMAT_RG_B565);
+	//scheduleid = Director::getInstance()->getScheduler()->scheduleScriptFunc(exitDialog, 3, false);//
+	//Texture2D::setDefaultAlphaPixelFormat(TEXTURE2_D_PIXEL_FORMAT_RG_B565);
 }
 
 void GameMaster::showVictoryUI()
