@@ -39,10 +39,10 @@ extern struct ReSkin_d ReSkin;
 
 struct RECTS_d
 {
-	Rect iceBolt = SpriteFrameCache::getInstance()->getSpriteFrameByName("icebolt.png")->getRect();
-	Rect iceSpike = SpriteFrameCache::getInstance()->getSpriteFrameByName("iceSpike1.png")->getRect();
-	Rect fireBall = SpriteFrameCache::getInstance()->getSpriteFrameByName("fireball1.png")->getRect();
-	Rect thunderBall = SpriteFrameCache::getInstance()->getSpriteFrameByName("thunderball.png")->getRect();
+	Rect iceBolt ;
+	Rect iceSpike;
+	Rect fireBall;
+	Rect thunderBall;
 };
 
 struct G_d
