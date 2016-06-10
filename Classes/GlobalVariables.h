@@ -139,7 +139,7 @@ struct ActorDefaultValues_d
 		float angle = DEGREES_TO_RADIANS(30);
 		float knock = 50;
 		float damage = 800;
-		int mask = EnumRaceType::HERO;
+		enum EnumRaceType mask = HERO;
 		float duration = 0;
 		float speed = 0;
 		float criticalChance = 0;
@@ -319,7 +319,7 @@ struct DragonValues_d
 		float angle = DEGREES_TO_RADIANS(360);
 		float knock = 50;
 		float damage = 400;
-		int mask = EnumRaceType::HERO;
+		enum EnumRaceType mask = HERO;
 		float duration = 1;
 		float speed = 350;
 		float criticalChance = 0.15;
@@ -355,7 +355,7 @@ struct SlimeValues_d
 		float angle = DEGREES_TO_RADIANS(360);
 		float knock = 0;
 		float damage = 135;
-		int mask = EnumRaceType::MONSTER;
+		enum EnumRaceType mask = MONSTER;
 		float duration = 0;
 		float speed = 0;
 		float criticalChance = 0.13;
