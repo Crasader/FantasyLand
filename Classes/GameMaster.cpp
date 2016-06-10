@@ -21,6 +21,7 @@ int backwardDistanceWithHeroX = 800;
 int distanceWithHeroX = 150;
 int distanceWithHeroY = 150;
 Size size = Director::getInstance()->getWinSize();
+struct monsterCount_d monsterCount;
 
 bool GameMaster::init()
 {
@@ -217,7 +218,7 @@ void GameMaster::addMonsters()
 
 void GameMaster::addDragon()
 {
-	for (int var = 1; var <= monsterCount::dragon ; var++)
+	for (int var = 1; var <= monsterCount.dragon ; var++)
 	{
 		auto dragon = Dragon::create();
 		currentLayer->addChild(dragon);
@@ -229,7 +230,7 @@ void GameMaster::addDragon()
 
 void GameMaster::addSlime()
 {
-	for (int i = 1; i <= monsterCount::slime ; i++)
+	for (int i = 1; i <= monsterCount.slime ; i++)
 	{
 		auto slime = Slime::create();
 		currentLayer->addChild(slime);
@@ -241,7 +242,7 @@ void GameMaster::addSlime()
 
 void GameMaster::addPiglet()
 {
-	for (int i = 1; i <= monsterCount::piglet ; i++)
+	for (int i = 1; i <= monsterCount.piglet ; i++)
 	{
 		auto piglet = Piglet::create();
 		currentLayer->addChild(piglet);
@@ -253,7 +254,7 @@ void GameMaster::addPiglet()
 
 void GameMaster::addRat()
 {
-	for (int i = 1; i <= monsterCount::rat; i++)
+	for (int i = 1; i <= monsterCount.rat; i++)
 	{
 		auto rat = Rat::create();
 		currentLayer->addChild(rat);

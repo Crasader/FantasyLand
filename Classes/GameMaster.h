@@ -49,11 +49,12 @@ extern int backwardDistanceWithHeroX;
 extern int distanceWithHeroX;
 extern int distanceWithHeroY;
 extern Size size;
+extern struct monsterCount_d monsterCount;
 
-enum monsterCount
+struct monsterCount_d
 {
-	dragon = 1,
-	slime = 7,
-	piglet = 2,
-	rat = 0
+	int dragon = 1;
+	int slime = 7;
+	int piglet = 2;
+	int rat = 0;
 };

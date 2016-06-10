@@ -8,7 +8,7 @@ USING_NS_CC;
 extern Camera* camera;
 
 typedef
-struct 
+struct timerange_d
 {
 	float begin;
 	float ended;
@@ -16,7 +16,7 @@ struct
 }timerange;
 
 typedef
-struct 
+struct msgStruct_d
 {
 	Actor * attacker;
 	Actor * target;

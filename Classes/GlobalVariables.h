@@ -1,21 +1,20 @@
 ﻿#pragma once
-
 #include "cocos2d.h"
 #include "Helper.h"
+
+void gv_init();
 
 extern float FXZorder;
 extern float CelLine;
 extern std::string BossTaunt;
 extern AnimationCache * animationCache ;
+extern Layer * currentLayer;
 
-void gv_init();
 
 extern struct RECTS_d RECTS;
 extern struct G_d G;
 extern struct BGM_RES_d BGM_RES;
-extern enum AUDIO_ID_d AUDIO_ID;
-
-
+extern struct AUDIO_ID_d AUDIO_ID;
 extern struct ActorCommonValues_d ActorCommonValues;
 extern struct ActorDefaultValues_d ActorDefaultValues;
 extern struct KnightValues_d KnightValues;
@@ -35,6 +34,8 @@ extern struct WarriorProperty_d WarriorProperty;
 extern struct Archerproperty_d Archerproperty;
 extern struct MageProperty_d MageProperty;
 extern struct ReSkin_d ReSkin;
+
+
 
 struct RECTS_d
 {
@@ -66,14 +67,14 @@ struct BGM_RES_d
 	std::string CHOOSEROLESCENEBGM = "audios/Imminent Threat Beat B FULL Loop.mp3";
 };
 
-enum AUDIO_ID_d
+struct AUDIO_ID_d
 {
-	MAINMENUBGM,
-	BATTLEFIELDBGM,
-	CHOOSEROLECHAPTERBGM,
-	KNIGHTNORMALATTACK,
-	KNIGHTSPECIALATTACK,
-	ARCHERATTACK
+	int MAINMENUBGM;
+	int BATTLEFIELDBGM;
+	int CHOOSEROLECHAPTERBGM;
+	int KNIGHTNORMALATTACK;
+	int KNIGHTSPECIALATTACK;
+	int ARCHERATTACK;
 };
 
 struct ActorCommonValues_d
@@ -106,7 +107,7 @@ struct ActorCommonValues_d
 
 struct ActorDefaultValues_d
 {
-	 int _racetype = EnumRaceType::HERO;
+	enum EnumRaceType _racetype = HERO;
 	//_statetype = nil;
 	//_sprite3d = nil;
 
@@ -147,7 +148,7 @@ struct ActorDefaultValues_d
 
 struct KnightValues_d
 {
-	int _racetype = EnumRaceType::HERO;
+	enum EnumRaceType _racetype = HERO;
 	std::string _name = "Knight";
 	float _radius = 50;
 	float _mass = 1000;
@@ -193,7 +194,7 @@ struct KnightValues_d
 
 struct MageValues_d
 {
-	int _racetype = EnumRaceType::HERO;
+	enum EnumRaceType _racetype = HERO;
 	std::string _name = "Mage";
 	float _radius = 50;
 	float _mass = 800;
@@ -242,7 +243,7 @@ struct MageValues_d
 
 struct ArcherValues_d
 {
-	int _racetype = EnumRaceType::HERO;
+	enum EnumRaceType _racetype = HERO;
 	std::string _name = "Archer";
 	float _radius = 50;
 	float _mass = 800;
@@ -292,7 +293,7 @@ struct ArcherValues_d
 
 struct DragonValues_d
 {
-	int _racetype = EnumRaceType::MONSTER;
+	enum EnumRaceType _racetype = MONSTER;
 	std::string _name = "Dragon";
 	float _radius = 50;
 	float _mass = 100;
@@ -328,7 +329,7 @@ struct DragonValues_d
 
 struct SlimeValues_d
 {
-	int _racetype = EnumRaceType::MONSTER;
+	enum EnumRaceType _racetype = MONSTER;
 	std::string _name = "Slime";
 	float _radius = 35;
 	float _mass = 20;
@@ -364,7 +365,7 @@ struct SlimeValues_d
 
 struct PigletValues_d
 {
-	int _racetype = EnumRaceType::MONSTER;
+	enum EnumRaceType _racetype = MONSTER;
 	std::string _name = "Piglet";
 	float _radius = 50;
 	float _mass = 69;
@@ -398,7 +399,7 @@ struct PigletValues_d
 
 struct RatValues_d
 {
-	int _racetype = EnumRaceType::MONSTER;
+	enum EnumRaceType _racetype = MONSTER;
 	std::string _name = "Rat";
 	float _radius = 70;
 	float _mass = 990;
@@ -434,7 +435,7 @@ struct RatValues_d
 
 struct BossValues_d
 {
-	int _racetype = EnumRaceType::MONSTER;
+	enum EnumRaceType _racetype = MONSTER;
 	std::string _name = "Boss";
 	float _radius = 50;
 	float _mass = 100;
@@ -460,7 +461,7 @@ struct BossValues_d
 		float angle = DEGREES_TO_RADIANS(100);
 		float knock = 50;
 		float damage = 200;
-		int mask = EnumRaceType::MONSTER;
+		enum EnumRaceType mask = MONSTER;
 		float duration = 0;
 		float speed = 0;
 		float criticalChance = 0.15;
@@ -473,7 +474,7 @@ struct BossValues_d
 		float angle = DEGREES_TO_RADIANS(360);
 		float knock = 120;
 		float damage = 250;
-		int mask = EnumRaceType::HERO;
+		enum EnumRaceType mask = HERO;
 		float duration = 0.5;
 		float speed = 0;
 		float criticalChance = 0.15;
