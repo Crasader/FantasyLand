@@ -18,7 +18,7 @@ class BasicCollider : public Node
 {
 public:
 	BasicCollider();
-	static BasicCollider* CreateWithPos(Vec2 pos, int facing, struct attackInfo);
+	static BasicCollider* CreateWithPos(Vec2 pos, int facing, struct attack_d attackInfo);
 	CREATE_FUNC(BasicCollider);
 	virtual bool init();
 	void onTimeOut();
@@ -26,7 +26,7 @@ public:
 	void hurtEffect(Actor* target);
 	void onCollide(Actor* target);
 	void onUpdate();
-	void initData(Vec2 pos, int facing, std::string attackInfo);
+	void initData(Vec2 pos, int facing, struct attack_d attackInfo);
 
 	//set & get
 	int getDamage();
@@ -67,7 +67,7 @@ class KnightNormalAttack : public BasicCollider
 {
 public:
 	KnightNormalAttack();
-	static KnightNormalAttack* CreateWithPos(Vec2 pos, int facing, std::string attackInfo, Actor* knight);
+	static KnightNormalAttack* CreateWithPos(Vec2 pos, int facing, struct attack_d attackInfo, Actor* knight);
 	CREATE_FUNC(KnightNormalAttack);
 	virtual bool init();
 	void onTimeOut();
@@ -80,7 +80,7 @@ class MageNormalAttack : public BasicCollider
 {
 public:
 	MageNormalAttack();
-	static MageNormalAttack* CreateWithPos(Vec2 pos, int facing, std::string attackInfo, Actor* target, Actor* owner);
+	static MageNormalAttack* CreateWithPos(Vec2 pos, int facing, struct attack_d attackInfo, Actor* target, Actor* owner);
 	CREATE_FUNC(MageNormalAttack);
 	virtual bool init();
 	void onTimeOut();
@@ -99,7 +99,7 @@ class MageIceSpikes : public BasicCollider
 {
 public:
     MageIceSpikes();
-	static MageIceSpikes* CreateWithPos(Vec2 pos, int facing, std::string attackInfo, Actor* owner);
+	static MageIceSpikes* CreateWithPos(Vec2 pos, int facing, struct attack_d attackInfo, Actor* owner);
 	CREATE_FUNC(MageIceSpikes);
 	virtual bool init();
 	void playHitAudio();
@@ -118,7 +118,7 @@ class ArcherNormalAttack : public BasicCollider
 {
 public:
 	ArcherNormalAttack();
-	static ArcherNormalAttack* CreateWithPos(Vec2 pos, int facing, std::string attackInfo, Actor* owner);
+	static ArcherNormalAttack* CreateWithPos(Vec2 pos, int facing, struct attack_d attackInfo, Actor* owner);
 	CREATE_FUNC(ArcherNormalAttack);
 	virtual bool init();
 	void onTimeOut();
@@ -134,7 +134,7 @@ class ArcherSpecialAttack : public BasicCollider
 {
 public:
 	ArcherSpecialAttack();
-	static ArcherSpecialAttack* CreateWithPos(Vec2 pos, int facing, std::string attackInfo, Actor* owner);
+	static ArcherSpecialAttack* CreateWithPos(Vec2 pos, int facing, struct attack_d attackInfo, Actor* owner);
 	CREATE_FUNC(ArcherSpecialAttack);
 	virtual bool init();
 	void onTimeOut();
@@ -164,7 +164,7 @@ class DragonAttack : public BasicCollider
 {
 public:
 	DragonAttack();
-	static DragonAttack* CreateWithPos(Vec2 pos, int facing, std::string attackInfo);
+	static DragonAttack* CreateWithPos(Vec2 pos, int facing, struct attack_d attackInfo);
 	CREATE_FUNC(DragonAttack);
 	virtual bool init();
 	void playHitAudio();
@@ -180,7 +180,7 @@ class BossNormal : public BasicCollider
 {
 public:
 	BossNormal();
-	static BossNormal* CreateWithPos(Vec2 pos, int facing, std::string attackInfo);
+	static BossNormal* CreateWithPos(Vec2 pos, int facing, struct attack_d attackInfo);
 	CREATE_FUNC(BossNormal);
 	virtual bool init();
 	void playHitAudio();
@@ -196,7 +196,7 @@ class BossSuper : public BasicCollider
 {
 public:
     BossSuper();
-	static BossSuper* CreateWithPos(Vec2 pos, int facing, std::string attackInfo);
+	static BossSuper* CreateWithPos(Vec2 pos, int facing, struct attack_d attackInfo);
 	CREATE_FUNC(BossSuper);
 	virtual bool init();
 	void playHitAudio();

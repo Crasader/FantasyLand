@@ -21,4 +21,7 @@ public:
 	void initActions();
 	void dyingMode(Vec2 knockSource, int knockAmount);
 	int hurt(BasicCollider* collider, bool dirKnockMode);
+
+private:
+	std::string file = "model/rat/rat.c3b";
 };

@@ -32,4 +32,6 @@ public:
 	int getHelmetID();
 	int getArmourID();
 	int hurt(BasicCollider* collider, bool dirKnockMode);
+
+	std::string file = "model/mage/mage.c3b";
 };

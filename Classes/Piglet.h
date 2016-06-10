@@ -19,4 +19,7 @@ public:
 	void normalAttackSoundEffects();
 	void init3D();
 	void initActions();
+
+private:
+	std::string file = "model/piglet/piglet.c3b";
 };

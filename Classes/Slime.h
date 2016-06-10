@@ -26,4 +26,5 @@ public:
 
 private:
 	bool _angryFace;
+	std::string file = "model/slime/slime.c3b";
 };

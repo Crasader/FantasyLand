@@ -1,6 +1,6 @@
 ﻿#include "Knight.h"
 
-std::string file = "model/knight/knight.c3b";
+
 
 Knight::Knight()
 {
@@ -12,7 +12,7 @@ Knight::Knight()
 			return;
 		_specialAttackChance = 1;
 	};
-	MessageDispatchCenter::registerMessage(MessageDispatchCenter::MessageType::SPECIAL_KNIGHT, specialAttack);
+	//MessageDispatchCenter::registerMessage(MessageDispatchCenter::MessageType::SPECIAL_KNIGHT, specialAttack);
 }
 
 bool Knight::init()
@@ -20,14 +20,14 @@ bool Knight::init()
 	_useWeaponId = ReSkin.knight.weapon;
 	_useArmourId = ReSkin.knight.armour;
 	_useHelmetId = ReSkin.knight.helmet;
-	copyTable(ActorCommonValues, this);
-	copyTable(KnightValues, this);
+	//copyTable(ActorCommonValues, this);
+	//copyTable(KnightValues, this);
 
-	if (uiLayer != NULL) {
+	/*if (uiLayer != NULL) {
 		_bloodBar = uiLayer->KnightBlood;
 		_bloodBarClone = uiLayer->KnightBloodClone;
 		_avatar = uiLayer->KnightPng;
-	}
+	}*/
 
 	init3D();
 	initActions();
@@ -38,7 +38,7 @@ void Knight::update(float dt)
 {
 	baseUpdate(dt);
 	stateMachineUpdate(dt);
-	movementUpdate(dt)
+	movementUpdate(dt);
 }
 
 void Knight::KnightNormalAttackCallback(int audioID, std::string filepath)
@@ -64,36 +64,36 @@ void Knight::hurtSoundEffects()
 void Knight::normalAttack()
 {
 	experimental::AudioEngine::play2d(WarriorProperty.normalAttackShout, false, 1);
-	KnightNormalAttack::CreateWithPos(getPosTable(this), _curFacing, _normalAttack, this);
+	//KnightNormalAttack::CreateWithPos(getPosTable(this), _curFacing, _normalAttack, this);
 	//self._sprite:runAction(self._action.attackEffect:clone()) 
-	AUDIO_ID.KNIGHTNORMALATTACK = experimental::AudioEngine::play2d(WarriorProperty.normalAttack1, false, 1);
-	experimental::AudioEngine::setFinishCallback(AUDIO_ID.KNIGHTNORMALATTACK, KnightNormalAttackCallback);
+	auto AUDIO_ID_KNIGHTNORMALATTACK = experimental::AudioEngine::play2d(WarriorProperty.normalAttack1, false, 1);
+	experimental::AudioEngine::setFinishCallback(AUDIO_ID_KNIGHTNORMALATTACK, KnightNormalAttackCallback);
 }
 
 void Knight::specialAttack()
 {
 	_specialAttackChance = KnightValues._specialAttackChance;
 	_angry = ActorCommonValues._angry;
-	auto angryChange = { _name, _angry, _angryMax };
-	MessageDispatchCenter::dispatchMessage(MessageDispatchCenter::MessageType::ANGRY_CHANGE, angryChange);
+	//auto anaryChange = { _name, _angry, _angryMax };
+	//MessageDispatchCenter::dispatchMessage(MessageDispatchCenter::MessageType::ANGRY_CHANGE, anaryChange);
 
 	//knight will create 2 attacks one by one  
 	experimental::AudioEngine::play2d(WarriorProperty.specialAttackShout, false, 0.7);
-	auto attack = _specialAttack;
-	attack.knock = 0;
-	KnightNormalAttack::CreateWithPos(getPosTable(this), _curFacing, attack, this);
+	//auto attack = _specialAttack;
+	//attack.knock = 0;
+	//KnightNormalAttack::CreateWithPos(getPosTable(this), _curFacing, attack, this);
 
 	auto pos = getPosTable(this);
 	pos.x += 50;
 	pos = ccpRotateByAngle(pos, _myPos, _curFacing);
 
-	AUDIO_ID.ARCHERATTACK = ccexp.AudioEngine:play2d(WarriorProperty.specialAttack1, false, 1);
-	experimental::AudioEngine::setFinishCallback(AUDIO_ID.KNIGHTSPECIALATTACK, KnightSpecialAttackCallback);
+	auto AUDIO_ID_KNIGHTSPECIALATTACK = experimental::AudioEngine::play2d(WarriorProperty.specialAttack1, false, 1);
+	experimental::AudioEngine::setFinishCallback(AUDIO_ID_KNIGHTSPECIALATTACK, KnightSpecialAttackCallback);
 	
 	auto punch = [&]() {
-		KnightNormalAttack::CreateWithPos(pos, _curFacing, _specialAttack, this);
+		//KnightNormalAttack::CreateWithPos(pos, _curFacing, _specialAttack, this);
 	};
-	delayExecute(this, punch, 0.2);
+	//delayExecute(this, punch, 0.2);
 }
 
 void Knight::initAttackEffect()
@@ -104,7 +104,7 @@ void Knight::initAttackEffect()
 	auto scale = 0.01;
 	auto sprite = Sprite::createWithSpriteFrameName("specialAttack.jpg");
 	sprite->setVisible(false);
-	sprite->setBlendFunc(gl.ONE, gl.ONE);
+	//sprite->setBlendFunc(gl.ONE, gl.ONE);
 	sprite->setScaleX(scale);
 	sprite->setRotation(startRotate);
 	sprite->setOpacity(0);
@@ -122,7 +122,7 @@ void Knight::initAttackEffect()
 	auto rotateAction2 = RotateBy::create(0, startRotate);
 	auto restore = Sequence::create(fadeAction2, rotateAction2, scaleAction2, NULL);
 
-	_sprite = sprite;
+	//_sprite = sprite;
 	_action.insert("attackEffect", Sequence::create(Show::create(), attack, restore, NULL));
 	_action.at("attackEffect")->retain();
 }
@@ -133,7 +133,7 @@ void Knight::init3D()
 	initPuff();
 	_sprite3d = Sprite3D::create(file);
 	_sprite3d->setScale(25);
-	_sprite3d->addEffect(Vec3(0, 0, 0), CelLine, -1);
+	//_sprite3d->addEffect(Vec3(0, 0, 0), CelLine, -1);
 	addChild(_sprite3d);
 	_sprite3d->setRotation3D(Vec3(90, 0, 0));
 	_sprite3d->setRotation(-90);

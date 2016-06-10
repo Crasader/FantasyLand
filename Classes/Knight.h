@@ -32,4 +32,6 @@ public:
 	int getWeaponID();
 	int getHelmetID();
 	int getArmourID();
+
+	std::string file = "model/knight/knight.c3b";
 };

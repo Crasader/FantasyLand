@@ -1,17 +1,15 @@
 ﻿#include "Dragon.h"
 
-static std::string file = "model/dragon/dragon.c3b";
-
 Dragon::Dragon()
 {
 	_AIEnabled = true;
-	scheduleUpdate(0.5);
+	schedule(schedule_selector(Dragon::update), 0.5);
 }
 
 bool Dragon::init()
 {
-	copyTable(ActorCommonValues, this);
-	copyTable(DragonValues, this);
+	//copyTable(ActorCommonValues, this);
+	//copyTable(DragonValues, this);
 	init3D();
 	initActions();
 	return true;
@@ -19,8 +17,8 @@ bool Dragon::init()
 
 void Dragon::reset()
 {
-	copyTable(ActorCommonValues, this);
-	copyTable(DragonValues, this);
+	//copyTable(ActorCommonValues, this);
+	//copyTable(DragonValues, this);
 	walkMode();
 	setPositionZ(0);
 }
@@ -29,7 +27,7 @@ void Dragon::update(float dt)
 {
 	baseUpdate(dt);
 	stateMachineUpdate(dt);
-	movementUpdate(dt)
+	movementUpdate(dt);
 }
 
 void Dragon::dyingMode(Vec2 knockSource, int knockAmount)
@@ -49,8 +47,8 @@ void Dragon::dyingMode(Vec2 knockSource, int knockAmount)
 	}
 	_AIEnabled = false;
 	//自己修改的Erase
-	std::vector<Actor*>::iterator it = std::find(MonsterManager.begin(), MonsterManager.end(), this);
-	HeroManager.erase(it);
+	remove(HeroManager.begin(), HeroManager.end(), this);
+
 	auto recycle = [&]() {
 		setVisible(false);
 		getPoolByName(_name).push_back(this);
@@ -79,7 +77,7 @@ void Dragon::hurtSoundEffects()
 void Dragon::normalAttack()
 {
 	normalAttackSoundEffects();
-	DragonAttack::CreateWithPos(getPosTable(this), _curFacing, _normalAttack);
+	//DragonAttack::CreateWithPos(getPosTable(this), _curFacing, _normalAttack);
 }
 
 void Dragon::init3D()
@@ -87,7 +85,7 @@ void Dragon::init3D()
 	initShadow();
 	_sprite3d = Sprite3D::create(file);
 	_sprite3d->setScale(10);
-	_sprite3d->addEffect(Vec3(0, 0, 0), CelLine, -1);
+	//_sprite3d->addEffect(Vec3(0, 0, 0), CelLine, -1);
 	addChild(_sprite3d);
 	_sprite3d->setRotation3D(Vec3(90, 0, 0));
 	_sprite3d->setRotation(-90);

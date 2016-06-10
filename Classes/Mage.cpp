@@ -1,7 +1,5 @@
 ﻿#include "Mage.h"
 
-std::string file = "model/mage/mage.c3b";
-
 Mage::Mage()
 {
 	_AIEnabled = true;
@@ -11,7 +9,7 @@ Mage::Mage()
 			return;
 		_specialAttackChance = 1;
 	};
-	MessageDispatchCenter::registerMessage(MessageDispatchCenter::MessageType::SPECIAL_MAGE, specialAttack);
+	//MessageDispatchCenter::registerMessage(MessageDispatchCenter::MessageType::SPECIAL_MAGE, specialAttack);
 }
 
 bool Mage::init()
@@ -19,14 +17,14 @@ bool Mage::init()
 	_useWeaponId = ReSkin.mage.weapon;
 	_useArmourId = ReSkin.mage.armour;
 	_useHelmetId = ReSkin.mage.helmet;
-	copyTable(ActorCommonValues, this);
-	copyTable(MageValues, this);
+	//copyTable(ActorCommonValues, this);
+	//copyTable(MageValues, this);
 
-	if (uiLayer != NULL) {
+	/*if (uiLayer != NULL) {
 		_bloodBar = uiLayer->MageBlood;
 		_bloodBarClone = uiLayer->MageBloodClone;
 		_avatar = uiLayer->MagePng;
-	}
+	}*/
 
 	init3D();
 	initActions();
@@ -37,7 +35,7 @@ void Mage::update(float dt)
 {
 	baseUpdate(dt);
 	stateMachineUpdate(dt);
-	movementUpdate(dt)
+	movementUpdate(dt);
 }
 
 void Mage::playDyingEffects()
@@ -54,15 +52,15 @@ void Mage::normalAttack()
 {
 	experimental::AudioEngine::play2d(MageProperty.normalAttackShout, false, 0.4);
 	experimental::AudioEngine::play2d(MageProperty.ice_normal, false, 0.8);
-	MageNormalAttack::CreateWithPos(getPosTable(this), _curFacing, _normalAttack, _target, this);
+	//MageNormalAttack::CreateWithPos(getPosTable(this), _curFacing, _normalAttack, _target, this);
 }
 
 void Mage::specialAttack()
 {
 	_specialAttackChance = MageValues._specialAttackChance;
 	_angry = ActorCommonValues._angry;
-	auto angryChange = { _name, _angry, _angryMax };
-	MessageDispatchCenter::dispatchMessage(MessageDispatchCenter::MessageType::ANGRY_CHANGE, angryChange);
+	//auto angryChange = { _name, _angry, _angryMax };
+	//MessageDispatchCenter::dispatchMessage(MessageDispatchCenter::MessageType::ANGRY_CHANGE, angryChange);
 
 	//mage will create 3 ice spikes on the ground
 	//get 3 positions
@@ -78,16 +76,16 @@ void Mage::specialAttack()
 	pos1 = ccpRotateByAngle(pos1, _myPos, _curFacing);
 	pos2 = ccpRotateByAngle(pos2, _myPos, _curFacing);
 	pos3 = ccpRotateByAngle(pos3, _myPos, _curFacing);
-	MageIceSpikes::CreateWithPos(pos1, _curFacing, _specialAttack, this);
-	auto spike2 = [&]() {
-		MageIceSpikes::CreateWithPos(pos2, _curFacing, _specialAttack, this);
-	};
-	auto spike3 = [&]() {
-		MageIceSpikes::CreateWithPos(pos3, _curFacing, _specialAttack, this);
-	};
+	//MageIceSpikes::CreateWithPos(pos1, _curFacing, _specialAttack, this);
+	//auto spike2 = [&]() {
+	//	MageIceSpikes::CreateWithPos(pos2, _curFacing, _specialAttack, this);
+	//};
+	//auto spike3 = [&]() {
+	//	MageIceSpikes::CreateWithPos(pos3, _curFacing, _specialAttack, this);
+	//};
 	
-	delayExecute(this, spike2, 0.25);
-	delayExecute(this, spike3, 0.5);
+	//delayExecute(this, spike2, 0.25);
+	//delayExecute(this, spike3, 0.5);
 }
 
 void Mage::init3D()
@@ -96,7 +94,7 @@ void Mage::init3D()
 	initPuff();
 	_sprite3d = Sprite3D::create(file);
 	_sprite3d->setScale(1.9);
-	_sprite3d->addEffect(Vec3(0, 0, 0), CelLine, -1);
+	//_sprite3d->addEffect(Vec3(0, 0, 0), CelLine, -1);
 	addChild(_sprite3d);
 	_sprite3d->setRotation3D(Vec3(90, 0, 0));
 	_sprite3d->setRotation(-90);
@@ -243,7 +241,7 @@ int Mage::hurt(BasicCollider* collider, bool dirKnockMode)
 		//three param judge if crit
 
 		/* 这里需要修改 */
-		Sprite* blood = _hpCounter->showBloodLossNum(damage, this, critical);
+		/*Sprite* blood = _hpCounter->showBloodLossNum(damage, this, critical);
 		if (_name == "Rat")
 			setPositionZ(Director::getInstance()->getVisibleSize().height * 0.25);
 		addEffect(blood);
@@ -251,7 +249,7 @@ int Mage::hurt(BasicCollider* collider, bool dirKnockMode)
 		auto bloodMinus = { _name, _maxhp, _hp, _bloodBar, _bloodBarClone, _avatar };
 		MessageDispatchCenter::dispatchMessage(MessageDispatchCenter::MessageType::BLOOD_MINUS, bloodMinus);
 		auto anaryChange = { _name, _angry,_angryMax };
-		MessageDispatchCenter::dispatchMessage(MessageDispatchCenter::MessageType::ANGRY_CHANCE, anaryChange);
+		MessageDispatchCenter::dispatchMessage(MessageDispatchCenter::MessageType::ANGRY_CHANCE, anaryChange);*/
 		return damage;
 	}
 	return 0;

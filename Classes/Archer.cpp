@@ -14,7 +14,7 @@ Archer::Archer()
 			return;
 		_specialAttackChance = 1;
 	};
-	MessageDispatchCenter::registerMessage(MessageDispatchCenter::MessageType::SPECIAL_ARCHER, specialAttack);
+	//MessageDispatchCenter::registerMessage(MessageDispatchCenter::MessageType::SPECIAL_ARCHER, specialAttack);
 };
 
 bool Archer::init()
@@ -24,11 +24,11 @@ bool Archer::init()
 	//_useHelmetId = ReSkin.archer.helmet;
 	//copyTable(ActorCommonValues, self);
 	//copyTable(ArcherValues, self);
-	if (uiLayer != NULL) {
+	/*if (uiLayer != NULL) {
 		_bloodBar = uiLayer->ArcherBlood;
 		_bloodBarClone = uiLayer->ArcherBloodClone;
 		_avatar = uiLayer->ArcherPng;
-	}
+	}*/
 
 	init3D();
 	initActions();
@@ -69,43 +69,44 @@ void Archer::hurtSoundEffects()
 
 void Archer::normalAttack()
 {
-	ArcherNormalAttack::CreateWithPos(getPosTable(this), _curFacing, _normalAttack, this);
+	//ArcherNormalAttack::CreateWithPos(getPosTable(this), _curFacing, _normalAttack, this);
 	experimental::AudioEngine::play2d(Archerproperty.normalAttackShout, false, 1);
-	AUDIO_ID.ARCHERATTACK = experimental::AudioEngine::play2d(Archerproperty.attack1, false, 1);
-	experimental::AudioEngine::setFinishCallback(AUDIO_ID.ARCHERATTACK, ArcherlAttackCallback);
+	auto AUDIO_ID_ARCHERATTACK = experimental::AudioEngine::play2d(Archerproperty.attack1, false, 1);
+	experimental::AudioEngine::setFinishCallback(AUDIO_ID_ARCHERATTACK, ArcherlAttackCallback);
 }
 
 void Archer::specialAttack()
 {
 	_specialAttackChance = ArcherValues._specialAttackChance;
 	_angry = ActorCommonValues._angry;
-	auto angryChange = { _name, _angry, _angryMax };
-	MessageDispatchCenter::dispatchMessage(MessageDispatchCenter::MessageType::ANGRY_CHANGE, angryChange);
+	//auto angryChange = { _name, _angry, _angryMax };
+	//MessageDispatchCenter::dispatchMessage(MessageDispatchCenter::MessageType::ANGRY_CHANGE, angryChange);
 
 	experimental::AudioEngine::play2d(Archerproperty.specialAttackShout, false, 1);
-	AUDIO_ID.ARCHERATTACK = ccexp.AudioEngine:play2d(Archerproperty.attack1, false, 1);
-	ccexp.AudioEngine : setFinishCallback(AUDIO_ID.ARCHERATTACK, ArcherlAttackCallback);
 
-	auto attack = _specialAttack;
-	attack.knock = 80;
+	auto AUDIO_ID_ARCHERATTACK = experimental::AudioEngine::play2d(Archerproperty.attack1, false, 1);
+	experimental::AudioEngine::setFinishCallback(AUDIO_ID_ARCHERATTACK, ArcherlAttackCallback);
+
+	//auto attack = _specialAttack;
+	//attack.knock = 80;
 
 	auto pos1 = getPosTable(this);
 	pos1 = ccpRotateByAngle(pos1, _myPos, _curFacing);
 	auto pos2 = pos1;
 	auto pos3 = pos2;
-	ArcherSpecialAttack::create(pos1, _curFacing, attack, this);
+	//ArcherSpecialAttack::create(pos1, _curFacing, attack, this);
 	auto spike2 = [&]() {
-		ArcherSpecialAttack::create(pos2, _curFacing, attack, this);
-		AUDIO_ID.ARCHERATTACK = ccexp.AudioEngine:play2d(Archerproperty.attack1, false, 1);
-		ccexp.AudioEngine : setFinishCallback(AUDIO_ID.ARCHERATTACK, ArcherlAttackCallback);
-	}
+		//ArcherSpecialAttack::create(pos2, _curFacing, attack, this);
+		auto AUDIO_ID_ARCHERATTACK = experimental::AudioEngine::play2d(Archerproperty.attack1, false, 1);
+		experimental::AudioEngine::setFinishCallback(AUDIO_ID_ARCHERATTACK, ArcherlAttackCallback);
+	};
 	auto spike3 = [&]() {
-		ArcherSpecialAttack::create(pos3, _curFacing, attack, this);
-		AUDIO_ID.ARCHERATTACK = ccexp.AudioEngine:play2d(Archerproperty.attack1, false, 1);
-		experimental::AudioEngine::setFinishCallback(AUDIO_ID.ARCHERATTACK, ArcherlAttackCallback);
-	}
-	delayExecute(this, spike2, 0.2);
-	delayExecute(this, spike3, 0.4);
+		//ArcherSpecialAttack::create(pos3, _curFacing, attack, this);
+		auto AUDIO_ID_ARCHERATTACK = experimental::AudioEngine::play2d(Archerproperty.attack1, false, 1);
+		experimental::AudioEngine::setFinishCallback(AUDIO_ID_ARCHERATTACK, ArcherlAttackCallback);
+	};
+	//delayExecute(this, spike2, 0.2);
+	//delayExecute(this, spike3, 0.4);
 
 }
 
@@ -115,7 +116,7 @@ void Archer::init3D()
 	initPuff();
 	_sprite3d = Sprite3D::create(file);
 	_sprite3d->setScale(1.6);
-	_sprite3d->addEffect(Vec3(0, 0, 0), CelLine, -1);
+	//_sprite3d->addEffect(Vec3(0, 0, 0), CelLine, -1);
 	addChild(_sprite3d);
 	_sprite3d->setRotation3D(Vec3(90, 0, 0));
 	_sprite3d->setRotation(-90);
@@ -290,7 +291,7 @@ int Archer::hurt(BasicCollider* collider, bool dirKnockMode)
 	//three param judge if crit
 
 	/* 这里需要修改 */
-	Sprite* blood = _hpCounter->showBloodLossNum(damage, this, critical);
+	/*Sprite* blood = _hpCounter->showBloodLossNum(damage, this, critical);
 	if (_name == "Rat")
 		setPositionZ(Director::getInstance()->getVisibleSize().height * 0.25);
 	addEffect(blood);
@@ -298,5 +299,6 @@ int Archer::hurt(BasicCollider* collider, bool dirKnockMode)
 	auto bloodMinus = { _name, _maxhp, _hp, _bloodBar, _bloodBarClone, _avatar };
 	MessageDispatchCenter::dispatchMessage(MessageDispatchCenter::MessageType::BLOOD_MINUS, bloodMinus);
 	auto anaryChange = { _name, _angry,_angryMax };
-	MessageDispatchCenter::dispatchMessage(MessageDispatchCenter::MessageType::ANGRY_CHANCE, anaryChange);
+	MessageDispatchCenter::dispatchMessage(MessageDispatchCenter::MessageType::ANGRY_CHANCE, anaryChange);*/
+	return damage;
 }

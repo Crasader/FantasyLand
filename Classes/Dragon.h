@@ -21,4 +21,7 @@ public:
 	void normalAttack();
 	void init3D();
 	void initActions();
+
+private:
+	std::string file = "model/dragon/dragon.c3b";
 };

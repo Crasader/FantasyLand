@@ -353,10 +353,10 @@ Actor* Actor::_findEnemy(EnumRaceType HeroOrMonster, bool &allDead)
 	Actor* target = nullptr;
 	std::vector<Actor*>* manager;
 	//error in delaration in Manager.h
-	if (HeroOrMonster == EnumRaceType::MONSTER)
+	/*if (HeroOrMonster == EnumRaceType::MONSTER)
 		manager = &HeroManager;
 	else
-		manager = &MonsterManager;
+		manager = &MonsterManager;*/
 	for (auto val = manager->begin(); val != manager->end(); ++val) {
 		auto temp = *val;
 		auto dis = ccpDistance(_myPos, temp->_myPos);

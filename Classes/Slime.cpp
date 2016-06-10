@@ -1,6 +1,6 @@
 ﻿#include "Slime.h"
 
-std::string file = "model/slime/slime.c3b";
+
 
 Slime::Slime()
 {
@@ -11,8 +11,8 @@ Slime::Slime()
 
 bool Slime::init()
 {
-	copyTable(ActorCommonValues, this);
-	copyTable(SlimeValues, this);
+	//copyTable(ActorCommonValues, this);
+	//copyTable(SlimeValues, this);
 	_angryFace = false;
 	init3D();
 	initActions();
@@ -21,9 +21,10 @@ bool Slime::init()
 
 void Slime::reset()
 {
-	copyTable(ActorCommonValues, this);
-	copyTable(SlimeValues, this);
-	_findEnemy(_racetype);
+	//copyTable(ActorCommonValues, this);
+	//copyTable(SlimeValues, this);
+	bool allDead;
+	_findEnemy(_racetype, allDead);
 	walkMode();
 	setPositionZ(0);
 }
@@ -45,7 +46,7 @@ void Slime::playAnimation(std::string name, bool loop)
 	if (_curAnimation != name) {	//--using name to check which animation is playing
 		_sprite3d->stopAction(_curAnimation3d);
 		if (loop)
-			_curAnimation3d = RepeatForever::create(_action.at(name)->clone()));
+			_curAnimation3d = RepeatForever::create(_action.at(name)->clone());
 		else
 			_curAnimation3d = _action.at(name)->clone();
 		_sprite3d->setPosition3D(Vec3(0, 0, 0));
@@ -61,7 +62,7 @@ void Slime::init3D()
 	_sprite3d = Sprite3D::create(file);
 	_sprite3d->setTexture("model/slime/baozi.jpg");
 	_sprite3d->setScale(17);
-	_sprite3d->addEffect(Vec3(0, 0, 0), CelLine, -1);
+	//_sprite3d->addEffect(Vec3(0, 0, 0), CelLine, -1);
 	addChild(_sprite3d);
 	_sprite3d->setRotation3D(Vec3(90, 0, 0));
 	_sprite3d->setRotation(-90);
@@ -70,26 +71,26 @@ void Slime::init3D()
 void Slime::walkMode()
 {
 	angryFace(false);
-	Actor::walkMode(this);
+	Actor::walkMode();
 
 };
 
 void Slime::attackMode()
 {
 	angryFace(true);
-	Actor::attackMode(this);
+	Actor::attackMode();
 };
 
 void Slime::idleMode()
 {
 	angryFace(false);
-	Actor::idleMode(this);
+	Actor::idleMode();
 };
 
 void Slime::knockMode(BasicCollider* collider, bool dirKnockMode)
 {
 	angryFace(false);
-	Actor::knockMode(this, collider, dirKnockMode);
+	Actor::knockMode(collider, dirKnockMode);
 };
 
 void Slime::angryFace(bool trueFalse)
@@ -147,7 +148,7 @@ void Slime::initActions()
 	attack2->retain();
 	auto die = Spawn::create(
 		Sequence::create(
-			JumpBy::create(dur / 2, Vec3(0, 0, 0), 30, 1),
+			JumpBy::create(dur / 2, Vec2(0, 0), 30, 1),
 			ScaleBy::create(dur, 2, 2, 0.1),
 			NULL
 			),

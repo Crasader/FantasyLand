@@ -12,7 +12,6 @@ USING_NS_CC;
 
 extern enum EnumRaceType;
 extern enum EnumStateType;
-static std::string file = "model/archer/archer.c3b";
 
 class Archer : public Actor
 {
@@ -56,19 +55,21 @@ public:
 
 
 private:
-	struct attackCollierInfoForSpecial {
-		int minRange;
-		int maxRange;
-		float angle;
-		int knock;
-		int damage;
-		EnumRaceType mask;
-		float duration;
-		int speed;
-		float criticalChance;
-		float DOTTimer;
-		float curDOTTimer;
-		bool DOTApplied;
-	}_specialAttack;
+	//struct attackCollierInfoForSpecial {
+	//	int minRange;
+	//	int maxRange;
+	//	float angle;
+	//	int knock;
+	//	int damage;
+	//	EnumRaceType mask;
+	//	float duration;
+	//	int speed;
+	//	float criticalChance;
+	//	float DOTTimer;
+	//	float curDOTTimer;
+	//	bool DOTApplied;
+	//}_specialAttack;
+
+	std::string file = "model/archer/archer.c3b";
 	
 };

@@ -1,6 +1,6 @@
 ﻿#include "Piglet.h"
 
-std::string file = "model/piglet/piglet.c3b";
+
 
 Piglet::Piglet()
 {
@@ -12,8 +12,8 @@ bool Piglet::init()
 {
 	_useWeaponId = ReSkin.mage.weapon;
 	_useArmourId = ReSkin.mage.armour;
-	copyTable(ActorCommonValues, this);
-	copyTable(PigletValues, this);
+	//copyTable(ActorCommonValues, this);
+	//copyTable(PigletValues, this);
 	init3D();
 	initActions();
 	return true;
@@ -21,9 +21,10 @@ bool Piglet::init()
 
 void Piglet::reset()
 {
-	copyTable(ActorCommonValues, this);
-	copyTable(PigletValues, this);
-	_findEnemy(_racetype);
+	//copyTable(ActorCommonValues, this);
+	//copyTable(PigletValues, this);
+	bool allDead;
+	_findEnemy(_racetype, allDead);
 	walkMode();
 	setPositionZ(0);
 }
@@ -65,7 +66,7 @@ void Piglet::init3D()
 	_sprite3d = Sprite3D::create(file);
 	_sprite3d->setTexture("model/piglet/zhu0928.jpg");
 	_sprite3d->setScale(1.3);
-	_sprite3d->addEffect(Vec3(0, 0, 0), CelLine, -1);
+	//_sprite3d->addEffect(Vec3(0, 0, 0), CelLine, -1);
 	addChild(_sprite3d);
 	_sprite3d->setRotation3D(Vec3(90, 0, 0));
 	_sprite3d->setRotation(-90);
