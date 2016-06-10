@@ -9,7 +9,7 @@ extern float CelLine;
 extern std::string BossTaunt;
 extern AnimationCache * animationCache ;
 extern Layer * currentLayer;
-
+extern float resolutionRate;
 
 extern struct RECTS_d RECTS;
 extern struct G_d G;
@@ -34,8 +34,6 @@ extern struct WarriorProperty_d WarriorProperty;
 extern struct Archerproperty_d Archerproperty;
 extern struct MageProperty_d MageProperty;
 extern struct ReSkin_d ReSkin;
-
-
 
 struct RECTS_d
 {
@@ -108,8 +106,8 @@ struct ActorCommonValues_d
 struct ActorDefaultValues_d
 {
 	enum EnumRaceType _racetype = HERO;
-	//_statetype = nil;
-	//_sprite3d = nil;
+	enum EnumStateType _statetype ;
+	Sprite3D * _sprite3d = NULL;
 
 	float _radius = 50;
 	float _mass = 100;

@@ -9,6 +9,8 @@ float CelLine = 0.009;
 std::string BossTaunt = "How dare you???";
 Layer * currentLayer;
 AnimationCache * animationCache = AnimationCache::getInstance();
+float resolutionRate = G.winSize.width / G.winSize.height;
+
 struct RECTS_d RECTS;
 struct G_d G;
 struct BGM_RES_d BGM_RES;

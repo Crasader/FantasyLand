@@ -472,10 +472,10 @@ void GameMaster::jumpInto(Actor* obj, bool isFront)
 
 void GameMaster::showWarning()
 {
-	/*Texture2D::setDefaultAlphaPixelFormat(TEXTURE2_D_PIXEL_FORMAT_AUTO);*/
+	Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::AUTO);
 	auto warning = Layer::create();
 	auto warning_logo = Sprite::createWithSpriteFrameName("caution.png");
-	/*Texture2D::setDefaultAlphaPixelFormat(TEXTURE2_D_PIXEL_FORMAT_RG_B565)*/
+	Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGB565);
 	warning_logo->setPosition(G.winSize.width*0.5, G.winSize.height*0.5);
 	warning_logo->setPositionZ(1);
 
@@ -498,7 +498,7 @@ void GameMaster::showWarning()
 
 void GameMaster::showDialog()
 {
-	//Texture2D::setDefaultAlphaPixelFormat(/*TEXTURE2_D_PIXEL_FORMAT_AUTO*/);
+	Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::AUTO);
 	auto colorLayer = LayerColor::create(Color4B(10, 10, 10, 150));
 	colorLayer->ignoreAnchorPointForPosition(false);
 	colorLayer->setPositionZ(-Director::getInstance()->getZEye() / 5);
@@ -571,7 +571,7 @@ void GameMaster::showDialog()
 
 	//scheduleid = Director::getInstance()->getScheduler()->scheduleScriptFunc(exitDialog, 3, false);
 
-	//Texture2D::setDefaultAlphaPixelFormat(TEXTURE2_D_PIXEL_FORMAT_RG_B565);
+	Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGB565);
 }
 
 void GameMaster::showVictoryUI()
