@@ -1,16 +1,7 @@
 ﻿#pragma once
 #include "cocos2d.h"
-#include "Manager.h"
-#include "Knight.h"
-#include "Mage.h"
 #include "Actor.h"
-#include "GlobalVariables.h"
-#include "Piglet.h"
-#include "Slime.h"
-#include "Rat.h"
-#include "Dragon.h"
-#include "Archer.h"
-#include "cocos2d.h"
+
 
 USING_NS_CC;
 

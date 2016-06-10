@@ -1,6 +1,7 @@
 ﻿#include "GlobalVariables.h"
 #include "cocos2d.h"
 #include "Helper.h"
+#include <string>
 USING_NS_CC;
 
 float FXZorder = 1999;

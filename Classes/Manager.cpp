@@ -1,4 +1,7 @@
 ﻿#include "Manager.h"
+#include "Dragon.h"
+#include "Actor.h"
+#include "GlobalVariables.h"
 
 std::vector<Actor *> HeroPool ;
 std::vector<Actor *> DragonPool ;

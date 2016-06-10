@@ -1,4 +1,14 @@
 ﻿#include "GameMaster.h"
+#include "GlobalVariables.h"
+#include "Piglet.h"
+#include "Slime.h"
+#include "Rat.h"
+#include "Dragon.h"
+#include "Archer.h"
+#include "cocos2d.h"
+#include "Manager.h"
+#include "Knight.h"
+#include "Mage.h"
 
 int gloableZOrder = 1;
 int EXIST_MIN_MONSTER = 4;
