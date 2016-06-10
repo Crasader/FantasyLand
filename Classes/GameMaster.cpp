@@ -297,7 +297,7 @@ void GameMaster::showDragon(bool isFront)
 		dragon->setPosition(appearPos);
 		dragon->getMyPos() = appearPos;
 		dragon->setVisible(true);
-		dragon->setgoRight = false;
+		dragon->setGoRight(false);
 		dragon->setAIEnabled(true);
 		MonsterManager.push_back(dragon);
 	}
@@ -338,7 +338,7 @@ void GameMaster::showPiglet(bool isFront)
 		piglet->setPosition(appearPos);
 		piglet->getMyPos() = appearPos;
 		piglet->setVisible(true);
-		piglet->setgoRight = false;
+		piglet->setGoRight(false) ;
 		piglet->setAIEnabled(true);
 		MonsterManager.push_back(piglet);
 	}
@@ -351,7 +351,7 @@ void GameMaster::showSlime(bool isFront)
 		Slime * cslime = dynamic_cast<Slime *> (SlimePool[0]);
 		SlimePool.erase(SlimePool.begin());
 		cslime->reset();
-		cslime->setgoRight = false;
+		cslime->setGoRight(false) ;
 		jumpInto(cslime, isFront);
 		MonsterManager.push_back(cslime);
 	}
@@ -365,7 +365,7 @@ void GameMaster::showRat(bool isFront)
 
 		RatPool.erase(RatPool.begin());
 		crat->reset();
-		crat->setgoRight = false;
+		crat->setGoRight(false);
 		jumpInto(crat, isFront);
 		MonsterManager.push_back(crat);
 	}
@@ -411,7 +411,7 @@ void GameMaster::showBoss()
 	boss->setPosition3D(apperPos);
 	boss->setMyPos(Vec2(apperPos.x,apperPos.y));
 	boss->setFacing(180);
-	boss->setgoRight = false;
+	boss->setGoRight(false);
 	auto enableAI = [boss]()
 	{
 		boss->setAIEnabled(true);

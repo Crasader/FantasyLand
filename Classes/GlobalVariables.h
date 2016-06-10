@@ -8,7 +8,7 @@ extern float CelLine;
 extern std::string BossTaunt;
 extern AnimationCache * animationCache ;
 
-void init();
+void gv_init();
 
 extern struct RECTS_d RECTS;
 extern struct G_d G;

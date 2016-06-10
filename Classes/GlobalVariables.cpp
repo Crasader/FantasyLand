@@ -10,7 +10,7 @@ std::string BossTaunt = "How dare you???";
 
 AnimationCache * animationCache = AnimationCache::getInstance();
 
-void init()
+void gv_init()
 {
 	Animation * hurtAnimation = Animation::create();
 	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("FX/FX.plist");
