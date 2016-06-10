@@ -2,12 +2,8 @@
 
 #include <list>
 #include <numeric>
-#include <algorithm>
 #include "cocos2d.h"
 #include "Actor.h"
-#include "Helper.h"
-#include "Manager.h"
-#include "GlobalVariables.h"
 #include "Archer.h"
 
 USING_NS_CC;

@@ -2,9 +2,8 @@
 
 #include "cocos2d.h"
 #include "GlobalVariables.h"
-#include "Helper.h"
 #include "Actor.h"
-#include "AttackCommand.h"
+
 
 class Dragon : public Actor
 {

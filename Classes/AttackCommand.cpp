@@ -1,5 +1,10 @@
 ﻿#include "AttackCommand.h"
 
+#include "Helper.h"
+#include "Manager.h"
+#include "GlobalVariables.h"
+#include "ParticleManager.h"
+
 std::vector<BasicCollider*> AttackManager;
 
 void solveAttacks(float dt)

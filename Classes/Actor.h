@@ -1,15 +1,11 @@
 ﻿#pragma once
 
 #include <vector>
-#include <algorithm>
 
 #include "cocos2d.h"
-#include "Helper.h"
 #include "HPCounter.h"
 #include "AttackCommand.h"
-#include "ParticleManager.h"
 #include "BattleFieldUI.h"
-#include "MessageDispatchCenter.h"
 #include "AudioEngine.h"
 
 USING_NS_CC;

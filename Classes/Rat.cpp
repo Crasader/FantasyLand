@@ -1,5 +1,5 @@
 ﻿#include "Rat.h"
-
+#include "Manager.h"
 
 
 Rat::Rat()
