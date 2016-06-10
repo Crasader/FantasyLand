@@ -1,9 +1,7 @@
 ﻿#pragma once
 #include "cocos2d.h"
-#include "ui/CocosGUI.h"
 #include "ParticleManager.h"
 #include "Slime.h"
-#include "MainMenuScene.h"
 
 USING_NS_CC;
 

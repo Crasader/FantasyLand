@@ -1,4 +1,9 @@
 ﻿#include "ChooseRoleScene.h"
+#include "ui/CocosGUI.h"
+#include "Knight.h"
+#include "Archer.h"
+#include "Mage.h"
+#include "BattleScene.h"
 
 Scene* ChooseRoleScene::createScene()
 {
@@ -10,7 +15,7 @@ Scene* ChooseRoleScene::createScene()
 
 bool ChooseRoleScene::init()
 {
-	layer->:init();
+	layer->init();
 
 	return true;
 }
@@ -128,7 +133,7 @@ void ChooseRoleScene::addHeros()
 		auto rotation = layer->getChildByTag(sortorder[2])->getRotation3D();
 		layer->getChildByTag(sortorder[2])->setRotation3D(Vec3(rotation.x, rotation.y + rotate, 0));
 	};
-	_schedule_rotate = Director::getInstance()->getScheduler()->scheduleScriptFunc(hero_rotate, 0, false);
+	//_schedule_rotate = Director::getInstance()->getScheduler()->scheduleScriptFunc(hero_rotate, 0, false);
 }
 
 void ChooseRoleScene::addBk()
@@ -143,7 +148,7 @@ Layer *ChooseRoleScene::createLayer()
 {
 
 	//create layer
-	layer = layer->:create();
+	layer = layer->create();
 
 	//create bk
 	addBk();
