@@ -1,5 +1,4 @@
 ﻿#include "ParticleManager.h"
-#include <map>
 
 ParticleManager* ParticleManager::getInstance()
 {

@@ -1,11 +1,9 @@
 ﻿#pragma once
-
 #include "cocos2d.h"
 
 USING_NS_CC;
 
 class Actor;
-
 class BasicCollider : public Node
 {
 public:

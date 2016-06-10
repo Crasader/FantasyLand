@@ -1,8 +1,5 @@
 ﻿#pragma once
-
-#include "cocos2d.h"
 #include "Actor.h"
-
 
 class Dragon : public Actor
 {

@@ -1,6 +1,4 @@
 ﻿#include "Piglet.h"
-#include "Helper.h"
-#include "GlobalVariables.h"
 
 Piglet::Piglet()
 {

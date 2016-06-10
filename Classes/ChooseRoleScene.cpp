@@ -1,9 +1,9 @@
-﻿#include "Archer.h"
-#include "ChooseRoleScene.h"
+﻿#include "ChooseRoleScene.h"
 #include "ui/CocosGUI.h"
+#include "BattleScene.h"
+#include "Archer.h"
 #include "Knight.h"
 #include "Mage.h"
-#include "BattleScene.h"
 
 Scene* ChooseRoleScene::createScene()
 {

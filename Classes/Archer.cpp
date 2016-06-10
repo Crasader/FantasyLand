@@ -1,8 +1,5 @@
 ﻿#include "Archer.h"
 
-#include "Helper.h"
-#include "AttackCommand.h"
-
 struct ArcherValues;
 
 Archer::Archer()

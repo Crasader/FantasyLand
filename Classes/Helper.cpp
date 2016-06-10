@@ -1,5 +1,4 @@
 ﻿#include "Helper.h"
-#include <cmath>
 #include "Actor.h"
 
 Camera * camera = Camera::create();

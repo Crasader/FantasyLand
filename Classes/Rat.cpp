@@ -1,7 +1,4 @@
 ﻿#include "Rat.h"
-#include "GlobalVariables.h"
-#include "Manager.h"
-#include "AttackCommand.h"
 
 Rat::Rat()
 {

@@ -1,6 +1,6 @@
 ﻿#include "BattleFieldUI.h"
-#include <AudioEngine.h>
 #include "GlobalVariables.h"
+#include <AudioEngine.h>
 
 BattleFieldUI *uiLayer;
 

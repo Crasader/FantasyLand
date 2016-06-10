@@ -1,8 +1,5 @@
 ﻿#include "AttackCommand.h"
-
-#include "Helper.h"
 #include "Actor.h"
-#include "Manager.h"
 #include "ParticleManager.h"
 
 std::vector<BasicCollider*> AttackManager;

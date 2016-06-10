@@ -1,6 +1,4 @@
 ﻿#pragma once
-
-#include "cocos2d.h"
 #include "Actor.h"
 
 class Rat : public Actor

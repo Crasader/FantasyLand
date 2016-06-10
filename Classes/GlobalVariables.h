@@ -1,5 +1,4 @@
 ﻿#pragma once
-#include "cocos2d.h"
 #include "Helper.h"
 
 void gv_init();

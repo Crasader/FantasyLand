@@ -1,6 +1,4 @@
 ﻿#include "Mage.h"
-#include "GlobalVariables.h"
-#include "AttackCommand.h"
 
 Mage::Mage()
 {

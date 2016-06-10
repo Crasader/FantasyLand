@@ -1,12 +1,5 @@
 ﻿#pragma once
-
-#include "cocos2d.h"
 #include "Actor.h"
-
-USING_NS_CC;
-
-extern enum EnumRaceType;
-extern enum EnumStateType;
 
 class Archer : public Actor
 {

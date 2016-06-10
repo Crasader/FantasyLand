@@ -1,17 +1,15 @@
-﻿#include "Archer.h"
-#include "GlobalVariables.h"
-#include "GameMaster.h"
+﻿#include "GameMaster.h"
 #include "Actor.h"
+#include "Archer.h"
 #include "Piglet.h"
 #include "Slime.h"
 #include "Rat.h"
 #include "Dragon.h"
-#include "cocos2d.h"
 #include "Manager.h"
 #include "Knight.h"
 #include "Mage.h"
-#include "JumpBy3D.h"
 #include "BattleFieldUI.h"
+#include "JumpBy3D.h"
 
 int gloableZOrder = 1;
 int EXIST_MIN_MONSTER = 4;

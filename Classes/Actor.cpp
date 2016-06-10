@@ -1,7 +1,4 @@
 ﻿#include "Actor.h"
-#include "Manager.h"
-#include "AttackCommand.h"
-#include "Helper.h"
 #include "BattleFieldUI.h"
 
 bool Actor::init() 

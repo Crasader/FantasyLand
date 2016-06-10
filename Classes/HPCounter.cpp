@@ -1,5 +1,5 @@
-﻿#include "GlobalVariables.h"
-#include "HPCounter.h"
+﻿#include "HPCounter.h"
+#include "GlobalVariables.h"
 #include "Actor.h"
 
 bool HPCounter::init()

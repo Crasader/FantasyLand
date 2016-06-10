@@ -1,8 +1,5 @@
 ﻿#include "Knight.h"
 
-#include "Helper.h"
-#include "AttackCommand.h"
-
 Knight::Knight()
 {
 	_AIEnabled = true;

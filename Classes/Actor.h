@@ -1,13 +1,11 @@
 ﻿#pragma once
-
 #include "cocos2d.h"
 #include "AudioEngine.h"
 #include "GlobalVariables.h"
+#include "AttackCommand.h"
+#include "Manager.h"
 
 USING_NS_CC;
-
-//extern enum EnumRaceType;
-//extern enum EnumStateType;
 
 class BasicCollider;
 class HPCounter;

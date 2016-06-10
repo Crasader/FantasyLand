@@ -1,6 +1,5 @@
 ﻿#pragma once
 #include "cocos2d.h"
-#include <math/Vec2.h>
 
 USING_NS_CC;
 class Actor;

@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include "GlobalVariables.h"
 
 extern std::vector<Actor *> HeroPool;
 extern std::vector<Actor *> DragonPool;
