@@ -4,16 +4,15 @@ bool Actor::init()
 {
 	this->setCascadeColorEnabled(true);
 	_action.clear();
-	copyTable(ActorDefaultValues, this);
-	copyTable(ActorCommonValues, this);
-
+	//copyTable(ActorDefaultValues, this);
+	//copyTable(ActorCommonValues, this);
 	//dropblood
-	_hpCounter = HPCounter::create();
-	addChild(_hpCounter);
+	///_hpCounter = HPCounter::create();
+	///addChild(_hpCounter);
 	_effectNode = Node::create();
 	_monsterHeight = 70;
 	_heroHeight = 150;
-	if (uiLayer != nullptr)
+	//if (uiLayer != nullptr)
 		currentLayer->addChild(_effectNode);
 	return true;
 }
@@ -30,6 +29,7 @@ void Actor::addEffect(Sprite* effect)
 
 void Actor::initPuff()
 {
+	/*
 	auto puff = ParticleSystemQuad::create(ParticleManager::getInstance()->getPlistData("walkpuff"));
 	//***ParticleSystem should be BillboardParticleSystem;
 	auto puffFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName("walkingPuff.png");
@@ -39,6 +39,7 @@ void Actor::initPuff()
 	puff->setPositionZ(10);
 	_puff = puff;
 	_effectNode->addChild(puff);
+	*/
 }
 
 void Actor::initShadow()
@@ -159,6 +160,11 @@ bool Actor::getGoRight()
 	return _goRight;
 }
 
+void Actor::setGoRight(bool goRight)
+{
+	_goRight = goRight;
+}
+
 
 Node* Actor::getEffectNode() {
 	return _effectNode;
@@ -227,13 +233,13 @@ void Actor::playDyingEffects()
 //attacking collision check
 void Actor::normalAttack()
 {
-	BasicCollider::CreateWithPos(_myPos, _curFacing, _normalAttack);
+	//BasicCollider::CreateWithPos(_myPos, _curFacing, _normalAttack);
 	normalAttackSoundEffects();
 }
 
 void Actor::specialAttack()
 {
-	BasicCollider::CreateWithPos(_myPos, _curFacing, _specialAttack);
+	//BasicCollider::CreateWithPos(_myPos, _curFacing, _specialAttack);
 	specialAttackSoundEffects();
 }
 
@@ -277,9 +283,8 @@ void Actor::dyingMode(Vec2 knockSource, int knockAmount)
 	playDyingEffects();
 	if (_racetype == EnumRaceType::HERO) {
 		uiLayer->heroDead(this);
-		//自己修改的Erase，下面还有一个
-		std::vector<Actor*>::iterator it = std::find(HeroManager.begin(), HeroManager.end(), this);
-		HeroManager.erase(it);
+
+		remove(HeroManager.begin(), HeroManager.end(), this);
 
 		runAction(Sequence::create(DelayTime::create(3), 
 			MoveBy::create(1.0, Vec3(0, 0, -50)), 
@@ -287,13 +292,14 @@ void Actor::dyingMode(Vec2 knockSource, int knockAmount)
 		_angry = 0;
 
 		//AUTO???!!!
-		auto anaryChange = { _name, _angry, _angryMax };
-		MessageDispatchCenter::dispatchMessage(MessageDispatchCenter::MessageType::ANARY_CHANGE, angryChange);
+		//auto anaryChange = { _name, _angry, _angryMax };
+		//MessageDispatchCenter::dispatchMessage(MessageDispatchCenter::MessageType::ANARY_CHANGE, angryChange);
     //CallFunc::create(recycle)
 	}
 	else {
 		std::vector<Actor*>::iterator it = std::find(HeroManager.begin(), HeroManager.end(), this);
-		HeroManager.erase(it);
+
+		remove(HeroManager.begin(), HeroManager.end(), this);
 
 		auto recycle = [&]() {
 			setVisible(false);
@@ -463,7 +469,7 @@ void Actor::attackUpdate(float dt)
 				CallFunc::create(playIdle), NULL);
 			_sprite3d->stopAction(_curAnimation3d);
 			_sprite3d->runAction(attackAction);
-			_curAnimation = attackAction;
+			_curAnimation = "attack1";
 			_cooldown = true;
 		}
 		else {
@@ -471,15 +477,15 @@ void Actor::attackUpdate(float dt)
 			auto createCol = [&]() {
 				specialAttack();
 			};
-			auto messageParam = {0.2, _myPos, _specialSlowTime, this};
+			//auto messageParam = {0.2, _myPos, _specialSlowTime, this};
 			//speed = 0.2, pos = self._myPos, dur= self._specialSlowTime , target=self
-			MessageDispatchCenter::dispatchMessage(MessageDispatchCenter::MessageType::SPECIAL_PERSPECTIVE, messageParam);
+			//MessageDispatchCenter::dispatchMessage(MessageDispatchCenter::MessageType::SPECIAL_PERSPECTIVE, messageParam);
 			auto attackAction = Sequence::create(_action.at("specialattack1")->clone(),
 				CallFunc::create(createCol), _action.at("specialattack2")->clone(),
 				CallFunc::create(playIdle), NULL);
 			_sprite3d->stopAction(_curAnimation3d);
 			_sprite3d->runAction(attackAction);
-			_curAnimation = attackAction;
+			_curAnimation = "specialAttack1";
 			_cooldown = true;	
 		}
 	}

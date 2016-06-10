@@ -27,7 +27,7 @@ public:
 	void addEffect(Sprite* effect);
 	void initPuff();
 	void initShadow();
-	static void playAnimation(std::string name, bool loop = false);
+	void playAnimation(std::string name, bool loop = false);
 
 	//getter & setter
 	EnumRaceType getRaceType();
@@ -47,14 +47,15 @@ public:
 	bool isAlive();
 	Vec2 getMyPos();
 	void setMyPos(Vec2 pos);
+	void setGoRight(bool goRight);
 	bool getGoRight();
 	Node* getEffectNode();
 
 	float hurt(BasicCollider* collider, bool dirKnockMode = false);
-	void hurtSoundEffects();
-	void normalAttackSoundEffects();
-	void specialAttackSoundEffects();
-	void playDyingEffects();
+	virtual void hurtSoundEffects();
+	virtual void normalAttackSoundEffects();
+	virtual void specialAttackSoundEffects();
+	virtual void playDyingEffects();
 	
 
 	//attacking collision check
@@ -153,7 +154,7 @@ protected:
 	/*
 	//attack collider info, it can be customized
 	struct attackColliderInfo {	//data for normal attack
-		int minRange;	//collider inner radius
+		int minRange; 	//collider inner radius
 		int maxRange;	//collider outer radius
 		float angle;	//collider angle, 360 for full circle, otherwise, a fan shape is created
 		int knock;	//attack knock back distance
