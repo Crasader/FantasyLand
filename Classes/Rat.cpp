@@ -81,7 +81,7 @@ void Rat::dyingMode(Vec2 knockSource, int knockAmount)
 	};
 
 	auto disableHeroAI = [&]() {
-		if (HeroManager.size != 0) {
+		if (HeroManager.size() != 0) {
 			for (auto var = HeroManager.begin(); var != HeroManager.end(); ++var) {
 				//HeroManager(var)->setAIEnabled(false);
 				//HeroManager(var)->idleMode();
