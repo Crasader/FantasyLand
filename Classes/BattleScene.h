@@ -1,8 +1,6 @@
 ﻿#pragma once
 #include "cocos2d.h"
 #include "Helper.h"
-#include "Manager.h"
-#include "MessageDispatchCenter.h"
 #include "Actor.h"
 
 USING_NS_CC;

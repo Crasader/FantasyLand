@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include <string>
+
 #include "cocos2d.h"
 #include "Helper.h"
 

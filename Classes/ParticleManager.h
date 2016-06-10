@@ -1,7 +1,5 @@
 ﻿#pragma once
 #include "cocos2d.h"
-#include "cocos2d.h"
-#include <set>
 
 USING_NS_CC;
 

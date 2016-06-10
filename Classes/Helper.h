@@ -1,8 +1,6 @@
 ﻿#pragma once
-#include <map>
 #include <math/Vec2.h>
 #include "cocos2d.h"
-#include <cmath>
 #include "Actor.h"
 
 USING_NS_CC;

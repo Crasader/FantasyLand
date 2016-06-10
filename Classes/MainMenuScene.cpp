@@ -1,4 +1,7 @@
 ﻿#include "MainMenuScene.h"
+#include "GlobalVariables.h"
+#include "audio/win32/AudioEngine-win32.h"
+#include <ui/CocosGUI.h>
 
 Scene* MainMenuScene::createScene()
 {

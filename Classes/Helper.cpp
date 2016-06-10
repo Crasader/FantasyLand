@@ -1,4 +1,6 @@
 ﻿#include "Helper.h"
+#include <cmath>
+#include <map>
 
 Camera * camera = Camera::create();
 
