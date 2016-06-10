@@ -1,4 +1,6 @@
 ﻿#include "BattleScene.h"
+#include "Manager.h"
+#include "MessageDispatchCenter.h"
 
 Scene* BattleScene::createScene()
 {

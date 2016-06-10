@@ -1,11 +1,6 @@
 ﻿#pragma once
 #include "cocos2d.h"
-#include "ui/CocosGUI.h"
 #include "Actor.h"
-#include "Knight.h"
-#include "Archer.h"
-#include "Mage.h"
-#include "BattleScene.h"
 
 USING_NS_CC;
 

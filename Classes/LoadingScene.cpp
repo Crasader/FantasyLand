@@ -1,4 +1,6 @@
 ﻿#include "LoadingScene.h"
+#include "ui/CocosGUI.h"
+#include "MainMenuScene.h"
 
 //local varibles
 //local particleRes
