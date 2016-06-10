@@ -1,4 +1,6 @@
 ﻿#include "Archer.h"
+#include <AudioEngine.h>
+#include "BattleFieldUI.h"
 
 struct ArcherValues;
 
@@ -9,26 +11,26 @@ Archer::Archer()
 	//this update do not do AI
 	scheduleUpdate();
 	
-	auto specialAttack = [&]() {
-		if (_specialAttackChance == 1)
-			return;
-		_specialAttackChance = 1;
-	};
+	//auto specialAttack = [&]() {
+	//	if (_specialAttackChance == 1)
+	//		return;
+	//	_specialAttackChance = 1;
+	//};
 	//MessageDispatchCenter::registerMessage(MessageDispatchCenter::MessageType::SPECIAL_ARCHER, specialAttack);
 };
 
 bool Archer::init()
 {
-	//_useWeaponId = ReSkin.archer.weapon;
-	//_useArmourId = ReSkin.archer.armour;
-	//_useHelmetId = ReSkin.archer.helmet;
-	//copyTable(ActorCommonValues, self);
-	//copyTable(ArcherValues, self);
-	/*if (uiLayer != NULL) {
+	Actor::init();
+	_useWeaponId = ReSkin.archer.weapon;
+	_useArmourId = ReSkin.archer.armour;
+	_useHelmetId = ReSkin.archer.helmet;
+
+	if (uiLayer != NULL) {
 		_bloodBar = uiLayer->ArcherBlood;
 		_bloodBarClone = uiLayer->ArcherBloodClone;
 		_avatar = uiLayer->ArcherPng;
-	}*/
+	}
 
 	init3D();
 	initActions();

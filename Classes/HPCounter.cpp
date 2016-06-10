@@ -10,7 +10,7 @@ bool HPCounter::init()
 	return true;
 }
 
-void HPCounter::showBloodLossNum(float dmage, Actor &racetype, bool atack)
+LabelTTF *HPCounter::showBloodLossNum(float dmage, Actor *racetype, bool atack)
 {
 	if(atack)
 	{
@@ -18,9 +18,9 @@ void HPCounter::showBloodLossNum(float dmage, Actor &racetype, bool atack)
 		//tm=1;
 		critleAttack->runAction(getAction(tm,targetScale,pointZ));
 		critleAttack->setRotation3D(Vec3(90, 0, 0));
-		if (racetype.getName() == "rat")
+		if (racetype->getName() == "rat")
 			critleAttack->setPosition3D(Vec3(90, 0, 0));
-		racetype.addEffect(critleAttack);
+		racetype->addEffect(critleAttack);
 		pointZ = 80;
 		targetScale = targetScale * 2;
 	}

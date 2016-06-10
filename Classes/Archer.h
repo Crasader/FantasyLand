@@ -8,7 +8,7 @@ public:
 	CREATE_FUNC(Archer);
 	virtual bool init();
 	virtual void update(float dt);
-	Sprite3D* createArrow();
+	static Sprite3D* createArrow();
 	void ArcherlAttackCallback(int audioID, std::string filePath);
 	void playDyingEffects();
 	void hurtSoundEffects();
@@ -39,7 +39,7 @@ public:
 	int getArmourID();
 	//get helmet id
 	int getHelmetID();
-	int hurt(BasicCollider* collider, bool dirKnockMode);
+	float hurt(BasicCollider* collider, bool dirKnockMode);
 
 
 private:
@@ -57,6 +57,7 @@ private:
 	//	float curDOTTimer;
 	//	bool DOTApplied;
 	//}_specialAttack;
+	struct attack_d _specialAttack;
 
 	std::string file = "model/archer/archer.c3b";
 	

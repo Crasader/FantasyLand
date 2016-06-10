@@ -21,7 +21,9 @@ public:
 	void timeInit();
 	void showVictoryUI();
 
-protected:
+//杜：此处修改过，因为我要访问这些东西
+	ProgressTimer* MageBlood;
+	ProgressTimer* MageBloodClone;
 	Sprite *MagePng;
 	Sprite *MagePngFrame;
 	Sprite *KnightPng;
