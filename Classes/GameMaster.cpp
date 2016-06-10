@@ -81,7 +81,7 @@ void GameMaster::logicUpdate()
 				auto hero = HeroManager[i];
 				if (hero != NULL)
 				{
-					hero->setGoRight = true;
+					hero->setGoRight(true) ;
 				}
 			}
 			stage = 4;
@@ -136,7 +136,7 @@ void GameMaster::logicUpdate()
 				auto hero = HeroManager[i];
 				if (hero != NULL)
 				{
-					hero->setgoRight = true;
+					hero->setGoRight(true);
 				}
 			}
 			for (int i = 0; i < PigletPool.size(); i++)

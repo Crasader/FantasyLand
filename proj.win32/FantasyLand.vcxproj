@@ -158,6 +158,7 @@ xcopy /Y /Q "$(COCOS_X_ROOT)\cocos2d-x-3.10\prebuilt\win32\*.*" "$(OutDir)"
     <ClCompile Include="..\Classes\GlobalVariables.cpp" />
     <ClCompile Include="..\Classes\Helper.cpp" />
     <ClCompile Include="..\Classes\HPCounter.cpp" />
+    <ClCompile Include="..\Classes\JumpBy3D.cpp" />
     <ClCompile Include="..\Classes\Knight.cpp" />
     <ClCompile Include="..\Classes\LoadingScene.cpp" />
     <ClCompile Include="..\Classes\Mage.cpp" />
@@ -184,6 +185,7 @@ xcopy /Y /Q "$(COCOS_X_ROOT)\cocos2d-x-3.10\prebuilt\win32\*.*" "$(OutDir)"
     <ClInclude Include="..\Classes\GlobalVariables.h" />
     <ClInclude Include="..\Classes\Helper.h" />
     <ClInclude Include="..\Classes\HPCounter.h" />
+    <ClInclude Include="..\Classes\JumpBy3D.h" />
     <ClInclude Include="..\Classes\Knight.h" />
     <ClInclude Include="..\Classes\LoadingScene.h" />
     <ClInclude Include="..\Classes\Mage.h" />

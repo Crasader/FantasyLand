@@ -8,7 +8,6 @@ USING_NS_CC;
 class GameMaster
 {
 public:
-	//CREATE_FUNC(GameMaster);
 
 	virtual bool init();
 	virtual void update(float dt);

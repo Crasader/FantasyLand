@@ -93,6 +93,9 @@
     <ClCompile Include="..\Classes\Sample.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\JumpBy3D.cpp">
+      <Filter>src\Logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -166,6 +169,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Sample.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\JumpBy3D.h">
+      <Filter>src\Logic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
