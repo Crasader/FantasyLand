@@ -34,8 +34,3 @@ void delayExecute(Actor * target, void (*func)() ,float delay);
 
 float DEGREES_TO_RADIANS(float _ANGLE);
 float RADIANS_TO_DEGREES(float _ANGLE);
-
-//void print(std::map<> tab);
-//function CreateEnumTable(tbl, index)
-//function removeAll(table)
-//void copytable()

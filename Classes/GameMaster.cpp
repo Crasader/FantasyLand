@@ -9,6 +9,7 @@
 #include "Manager.h"
 #include "Knight.h"
 #include "Mage.h"
+#include "JumpBy3D.h"
 
 int gloableZOrder = 1;
 int EXIST_MIN_MONSTER = 4;
@@ -450,19 +451,19 @@ void GameMaster::jumpInto(Actor* obj, bool isFront)
 
 	if ( stage == 0 )
 	{
-		//obj->runAction(Sequence::create(DelayTime::create(rand()), CallFunc::create(visibleMonster), JumpBy::create(0.5, Vec3(-200 * (rand()*0.6 + 0.7), -400 * (rand()*0.4 + 0.8), 0), 150, 1), CallFunc::create(enableAI)));
+		obj->runAction(Sequence::create(DelayTime::create(rand()), CallFunc::create(visibleMonster), JumpBy3D::create(0.5, Vec3(-200 * (rand()*0.6 + 0.7), -400 * (rand()*0.4 + 0.8), 0), 150, 1), CallFunc::create(enableAI)));
 		obj->setFacing(135);
 	}
 	else
 	{
 		if (isFront)
 		{
-			//obj->runAction(Sequence::create(DelayTime::create(rand()), CallFunc::create(visibleMonster), JumpBy3D::create(0.5, Vec3(0, -400 * (rand()*0.4 + 0.8), 0), 150, 1), CallFunc::create(enableAI)));
+			obj->runAction(Sequence::create(DelayTime::create(rand()), CallFunc::create(visibleMonster), JumpBy3D::create(0.5, Vec3(0, -400 * (rand()*0.4 + 0.8), 0), 150, 1), CallFunc::create(enableAI)));
 			obj->setFacing(135);
 		}
 		else
 		{
-			//obj:runAction(cc.Sequence:create(cc.DelayTime:create(math.random()), cc.CallFunc : create(visibleMonster), cc.JumpBy3D : create(0.5, cc.V3(200 * (math.random()*0.6 + 0.7), -400 * (math.random()*0.4 + 0.8), 0), 150, 1), cc.CallFunc : create(enableAI)))
+			obj->runAction(Sequence::create(DelayTime::create(rand()), CallFunc::create(visibleMonster), JumpBy3D::create(0.5, Vec3((200 * rand()*0.6 + 0.7), -400 * (rand()*0.4 + 0.8), 0), 150, 1), CallFunc::create(enableAI)));
 			obj->setFacing(45);
 		}
 	}
@@ -491,7 +492,7 @@ void GameMaster::showWarning()
 	warning->setPositionZ(-Director::getInstance()->getZEye() / 2);
 	warning->ignoreAnchorPointForPosition(false);
 	warning->setLocalZOrder(999);
-	/*camera->addChild(warning, 2);*/
+	camera->addChild(warning, 2);
 }
 
 void GameMaster::showDialog()
@@ -567,7 +568,8 @@ void GameMaster::showDialog()
 		Director::getInstance()->getScheduler()->unscheduleScriptEntry(scheduleid);
 	};
 
-	//scheduleid = Director::getInstance()->getScheduler()->scheduleScriptFunc(exitDialog, 3, false);//
+	//scheduleid = Director::getInstance()->getScheduler()->scheduleScriptFunc(exitDialog, 3, false);
+
 	//Texture2D::setDefaultAlphaPixelFormat(TEXTURE2_D_PIXEL_FORMAT_RG_B565);
 }
 
