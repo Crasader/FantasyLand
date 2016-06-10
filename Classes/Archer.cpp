@@ -1,5 +1,8 @@
 ﻿#include "Archer.h"
 
+#include "GlobalVariables.h"
+#include "Helper.h"
+
 struct ArcherValues;
 
 Archer::Archer()

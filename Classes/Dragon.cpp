@@ -1,5 +1,9 @@
 ﻿#include "Dragon.h"
 
+#include "Helper.h"
+#include "AttackCommand.h"
+#include "Manager.h"
+
 Dragon::Dragon()
 {
 	_AIEnabled = true;

@@ -2,9 +2,7 @@
 
 #include "cocos2d.h"
 #include "Actor.h"
-#include "GlobalVariables.h"
 #include "MessageDispatchCenter.h"
-#include "Helper.h"
 #include "AttackCommand.h"
 
 

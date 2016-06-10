@@ -1,5 +1,10 @@
 ﻿#include "Actor.h"
 
+#include "Helper.h"
+#include "ParticleManager.h"
+#include "MessageDispatchCenter.h"
+#include "GameMaster.h"
+
 bool Actor::init() 
 {
 	this->setCascadeColorEnabled(true);
