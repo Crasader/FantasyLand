@@ -71,7 +71,7 @@ void GameMaster::logicUpdate()
 				auto hero = HeroManager[i];
 				if (hero != NULL)
 				{
-					//hero->_goRight = true;
+					hero->setgoRight = true;
 				}
 			}
 			stage = 4;
@@ -126,7 +126,7 @@ void GameMaster::logicUpdate()
 				auto hero = HeroManager[i];
 				if (hero != NULL)
 				{
-					//hero->_goRight = true;
+					hero->setgoRight = true;
 				}
 			}
 			for (int i = 0; i < PigletPool.size(); i++)
@@ -191,9 +191,9 @@ void GameMaster::AddHeros()
 
 	auto archer = Archer::create();
 	archer->setPosition(battleSiteX[1], -80);
-	//currentLayer->addChild(archer);
+	currentLayer->addChild(archer);
 	archer->idleMode();
-	//HeroManager.push_back(archer);
+	HeroManager.push_back(archer);
 }
 
 void GameMaster::addMonsters()
@@ -256,9 +256,9 @@ void GameMaster::showDragon(bool isFront)
 {
 	if(DragonPool.size() != 0 )
 	{
-		auto dragon = DragonPool[0];
+		Dragon * dragon = dynamic_cast<Dragon* >(DragonPool[0]);
 		DragonPool.erase(DragonPool.begin());
-		//dragon->reset();
+		dragon->reset();
 
 		auto appearPos = getFocusPointOfHeros();
 		auto randomvarX = random()*0.2 + 1;
@@ -287,7 +287,7 @@ void GameMaster::showDragon(bool isFront)
 		dragon->setPosition(appearPos);
 		dragon->getMyPos() = appearPos;
 		dragon->setVisible(true);
-		//dragon->_goRight = false;
+		dragon->setgoRight = false;
 		dragon->setAIEnabled(true);
 		MonsterManager.push_back(dragon);
 	}
@@ -297,9 +297,9 @@ void GameMaster::showPiglet(bool isFront)
 {
 	if( PigletPool.size() != 0 )
 	{
-		auto piglet = PigletPool[0];
+		Piglet * piglet = dynamic_cast<Piglet*> (PigletPool[0]);
 		PigletPool.erase(PigletPool.begin());
-		//piglet->reset();
+		piglet->reset();
 
 		auto appearPos = getFocusPointOfHeros();
 		auto randomvarX = random()*0.2 + 1;
@@ -328,7 +328,7 @@ void GameMaster::showPiglet(bool isFront)
 		piglet->setPosition(appearPos);
 		piglet->getMyPos() = appearPos;
 		piglet->setVisible(true);
-		//piglet._goRight = false;
+		piglet->setgoRight = false;
 		piglet->setAIEnabled(true);
 		MonsterManager.push_back(piglet);
 	}
@@ -338,12 +338,12 @@ void GameMaster::showSlime(bool isFront)
 {
 	if( SlimePool.size() != 0 )
 	{
-		auto Slime = SlimePool[0];
+		Slime * cslime = dynamic_cast<Slime *> (SlimePool[0]);
 		SlimePool.erase(SlimePool.begin());
-		//slime->reset();
-		//slime._goRight = false;
-		jumpInto(Slime, isFront);
-		MonsterManager.push_back(Slime);
+		cslime->reset();
+		cslime->setgoRight = false;
+		jumpInto(cslime, isFront);
+		MonsterManager.push_back(cslime);
 	}
 }
 
@@ -351,13 +351,13 @@ void GameMaster::showRat(bool isFront)
 {
 	if (RatPool.size() != 0)
 	{
-		auto Rat = RatPool[0];
+		Rat * crat =dynamic_cast<Rat *> (RatPool[0]);
 
 		RatPool.erase(RatPool.begin());
-		//rat->reset();
-		//rat->_goRight = false;
-		jumpInto(Rat, isFront);
-		MonsterManager.push_back(Rat);
+		crat->reset();
+		crat->setgoRight = false;
+		jumpInto(crat, isFront);
+		MonsterManager.push_back(crat);
 	}
 }
 
@@ -401,7 +401,7 @@ void GameMaster::showBoss()
 	boss->setPosition3D(apperPos);
 	boss->setMyPos(Vec2(apperPos.x,apperPos.y));
 	boss->setFacing(180);
-	//boss->_goRight = false;
+	boss->setgoRight = false;
 	auto enableAI = [boss]()
 	{
 		boss->setAIEnabled(true);
