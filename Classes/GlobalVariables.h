@@ -602,3 +602,5 @@ struct ReSkin_d
 		float helmet = 0;
 	}mage;
 };
+
+struct attack_d{	float minRange;	float maxRange;	float angle;	float knock;	float damage;	int mask;	float duration;	float speed;	float criticalChance;	float DOTTimer;	float curDOTTime;	bool DOTApplied;};
