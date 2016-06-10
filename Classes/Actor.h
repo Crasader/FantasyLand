@@ -1,12 +1,8 @@
 ﻿#pragma once
 
-#include <vector>
-
 #include "cocos2d.h"
-#include "HPCounter.h"
-#include "AttackCommand.h"
-#include "BattleFieldUI.h"
 #include "AudioEngine.h"
+#include "GlobalVariables.h"
 
 USING_NS_CC;
 
@@ -14,7 +10,7 @@ USING_NS_CC;
 //extern enum EnumStateType;
 
 class BasicCollider;
-
+class HPCounter;
 class Actor : public Node
 {
 public:	
@@ -163,9 +159,6 @@ protected:
 	*/
 	
 };
-
-extern BattleFieldUI* uiLayer;
-extern Layer* currentLayer;
 
 struct ActorCommonValues;
 struct ActorDefaultValues;

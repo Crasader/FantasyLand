@@ -1,7 +1,7 @@
 ﻿#include "Archer.h"
 
-#include "GlobalVariables.h"
 #include "Helper.h"
+#include "AttackCommand.h"
 
 struct ArcherValues;
 

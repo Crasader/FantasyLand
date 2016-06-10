@@ -29,3 +29,4 @@ protected:
 	Sprite *ArcherPng;
 	Sprite *ArcherPngFrame;
 };
+extern BattleFieldUI *uiLayer;

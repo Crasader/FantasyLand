@@ -1,9 +1,8 @@
 ﻿#include "Actor.h"
-
+#include "Manager.h"
+#include "AttackCommand.h"
 #include "Helper.h"
-#include "ParticleManager.h"
-#include "MessageDispatchCenter.h"
-#include "GameMaster.h"
+#include "BattleFieldUI.h"
 
 bool Actor::init() 
 {

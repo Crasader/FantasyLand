@@ -1,10 +1,6 @@
 ﻿#pragma once
 
-#include <list>
-#include <numeric>
 #include "cocos2d.h"
-#include "Actor.h"
-#include "Archer.h"
 
 USING_NS_CC;
 

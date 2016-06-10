@@ -11,6 +11,7 @@
 #include "Knight.h"
 #include "Mage.h"
 #include "JumpBy3D.h"
+#include "BattleFieldUI.h"
 
 int gloableZOrder = 1;
 int EXIST_MIN_MONSTER = 4;
@@ -37,6 +38,7 @@ bool GameMaster::init()
 		randomshowMonster(true);
 
 	stage = 1;
+	return true;
 }
 
 void GameMaster::update(float dt)

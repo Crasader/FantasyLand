@@ -1,9 +1,7 @@
 ﻿#pragma once
 
 #include "cocos2d.h"
-#include "GlobalVariables.h"
 #include "Actor.h"
-#include "AttackCommand.h"
 
 class Slime : public Actor
 {

@@ -1,8 +1,8 @@
 ﻿#include "AttackCommand.h"
 
 #include "Helper.h"
+#include "Actor.h"
 #include "Manager.h"
-#include "GlobalVariables.h"
 #include "ParticleManager.h"
 
 std::vector<BasicCollider*> AttackManager;
@@ -363,6 +363,7 @@ MageIceSpikes::MageIceSpikes()
 bool MageIceSpikes::init()
 {
 
+	return true;
 }
 
 void MageIceSpikes::onTimeOut()
@@ -435,6 +436,7 @@ ArcherNormalAttack::ArcherNormalAttack()
 bool ArcherNormalAttack::init()
 {
 
+	return true;
 }
 
 void ArcherNormalAttack::onTimeOut()
@@ -479,6 +481,7 @@ ArcherSpecialAttack::ArcherSpecialAttack()
 bool ArcherSpecialAttack::init()
 {
 
+	return true;
 }
 
 void ArcherSpecialAttack::onTimeOut()
@@ -532,6 +535,7 @@ Nova* Nova::CreateWithPos(Vec2 pos, int facing)
 bool Nova::init()
 {
 
+	return true;
 }
 
 void Nova::onTimeOut()
@@ -577,6 +581,7 @@ DragonAttack::DragonAttack()
 bool DragonAttack::init()
 {
 
+	return true;
 }
 
 void DragonAttack::onTimeOut()
@@ -639,6 +644,7 @@ BossNormal::BossNormal()
 bool BossNormal::init()
 {
 
+	return true;
 }
 
 void BossNormal::onTimeOut()
@@ -699,6 +705,7 @@ BossSuper::BossSuper()
 bool BossSuper::init()
 {
 
+	return true;
 }
 
 void BossSuper::onTimeOut()

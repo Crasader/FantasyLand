@@ -1,4 +1,6 @@
 ﻿#include "Slime.h"
+#include "GlobalVariables.h"
+#include "AttackCommand.h"
 
 
 

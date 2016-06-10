@@ -1,7 +1,6 @@
 ﻿#include "Piglet.h"
-
 #include "Helper.h"
-#include "AttackCommand.h"
+#include "GlobalVariables.h"
 
 Piglet::Piglet()
 {

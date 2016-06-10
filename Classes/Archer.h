@@ -2,9 +2,6 @@
 
 #include "cocos2d.h"
 #include "Actor.h"
-#include "MessageDispatchCenter.h"
-#include "AttackCommand.h"
-
 
 USING_NS_CC;
 
