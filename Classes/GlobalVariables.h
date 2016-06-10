@@ -35,6 +35,22 @@ extern struct Archerproperty_d Archerproperty;
 extern struct MageProperty_d MageProperty;
 extern struct ReSkin_d ReSkin;
 
+enum EnumRaceType
+{
+	HERO, 
+	MONSTER,
+};
+enum EnumStateType 
+{
+	IDLE,
+	WALKING,
+	ATTACKING,
+	DEFENDING,
+	KNOCKING,
+	DYING,
+	DEAD,
+};
+
 struct RECTS_d
 {
 	Rect iceBolt ;

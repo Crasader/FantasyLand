@@ -1,4 +1,6 @@
 ﻿#include "BattleFieldUI.h"
+#include <AudioEngine.h>
+#include "GlobalVariables.h"
 
 bool BattleFieldUI::init()
 {

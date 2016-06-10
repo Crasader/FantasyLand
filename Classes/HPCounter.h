@@ -1,19 +1,8 @@
 ﻿#pragma once
 #include "cocos2d.h"
-#include "GlobalVariables.h"
-#include "Actor.h"
 
 USING_NS_CC;
-enum EnumRaceType { HERO, MONSTER, };
-enum EnumStateType {
-	IDLE,
-	WALKING,
-	ATTACKING,
-	DEFENDING,
-	KNOCKING,
-	DYING,
-	DEAD,
-};
+class Actor;
 
 class HPCounter :public Layer
 {

@@ -1,10 +1,10 @@
 ﻿#pragma once
 #include "cocos2d.h"
-#include "ParticleManager.h"
-#include "Slime.h"
 
 USING_NS_CC;
 
+class ParticleManager;
+class Slime;
 class LoadingScene:public Layer
 {
 public:

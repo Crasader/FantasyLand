@@ -1,7 +1,7 @@
-﻿#include "ChooseRoleScene.h"
+﻿#include "Archer.h"
+#include "ChooseRoleScene.h"
 #include "ui/CocosGUI.h"
 #include "Knight.h"
-#include "Archer.h"
 #include "Mage.h"
 #include "BattleScene.h"
 

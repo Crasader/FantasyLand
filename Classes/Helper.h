@@ -1,10 +1,9 @@
 ﻿#pragma once
-#include <math/Vec2.h>
 #include "cocos2d.h"
-#include "Actor.h"
+#include <math/Vec2.h>
 
 USING_NS_CC;
-
+class Actor;
 extern Camera* camera;
 
 typedef

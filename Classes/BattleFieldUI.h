@@ -1,10 +1,9 @@
 ﻿#pragma once
 #include "cocos2d.h"
-#include "GlobalVariables.h"
-#include "Actor.h"
 
 USING_NS_CC;
 
+class Actor;
 class BattleFieldUI :public Layer
 {
 public:

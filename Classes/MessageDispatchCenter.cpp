@@ -1,5 +1,4 @@
 ﻿#include "MessageDispatchCenter.h"
-#include <string>
 #include <iostream>
 
 std::set<std::string> MessageType;

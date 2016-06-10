@@ -1,10 +1,9 @@
 ﻿#pragma once
 #include "cocos2d.h"
-#include "Helper.h"
-#include "Actor.h"
 
 USING_NS_CC;
 
+class Actor;
 class BattleScene:public Layer
 {
 public:
