@@ -71,7 +71,7 @@ void GameMaster::logicUpdate()
 				auto hero = HeroManager[i];
 				if (hero != NULL)
 				{
-					hero->setgoRight = true;
+					hero->setGoRight = true;
 				}
 			}
 			stage = 4;
