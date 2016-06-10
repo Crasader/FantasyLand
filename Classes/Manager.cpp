@@ -79,7 +79,7 @@ void isOutOfBound(Actor* object)
 
 void collisionDetect(float dt)
 {
-	for (int val = HeroManager.size(); val >= 0; val--)
+	for (int val = HeroManager.size()-1; val >= 0; val--)
 	{
 		auto sprite = HeroManager[val];
 		if(sprite->isAlive())
@@ -95,7 +95,7 @@ void collisionDetect(float dt)
 		}
 	}
 	
-	for (int val = MonsterManager.size(); val >= 0; val--)
+	for (int val = MonsterManager.size()-1; val >= 0; val--)
 	{
 		auto sprite = MonsterManager[val];
 		if (sprite->isAlive())
@@ -117,7 +117,7 @@ Vec2 getFocusPointOfHeros()
 	ptFocus.x = 0;
 	ptFocus.y = 0;
 
-	for (int var = HeroManager.size(); var > -1; var-- )
+	for (int var = HeroManager.size()-1; var > -1; var-- )
 	{
 		ptFocus.x = ptFocus.x + HeroManager[var]->getPositionX();
 		ptFocus.y = ptFocus.y + HeroManager[var]->getPositionY();

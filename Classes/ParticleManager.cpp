@@ -1,7 +1,5 @@
 ﻿#include "ParticleManager.h"
 
-ParticleManager * ParticleManager::instance = NULL;
-
 ParticleManager* ParticleManager::getInstance()
 {
 	if (instance == NULL)

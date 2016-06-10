@@ -2,6 +2,7 @@
 #include <string>
 #include "cocos2d.h"
 #include <set>
+#include <iostream>
 
 USING_NS_CC;
 

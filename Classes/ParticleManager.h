@@ -1,5 +1,7 @@
 ﻿#pragma once
 #include "cocos2d.h"
+#include "cocos2d.h"
+#include <set>
 
 USING_NS_CC;
 
@@ -13,8 +15,6 @@ public:
 
 private:
 	std::map<std::string,ValueMap> _plistMap;
-
 	static ParticleManager* instance;
-	ParticleManager();
 };
 
