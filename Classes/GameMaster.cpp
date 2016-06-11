@@ -510,23 +510,23 @@ void GameMaster::showDialog()
 
 	auto outframe = Sprite::createWithSpriteFrameName("outframe.png");
 	outframe->setPosition(G.winSize.width * 0.55, G.winSize.height * 0.27);
-	//outframe->setScale(0.6*resolutionRate);
+	outframe->setScale(0.6*resolutionRate);
 	dialog->addChild(outframe);
 
 	auto inframe = Sprite::createWithSpriteFrameName("inframe.png");
 	inframe->setPosition(G.winSize.width * 0.67, G.winSize.height * 0.27);
-	//inframe->setScale(0.5*resolutionRate);
+	inframe->setScale(0.5*resolutionRate);
 	dialog->addChild(inframe);
 
 	auto bossicon = Sprite::createWithSpriteFrameName("bossicon.png");
 	bossicon->setPosition(G.winSize.width*0.42, G.winSize.height*0.46);
-	//bossicon->setScale(0.75*resolutionRate);
+	bossicon->setScale(0.75*resolutionRate);
 	bossicon->setFlippedX(true);
 	dialog->addChild(bossicon);
 
 	auto bosslogo = Sprite::createWithSpriteFrameName("bosslogo.png");
 	bosslogo->setPosition(G.winSize.width*0.417, G.winSize.height*0.265);
-	//bosslogo->setScale(0.74*resolutionRate);
+	bosslogo->setScale(0.74*resolutionRate);
 	dialog->addChild(bosslogo);
 
 	auto text = Label::createWithTTF(BossTaunt, "fonts/britanic bold.ttf", 24);
