@@ -321,14 +321,13 @@ float Knight::hurt(BasicCollider* collider, bool dirKnockMode)
 
 		/* 这里需要修改 */
 		auto blood = _hpCounter->showBloodLossNum(damage, this, critical);
-		if (_name == "Rat")
-			setPositionZ(Director::getInstance()->getVisibleSize().height * 0.25);
 		addEffect(blood);
 
 		struct MESSAGE_BLOOD_MINUS bloodMinus = { _name, _maxhp, _hp, _bloodBar, _bloodBarClone, _avatar };
 		//MessageDispatchCenter::dispatchMessage(MessageDispatchCenter::MessageType::BLOOD_MINUS, bloodMinus);
 		struct MESSAGE_ANGRY_CHANGE anaryChange = { _name, _angry,_angryMax };
 		//MessageDispatchCenter::dispatchMessage(MessageDispatchCenter::MessageType::ANGRY_CHANCE, anaryChange);*/
+		_angry += damage;
 		return damage;
 	}
 	return 0;
