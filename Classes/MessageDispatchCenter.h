@@ -25,10 +25,13 @@ public:
 	void registerMessage(std::string messageType /*callback*/);
 	void removeMessage(std::string messageType/*callback*/);
 
-	void dispatchMessage(std::string messageType /*param*/);
+	void dispatchMessage(std::string messageType , struct MESSAGE_ANGRY_CHANGE param);
+	void dispatchMessage(std::string messageType, struct MESSAGE_BLOOD_MINUS param);
+	void dispatchMessage(std::string messageType, struct MESSAGE_SPECIAL_PERSPECTIVE param);
+
 
 private:
 	static MessageDispatchCenter * instance;
 
-	//std::map<std::string , > MessageQue;
+	//std::map<enum MessageType , std::vector<> > MessageQue;
 };

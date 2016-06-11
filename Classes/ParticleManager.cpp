@@ -1,8 +1,9 @@
 ﻿#include "ParticleManager.h"
 ParticleManager *ParticleManager::instance = nullptr;
+
 ParticleManager* ParticleManager::getInstance()
 {
-	if (instance == NULL)
+	if (instance == nullptr )
 		instance = new ParticleManager();
 	return instance;
 }
