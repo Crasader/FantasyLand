@@ -1,14 +1,14 @@
 ﻿#include "Helper.h"
 #include "Actor.h"
 
-Camera * camera = Camera::create();
+Camera * camera;
 
 float radNormalize(float rad)
 {
 	float pi2 = 2 * M_PI;
 	rad = fmod(rad, pi2);
 	rad = fmod((rad + pi2), pi2);
-	if( rad > M_PI)
+	if (rad > M_PI)
 	{
 		rad = rad - M_PI;
 	}
@@ -57,11 +57,11 @@ float RADIANS_TO_DEGREES(float _ANGLE)
 
 msgStruct createKnockedMsgStruct(Actor * object)
 {
-	msgStruct buffer = { object , object->getTarget()};
+	msgStruct buffer = { object , object->getTarget() };
 	return buffer;
 }
 
-void delayExecute(Actor* target, void(* func)(), float delay)
+void delayExecute(Actor* target, void(*func)(), float delay)
 {
 	auto wait = DelayTime::create(delay);
 	target->runAction(Sequence::create(wait, CallFunc::create(func)));

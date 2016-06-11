@@ -38,6 +38,8 @@ struct ReSkin_d ReSkin;
 
 void gv_init()
 {
+	camera = Camera::create();
+
 	Animation * hurtAnimation = Animation::create();
 	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("FX/FX.plist");
 	hurtAnimation->addSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("hit1.png"));
