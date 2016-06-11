@@ -1,5 +1,6 @@
 #include "AppDelegate.h"
-#include "LoadingScene.h"
+#include "GlobalVariables.h"
+#include "BattleScene.h"
 
 USING_NS_CC;
 
@@ -41,8 +42,9 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     FileUtils::getInstance()->addSearchPath("res");
 
+	gv_init();
     // create a scene. it's an autorelease object
-    auto scene = LoadingScene::createScene();
+    auto scene = BattleScene::createScene();
 
     // run
     director->runWithScene(scene);
