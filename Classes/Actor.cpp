@@ -44,6 +44,7 @@ void Actor::copyData()
 	_myPos = ccp(0, 0);
 	_angry = 0;
 	_angryMax = 500;
+	//Default
 	_racetype = EnumRaceType::HERO;
 	_statetype = EnumStateType::IDLE;
 	//_sprite3d = nil;
@@ -62,10 +63,11 @@ void Actor::copyData()
 	_attackFrequency = 0.01;
 	_searchDistance = 5000;
 	_attackRange = 100;
-	_normalAttack =
-	{
-		0.0f,130.0f, DEGREES_TO_RADIANS(30), 50.0f, 800.0f, EnumRaceType::HERO, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, false
-	};
+	//_normalAttack =
+	//{
+	//	0.0f,130.0f, DEGREES_TO_RADIANS(30), 50.0f, 800.0f, EnumRaceType::HERO, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, false
+	//};
+	_normalAttack = ActorDefaultValues._normalAttack;
 }
 
 void Actor::addEffect(Node* effect)

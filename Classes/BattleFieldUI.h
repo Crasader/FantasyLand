@@ -24,6 +24,10 @@ public:
 //杜：此处修改过，因为我要访问这些东西
 	ProgressTimer* MageBlood;
 	ProgressTimer* MageBloodClone;
+	ProgressTimer* ArcherBlood;
+	ProgressTimer* ArcherBloodClone;
+	ProgressTimer* KnightBlood;
+	ProgressTimer* KnightBloodClone;
 	Sprite *MagePng;
 	Sprite *MagePngFrame;
 	Sprite *KnightPng;

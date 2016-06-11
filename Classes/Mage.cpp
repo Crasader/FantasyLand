@@ -69,15 +69,17 @@ void Mage::copyData_Mage()
 	_attackRange = 400;
 	_specialAttackChance = 0;
 	_specialSlowTime = 0.67;
+ //   struct attack_d _normalAttack = 
+	//{
+	//	0, 50,DEGREES_TO_RADIANS(360),10 , 280,EnumRaceType::HERO,2,400,0.05
+	//};
+	//struct attack_d _specialAttack =
+	//{
+	//	0, 140,DEGREES_TO_RADIANS(360),75, 250,EnumRaceType::HERO,4.5,0,0.05,0.75,0.75,false
+	//};
+	_normalAttack = MageValues._normalAttack;
+	_specialAttack = MageValues._specialAttack;
 
-	struct attack_d _normalAttack =
-	{
-		0, 50,DEGREES_TO_RADIANS(360),10 , 280,EnumRaceType::HERO,2,400,0.05
-	};
-	struct attack_d _specialAttack =
-	{
-		0, 140,DEGREES_TO_RADIANS(360),75, 250,EnumRaceType::HERO,4.5,0,0.05,0.75,0.75,false
-	};
 }
 
 void Mage::update(float dt)
@@ -127,10 +129,10 @@ void Mage::specialAttack()
 	pos3 = ccpRotateByAngle(pos3, _myPos, _curFacing);
 	MageIceSpikes::CreateWithPos(pos1, _curFacing, _specialAttack, this);
 
-	auto spike2 = []() {
+	auto spike2 = [&]() {
 		MageIceSpikes::CreateWithPos(pos2, _curFacing, _specialAttack, this);
 	};
-	auto spike3 = []() {
+	auto spike3 = [&]() {
 		MageIceSpikes::CreateWithPos(pos3, _curFacing, _specialAttack, this);
 	};
 

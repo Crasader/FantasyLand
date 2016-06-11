@@ -9,7 +9,8 @@ public:
 	virtual bool init();
 	virtual void update(float dt);
 	static Sprite3D* createArrow();
-	void ArcherlAttackCallback(int audioID, std::string filePath);
+	static void ArcherlAttackCallback(int audioID, std::string filePath);
+	void copyData_Archer();
 	void playDyingEffects();
 	void hurtSoundEffects();
 	void normalAttack();
@@ -39,7 +40,7 @@ public:
 	int getArmourID();
 	//get helmet id
 	int getHelmetID();
-	float hurt(BasicCollider* collider, bool dirKnockMode);
+	float hurt(BasicCollider* collider, bool dirKnockMode = false);
 
 
 private:
