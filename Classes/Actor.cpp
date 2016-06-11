@@ -1,24 +1,76 @@
 ﻿#include "Actor.h"
 #include "BattleFieldUI.h"
+#include "ParticleManager.h"
+#include "Helper.h"
+#include "Manager.h"
+#include "HPCounter.h"
 
 bool Actor::init() 
 {
 	this->setCascadeColorEnabled(true);
 	_action.clear();
-	//copyTable(ActorDefaultValues, this);
-	//copyTable(ActorCommonValues, this);
-	//dropblood
-	///_hpCounter = HPCounter::create();
-	///addChild(_hpCounter);
+	copyData();
+
+	_hpCounter = HPCounter::create();
+	addChild(_hpCounter);
+
 	_effectNode = Node::create();
 	_monsterHeight = 70;
 	_heroHeight = 150;
-	//if (uiLayer != nullptr)
+	setCameraMask(2);
+
+	if (uiLayer != nullptr)
 		currentLayer->addChild(_effectNode);
 	return true;
 }
 
-void Actor::addEffect(Sprite* effect)
+void Actor::copyData()
+{
+	_aliveTime = 0,
+	_curSpeed = 0;
+	_curAnimation = "";
+	_curAnimation3d = NULL;
+	_curFacing = 0;
+	_isalive = true;
+	_AITimer = 0;
+	_AIEnabled = false;
+	_attackTimer = 0;
+	_timeKnocked = 0;
+	_cooldown = false;
+	_hp = 1000;
+	_goRight = true;
+	_targetFacing = 0;
+	_target = NULL;
+	_myPos = ccp(0, 0);
+	_angry = 0;
+	_angryMax = 500;
+	//Default
+	_racetype = EnumRaceType::HERO;
+	_statetype = EnumStateType::IDLE;
+	//_sprite3d = nil;
+	_radius = 50;
+	_mass = 100;
+	_shadowSize = 70;
+	_maxhp = 1000;
+	_defense = 100;
+	_specialAttackChance = 0;
+	_recoverTime = 0.8;
+	_speed = 500;
+	_turnSpeed = DEGREES_TO_RADIANS(225);
+	_acceleration = 750;
+	_decceleration = 750 * 1.7;
+	_AIFrequency = 1.0;
+	_attackFrequency = 0.01;
+	_searchDistance = 5000;
+	_attackRange = 100;
+	//_normalAttack =
+	//{
+	//	0.0f,130.0f, DEGREES_TO_RADIANS(30), 50.0f, 800.0f, EnumRaceType::HERO, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, false
+	//};
+	_normalAttack = ActorDefaultValues._normalAttack;
+}
+
+void Actor::addEffect(Node* effect)
 {
 	effect->setPosition(ccpAdd(getPosTable(this), getPosTable(effect)));
 	if (_racetype != EnumRaceType::MONSTER)
@@ -30,8 +82,8 @@ void Actor::addEffect(Sprite* effect)
 
 void Actor::initPuff()
 {
-	/*
-	auto puff = ParticleSystemQuad::create(ParticleManager::getInstance()->getPlistData("walkpuff"));
+	auto valueMap = ParticleManager::getInstance()->getPlistData("walkpuff");
+	auto puff = ParticleSystemQuad::create(valueMap);
 	//***ParticleSystem should be BillboardParticleSystem;
 	auto puffFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName("walkingPuff.png");
 	puff->setTextureWithRect(puffFrame->getTexture(), puffFrame->getRect());
@@ -40,7 +92,7 @@ void Actor::initPuff()
 	puff->setPositionZ(10);
 	_puff = puff;
 	_effectNode->addChild(puff);
-	*/
+	//this->addChild(puff);
 }
 
 void Actor::initShadow()
@@ -173,7 +225,8 @@ Node* Actor::getEffectNode() {
 
 float Actor::hurt(BasicCollider* collider, bool dirKnockMode = false)
 {
-    if (_isalive == true) {
+	//log("A actor is hurted");
+	if (_isalive == true) {
 		//TODO add sound effect
 		auto damage = collider->getDamage();
 		auto critical = false;
@@ -203,8 +256,8 @@ float Actor::hurt(BasicCollider* collider, bool dirKnockMode = false)
 			_isalive = false;
 			dyingMode(getPosTable(collider), knock);
 		}
-		//auto blood = _hpCounter->showBloodLossNum(damage, this, critical);
-		//addEffect(blood);
+		auto blood = _hpCounter->showBloodLossNum(damage, this, critical);
+		addEffect(blood);
 		return damage;
 	}
 	return 0;
@@ -284,29 +337,20 @@ void Actor::dyingMode(Vec2 knockSource, int knockAmount)
 	playDyingEffects();
 	if (_racetype == EnumRaceType::HERO) {
 		uiLayer->heroDead(this);
-
 		remove(HeroManager.begin(), HeroManager.end(), this);
-
 		runAction(Sequence::create(DelayTime::create(3), 
 			MoveBy::create(1.0, Vec3(0, 0, -50)), 
 			RemoveSelf::create(), NULL));
 		_angry = 0;
-
-		//AUTO???!!!
 		//auto anaryChange = { _name, _angry, _angryMax };
 		//MessageDispatchCenter::dispatchMessage(MessageDispatchCenter::MessageType::ANARY_CHANGE, angryChange);
-    //CallFunc::create(recycle)
+        //CallFunc::create(recycle)
 	}
 	else {
-		std::vector<Actor*>::iterator it = std::find(HeroManager.begin(), HeroManager.end(), this);
-
-		remove(HeroManager.begin(), HeroManager.end(), this);
-
+		remove(MonsterManager.begin(), MonsterManager.end(), this);
 		auto recycle = [&]() {
 			setVisible(false);
-			getPoolByName(_name).push_back(this);
-			//List.pushlast(getPoolByName(_name), self);
-			
+			getPoolByName(_name).push_back(this);	
 		};
 		runAction(Sequence::create(DelayTime::create(3),
 			MoveBy::create(1.0, Vec3(0, 0, -50)),
@@ -317,6 +361,7 @@ void Actor::dyingMode(Vec2 knockSource, int knockAmount)
 		auto p = _myPos;
 		auto angle = ccpToAngle(ccpSub(p, knockSource));
 		auto newPos = ccpRotateByAngle(ccpAdd(Vec2(knockAmount, 0), p), p, angle);
+		runAction(EaseCubicActionOut::create(MoveTo::create(_action.at("knocked")->getDuration() * 3, newPos)));
 	}
 	_AIEnabled = false;
 }
@@ -354,10 +399,10 @@ Actor* Actor::_findEnemy(EnumRaceType HeroOrMonster, bool &allDead)
 	Actor* target = nullptr;
 	std::vector<Actor*>* manager;
 	//error in delaration in Manager.h
-	/*if (HeroOrMonster == EnumRaceType::MONSTER)
+	if (HeroOrMonster == EnumRaceType::MONSTER)
 		manager = &HeroManager;
 	else
-		manager = &MonsterManager;*/
+		manager = &MonsterManager;
 	for (auto val = manager->begin(); val != manager->end(); ++val) {
 		auto temp = *val;
 		auto dis = ccpDistance(_myPos, temp->_myPos);

@@ -1,4 +1,6 @@
 ﻿#include "Rat.h"
+#include "BattleScene.h"
+#include "HPCounter.h"
 
 Rat::Rat()
 {
@@ -8,8 +10,10 @@ Rat::Rat()
 
 bool Rat::init()
 {
+	Actor::init();
 	//copyTable(ActorCommonValues, this);
 	//copyTable(RatValues, this);
+	copyData_Rat();
 	init3D();
 	initActions();
 	return true;
@@ -19,9 +23,50 @@ void Rat::reset()
 {
 	//copyTable(ActorCommonValues, this);
 	//copyTable(RatValues, this);
+	copyData_Rat();
 	walkMode();
 	setPositionZ(0);
 }
+
+void Rat::copyData_Rat()
+{
+	_aliveTime = 0,
+	_curSpeed = 0;
+	_curAnimation = "";
+	_curAnimation3d = NULL;
+	_curFacing = 0;
+	_isalive = true;
+	_AITimer = 0;
+	_AIEnabled = false;
+	_attackTimer = 0;
+	_timeKnocked = 0;
+	_cooldown = false;
+	_hp = 1000;
+	_goRight = true;
+	_targetFacing = 0;
+	_target = NULL;
+	_myPos = ccp(0, 0);
+	_angry = 0;
+	_angryMax = 500;
+	_racetype = MONSTER;
+	_name = "Rat";
+	_radius = 70;
+	_mass = 990;
+	_shadowSize = 90;
+	_hp = 2800;
+	_maxhp = 2800;
+	_defense = 200;
+	_attackFrequency = 3.0;
+	_recoverTime = 0.4;
+	_AIFrequency = 5.3;
+	_attackRange = 150;
+    _speed = 400;
+	_turnSpeed = DEGREES_TO_RADIANS(180);
+	_acceleration = 200;
+	_decceleration = 750 * 17;
+	_normalAttack = RatValues._normalAttack;
+}
+
 
 void Rat::update(float dt)
 {
@@ -72,20 +117,19 @@ void Rat::dyingMode(Vec2 knockSource, int knockAmount)
 	playAnimation("dead");
 	playDyingEffects();
 
-	std::vector<Actor*>::iterator it = std::find(MonsterManager.begin(), MonsterManager.end(), this);
-	remove(HeroManager.begin(), HeroManager.end(), this);
+	remove(MonsterManager.begin(), MonsterManager.end(), this);
 	auto recycle = [&]() {
 		removeFromParent();
-		//if (gameMaster != NULL)
-		//	gameMaster::showVictoryUI();
+		if (gameMaster != NULL)
+			gameMaster->showVictoryUI();
 	};
 
 	auto disableHeroAI = [&]() {
 		if (HeroManager.size() != 0) {
 			for (auto var = HeroManager.begin(); var != HeroManager.end(); ++var) {
-				//HeroManager(var)->setAIEnabled(false);
-				//HeroManager(var)->idleMode();
-				//HeroManager(var)->_goRight = false;
+				(*var)->setAIEnabled(false);
+				(*var)->idleMode();
+				(*var)->setGoRight(false);
 			}
 		}
 	};
@@ -100,7 +144,7 @@ void Rat::dyingMode(Vec2 knockSource, int knockAmount)
 	_AIEnabled = false;
 }
 
-int Rat::hurt(BasicCollider* collider, bool dirKnockMode)
+float Rat::hurt(BasicCollider* collider, bool dirKnockMode)
 {
 	if (_isalive == true) {
 		//TODO add sound effect
@@ -131,11 +175,9 @@ int Rat::hurt(BasicCollider* collider, bool dirKnockMode)
 		}
 
 		//three param judge if crit
-
-		/* 这里需要修改 */
-		/*Sprite* blood = _hpCounter->showBloodLossNum(damage, this, critical);
+		auto blood = _hpCounter->showBloodLossNum(damage, this, critical);
 		setPositionZ(Director::getInstance()->getVisibleSize().height * 0.25);
-		addEffect(blood);*/
+		addEffect(blood);
 		return damage;
 	}
 	return 0;

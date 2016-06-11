@@ -8,6 +8,7 @@ public:
 	CREATE_FUNC(Mage);
 	virtual bool init();
 	virtual void update(float dt);
+	void copyData_Mage();
 	void playDyingEffects();
 	void hurtSoundEffects();
 	void normalAttack();
@@ -24,7 +25,9 @@ public:
 	int getWeaponID();
 	int getHelmetID();
 	int getArmourID();
-	int hurt(BasicCollider* collider, bool dirKnockMode);
+	float hurt(BasicCollider* collider, bool dirKnockMode);
 
+private:
+	struct attack_d _specialAttack;
 	std::string file = "model/mage/mage.c3b";
 };

@@ -1,9 +1,13 @@
 ﻿#include "GlobalVariables.h"
+#include "GameMaster.h"
+
+Layer * currentLayer;
+GameMaster *gameMaster;
+class BattleFieldUI *uiLayer;
 
 float FXZorder = 1999;
 float CelLine = 0.009;
 std::string BossTaunt = "How dare you???";
-Layer * currentLayer;
 AnimationCache * animationCache = AnimationCache::getInstance();
 float resolutionRate = G.winSize.width / G.winSize.height;
 

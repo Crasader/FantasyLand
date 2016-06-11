@@ -1,9 +1,9 @@
 ﻿#pragma once
 #include "cocos2d.h"
-#include "AudioEngine.h"
 #include "GlobalVariables.h"
-#include "AttackCommand.h"
 #include "Manager.h"
+#include "GameMaster.h"
+#include "AttackCommand.h"
 
 USING_NS_CC;
 
@@ -14,7 +14,8 @@ class Actor : public Node
 public:	
 	CREATE_FUNC(Actor);
 	virtual bool init();
-	void addEffect(Sprite* effect);
+	void addEffect(Node* effect);
+	void copyData();
 	void initPuff();
 	void initShadow();
 	void playAnimation(std::string name, bool loop = false);
@@ -41,23 +42,22 @@ public:
 	bool getGoRight();
 	Node* getEffectNode();
 
-	float hurt(BasicCollider* collider, bool dirKnockMode = false);
+	virtual float hurt(BasicCollider* collider, bool dirKnockMode = false);
 	virtual void hurtSoundEffects();
 	virtual void normalAttackSoundEffects();
 	virtual void specialAttackSoundEffects();
 	virtual void playDyingEffects();
 	
-
 	//attacking collision check
-	void normalAttack();
-	void specialAttack();
+	virtual void normalAttack();
+	virtual void specialAttack();
 
 	//State Machine switching functions
-	void idleMode();	//switch into idle mode
-	void walkMode();	//switch into walk mode
-	void attackMode();	//switch into attack mode
-	void knockMode(BasicCollider* collider, bool dirKnockMode = false);
-	void dyingMode(Vec2 knockSource, int knockAmount);
+	virtual void idleMode();	//switch into idle mode
+	virtual void walkMode();	//switch into walk mode
+	virtual void attackMode();	//switch into attack mode
+	virtual void knockMode(BasicCollider* collider, bool dirKnockMode = false);
+	virtual void dyingMode(Vec2 knockSource, int knockAmount);
 
 	//Base Update Functions
 	void stateMachineUpdate(float dt);
@@ -115,9 +115,9 @@ protected:
 	Sprite* _avatar;
 
 	//
-	EnumRaceType _racetype;	//type of the actor
-	EnumStateType _statetype;	//AI state machine
-	Sprite _sprite;
+	enum EnumRaceType _racetype;	//type of the actor
+	enum EnumStateType _statetype;	//AI state machine
+	Sprite* _sprite;
     Sprite3D* _sprite3d;	//place to hold 3d model
 
     float _radius;	//actor collider size
@@ -140,22 +140,8 @@ protected:
 	float _searchDistance;	//distance which enemy can be found
 
 	float _attackRange;	//distance the actor will stop and commence attack
-
-	/*
 	//attack collider info, it can be customized
-	struct attackColliderInfo {	//data for normal attack
-		int minRange; 	//collider inner radius
-		int maxRange;	//collider outer radius
-		float angle;	//collider angle, 360 for full circle, otherwise, a fan shape is created
-		int knock;	//attack knock back distance
-		int damage;	//attack damage
-		EnumRaceType mask;	//who created this attack collider
-		float duration;	//0 means it'll be removed upon calculation
-		int speed;	//speed the collider is traveling;
-		int criticalChance;
-	} _normalAttack;
-	*/
-	
+	struct attack_d _normalAttack;
 };
 
 struct ActorCommonValues;

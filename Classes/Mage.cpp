@@ -1,4 +1,6 @@
 ﻿#include "Mage.h"
+#include "BattleFieldUI.h"
+#include "HPCounter.h"
 
 Mage::Mage()
 {
@@ -19,16 +21,64 @@ bool Mage::init()
 	_useHelmetId = ReSkin.mage.helmet;
 	//copyTable(ActorCommonValues, this);
 	//copyTable(MageValues, this);
+	copyData_Mage();
 
-	/*if (uiLayer != NULL) {
+	if (uiLayer != NULL) {
 		_bloodBar = uiLayer->MageBlood;
 		_bloodBarClone = uiLayer->MageBloodClone;
 		_avatar = uiLayer->MagePng;
-	}*/
+	}
 
 	init3D();
 	initActions();
 	return true;
+}
+
+void Mage::copyData_Mage()
+{
+	_aliveTime = 0,
+	_curSpeed = 0;
+	_curAnimation = "";
+	_curAnimation3d = NULL;
+	_curFacing = 0;
+	_isalive = true;
+	_AITimer = 0;
+	_AIEnabled = false;
+	_attackTimer = 0;
+	_timeKnocked = 0;
+	_cooldown = false;
+	_hp = 1000;
+	_goRight = true;
+	_targetFacing = 0;
+	_target = NULL;
+	_myPos = ccp(0, 0);
+	_angry = 0;
+	_angryMax = 500;
+	_racetype = EnumRaceType::HERO;
+	_name = "Mage";
+	_radius = 50;
+	_mass = 800;
+	_shadowSize = 70;
+	_hp = 1100;
+	_maxhp = 1100;
+	_defense = 120;
+	_attackFrequency = 2.67;
+	_recoverTime = 0.8;
+	_AIFrequency = 1.33;
+	_attackRange = 400;
+	_specialAttackChance = 0;
+	_specialSlowTime = 0.67;
+ //   struct attack_d _normalAttack = 
+	//{
+	//	0, 50,DEGREES_TO_RADIANS(360),10 , 280,EnumRaceType::HERO,2,400,0.05
+	//};
+	//struct attack_d _specialAttack =
+	//{
+	//	0, 140,DEGREES_TO_RADIANS(360),75, 250,EnumRaceType::HERO,4.5,0,0.05,0.75,0.75,false
+	//};
+	_normalAttack = MageValues._normalAttack;
+	_specialAttack = MageValues._specialAttack;
+
 }
 
 void Mage::update(float dt)
@@ -52,7 +102,7 @@ void Mage::normalAttack()
 {
 	experimental::AudioEngine::play2d(MageProperty.normalAttackShout, false, 0.4);
 	experimental::AudioEngine::play2d(MageProperty.ice_normal, false, 0.8);
-	//MageNormalAttack::CreateWithPos(getPosTable(this), _curFacing, _normalAttack, _target, this);
+	MageNormalAttack::CreateWithPos(getPosTable(this), _curFacing, _normalAttack, _target, this);
 }
 
 void Mage::specialAttack()
@@ -76,16 +126,17 @@ void Mage::specialAttack()
 	pos1 = ccpRotateByAngle(pos1, _myPos, _curFacing);
 	pos2 = ccpRotateByAngle(pos2, _myPos, _curFacing);
 	pos3 = ccpRotateByAngle(pos3, _myPos, _curFacing);
-	//MageIceSpikes::CreateWithPos(pos1, _curFacing, _specialAttack, this);
-	//auto spike2 = [&]() {
-	//	MageIceSpikes::CreateWithPos(pos2, _curFacing, _specialAttack, this);
-	//};
-	//auto spike3 = [&]() {
-	//	MageIceSpikes::CreateWithPos(pos3, _curFacing, _specialAttack, this);
-	//};
-	
-	//delayExecute(this, spike2, 0.25);
-	//delayExecute(this, spike3, 0.5);
+	MageIceSpikes::CreateWithPos(pos1, _curFacing, _specialAttack, this);
+
+	auto spike2 = [&]() {
+		MageIceSpikes::CreateWithPos(pos2, _curFacing, _specialAttack, this);
+	};
+	auto spike3 = [&]() {
+		MageIceSpikes::CreateWithPos(pos3, _curFacing, _specialAttack, this);
+	};
+
+	delayExecute(this, spike2, 0.25);
+	delayExecute(this, spike3, 0.5);
 }
 
 void Mage::init3D()
@@ -208,7 +259,7 @@ int Mage::getArmourID()
 	return _useHelmetId;
 }
 
-int Mage::hurt(BasicCollider* collider, bool dirKnockMode)
+float Mage::hurt(BasicCollider* collider, bool dirKnockMode)
 {
 	if (_isalive == true) {
 		//TODO add sound effect
@@ -240,16 +291,15 @@ int Mage::hurt(BasicCollider* collider, bool dirKnockMode)
 
 		//three param judge if crit
 
-		/* 这里需要修改 */
-		/*Sprite* blood = _hpCounter->showBloodLossNum(damage, this, critical);
+		auto blood = _hpCounter->showBloodLossNum(damage, this, critical);
 		if (_name == "Rat")
 			setPositionZ(Director::getInstance()->getVisibleSize().height * 0.25);
 		addEffect(blood);
 
-		auto bloodMinus = { _name, _maxhp, _hp, _bloodBar, _bloodBarClone, _avatar };
-		MessageDispatchCenter::dispatchMessage(MessageDispatchCenter::MessageType::BLOOD_MINUS, bloodMinus);
-		auto anaryChange = { _name, _angry,_angryMax };
-		MessageDispatchCenter::dispatchMessage(MessageDispatchCenter::MessageType::ANGRY_CHANCE, anaryChange);*/
+		//auto bloodMinus = { _name, _maxhp, _hp, _bloodBar, _bloodBarClone, _avatar };
+		//MessageDispatchCenter::dispatchMessage(MessageDispatchCenter::MessageType::BLOOD_MINUS, bloodMinus);
+		//auto anaryChange = { _name, _angry,_angryMax };
+		//MessageDispatchCenter::dispatchMessage(MessageDispatchCenter::MessageType::ANGRY_CHANCE, anaryChange);*/
 		return damage;
 	}
 	return 0;

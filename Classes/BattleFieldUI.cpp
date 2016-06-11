@@ -2,7 +2,6 @@
 #include "GlobalVariables.h"
 #include <AudioEngine.h>
 
-BattleFieldUI *uiLayer;
 
 bool BattleFieldUI::init()
 {
@@ -55,7 +54,7 @@ void BattleFieldUI::bloodbarInit()
 {
 	auto offset = 45;
 	auto scale = 0.7;
-	auto KnightBlood = ProgressTimer::create(Sprite::createWithSpriteFrameName("UI-1136-640_36_clone.png"));
+	KnightBlood = ProgressTimer::create(Sprite::createWithSpriteFrameName("UI-1136-640_36_clone.png"));
 	KnightBlood->setColor(Color3B(149, 254, 26));
 	KnightBlood->setType(ProgressTimerType::BAR);
 	KnightBlood->setBarChangeRate(Vec2(1, 0));
@@ -65,7 +64,7 @@ void BattleFieldUI::bloodbarInit()
 	KnightBlood->setScale(scale);
 	addChild(KnightBlood, 4);
 
-	auto KnightBloodClone = ProgressTimer::create(Sprite::createWithSpriteFrameName("UI-1136-640_36_clone.png"));
+	KnightBloodClone = ProgressTimer::create(Sprite::createWithSpriteFrameName("UI-1136-640_36_clone.png"));
 	KnightBloodClone->setColor(Color3B(255, 83, 23));
 	KnightBloodClone->setType(ProgressTimerType::BAR);
 	KnightBloodClone->setBarChangeRate(Vec2(1, 0));
@@ -75,7 +74,7 @@ void BattleFieldUI::bloodbarInit()
 	KnightBloodClone->setScale(scale);
 	addChild(KnightBloodClone, 3);
 
-	auto ArcherBlood = ProgressTimer::create(Sprite::createWithSpriteFrameName("UI-1136-640_36_clone.png"));
+	ArcherBlood = ProgressTimer::create(Sprite::createWithSpriteFrameName("UI-1136-640_36_clone.png"));
 	ArcherBlood->setColor(Color3B(149, 254, 26));
 	ArcherBlood->setType(ProgressTimerType::BAR);
 	ArcherBlood->setMidpoint(Vec2(0, 0));
@@ -85,7 +84,7 @@ void BattleFieldUI::bloodbarInit()
 	ArcherBlood->setScale(scale);
 	addChild(ArcherBlood, 4);
 
-	auto ArcherBloodClone = ProgressTimer::create(Sprite::createWithSpriteFrameName("UI-1136-640_36_clone.png"));
+	ArcherBloodClone = ProgressTimer::create(Sprite::createWithSpriteFrameName("UI-1136-640_36_clone.png"));
 	ArcherBloodClone->setColor(Color3B(255, 83, 23));
 	ArcherBloodClone->setType(ProgressTimerType::BAR);
 	ArcherBloodClone->setBarChangeRate(Vec2(1, 0));
@@ -95,7 +94,8 @@ void BattleFieldUI::bloodbarInit()
 	ArcherBloodClone->setScale(scale);
 	addChild(ArcherBloodClone, 3);
 
-	auto MageBlood = ProgressTimer::create(Sprite::createWithSpriteFrameName("UI-1136-640_36_clone.png"));
+	//杜：此处修改多处，因为我需要返回各种Blood和Clone
+	MageBlood = ProgressTimer::create(Sprite::createWithSpriteFrameName("UI-1136-640_36_clone.png"));
 	MageBlood->setColor(Color3B(149, 254, 26));
 	MageBlood->setType(ProgressTimerType::BAR);
 	MageBlood->setMidpoint(Vec2(0, 0));
@@ -105,7 +105,7 @@ void BattleFieldUI::bloodbarInit()
 	MageBlood->setScale(scale);
 	addChild(MageBlood, 4);
 
-	auto MageBloodClone = ProgressTimer::create(Sprite::createWithSpriteFrameName("UI-1136-640_36_clone.png"));
+	MageBloodClone = ProgressTimer::create(Sprite::createWithSpriteFrameName("UI-1136-640_36_clone.png"));
 	MageBloodClone->setColor(Color3B(255, 83, 23));
 	MageBloodClone->setType(ProgressTimerType::BAR);
 	MageBloodClone->setBarChangeRate(Vec2(1, 0));

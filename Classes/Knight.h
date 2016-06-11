@@ -8,8 +8,9 @@ public:
 	CREATE_FUNC(Knight);
 	virtual bool init();
 	virtual void update(float dt);
-	void KnightNormalAttackCallback(int audioID, std::string filepath);
-	void KnightSpecialAttackCallback(int audioID, std::string filepath);
+	void copyData_Knight();
+	static void KnightNormalAttackCallback(int audioID, std::string filepath);
+	static void KnightSpecialAttackCallback(int audioID, std::string filepath);
 	void playDyingEffects();
 	void hurtSoundEffects();
 	void normalAttack();
@@ -28,5 +29,7 @@ public:
 	int getHelmetID();
 	int getArmourID();
 
+private:
+	attack_d _specialAttack;
 	std::string file = "model/knight/knight.c3b";
 };

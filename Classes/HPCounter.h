@@ -9,7 +9,7 @@ class HPCounter :public Layer
 public:
 	CREATE_FUNC(HPCounter);
 	virtual bool init();
-	void showBloodLossNum(float dmage, Actor& racetype, bool atack);
+	LabelTTF *showBloodLossNum(float dmage, Actor* racetype, bool atack);
 
 private:
 	bool _isBlooding;

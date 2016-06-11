@@ -1,4 +1,6 @@
 ﻿#include "Archer.h"
+#include "BattleFieldUI.h"
+#include "HPCounter.h"
 
 struct ArcherValues;
 
@@ -9,30 +11,70 @@ Archer::Archer()
 	//this update do not do AI
 	scheduleUpdate();
 	
-	auto specialAttack = [&]() {
-		if (_specialAttackChance == 1)
-			return;
-		_specialAttackChance = 1;
-	};
+	//auto specialAttack = [&]() {
+	//	if (_specialAttackChance == 1)
+	//		return;
+	//	_specialAttackChance = 1;
+	//};
 	//MessageDispatchCenter::registerMessage(MessageDispatchCenter::MessageType::SPECIAL_ARCHER, specialAttack);
 };
 
 bool Archer::init()
 {
-	//_useWeaponId = ReSkin.archer.weapon;
-	//_useArmourId = ReSkin.archer.armour;
-	//_useHelmetId = ReSkin.archer.helmet;
-	//copyTable(ActorCommonValues, self);
-	//copyTable(ArcherValues, self);
-	/*if (uiLayer != NULL) {
+	Actor::init();
+	_useWeaponId = ReSkin.archer.weapon;
+	_useArmourId = ReSkin.archer.armour;
+	_useHelmetId = ReSkin.archer.helmet;
+	copyData_Archer();
+	if (uiLayer != NULL) {
 		_bloodBar = uiLayer->ArcherBlood;
 		_bloodBarClone = uiLayer->ArcherBloodClone;
 		_avatar = uiLayer->ArcherPng;
-	}*/
+	}
 
 	init3D();
 	initActions();
 	return true;
+}
+
+void Archer::copyData_Archer()
+{
+	_aliveTime = 0,
+    _curSpeed = 0;
+	_curAnimation = "";
+	_curAnimation3d = NULL;
+	_curFacing = 0;
+	_isalive = true;
+	_AITimer = 0;
+	_AIEnabled = false;
+	_attackTimer = 0;
+	_timeKnocked = 0;
+	_cooldown = false;
+	_hp = 1000;
+	_goRight = true;
+	_targetFacing = 0;
+	_target = NULL;
+	_myPos = ccp(0, 0);
+	_angry = 0;
+	_angryMax = 500;
+
+	_racetype = HERO;
+	_name = "Archer";
+	_radius = 50;
+	_mass = 800;
+	_shadowSize = 70;
+	_hp = 1200;
+	_maxhp = 1200;
+	_defense = 130;
+	_attackFrequency = 2.5;
+	_recoverTime = 0.4;
+	_AIFrequency = 1.3;
+	_attackRange = 450;
+	_specialAttackChance = 0;
+	_specialSlowTime = 0.5;
+	_turnSpeed = DEGREES_TO_RADIANS(360);
+	_normalAttack = ArcherValues._normalAttack;
+	_specialAttack = ArcherValues._specialAttack;
 }
 
 void Archer::update(float dt)
@@ -69,10 +111,10 @@ void Archer::hurtSoundEffects()
 
 void Archer::normalAttack()
 {
-	//ArcherNormalAttack::CreateWithPos(getPosTable(this), _curFacing, _normalAttack, this);
+	ArcherNormalAttack::CreateWithPos(getPosTable(this), _curFacing, _normalAttack, this);
 	experimental::AudioEngine::play2d(Archerproperty.normalAttackShout, false, 1);
-	auto AUDIO_ID_ARCHERATTACK = experimental::AudioEngine::play2d(Archerproperty.attack1, false, 1);
-	experimental::AudioEngine::setFinishCallback(AUDIO_ID_ARCHERATTACK, ArcherlAttackCallback);
+	AUDIO_ID.ARCHERATTACK = experimental::AudioEngine::play2d(Archerproperty.attack1, false, 1);
+	experimental::AudioEngine::setFinishCallback(AUDIO_ID.ARCHERATTACK, ArcherlAttackCallback);
 }
 
 void Archer::specialAttack()
@@ -84,29 +126,30 @@ void Archer::specialAttack()
 
 	experimental::AudioEngine::play2d(Archerproperty.specialAttackShout, false, 1);
 
-	auto AUDIO_ID_ARCHERATTACK = experimental::AudioEngine::play2d(Archerproperty.attack1, false, 1);
-	experimental::AudioEngine::setFinishCallback(AUDIO_ID_ARCHERATTACK, ArcherlAttackCallback);
+	AUDIO_ID.ARCHERATTACK = experimental::AudioEngine::play2d(Archerproperty.attack1, false, 1);
+	experimental::AudioEngine::setFinishCallback(AUDIO_ID.ARCHERATTACK, ArcherlAttackCallback);
 
-	//auto attack = _specialAttack;
-	//attack.knock = 80;
+	auto attack = _specialAttack;
+	attack.knock = 80;
 
 	auto pos1 = getPosTable(this);
 	pos1 = ccpRotateByAngle(pos1, _myPos, _curFacing);
 	auto pos2 = pos1;
 	auto pos3 = pos2;
-	//ArcherSpecialAttack::create(pos1, _curFacing, attack, this);
+	ArcherSpecialAttack::CreateWithPos(pos1, _curFacing, attack, this);
 	auto spike2 = [&]() {
-		//ArcherSpecialAttack::create(pos2, _curFacing, attack, this);
-		auto AUDIO_ID_ARCHERATTACK = experimental::AudioEngine::play2d(Archerproperty.attack1, false, 1);
-		experimental::AudioEngine::setFinishCallback(AUDIO_ID_ARCHERATTACK, ArcherlAttackCallback);
+		ArcherSpecialAttack::CreateWithPos(pos2, _curFacing, attack, this);
+		AUDIO_ID.ARCHERATTACK = experimental::AudioEngine::play2d(Archerproperty.attack1, false, 1);
+		experimental::AudioEngine::setFinishCallback(AUDIO_ID.ARCHERATTACK, ArcherlAttackCallback);
 	};
 	auto spike3 = [&]() {
-		//ArcherSpecialAttack::create(pos3, _curFacing, attack, this);
-		auto AUDIO_ID_ARCHERATTACK = experimental::AudioEngine::play2d(Archerproperty.attack1, false, 1);
-		experimental::AudioEngine::setFinishCallback(AUDIO_ID_ARCHERATTACK, ArcherlAttackCallback);
+		ArcherSpecialAttack::CreateWithPos(pos3, _curFacing, attack, this);
+		AUDIO_ID.ARCHERATTACK = experimental::AudioEngine::play2d(Archerproperty.attack1, false, 1);
+		experimental::AudioEngine::setFinishCallback(AUDIO_ID.ARCHERATTACK, ArcherlAttackCallback);
 	};
-	//delayExecute(this, spike2, 0.2);
-	//delayExecute(this, spike3, 0.4);
+
+	delayExecute(this, spike2, 0.2);
+	delayExecute(this, spike3, 0.4);
 
 }
 
@@ -259,7 +302,7 @@ int Archer::getHelmetID()
 	return _useHelmetId;
 }
 
-int Archer::hurt(BasicCollider* collider, bool dirKnockMode)
+float Archer::hurt(BasicCollider* collider, bool dirKnockMode)
 {
 	//TODO add sound effect
 	auto damage = collider->getDamage();
@@ -291,12 +334,12 @@ int Archer::hurt(BasicCollider* collider, bool dirKnockMode)
 	//three param judge if crit
 
 	/* 这里需要修改 */
-	/*Sprite* blood = _hpCounter->showBloodLossNum(damage, this, critical);
+	auto blood = _hpCounter->showBloodLossNum(damage, this, critical);
 	if (_name == "Rat")
 		setPositionZ(Director::getInstance()->getVisibleSize().height * 0.25);
 	addEffect(blood);
 
-	auto bloodMinus = { _name, _maxhp, _hp, _bloodBar, _bloodBarClone, _avatar };
+	/*auto bloodMinus = { _name, _maxhp, _hp, _bloodBar, _bloodBarClone, _avatar };
 	MessageDispatchCenter::dispatchMessage(MessageDispatchCenter::MessageType::BLOOD_MINUS, bloodMinus);
 	auto anaryChange = { _name, _angry,_angryMax };
 	MessageDispatchCenter::dispatchMessage(MessageDispatchCenter::MessageType::ANGRY_CHANCE, anaryChange);*/

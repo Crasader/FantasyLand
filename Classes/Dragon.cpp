@@ -3,22 +3,63 @@
 Dragon::Dragon()
 {
 	_AIEnabled = true;
-	schedule(schedule_selector(Dragon::update), 0.5);
+	scheduleUpdateWithPriority(1);
 }
 
 bool Dragon::init()
 {
+	Actor::init();
 	//copyTable(ActorCommonValues, this);
 	//copyTable(DragonValues, this);
+	copyData_Dragon();
 	init3D();
 	initActions();
 	return true;
 }
 
+void Dragon::copyData_Dragon()
+{
+	_aliveTime = 0,
+	_curSpeed = 0;
+	_curAnimation = "";
+	_curAnimation3d = NULL;
+	_curFacing = 0;
+	_isalive = true;
+	_AITimer = 0;
+	_AIEnabled = false;
+	_attackTimer = 0;
+	_timeKnocked = 0;
+	_cooldown = false;
+	_hp = 1000;
+	_goRight = true;
+	_targetFacing = 0;
+	_target = NULL;
+	_myPos = ccp(0, 0);
+	_angry = 0;
+	_angryMax = 500;
+
+	_racetype = EnumRaceType::MONSTER;
+	_name = "Dragon";
+	_radius = 50;
+	_mass = 100;
+	_shadowSize = 70;
+	_hp = 600;
+	_maxhp = 600;
+	_defense = 130;
+	_attackFrequency = 5.2;
+	_recoverTime = 0.8;
+	_AIFrequency = 1.337;
+	_attackRange = 350;
+	_speed = 300;
+	_turnSpeed = DEGREES_TO_RADIANS(180);
+	_acceleration = 250;
+	_decceleration = 750 * 1.7;
+	_normalAttack = DragonValues._normalAttack;
+}
+
 void Dragon::reset()
 {
-	//copyTable(ActorCommonValues, this);
-	//copyTable(DragonValues, this);
+	copyData_Dragon();
 	walkMode();
 	setPositionZ(0);
 }
@@ -46,13 +87,12 @@ void Dragon::dyingMode(Vec2 knockSource, int knockAmount)
 		runAction(EaseCubicActionInOut::create(MoveTo::create(_action.at("knocked")->getDuration() * 3, newPos)));
 	}
 	_AIEnabled = false;
-	//自己修改的Erase
-	remove(HeroManager.begin(), HeroManager.end(), this);
+
+	remove(MonsterManager.begin(), MonsterManager.end(), this);
 
 	auto recycle = [&]() {
 		setVisible(false);
 		getPoolByName(_name).push_back(this);
-		//List.pushlast(getPoolByName(_name), self);
 	};
 	runAction(Sequence::create(DelayTime::create(3),
 		MoveBy::create(1.0, Vec3(0, 0, -50)),
@@ -77,7 +117,7 @@ void Dragon::hurtSoundEffects()
 void Dragon::normalAttack()
 {
 	normalAttackSoundEffects();
-	//DragonAttack::CreateWithPos(getPosTable(this), _curFacing, _normalAttack);
+	DragonAttack::CreateWithPos(getPosTable(this), _curFacing, _normalAttack);
 }
 
 void Dragon::init3D()
