@@ -1,5 +1,6 @@
 ﻿#include "Knight.h"
 #include "BattleFieldUI.h"
+#include "HPCounter.h"
 
 Knight::Knight()
 {
@@ -52,7 +53,6 @@ void Knight::copyData_Knight()
 	_targetFacing = 0;
 	_target = NULL;
 	_myPos = ccp(0, 0);
-	_angry = 0;
 	_angryMax = 500;
 	_racetype = HERO;
 	_name = "Knight";
@@ -60,6 +60,7 @@ void Knight::copyData_Knight()
 	_mass = 1000;
 	_shadowSize = 70;
 	_hp = 1850;
+	_angry = 0;
 	_maxhp = 1850;
 	_defense = 180;
 	_attackFrequency = 2.2;
@@ -112,7 +113,7 @@ void Knight::specialAttack()
 {
 	_specialAttackChance = KnightValues._specialAttackChance;
 	_angry = ActorCommonValues._angry;
-	//auto anaryChange = { _name, _angry, _angryMax };
+	struct MESSAGE_ANGRY_CHANGE anaryChange = { _name, _angry, _angryMax };
 	//MessageDispatchCenter::dispatchMessage(MessageDispatchCenter::MessageType::ANGRY_CHANGE, anaryChange);
 
 	//knight will create 2 attacks one by one  
@@ -284,4 +285,51 @@ int Knight::getHelmetID()
 int Knight::getArmourID()
 {
 	return _useHelmetId;
+}
+
+float Knight::hurt(BasicCollider* collider, bool dirKnockMode)
+{
+	if (isAlive()) {
+		//TODO add sound effect
+		auto damage = collider->getDamage();
+		//calculate the real damage
+		bool critical = false;
+		auto knock = collider->getKnock();
+		if (CCRANDOM_0_1() < collider->getCriticalChance()) {
+			damage *= 1.5;
+			critical = true;
+			knock *= 2;
+		}
+		damage = damage + damage * CCRANDOM_MINUS1_1() * 0.15 - _defense;
+		damage = floor(damage);
+		if (damage <= 0) damage = 1;
+		_hp -= damage;
+		if (_hp > 0) {
+			if (critical == true) {
+				knockMode(collider, dirKnockMode);
+				hurtSoundEffects();
+			}
+			else hurtSoundEffects();
+		}
+		else {
+			_hp = 0;
+			_isalive = false;
+			dyingMode(getPosTable(collider), knock);
+		}
+
+		//three param judge if crit
+
+		/* 这里需要修改 */
+		auto blood = _hpCounter->showBloodLossNum(damage, this, critical);
+		if (_name == "Rat")
+			setPositionZ(Director::getInstance()->getVisibleSize().height * 0.25);
+		addEffect(blood);
+
+		struct MESSAGE_BLOOD_MINUS bloodMinus = { _name, _maxhp, _hp, _bloodBar, _bloodBarClone, _avatar };
+		//MessageDispatchCenter::dispatchMessage(MessageDispatchCenter::MessageType::BLOOD_MINUS, bloodMinus);
+		struct MESSAGE_ANGRY_CHANGE anaryChange = { _name, _angry,_angryMax };
+		//MessageDispatchCenter::dispatchMessage(MessageDispatchCenter::MessageType::ANGRY_CHANCE, anaryChange);*/
+		return damage;
+	}
+	return 0;
 }

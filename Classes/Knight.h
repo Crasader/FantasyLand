@@ -28,6 +28,7 @@ public:
 	int getWeaponID();
 	int getHelmetID();
 	int getArmourID();
+	float hurt(BasicCollider* collider, bool dirKnockMode = false);
 
 private:
 	attack_d _specialAttack;
