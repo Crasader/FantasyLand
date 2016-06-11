@@ -30,7 +30,7 @@ void Slime::reset()
 void Slime::copyData_Slime()
 {
 	_aliveTime = 0,
-		_curSpeed = 0;
+	_curSpeed = 0;
 	_curAnimation = "";
 	_curAnimation3d = NULL;
 	_curFacing = 0;
@@ -63,7 +63,7 @@ void Slime::copyData_Slime()
 	_speed = 150;
 	_acceleration = 9999;
 	_decceleration = 9999;
-	_normalAttack = SlimeValues._normalAttack;
+	//_normalAttack = SlimeValues._normalAttack;
 }
 
 void Slime::update(float dt)
