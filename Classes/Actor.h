@@ -1,7 +1,10 @@
 ﻿#pragma once
 #include "cocos2d.h"
 #include "GlobalVariables.h"
+#include "Manager.h"
+#include "GameMaster.h"
 #include "AttackCommand.h"
+
 USING_NS_CC;
 
 class BasicCollider;

@@ -1,5 +1,10 @@
 ﻿#pragma once
 #include "Helper.h"
+#include "AudioEngine.h"
+
+extern Layer * currentLayer;
+extern class GameMaster *gameMaster;
+extern class BattleFieldUI *uiLayer;
 
 void gv_init();
 
@@ -7,7 +12,6 @@ extern float FXZorder;
 extern float CelLine;
 extern std::string BossTaunt;
 extern AnimationCache * animationCache ;
-extern Layer * currentLayer;
 extern float resolutionRate;
 
 extern struct RECTS_d RECTS;

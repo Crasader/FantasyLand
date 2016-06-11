@@ -1,6 +1,4 @@
 ﻿#include "Dragon.h"
-#include "Manager.h"
-#include <AudioEngine.h>
 
 Dragon::Dragon()
 {

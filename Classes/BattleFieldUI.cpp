@@ -2,7 +2,6 @@
 #include "GlobalVariables.h"
 #include <AudioEngine.h>
 
-BattleFieldUI *uiLayer;
 
 bool BattleFieldUI::init()
 {

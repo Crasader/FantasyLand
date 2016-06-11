@@ -1,6 +1,4 @@
 ﻿#include "Rat.h"
-#include <AudioEngine.h>
-#include "Manager.h"
 #include "BattleScene.h"
 #include "HPCounter.h"
 
@@ -123,7 +121,7 @@ void Rat::dyingMode(Vec2 knockSource, int knockAmount)
 	auto recycle = [&]() {
 		removeFromParent();
 		if (gameMaster != NULL)
-			gameMaster::showVictoryUI();
+			gameMaster->showVictoryUI();
 	};
 
 	auto disableHeroAI = [&]() {
