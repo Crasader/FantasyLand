@@ -25,7 +25,7 @@ public:
 	int getWeaponID();
 	int getHelmetID();
 	int getArmourID();
-	float hurt(BasicCollider* collider, bool dirKnockMode);
+	float hurt(BasicCollider* collider, bool dirKnockMode = false);
 
 private:
 	struct attack_d _specialAttack;

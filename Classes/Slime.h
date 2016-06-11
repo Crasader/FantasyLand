@@ -16,7 +16,7 @@ public:
 	void walkMode();
 	void attackMode();
 	void idleMode();
-	void knockMode(BasicCollider* collider, bool dirKnockMode);
+	void knockMode(BasicCollider* collider, bool dirKnockMode = false);
 	void angryFace(bool trueFalse);
 	void initActions();
 
