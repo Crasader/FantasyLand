@@ -96,7 +96,7 @@ void ChooseRoleScene::addButton()
 	next_Button->setTouchEnabled(true);
 	next_Button->setNormalizedPosition(Vec2(0.34, 0.13));
 	//next_Button->setScale(resolutionRate);
-	next_Button->addTouchEventListener(touchEvent_next);
+	//next_Button->addTouchEventListener(touchEvent_next);
 	layer->addChild(next_Button);
 }
 
@@ -262,15 +262,15 @@ void ChooseRoleScene::rotate3Heroes(bool isRight)
 	if (isRight)
 	{
 		auto middle = layer->getChildByTag(sortorder[2]);
-		middle->runAction(Sequence::create(
-			CallFunc::create(isMoving = true),
-			Spawn::create(EaseCircleActionInOut::create(MoveTo::create(rotatetime, pos/*[3]*/))),
-			CallFunc::create([this]()
-		{
-			isMoving = false;
-			playAudioWhenRotate();
-		}
-		)));
+		//middle->runAction(Sequence::create(
+		//	CallFunc::create(isMoving = true),
+		//	Spawn::create(EaseCircleActionInOut::create(MoveTo::create(rotatetime, pos/*[3]*/))),
+		//	CallFunc::create([this]()
+		//{
+		//	isMoving = false;
+		//	playAudioWhenRotate();
+		//}
+		//)));
 		auto left = layer->getChildByTag(sortorder[1]);
 		layer->runAction(EaseCircleActionInOut::create(MoveTo::create(rotatetime, pos/*[2]*/)));
 		auto right = layer->getChildByTag(sortorder[3]);

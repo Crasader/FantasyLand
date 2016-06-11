@@ -208,9 +208,9 @@ void MainMenuScene::addPointLight(Layer* layer)
 
 	//add event listener
 	auto touchEventListener = EventListenerTouchOneByOne::create();
-	touchEventListener->onTouchBegan = onTouchBegin;
-	touchEventListener->onTouchMoved = onTouchMoved;
-	touchEventListener->onTouchEnded = onTouchEnded;
+	//touchEventListener->onTouchBegan = onTouchBegin;
+	//touchEventListener->onTouchMoved = onTouchMoved;
+	//touchEventListener->onTouchEnded = onTouchEnded;
 	layer->getEventDispatcher()->addEventListenerWithSceneGraphPriority(touchEventListener, layer);
 }
 
@@ -232,7 +232,7 @@ void MainMenuScene::addButton(Layer* layer)
 
 	auto button = ui::Button::create("start.png", "", "", ui::TextureResType::PLIST);
 	button->setPosition(Vec2(size.width*0.5, size.height*0.15));
-	button->addTouchEventListener(button_callback);
+	//button->addTouchEventListener(button_callback);
 	layer->addChild(button, 4);
 
 	/*auto effectNormalMapped = EffectNormalMapped:create("mainmenuscene/start_normal.png")
