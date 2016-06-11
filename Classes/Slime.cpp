@@ -64,6 +64,11 @@ void Slime::copyData_Slime()
 	_acceleration = 9999;
 	_decceleration = 9999;
 	//_normalAttack = SlimeValues._normalAttack;
+	_normalAttack =
+	{
+		0 , 50 , DEGREES_TO_RADIANS(360) ,
+		0 , 135 , MONSTER , 0 , 0 , 0.13f
+	};
 }
 
 void Slime::update(float dt)

@@ -64,7 +64,11 @@ void Rat::copyData_Rat()
 	_turnSpeed = DEGREES_TO_RADIANS(180);
 	_acceleration = 200;
 	_decceleration = 750 * 17;
-	//_normalAttack = RatValues._normalAttack;
+	_normalAttack =
+	{
+		0 , 150 , DEGREES_TO_RADIANS(100) ,
+		250 , 210 , MONSTER , 0 , 0 , 1
+	};
 }
 
 
