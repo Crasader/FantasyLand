@@ -180,13 +180,13 @@ struct KnightValues_d
 	struct attack_d _normalAttack =
 	{
 		0 , 130 , DEGREES_TO_RADIANS(70) ,
-		60 , 250 , HERO , 0 , 0 , 0.15
+		60 , 250 , HERO , 0 , 0 , 0.15f
 	}; 
 
 	struct attack_d _specialAttack =
 	{
 		0 , 250 , DEGREES_TO_RADIANS(160) ,
-		150 , 350 , HERO , 0 , 0 , 0.35
+		150 , 350 , HERO , 0 , 0 , 0.35f
 	};
 };
 
@@ -212,14 +212,14 @@ struct MageValues_d
 	struct attack_d _normalAttack =
 	{
 		0 , 50 , DEGREES_TO_RADIANS(360) ,
-		10 , 280 , HERO , 2 , 400 , 0.05
+		10 , 280 , HERO , 2 , 400 , 0.05f
 	};
 
 	struct attack_d _specialAttack =
 	{
 		0 , 140 , DEGREES_TO_RADIANS(360) ,
-		75 , 250 , HERO , 4.5 , 0 , 0.05,
-		0.75 , 0.75 , false
+		75 , 250 , HERO , 4.5 , 0 , 0.05f,
+		0.75f , 0.75f , false
 	};
 };
 
@@ -245,14 +245,14 @@ struct ArcherValues_d
 	struct attack_d _normalAttack =
 	{
 		0 , 30 , DEGREES_TO_RADIANS(360) ,
-		100 , 200 , HERO , 1.3 , 900 , 0.33
+		100 , 200 , HERO , 1.3f , 900 , 0.33f
 	};
 
 	struct attack_d _specialAttack =
 	{
 		0 , 75 , DEGREES_TO_RADIANS(360) ,
-		100 , 200 , HERO , 1.5 , 850 , 0.5 ,
-		0.3 , 0.3 , false
+		100 , 200 , HERO , 1.5f , 850 , 0.5f ,
+		0.3f , 0.3f , false
 	};
 };
 
@@ -280,7 +280,7 @@ struct DragonValues_d
 	struct attack_d _normalAttack =
 	{
 		0 , 40 , DEGREES_TO_RADIANS(360) ,
-		50 , 400 , MONSTER , 1 , 350 , 0.15
+		50 , 400 , MONSTER , 1 , 350 , 0.15f
 	};
 };
 
@@ -308,7 +308,7 @@ struct SlimeValues_d
 	struct attack_d _normalAttack =
 	{
 		0 , 50 , DEGREES_TO_RADIANS(360) ,
-		0 , 135 , MONSTER , 0 , 0 , 0.13
+		0 , 135 , MONSTER , 0 , 0 , 0.13f
 	};
 };
 
@@ -334,7 +334,7 @@ struct PigletValues_d
 	struct attack_d _normalAttack =
 	{
 		0 , 120 , DEGREES_TO_RADIANS(50) ,
-		0 , 150 , MONSTER , 0 , 0 , 0.15
+		0 , 150 , MONSTER , 0 , 0 , 0.15f
 	};
 };
 
@@ -390,14 +390,14 @@ struct BossValues_d
 	struct attack_d _normalAttack =
 	{
 		0 , 110 , DEGREES_TO_RADIANS(100) ,
-		50 , 200 , MONSTER , 0 , 0 , 0.15
+		50 , 200 , MONSTER , 0 , 0 , 0.15f
 	};
 
 	struct attack_d nova =
 	{
 		0 , 250 , DEGREES_TO_RADIANS(360) ,
-		120 , 250 , HERO , 0.5 , 0 , 0.15 ,
-		0.3 , 0.3 , false
+		120 , 250 , HERO , 0.5f , 0 , 0.15f ,
+		0.3f , 0.3f , false
 	};
 
 };
