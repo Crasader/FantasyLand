@@ -4,7 +4,7 @@
 USING_NS_CC;
 
 class Actor;
-class BattleScene:public Layer
+class BattleScene :public Layer
 {
 public:
 	static cocos2d::Scene* createScene();
@@ -24,5 +24,9 @@ public:
 	void UIcontainsPoint(Vec2 position/*position @lua*/);
 
 private:
-
+	Camera *specialCamera;
+	Scheduler * scheduler;
+	Vec3 cameraOffset;
+	Vec2 cameraOffsetMin;
+	Vec2 cameraOffsetMax;
 };

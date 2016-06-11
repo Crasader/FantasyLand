@@ -1,5 +1,8 @@
 #include "AppDelegate.h"
 #include "GlobalVariables.h"
+#include "LoadingScene.h"
+#include "MainMenuScene.h"
+#include "ChooseRoleScene.h"
 #include "BattleScene.h"
 
 USING_NS_CC;

@@ -223,6 +223,11 @@ Node* Actor::getEffectNode() {
 	return _effectNode;
 }
 
+ParticleSystem* Actor::getPuff()
+{
+	return _puff;
+}
+
 float Actor::hurt(BasicCollider* collider, bool dirKnockMode)
 {
 	//log("A actor is hurted");
@@ -342,7 +347,7 @@ void Actor::dyingMode(Vec2 knockSource, int knockAmount)
 			MoveBy::create(1.0, Vec3(0, 0, -50)), 
 			RemoveSelf::create(), NULL));
 		_angry = 0;
-		//auto anaryChange = { _name, _angry, _angryMax };
+		struct MESSAGE_ANGRY_CHANGE anaryChange = { _name, _angry, _angryMax };
 		//MessageDispatchCenter::dispatchMessage(MessageDispatchCenter::MessageType::ANARY_CHANGE, angryChange);
         //CallFunc::create(recycle)
 	}
@@ -523,7 +528,7 @@ void Actor::attackUpdate(float dt)
 			auto createCol = [&]() {
 				specialAttack();
 			};
-			//auto messageParam = {0.2, _myPos, _specialSlowTime, this};
+			struct MESSAGE_SPECIAL_PERSPECTIVE messageParam = {0.2, _myPos, _specialSlowTime, this};
 			//speed = 0.2, pos = self._myPos, dur= self._specialSlowTime , target=self
 			//MessageDispatchCenter::dispatchMessage(MessageDispatchCenter::MessageType::SPECIAL_PERSPECTIVE, messageParam);
 			auto attackAction = Sequence::create(_action.at("specialattack1")->clone(),

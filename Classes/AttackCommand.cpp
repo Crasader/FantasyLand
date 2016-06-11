@@ -299,7 +299,7 @@ void MageNormalAttack::onCollide(Actor* target)
 	hurtEffect(target);
 	playHitAudio();
 	_owner->setAngry(_owner->getAngry() + target->hurt(this) * 0.3);
-	//auto anaryChange = (MageValues._name, _owner->getAngry(), _owner->getAngryMax());
+	struct MESSAGE_ANGRY_CHANGE anaryChange = { MageValues._name, _owner->getAngry(), _owner->getAngryMax() };
     //MessageDispatchCenter::dispatchMessage(MessageDispatchCenter::MessageType::ANGRY_CHANGE, anaryChange);
 	//set cur duration to its max duration, so it will be removed when checking time out
 	_curDuration++;
@@ -417,8 +417,8 @@ void MageIceSpikes::onCollide(Actor* target)
 		hurtEffect(target);
 		playHitAudio();
 		_owner->setAngry(_owner->getAngry() + target->hurt(this, true) * 0.3);
-		/*auto anaryChange = { ArcherValues._name, _owner->getAngry(), _owner->getAngry(), _owner->getAngryMax() };
-		MessageDispatchCenter::dispatchMessage(MessageDispatchCenter::MessageType::ANGRY_CHANGE, anaryChange);*/
+		struct MESSAGE_ANGRY_CHANGE  anaryChange = { ArcherValues._name, _owner->getAngry(), _owner->getAngryMax() };
+		//MessageDispatchCenter::dispatchMessage(MessageDispatchCenter::MessageType::ANGRY_CHANGE, anaryChange);*/
 		_DOTApplied = true;
 	}
 }
@@ -508,8 +508,8 @@ void ArcherSpecialAttack::onCollide(Actor* target)
 		hurtEffect(target);
 		playHitAudio();
 		_owner->setAngry(_owner->getAngry() + target->hurt(this, true) * 0.3);
-		/*auto anaryChange = { ArcherValues._name, _owner->getAngry(), _owner->getAngry(), _owner->getAngryMax() };
-		MessageDispatchCenter::dispatchMessage(MessageDispatchCenter::MessageType::ANGRY_CHANGE, anaryChange);*/
+		struct MESSAGE_ANGRY_CHANGE anaryChange = { ArcherValues._name, _owner->getAngry(), _owner->getAngryMax() };
+		//MessageDispatchCenter::dispatchMessage(MessageDispatchCenter::MessageType::ANGRY_CHANGE, anaryChange);*/
 		_DOTApplied = true;
 	}
 }

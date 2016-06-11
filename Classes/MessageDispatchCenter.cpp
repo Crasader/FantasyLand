@@ -15,7 +15,7 @@ MessageDispatchCenter* MessageDispatchCenter::getInstance()
 
 void MessageDispatchCenter::registerMessage(std::string messageType /*callback*/)
 {
-	if(MessageType.find(messageType) == MessageType.end() )
+	if( MessageType.find(messageType) == MessageType.end() ) 
 	{
 		std::cout << "param is invalid";
 		return;

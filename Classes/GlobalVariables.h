@@ -524,3 +524,11 @@ struct MESSAGE_BLOOD_MINUS
 	ProgressTimer* _bloodBarClone;
 	Sprite* _avatar;
 };
+
+struct MESSAGE_SPECIAL_PERSPECTIVE
+{
+	float speed;
+	Vec2 pos;
+	float dur;
+	Actor* target;
+};
