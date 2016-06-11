@@ -20,7 +20,6 @@ int frontDistanceWithHeroX = 600;
 int backwardDistanceWithHeroX = 800;
 int distanceWithHeroX = 150;
 int distanceWithHeroY = 150;
-Size size = Director::getInstance()->getWinSize();
 struct monsterCount_d monsterCount;
 
 bool GameMaster::init()

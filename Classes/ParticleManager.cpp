@@ -1,7 +1,5 @@
 ﻿#include "ParticleManager.h"
-
-ParticleManager* ParticleManager::instance = NULL;
-
+ParticleManager *ParticleManager::instance = nullptr;
 ParticleManager* ParticleManager::getInstance()
 {
 	if (instance == NULL)
@@ -13,7 +11,7 @@ void ParticleManager::AddPlistData(std::string fileName, std::string keyName)
 {
 	if (fileName == "" || keyName == "")
 		return;
-	
+
 	if (_plistMap.find(keyName) != _plistMap.end())
 		log("the keyName is exist already.");
 

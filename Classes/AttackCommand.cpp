@@ -205,7 +205,7 @@ KnightNormalAttack::KnightNormalAttack()
 
 KnightNormalAttack* KnightNormalAttack::CreateWithPos(Vec2 pos, int facing, struct attack_d attackInfo, Actor* knight)
 {
-	KnightNormalAttack* newKnightNormalAttack = KnightNormalAttack::create();
+	auto newKnightNormalAttack = KnightNormalAttack::create();
     newKnightNormalAttack->initData(pos, facing, attackInfo);
 	newKnightNormalAttack->_owner = knight;
 	return newKnightNormalAttack;
@@ -228,7 +228,7 @@ MageNormalAttack::MageNormalAttack()
 
 MageNormalAttack* MageNormalAttack::CreateWithPos(Vec2 pos, int facing, struct attack_d attackInfo, Actor* target, Actor* owner)
 {
-	MageNormalAttack* newMageNormalAttack = MageNormalAttack::create();
+	auto newMageNormalAttack = MageNormalAttack::create();
 	newMageNormalAttack->initData(pos, facing, attackInfo);
 	newMageNormalAttack->_target = target;
 	newMageNormalAttack->_owner = owner;
@@ -320,9 +320,14 @@ void MageNormalAttack::onUpdate(float dt)
 	}
 }
 
+MageIceSpikes::MageIceSpikes()
+{
+	
+}
+
 MageIceSpikes* MageIceSpikes::CreateWithPos(Vec2 pos, int facing, struct attack_d attackInfo, Actor* owner)
 {
-	MageIceSpikes* ret = MageIceSpikes::create();
+	auto ret = MageIceSpikes::create();
 	ret->initData(pos, facing, attackInfo);
 	ret->_owner = owner;
 	ret->_sp = Sprite::createWithSpriteFrameName("shadow.png");
