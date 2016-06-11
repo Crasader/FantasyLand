@@ -148,8 +148,8 @@ void Archer::specialAttack()
 		experimental::AudioEngine::setFinishCallback(AUDIO_ID.ARCHERATTACK, ArcherlAttackCallback);
 	};
 
-	delayExecute(this, spike2, 0.2);
-	delayExecute(this, spike3, 0.4);
+	//delayExecute(this, spike2, 0.2); todo
+	//delayExecute(this, spike3, 0.4); todo
 
 }
 
