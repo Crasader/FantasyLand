@@ -1,4 +1,5 @@
 ﻿#include "Piglet.h"
+#include <AudioEngine.h>
 
 Piglet::Piglet()
 {
@@ -8,19 +9,57 @@ Piglet::Piglet()
 
 bool Piglet::init()
 {
+	Actor::init();
 	_useWeaponId = ReSkin.mage.weapon;
 	_useArmourId = ReSkin.mage.armour;
 	//copyTable(ActorCommonValues, this);
 	//copyTable(PigletValues, this);
+	copyData_Piglet();
 	init3D();
 	initActions();
 	return true;
 }
 
+void Piglet::copyData_Piglet()
+{
+	_aliveTime = 0,
+	_curSpeed = 0;
+	_curAnimation = "";
+	_curAnimation3d = NULL;
+	_curFacing = 0;
+	_isalive = true;
+	_AITimer = 0;
+	_AIEnabled = false;
+	_attackTimer = 0;
+	_timeKnocked = 0;
+	_cooldown = false;
+	_hp = 1000;
+	_goRight = true;
+	_targetFacing = 0;
+	_target = NULL;
+	_myPos = ccp(0, 0);
+	_angry = 0;
+	_angryMax = 500;
+	_racetype = MONSTER;
+	_name = "Piglet";
+	_radius = 50;
+	_mass = 69;
+	_shadowSize = 60;
+	_hp = 400;
+	_maxhp = 400;
+	_defense = 65;
+	_attackFrequency = 4.73;
+    _recoverTime = 0.9;
+	_AIFrequency = 2.3;
+	_attackRange = 120;
+	_speed = 350;
+	_turnSpeed = DEGREES_TO_RADIANS(270);
+	_normalAttack = PigletValues._normalAttack;
+}
+
 void Piglet::reset()
 {
-	//copyTable(ActorCommonValues, this);
-	//copyTable(PigletValues, this);
+	copyData_Piglet();
 	bool allDead;
 	_findEnemy(_racetype, allDead);
 	walkMode();

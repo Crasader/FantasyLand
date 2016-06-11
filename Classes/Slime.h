@@ -8,6 +8,7 @@ public:
 	CREATE_FUNC(Slime);
 	virtual bool init();
 	void reset();
+	void copyData_Slime();
 	virtual void update(float dt);
 	void play3DAnim();
 	void playAnimation(std::string name, bool loop);

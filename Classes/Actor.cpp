@@ -347,7 +347,7 @@ void Actor::dyingMode(Vec2 knockSource, int knockAmount)
         //CallFunc::create(recycle)
 	}
 	else {
-		remove(HeroManager.begin(), HeroManager.end(), this);
+		remove(MonsterManager.begin(), MonsterManager.end(), this);
 		auto recycle = [&]() {
 			setVisible(false);
 			getPoolByName(_name).push_back(this);	

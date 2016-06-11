@@ -27,6 +27,45 @@ void Slime::reset()
 	setPositionZ(0);
 }
 
+void Slime::copyData_Slime()
+{
+	_aliveTime = 0,
+		_curSpeed = 0;
+	_curAnimation = "";
+	_curAnimation3d = NULL;
+	_curFacing = 0;
+	_isalive = true;
+	_AITimer = 0;
+	_AIEnabled = false;
+	_attackTimer = 0;
+	_timeKnocked = 0;
+	_cooldown = false;
+	_hp = 1000;
+	_goRight = true;
+	_targetFacing = 0;
+	_target = NULL;
+	_myPos = ccp(0, 0);
+	_angry = 0;
+	_angryMax = 500;
+	_racetype = MONSTER;
+	_name = "Slime";
+	_radius = 35;
+	_mass = 20;
+	_shadowSize = 45;
+	_hp = 300;
+	_maxhp = 300;
+	_defense = 65;
+	_attackFrequency = 1.5;
+	_recoverTime = 0.7;
+	_AIFrequency = 3.3;
+	_AITimer = 2.0;
+	_attackRange = 50;
+	_speed = 150;
+	_acceleration = 9999;
+	_decceleration = 9999;
+	_normalAttack = SlimeValues._normalAttack;
+}
+
 void Slime::update(float dt)
 {
 	baseUpdate(dt);

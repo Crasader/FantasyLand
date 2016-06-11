@@ -114,7 +114,7 @@ protected:
 	//
 	enum EnumRaceType _racetype;	//type of the actor
 	enum EnumStateType _statetype;	//AI state machine
-	Sprite _sprite;
+	Sprite* _sprite;
     Sprite3D* _sprite3d;	//place to hold 3d model
 
     float _radius;	//actor collider size

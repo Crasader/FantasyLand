@@ -7,6 +7,7 @@ public:
 	Dragon();
 	CREATE_FUNC(Dragon);
 	virtual bool init();
+	void copyData_Dragon();
 	void reset();
 	virtual void update(float dt);
 	void dyingMode(Vec2 knockSource, int knockAmount);

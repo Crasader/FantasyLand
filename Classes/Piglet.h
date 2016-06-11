@@ -8,6 +8,7 @@ public:
 	CREATE_FUNC(Piglet);
 	virtual bool init();
 	void reset();
+	void copyData_Piglet();
 	virtual void update(float dt);
 	void playDyingEffects();
 	void hurtSoundEffects();

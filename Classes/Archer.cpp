@@ -40,7 +40,42 @@ bool Archer::init()
 
 void Archer::copyData_Archer()
 {
-	
+	_aliveTime = 0,
+    _curSpeed = 0;
+	_curAnimation = "";
+	_curAnimation3d = NULL;
+	_curFacing = 0;
+	_isalive = true;
+	_AITimer = 0;
+	_AIEnabled = false;
+	_attackTimer = 0;
+	_timeKnocked = 0;
+	_cooldown = false;
+	_hp = 1000;
+	_goRight = true;
+	_targetFacing = 0;
+	_target = NULL;
+	_myPos = ccp(0, 0);
+	_angry = 0;
+	_angryMax = 500;
+
+	_racetype = HERO;
+	_name = "Archer";
+	_radius = 50;
+	_mass = 800;
+	_shadowSize = 70;
+	_hp = 1200;
+	_maxhp = 1200;
+	_defense = 130;
+	_attackFrequency = 2.5;
+	_recoverTime = 0.4;
+	_AIFrequency = 1.3;
+	_attackRange = 450;
+	_specialAttackChance = 0;
+	_specialSlowTime = 0.5;
+	_turnSpeed = DEGREES_TO_RADIANS(360);
+	_normalAttack = ArcherValues._normalAttack;
+	_specialAttack = ArcherValues._specialAttack;
 }
 
 void Archer::update(float dt)
