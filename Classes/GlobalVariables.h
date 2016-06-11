@@ -38,11 +38,14 @@ extern struct Archerproperty_d Archerproperty;
 extern struct MageProperty_d MageProperty;
 extern struct ReSkin_d ReSkin;
 
+struct attack_d{	float minRange;	float maxRange;	float angle;	float knock;	float damage;	enum EnumRaceType mask;	float duration;	float speed;	float criticalChance;	float DOTTimer;	float curDOTTime;	bool DOTApplied;};
+
 enum EnumRaceType
 {
 	HERO, 
 	MONSTER,
 };
+
 enum EnumStateType 
 {
 	IDLE,
@@ -149,18 +152,11 @@ struct ActorDefaultValues_d
 
 	float _attackRange = 100;
 
-	struct _normalAttack
+	struct attack_d _normalAttack = 
 	{
-		float minRange = 0;
-		float maxRange = 130;
-		float angle = DEGREES_TO_RADIANS(30);
-		float knock = 50;
-		float damage = 800;
-		enum EnumRaceType mask = HERO;
-		float duration = 0;
-		float speed = 0;
-		float criticalChance = 0;
-	}_normalAttack;
+		0 , 130 , DEGREES_TO_RADIANS(30),
+		50 , 800 , HERO , 0 , 0 , 0
+	};
 };
 
 struct KnightValues_d
@@ -181,32 +177,17 @@ struct KnightValues_d
 	float _specialAttackChance = 0;
 	float _specialSlowTime = 1;
 
-	struct _normalAttack
+	struct attack_d _normalAttack =
 	{
-		float minRange = 0;
-		float maxRange = 130;
-		float angle = DEGREES_TO_RADIANS(70);
-		float knock = 60;
-		float damage = 250;
-		int mask = EnumRaceType::HERO;
-		float duration = 0;
-		float speed = 0;
-		float criticalChance = 0.15;
-	}_normalAttack;
+		0 , 130 , DEGREES_TO_RADIANS(70) ,
+		60 , 250 , HERO , 0 , 0 , 0.15
+	}; 
 
-	struct _specialAttack
+	struct attack_d _specialAttack =
 	{
-		float minRange = 0;
-		float maxRange = 250;
-		float angle = DEGREES_TO_RADIANS(160);
-		float knock = 150;
-		float damage = 350;
-		int mask = EnumRaceType::HERO;
-		float duration = 0;
-		float speed = 0;
-		float criticalChance = 0.35;
-	}_specialAttack;
-
+		0 , 250 , DEGREES_TO_RADIANS(160) ,
+		150 , 350 , HERO , 0 , 0 , 0.35
+	};
 };
 
 struct MageValues_d
@@ -227,35 +208,19 @@ struct MageValues_d
 	float _specialAttackChance = 0;
 	float _specialSlowTime = 0.67;
 
-	struct _normalAttack
+	
+	struct attack_d _normalAttack =
 	{
-		float minRange = 0;
-		float maxRange = 50;
-		float angle = DEGREES_TO_RADIANS(360);
-		float knock = 10;
-		float damage = 280;
-		int mask = EnumRaceType::HERO;
-		float duration = 2;
-		float speed = 400;
-		float criticalChance = 0.05;
-	}_normalAttack;
+		0 , 50 , DEGREES_TO_RADIANS(360) ,
+		10 , 280 , HERO , 2 , 400 , 0.05
+	};
 
-	struct _specialAttack
+	struct attack_d _specialAttack =
 	{
-		float minRange = 0;
-		float maxRange = 140;
-		float angle = DEGREES_TO_RADIANS(360);
-		float knock = 75;
-		float damage = 250;
-		int mask = EnumRaceType::HERO;
-		float duration = 4.5;
-		float speed = 0;
-		float criticalChance = 0.05;
-		float DOTTimer = 0.75;
-		float curDOTTime = 0.75;
-		bool DOTApplied = false;
-	}_specialAttack;
-
+		0 , 140 , DEGREES_TO_RADIANS(360) ,
+		75 , 250 , HERO , 4.5 , 0 , 0.05,
+		0.75 , 0.75 , false
+	};
 };
 
 struct ArcherValues_d
@@ -277,35 +242,18 @@ struct ArcherValues_d
 	float _specialSlowTime = 0.5;
 	float _turnSpeed = DEGREES_TO_RADIANS(360);
 
-	struct _normalAttack
+	struct attack_d _normalAttack =
 	{
-		float minRange = 0;
-		float maxRange = 30;
-		float angle = DEGREES_TO_RADIANS(360);
-		float knock = 100;
-		float damage = 200;
-		int mask = EnumRaceType::HERO;
-		float duration = 1.3;
-		float speed = 900;
-		float criticalChance = 0.33;
-	}_normalAttack;
+		0 , 30 , DEGREES_TO_RADIANS(360) ,
+		100 , 200 , HERO , 1.3 , 900 , 0.33
+	};
 
-	struct _specialAttack
+	struct attack_d _specialAttack =
 	{
-		float minRange = 0;
-		float maxRange = 75;
-		float angle = DEGREES_TO_RADIANS(360);
-		float knock = 100;
-		float damage = 200;
-		int mask = EnumRaceType::HERO;
-		float duration = 1.5;
-		float speed = 850;
-		float criticalChance = 0.5;
-		float DOTTimer = 0.3;
-		float curDOTTime = 0.3;
-		bool DOTApplied = false;
-	}_specialAttack;
-
+		0 , 75 , DEGREES_TO_RADIANS(360) ,
+		100 , 200 , HERO , 1.5 , 850 , 0.5 ,
+		0.3 , 0.3 , false
+	};
 };
 
 struct DragonValues_d
@@ -329,19 +277,11 @@ struct DragonValues_d
 	float _decceleration = 750 * 1.7;
 	float _turnSpeed = DEGREES_TO_RADIANS(180);
 
-	struct _normalAttack
+	struct attack_d _normalAttack =
 	{
-		float minRange = 0;
-		float maxRange = 40;
-		float angle = DEGREES_TO_RADIANS(360);
-		float knock = 50;
-		float damage = 400;
-		enum EnumRaceType mask = HERO;
-		float duration = 1;
-		float speed = 350;
-		float criticalChance = 0.15;
-	}_normalAttack;
-
+		0 , 40 , DEGREES_TO_RADIANS(360) ,
+		50 , 400 , MONSTER , 1 , 350 , 0.15
+	};
 };
 
 struct SlimeValues_d
@@ -365,19 +305,11 @@ struct SlimeValues_d
 	float _acceleration = 9999;
 	float _decceleration = 9999;
 
-	struct _normalAttack
+	struct attack_d _normalAttack =
 	{
-		float minRange = 0;
-		float maxRange = 50;
-		float angle = DEGREES_TO_RADIANS(360);
-		float knock = 0;
-		float damage = 135;
-		enum EnumRaceType mask = MONSTER;
-		float duration = 0;
-		float speed = 0;
-		float criticalChance = 0.13;
-	}_normalAttack;
-
+		0 , 50 , DEGREES_TO_RADIANS(360) ,
+		0 , 135 , MONSTER , 0 , 0 , 0.13
+	};
 };
 
 struct PigletValues_d
@@ -399,19 +331,11 @@ struct PigletValues_d
 	float _speed = 350;
 	float _turnSpeed = DEGREES_TO_RADIANS(270);
 
-	struct _normalAttack
+	struct attack_d _normalAttack =
 	{
-		float minRange = 0;
-		float maxRange = 120;
-		float angle = DEGREES_TO_RADIANS(50);
-		float knock = 0;
-		float damage = 150;
-		int mask = EnumRaceType::MONSTER;
-		float duration = 0;
-		float speed = 0;
-		float criticalChance = 0.15;
-	}_normalAttack;
-
+		0 , 120 , DEGREES_TO_RADIANS(50) ,
+		0 , 150 , MONSTER , 0 , 0 , 0.15
+	};
 };
 
 struct RatValues_d
@@ -435,19 +359,11 @@ struct RatValues_d
 	float _acceleration = 200;
 	float _decceleration = 750 * 17;
 
-	struct _normalAttack
+	struct attack_d _normalAttack =
 	{
-		float minRange = 0;
-		float maxRange = 150;
-		float angle = DEGREES_TO_RADIANS(100);
-		float knock = 250;
-		float damage = 210;
-		int mask = EnumRaceType::MONSTER;
-		float duration = 0;
-		float speed = 0;
-		float criticalChance = 1;
-	}_normalAttack;
-
+		0 , 150 , DEGREES_TO_RADIANS(100) ,
+		250 , 210 , MONSTER , 0 , 0 , 1
+	};
 };
 
 struct BossValues_d
@@ -471,34 +387,18 @@ struct BossValues_d
 	float _speed = 300;
 	float _AITimer = 5.0;
 
-	struct _normalAttack
+	struct attack_d _normalAttack =
 	{
-		float minRange = 0;
-		float maxRange = 110;
-		float angle = DEGREES_TO_RADIANS(100);
-		float knock = 50;
-		float damage = 200;
-		enum EnumRaceType mask = MONSTER;
-		float duration = 0;
-		float speed = 0;
-		float criticalChance = 0.15;
-	}_normalAttack;
+		0 , 110 , DEGREES_TO_RADIANS(100) ,
+		50 , 200 , MONSTER , 0 , 0 , 0.15
+	};
 
-	struct nova
+	struct attack_d nova =
 	{
-		float minRange = 0;
-		float maxRange = 250;
-		float angle = DEGREES_TO_RADIANS(360);
-		float knock = 120;
-		float damage = 250;
-		enum EnumRaceType mask = HERO;
-		float duration = 0.5;
-		float speed = 0;
-		float criticalChance = 0.15;
-		float DOTTimer = 0.3;
-		float curDOTTime = 0.3;
-		bool DOTApplied = false;
-	}nova;
+		0 , 250 , DEGREES_TO_RADIANS(360) ,
+		120 , 250 , HERO , 0.5 , 0 , 0.15 ,
+		0.3 , 0.3 , false
+	};
 
 };
 
@@ -606,5 +506,3 @@ struct ReSkin_d
 		float helmet = 0;
 	}mage;
 };
-
-struct attack_d{	float minRange;	float maxRange;	float angle;	float knock;	float damage;	int mask;	float duration;	float speed;	float criticalChance;	float DOTTimer;	float curDOTTime;	bool DOTApplied;};
