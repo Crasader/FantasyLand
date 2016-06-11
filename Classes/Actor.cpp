@@ -223,6 +223,11 @@ Node* Actor::getEffectNode() {
 	return _effectNode;
 }
 
+ParticleSystem* Actor::getPuff()
+{
+	return _puff;
+}
+
 float Actor::hurt(BasicCollider* collider, bool dirKnockMode)
 {
 	//log("A actor is hurted");
