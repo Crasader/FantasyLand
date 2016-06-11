@@ -506,3 +506,29 @@ struct ReSkin_d
 		float helmet = 0;
 	}mage;
 };
+
+//todo MESSAGEcenter
+struct MESSAGE_ANGRY_CHANGE
+{
+	std::string _name;
+	float _angry;
+	float _angryMax;
+};
+
+struct MESSAGE_BLOOD_MINUS
+{
+	std::string _name;
+	float _maxhp;
+	float _hp;
+	ProgressTimer* _bloodBar;
+	ProgressTimer* _bloodBarClone;
+	Sprite* _avatar;
+};
+
+struct MESSAGE_SPECIAL_PERSPECTIVE
+{
+	float speed;
+	Vec2 pos;
+	float dur;
+	Actor* target;
+};
