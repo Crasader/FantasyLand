@@ -53,7 +53,11 @@ void Piglet::copyData_Piglet()
 	_attackRange = 120;
 	_speed = 350;
 	_turnSpeed = DEGREES_TO_RADIANS(270);
-	_normalAttack = PigletValues._normalAttack;
+	_normalAttack =
+	{
+		0 , 120 , DEGREES_TO_RADIANS(50) ,
+		0 , 150 , MONSTER , 0 , 0 , 0.15f
+	};
 }
 
 void Piglet::reset()
