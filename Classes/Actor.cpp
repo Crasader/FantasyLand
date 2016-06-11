@@ -104,7 +104,7 @@ void Actor::initShadow()
 	this->addChild(_circle);
 }
 
-void Actor::playAnimation(std::string name, bool loop = false) 
+void Actor::playAnimation(std::string name, bool loop) 
 {
 	if (_curAnimation != name)	//using name to check which animation is playing
 	{
@@ -223,7 +223,7 @@ Node* Actor::getEffectNode() {
 	return _effectNode;
 }
 
-float Actor::hurt(BasicCollider* collider, bool dirKnockMode = false)
+float Actor::hurt(BasicCollider* collider, bool dirKnockMode)
 {
 	//log("A actor is hurted");
 	if (_isalive == true) {

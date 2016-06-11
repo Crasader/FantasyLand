@@ -131,7 +131,7 @@ void Knight::specialAttack()
 	auto punch = [&]() {
 		KnightNormalAttack::CreateWithPos(pos, _curFacing, _specialAttack, this);
 	};
-	delayExecute(this, punch, 0.2);
+	//delayExecute(this, punch, 0.2); todo
 }
 
 void Knight::initAttackEffect()

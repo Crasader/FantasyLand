@@ -273,8 +273,8 @@ void MageNormalAttack::onTimeOut()
 	_part1->stopSystem();
 	_part2->stopSystem();
 	runAction(Sequence::create(DelayTime::create(1), RemoveSelf::create()));
-
-	auto magic = ParticleSystemQuad::create(ParticleManager::getInstance()->getPlistData("magic"));
+	auto pm = ParticleManager::getInstance()->getPlistData("magic");
+	auto magic = ParticleSystemQuad::create(pm);
 	auto magicf = SpriteFrameCache::getInstance()->getSpriteFrameByName("particle.png");
 	magic->setTextureWithRect(magicf->getTexture(), magicf->getRect());
 	magic->setScale(1.5);
@@ -702,7 +702,7 @@ BossSuper* BossSuper::CreateWithPos(Vec2 pos, int facing, struct attack_d attack
 	auto ret = BossSuper::create();
 	ret->initData(pos, facing, attackInfo);
 	ret->_sp = BillBoard::create("FX/FX.png", RECTS.fireBall);
-	ret->_sp->setPosition(Vec3(0, 0, 48));
+	ret->_sp->setPosition3D(Vec3(0, 0, 48));
 	ret->addChild(ret->_sp);
 	ret->_sp->setScale(1.7);
 	return ret;
