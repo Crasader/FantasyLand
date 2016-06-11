@@ -135,8 +135,8 @@ void Mage::specialAttack()
 		MageIceSpikes::CreateWithPos(pos3, _curFacing, _specialAttack, this);
 	};
 
-	delayExecute(this, spike2, 0.25);
-	delayExecute(this, spike3, 0.5);
+	//delayExecute(this, spike2, 0.25);
+	//delayExecute(this, spike3, 0.5);
 }
 
 void Mage::init3D()
