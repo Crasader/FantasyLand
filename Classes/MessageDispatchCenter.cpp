@@ -1,17 +1,16 @@
 ﻿#include "MessageDispatchCenter.h"
 #include <iostream>
 
-std::set<std::string> MessageType;
+MessageDispatchCenter * MessageDispatchCenter::instance = NULL;
 
-bool MessageDispatchCenter::init()
+MessageDispatchCenter* MessageDispatchCenter::getInstance()
 {
-	std::vector<std::string> buffer = { 
-		"BLOOD_MINUS",	"REDUCE_SCORE","KNOCKED",
-		"KNOCKEDAOE",	"SPECIAL_PERSPECTIVE","SPECIAL_KNIGHT",
-		"SPECIAL_ARCHER","SPECIAL_MAGE","ANGRY_CHANGE" };
-	MessageType.insert(buffer.begin(), buffer.end());
+	if (instance == NULL)
+	{
+		instance = new MessageDispatchCenter();	
+	}
 
-	return true;
+	return instance;
 }
 
 void MessageDispatchCenter::registerMessage(std::string messageType /*callback*/)
