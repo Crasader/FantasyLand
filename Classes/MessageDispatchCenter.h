@@ -22,12 +22,12 @@ class MessageDispatchCenter
 public:
 	static MessageDispatchCenter* getInstance();
 
-	void registerMessage(std::string messageType /*callback*/);
-	void removeMessage(std::string messageType/*callback*/);
+	void registerMessage( enum MessageType messageType /*callback*/);
+	void removeMessage(enum MessageType messageType/*callback*/);
 
-	void dispatchMessage(std::string messageType , struct MESSAGE_ANGRY_CHANGE param);
-	void dispatchMessage(std::string messageType, struct MESSAGE_BLOOD_MINUS param);
-	void dispatchMessage(std::string messageType, struct MESSAGE_SPECIAL_PERSPECTIVE param);
+	void dispatchMessage(enum MessageType messageType, struct MESSAGE_ANGRY_CHANGE param);
+	void dispatchMessage(enum MessageType messageType, struct MESSAGE_BLOOD_MINUS param);
+	void dispatchMessage(enum MessageType messageType, struct MESSAGE_SPECIAL_PERSPECTIVE param);
 
 
 private:

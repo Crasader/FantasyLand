@@ -14,7 +14,7 @@ MessageDispatchCenter* MessageDispatchCenter::getInstance()
 	return instance;
 }
 
-void MessageDispatchCenter::registerMessage(std::string messageType /*callback*/)
+void MessageDispatchCenter::registerMessage(enum MessageType messageType/*callback*/)
 {
 	/*if self.MessageQue[messageType] == nil then
 		self.MessageQue[messageType] = {}
@@ -23,7 +23,7 @@ void MessageDispatchCenter::registerMessage(std::string messageType /*callback*/
 	self.MessageQue[messageType][index + 1] = callback*/
 }
 
-void MessageDispatchCenter::removeMessage(std::string messageType/*callback*/)
+void MessageDispatchCenter::removeMessage(enum MessageType  messageType/*callback*/)
 {
 	//if self.MessageType[messageType] == nil or type(callback) ~= "function" then
 	//	print("param is invalid")
@@ -37,17 +37,17 @@ void MessageDispatchCenter::removeMessage(std::string messageType/*callback*/)
 	//end
 }
 
-void MessageDispatchCenter::dispatchMessage(std::string messageType, struct MESSAGE_ANGRY_CHANGE param)
+void MessageDispatchCenter::dispatchMessage(enum MessageType  messageType, struct MESSAGE_ANGRY_CHANGE param)
 {
 
 }
 
-void MessageDispatchCenter::dispatchMessage(std::string messageType, struct MESSAGE_BLOOD_MINUS param)
+void MessageDispatchCenter::dispatchMessage(enum MessageType  messageType, struct MESSAGE_BLOOD_MINUS param)
 {
 
 }
 
-void MessageDispatchCenter::dispatchMessage(std::string messageType, struct MESSAGE_SPECIAL_PERSPECTIVE param)
+void MessageDispatchCenter::dispatchMessage(enum MessageType  messageType, struct MESSAGE_SPECIAL_PERSPECTIVE param)
 {
 
 }
