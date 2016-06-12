@@ -16,6 +16,7 @@ Mage::Mage()
 
 bool Mage::init()
 {
+	Actor::init();
 	_useWeaponId = ReSkin.mage.weapon;
 	_useArmourId = ReSkin.mage.armour;
 	_useHelmetId = ReSkin.mage.helmet;

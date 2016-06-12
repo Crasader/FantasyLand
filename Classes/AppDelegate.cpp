@@ -47,7 +47,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
 	gv_init();
     // create a scene. it's an autorelease object
-    auto scene = LoadingScene::createScene();
+    auto scene = BattleScene::createScene();
 
     // run
     director->runWithScene(scene);

@@ -16,13 +16,14 @@ bool Actor::init()
 	addChild(_hpCounter);
 
 	_effectNode = Node::create();
+
 	_monsterHeight = 70;
 	_heroHeight = 150;
 	setCameraMask(2);
 
 	MDC = new MessageDispatchCenter();
 
-	if (uiLayer != nullptr)
+	//if (uiLayer != nullptr) todo
 		currentLayer->addChild(_effectNode);
 	return true;
 }
@@ -435,6 +436,7 @@ bool Actor::_inRange()
 		auto p2 = _target->_myPos;
 		return (ccpDistance(p1, p2) < attackDistance);
 	}
+	return false;
 }
 
 

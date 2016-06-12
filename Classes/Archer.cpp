@@ -211,11 +211,11 @@ void Archer::updateHelmet()
 	if (_useHelmetId == 0) {
 		auto helmet = _sprite3d->getMeshByName("gongjianshou_tou01");
 		helmet->setVisible(true);
-		helmet = _sprite3d->getMeshByName("gongjianshou_tou02");
+		helmet = _sprite3d->getMeshByName("gonajingshou_tou02");
 		helmet->setVisible(false);
 	}
 	else {
-		auto helmet = _sprite3d->getMeshByName("gongjianshou_tou02");
+		auto helmet = _sprite3d->getMeshByName("gonajingshou_tou02");
 		helmet->setVisible(true);
 		helmet = _sprite3d->getMeshByName("gongjianshou_tou01");
 		helmet->setVisible(false);
@@ -227,11 +227,11 @@ void Archer::updateArmour()
 	if (_useArmourId == 0) {
 		auto armour = _sprite3d->getMeshByName("gongjianshou_shenti01");
 		armour->setVisible(true);
-		armour = _sprite3d->getMeshByName("gongjianshou_shenti02");
+		armour = _sprite3d->getMeshByName("gonjianshou_shenti02");
 		armour->setVisible(false);
 	}
 	else {
-		auto armour = _sprite3d->getMeshByName("gongjianshou_shenti02");
+		auto armour = _sprite3d->getMeshByName("gonjianshou_shenti02");
 		armour->setVisible(true);
 		armour = _sprite3d->getMeshByName("gongjianshou_shenti01");
 		armour->setVisible(false);
@@ -271,13 +271,13 @@ void Archer::switchArmour()
 void Archer::showOrHideArrow(bool isShow, int arrowType)
 {
 	if (arrowType == 0) {
-		auto arrow = _sprite3d->getMeshByName("gongjianshou_jian01");
+		auto arrow = _sprite3d->getMeshByName("gongjiashou_jian01");
 		arrow->setVisible(isShow);
 		arrow = _sprite3d->getMeshByName("gongjianshou_jian02");
 		arrow->setVisible(isShow);
 	}
 	else if (arrowType == 1) {
-		auto arrow = _sprite3d->getMeshByName("gongjianshou_jian01");
+		auto arrow = _sprite3d->getMeshByName("gongjiashou_jian01");
 		arrow->setVisible(isShow);
 	}
 	else if (arrowType == 2) {
