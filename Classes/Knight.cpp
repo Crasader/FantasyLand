@@ -1,6 +1,7 @@
 ﻿#include "Knight.h"
 #include "BattleFieldUI.h"
 #include "HPCounter.h"
+#include "MessageDispatchCenter.h"
 
 Knight::Knight()
 {
@@ -12,7 +13,7 @@ Knight::Knight()
 			return;
 		_specialAttackChance = 1;
 	};
-	//MessageDispatchCenter::registerMessage(MessageDispatchCenter::MessageType::SPECIAL_KNIGHT, specialAttack);
+	//MDC->registerMessage(MessageDispatchCenter::MessageType::SPECIAL_KNIGHT, specialAttack);
 }
 
 bool Knight::init()
@@ -113,8 +114,8 @@ void Knight::specialAttack()
 {
 	_specialAttackChance = KnightValues._specialAttackChance;
 	_angry = ActorCommonValues._angry;
-	struct MESSAGE_ANGRY_CHANGE anaryChange = { _name, _angry, _angryMax };
-	//MessageDispatchCenter::dispatchMessage(MessageDispatchCenter::MessageType::ANGRY_CHANGE, anaryChange);
+	struct MESSAGE_ANGRY_CHANGE angryChange = { _name, _angry, _angryMax };
+	MDC->dispatchMessage(MessageType::ANGRY_CHANGE, angryChange);
 
 	//knight will create 2 attacks one by one  
 	experimental::AudioEngine::play2d(WarriorProperty.specialAttackShout, false, 0.7);
@@ -324,9 +325,9 @@ float Knight::hurt(BasicCollider* collider, bool dirKnockMode)
 		addEffect(blood);
 
 		struct MESSAGE_BLOOD_MINUS bloodMinus = { _name, _maxhp, _hp, _bloodBar, _bloodBarClone, _avatar };
-		//MessageDispatchCenter::dispatchMessage(MessageDispatchCenter::MessageType::BLOOD_MINUS, bloodMinus);
-		struct MESSAGE_ANGRY_CHANGE anaryChange = { _name, _angry,_angryMax };
-		//MessageDispatchCenter::dispatchMessage(MessageDispatchCenter::MessageType::ANGRY_CHANCE, anaryChange);*/
+		MDC->dispatchMessage(MessageType::BLOOD_MINUS, bloodMinus);
+		struct MESSAGE_ANGRY_CHANGE angryChange = { _name, _angry,_angryMax };
+		MDC->dispatchMessage(MessageType::ANGRY_CHANGE, angryChange);
 		_angry += damage;
 		return damage;
 	}
