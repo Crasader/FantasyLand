@@ -10,6 +10,7 @@ USING_NS_CC;
 class MessageDispatchCenter;
 class BasicCollider;
 class HPCounter;
+
 class Actor : public Node
 {
 public:	

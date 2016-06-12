@@ -3,9 +3,8 @@
 
 ParticleManager* ParticleManager::getInstance()
 {
-	if (instance == nullptr )
-		instance = new ParticleManager();
-	return instance;
+	static  ParticleManager instance ;
+	return &instance;
 }
 
 void ParticleManager::AddPlistData(std::string fileName, std::string keyName)
