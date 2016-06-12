@@ -3,6 +3,15 @@
 #include "Actor.h"
 #include "BattleFieldUI.h"
 #include "MessageDispatchCenter.h"
+#include "Mage.h"
+#include "Dragon.h"
+#include "Knight.h"
+#include "Piglet.h"
+
+Mage* mage;
+Dragon* dragon;
+Piglet* piglet;
+Knight* knight;
 
 Scene* BattleScene::createScene()
 {
@@ -233,6 +242,14 @@ void BattleScene::controlCamera()
 		case EventKeyboard::KeyCode::KEY_D:--cameraVelocity.x; break;
 		case EventKeyboard::KeyCode::KEY_Q:++cameraVelocity.z; break;
 		case EventKeyboard::KeyCode::KEY_E:--cameraVelocity.z; break;
+		case EventKeyboard::KeyCode::KEY_Z:	mage->dyingMode(Vec2(-500, -500), 100); break;
+		case EventKeyboard::KeyCode::KEY_X:	dragon->dyingMode(Vec2(-400, -500), 100); break;
+		case EventKeyboard::KeyCode::KEY_C:	knight->dyingMode(Vec2(-300, -500), 100); break;
+		case EventKeyboard::KeyCode::KEY_V:	piglet->dyingMode(Vec2(-500, -500), 100); break;
+			//dragon->dyingMode(Vec2(-500, 0), 100);
+			//knight->dyingMode(Vec2(-500, 0), 100);
+			//piglet->dyingMode(Vec2(-500, 0), 100); 
+			//break;
 		}
 	};
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(keyboardListener, this);
@@ -241,4 +258,21 @@ void BattleScene::controlCamera()
 void BattleScene::debug()
 {
 	//the camera->position is Vec3(-500, 80, 0)
+	mage = Mage::create();
+	mage->setPosition3D(Vec3(-500, 0, -500));
+	mage->setRotation3D(Vec3(-90, 0, 0));
+	currentLayer->addChild(mage);
+	dragon = Dragon::create();
+	dragon->setPosition3D(Vec3(-400, 0, -500));
+	dragon->setRotation3D(Vec3(-90, 0, 0));
+	currentLayer->addChild(dragon);
+	knight = Knight::create();
+	knight->setPosition3D(Vec3(-300, 0, -500));
+	knight->setRotation3D(Vec3(-90, 0, 0));
+	currentLayer->addChild(knight);
+	piglet = Piglet::create();
+	piglet->setPosition3D(Vec3(-200, 0, -500));
+	piglet->setRotation3D(Vec3(-90, 0, 0));
+	currentLayer->addChild(piglet);
+
 }
