@@ -8,8 +8,9 @@ class BattleFieldUI *uiLayer;
 float FXZorder = 1999;
 float CelLine = 0.009;
 std::string BossTaunt = "How dare you???";
-AnimationCache * animationCache = AnimationCache::getInstance();
-float resolutionRate = G.winSize.width / G.winSize.height;
+Size VisiableSize;
+float resolutionRate; 
+AnimationCache * animationCache;
 
 struct RECTS_d RECTS;
 struct G_d G;
@@ -40,6 +41,7 @@ void gv_init()
 {
 	camera = Camera::create();
 
+	animationCache = AnimationCache::getInstance();
 	Animation * hurtAnimation = Animation::create();
 	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("FX/FX.plist");
 	hurtAnimation->addSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("hit1.png"));
@@ -50,7 +52,6 @@ void gv_init()
 	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("battlefieldUI/battleFieldUI.plist");
 	hurtAnimation->setDelayPerUnit(0.1);
 	animationCache->addAnimation(hurtAnimation, "hurtAnimation");
-
 	Animation* fireBallAnim = Animation::create();
 	fireBallAnim->addSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("fireball2.png"));
 	fireBallAnim->addSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("fireball3.png"));
@@ -64,6 +65,6 @@ void gv_init()
 	RECTS.fireBall = SpriteFrameCache::getInstance()->getSpriteFrameByName("fireball1.png")->getRect();
 	RECTS.thunderBall = SpriteFrameCache::getInstance()->getSpriteFrameByName("thunderball.png")->getRect();
 
-
-
+	resolutionRate = G.winSize.width / G.winSize.height;
+	VisiableSize = Director::getInstance()->getWinSize();
 }

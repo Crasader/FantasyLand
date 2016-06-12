@@ -47,7 +47,6 @@ extern int frontDistanceWithHeroX;
 extern int backwardDistanceWithHeroX;
 extern int distanceWithHeroX;
 extern int distanceWithHeroY;
-extern Size size;
 extern struct monsterCount_d monsterCount;
 
 struct monsterCount_d

@@ -35,7 +35,7 @@ private:
 	Vec2 cameraOffsetMax;
 
 	bool isDebug;
-	Vec2 lastTouch;
+	Vec2 lastTouchPosition;
+	Vec2 cameraAngularVelocity;
 	Vec3 cameraVelocity;
-	Vec3 cameraAngularVelocity;
 };
