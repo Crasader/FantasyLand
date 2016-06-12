@@ -199,13 +199,19 @@ void BattleScene::UIcontainsPoint(Vec2 position)
 void BattleScene::controlCamera()
 {
 	auto touchListener = EventListenerTouchOneByOne::create();
-	touchListener->onTouchBegan = [](Touch*, Event*)
+	touchListener->onTouchBegan = [this](Touch* touch, Event*)
 	{
+		lastTouchPosition = touch->getLocation() / 5;
 		return true;
 	};
-	touchListener->onTouchMoved = [](Touch*, Event*)
+	touchListener->onTouchMoved = [this](Touch* touch, Event*)
 	{
-
+		auto touchPosition = touch->getLocation() / 5;
+		camera->setRotation3D(Vec3(
+			camera->getRotation3D().x - touchPosition.y + lastTouchPosition.y,
+			camera->getRotation3D().y + touchPosition.x - lastTouchPosition.x,
+			0));
+		lastTouchPosition = touchPosition;
 	};
 	auto keyboardListener = EventListenerKeyboard::create();
 	keyboardListener->onKeyPressed = [this](EventKeyboard::KeyCode keycode, Event*)
