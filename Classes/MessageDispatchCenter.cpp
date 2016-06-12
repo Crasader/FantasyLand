@@ -2,17 +2,6 @@
 #include <iostream>
 #include "GlobalVariables.h"
 
-MessageDispatchCenter * MessageDispatchCenter::instance = NULL;
-
-MessageDispatchCenter* MessageDispatchCenter::getInstance()
-{
-	if (instance == NULL)
-	{
-		instance = new MessageDispatchCenter();	
-	}
-
-	return instance;
-}
 
 void MessageDispatchCenter::registerMessage(enum MessageType messageType/*callback*/)
 {

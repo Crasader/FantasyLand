@@ -20,8 +20,7 @@ enum MessageType
 class MessageDispatchCenter
 {
 public:
-	static MessageDispatchCenter* getInstance();
-
+	
 	void registerMessage( enum MessageType messageType /*callback*/);
 	void removeMessage(enum MessageType messageType/*callback*/);
 
@@ -31,7 +30,6 @@ public:
 
 
 private:
-	static MessageDispatchCenter * instance;
 
 	//std::map<enum MessageType , std::vector<> > MessageQue;
 };

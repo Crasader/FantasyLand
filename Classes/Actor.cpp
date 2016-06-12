@@ -4,6 +4,7 @@
 #include "Helper.h"
 #include "Manager.h"
 #include "HPCounter.h"
+#include "MessageDispatchCenter.h"
 
 bool Actor::init() 
 {
@@ -18,6 +19,8 @@ bool Actor::init()
 	_monsterHeight = 70;
 	_heroHeight = 150;
 	setCameraMask(2);
+
+	MDC = new MessageDispatchCenter();
 
 	if (uiLayer != nullptr)
 		currentLayer->addChild(_effectNode);

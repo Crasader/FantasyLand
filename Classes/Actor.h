@@ -7,6 +7,7 @@
 
 USING_NS_CC;
 
+class MessageDispatchCenter;
 class BasicCollider;
 class HPCounter;
 class Actor : public Node
@@ -72,6 +73,8 @@ public:
 	void attackUpdate(float dt);
 	void walkUpdate(float dt);
 	void movementUpdate(float dt);
+
+	MessageDispatchCenter * MDC;
 
 protected:
 	float _aliveTime;	//time the actor is alive in seconds
