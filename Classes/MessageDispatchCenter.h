@@ -22,14 +22,14 @@ class MessageDispatchCenter
 public:
 	
 	void registerMessage( enum MessageType messageType /*callback*/);
+
 	void removeMessage(enum MessageType messageType/*callback*/);
 
 	void dispatchMessage(enum MessageType messageType, struct MESSAGE_ANGRY_CHANGE param);
 	void dispatchMessage(enum MessageType messageType, struct MESSAGE_BLOOD_MINUS param);
 	void dispatchMessage(enum MessageType messageType, struct MESSAGE_SPECIAL_PERSPECTIVE param);
 
-
 private:
+	//std::map< enum MessageType, std::vector<std::function<void(Ref*)> > > MessageQue;
 
-	//std::map<enum MessageType , std::vector<> > MessageQue;
 };

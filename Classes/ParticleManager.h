@@ -13,6 +13,5 @@ public:
 
 private:
 	std::map<std::string,ValueMap> _plistMap;
-	static ParticleManager* instance;
 };
 

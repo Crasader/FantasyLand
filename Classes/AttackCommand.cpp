@@ -4,6 +4,7 @@
 #include "Manager.h"
 #include "AudioEngine.h"
 #include "Archer.h"
+#include "MessageDispatchCenter.h"
 
 std::vector<BasicCollider*> AttackManager;
 
@@ -300,7 +301,7 @@ void MageNormalAttack::onCollide(Actor* target)
 	playHitAudio();
 	_owner->setAngry(_owner->getAngry() + target->hurt(this) * 0.3);
 	struct MESSAGE_ANGRY_CHANGE anaryChange = { MageValues._name, _owner->getAngry(), _owner->getAngryMax() };
-    //MessageDispatchCenter::dispatchMessage(MessageDispatchCenter::MessageType::ANGRY_CHANGE, anaryChange);
+    _owner->MDC->dispatchMessage(MessageType::ANGRY_CHANGE, anaryChange);
 	//set cur duration to its max duration, so it will be removed when checking time out
 	_curDuration++;
 }
@@ -417,8 +418,8 @@ void MageIceSpikes::onCollide(Actor* target)
 		hurtEffect(target);
 		playHitAudio();
 		_owner->setAngry(_owner->getAngry() + target->hurt(this, true) * 0.3);
-		struct MESSAGE_ANGRY_CHANGE  anaryChange = { ArcherValues._name, _owner->getAngry(), _owner->getAngryMax() };
-		//MessageDispatchCenter::dispatchMessage(MessageDispatchCenter::MessageType::ANGRY_CHANGE, anaryChange);*/
+		struct MESSAGE_ANGRY_CHANGE  angryChange = { ArcherValues._name, _owner->getAngry(), _owner->getAngryMax() };
+		_owner->MDC->dispatchMessage(MessageType::ANGRY_CHANGE, angryChange);
 		_DOTApplied = true;
 	}
 }
@@ -464,8 +465,8 @@ void ArcherNormalAttack::onCollide(Actor* target)
 	hurtEffect(target);
 	playHitAudio();
 	_owner->setAngry(_owner->getAngry() + target->hurt(this, true) * 0.3);
-	/*auto anaryChange = { ArcherValues._name, _owner->getAngry(), _owner->getAngry(), _owner->getAngryMax() };
-	MessageDispatchCenter::dispatchMessage(MessageDispatchCenter::MessageType::ANGRY_CHANGE, anaryChange);*/
+	struct MESSAGE_ANGRY_CHANGE angryChange = { ArcherValues._name, _owner->getAngry(),  _owner->getAngryMax() };
+	_owner->MDC->dispatchMessage(MessageType::ANGRY_CHANGE, angryChange);
 	//set cur duration to its max duration, so it will be removed when checking time out
 	_curDuration = _duration + 1;
 }
