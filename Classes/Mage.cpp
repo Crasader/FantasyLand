@@ -112,7 +112,7 @@ void Mage::specialAttack()
 	_specialAttackChance = MageValues._specialAttackChance;
 	_angry = ActorCommonValues._angry;
 	struct MESSAGE_ANGRY_CHANGE angryChange = { _name, _angry, _angryMax };
-	/MDC->dispatchMessage(MessageType::ANGRY_CHANGE, angryChange);
+	MDC->dispatchMessage(MessageType::ANGRY_CHANGE, angryChange);
 
 	//mage will create 3 ice spikes on the ground
 	//get 3 positions

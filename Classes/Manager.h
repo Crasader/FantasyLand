@@ -10,7 +10,6 @@ extern std::vector<Actor *> PigletPool;
 extern std::vector<Actor *> HeroManager;
 extern std::vector<Actor *> MonsterManager;
 
-extern Size size ;
 extern Scheduler* scheduler;
 
 void solveCollision(Actor *object1,Actor * object2);

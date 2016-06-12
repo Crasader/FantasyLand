@@ -44,14 +44,14 @@ void BattleScene::moveCamera(float dt)
 	auto focusPoint = getFocusPointOfHeros();
 	if (specialCamera->isBrushValid()/*?*/)
 	{
-		auto position = ccpLerp(cameraPosition, ccp(specialCamera->getPosition().x, (cameraOffset.y + focusPoint.y - size.height * 3 / 4)*0.5), 5 * dt);
+		auto position = ccpLerp(cameraPosition, ccp(specialCamera->getPosition().x, (cameraOffset.y + focusPoint.y - VisiableSize.height * 3 / 4)*0.5), 5 * dt);
 		camera->setPosition(position);
 		camera->lookAt(Vec3(position.x, specialCamera->getPosition().y, 50.0), Vec3(0.0, 1.0, 0.0));
 	}
 	else if (HeroManager.size() > 0)
 	{
-		auto temp = ccpLerp(cameraPosition, ccp(focusPoint.x + cameraOffset.x, cameraOffset.y + focusPoint.y - size.height * 3 / 4), 2 * dt);
-		auto position = Vec3(temp.x, temp.y, size.height / 2 - 100);
+		auto temp = ccpLerp(cameraPosition, ccp(focusPoint.x + cameraOffset.x, cameraOffset.y + focusPoint.y - VisiableSize.height * 3 / 4), 2 * dt);
+		auto position = Vec3(temp.x, temp.y, VisiableSize.height / 2 - 100);
 		camera->setPosition3D(position);
 		camera->lookAt(Vec3(position.x, focusPoint.y, 50.0), Vec3(0.0, 0.0, 1.0));
 		//log("\ncalf %f %f %f \ncalf %f %f 50.000000", position.x, position.y, position.z, focusPoint.x, focusPoint.y);
@@ -86,7 +86,7 @@ void BattleScene::createBackground()
 
 void BattleScene::setCamera()
 {
-	camera = Camera::createPerspective(60.0, size.width / size.height, 10.0, 4000.0);
+	camera = Camera::createPerspective(60.0, VisiableSize.width / VisiableSize.height, 10.0, 4000.0);
 	camera->setGlobalZOrder(10);
 	currentLayer->addChild(camera);
 
