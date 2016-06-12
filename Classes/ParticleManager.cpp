@@ -21,8 +21,5 @@ void ParticleManager::AddPlistData(std::string fileName, std::string keyName)
 
 ValueMap ParticleManager::getPlistData(std::string keyname)
 {
-	/*if (_plistMap.find(keyname) == _plistMap.end())
-		log("can't find plistData by the specified keyName.");
-	else*/
 	return _plistMap[keyname];
 }
