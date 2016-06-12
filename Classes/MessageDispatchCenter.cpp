@@ -1,5 +1,6 @@
 ﻿#include "MessageDispatchCenter.h"
 #include <iostream>
+#include "GlobalVariables.h"
 
 MessageDispatchCenter * MessageDispatchCenter::instance = NULL;
 
@@ -15,14 +16,6 @@ MessageDispatchCenter* MessageDispatchCenter::getInstance()
 
 void MessageDispatchCenter::registerMessage(std::string messageType /*callback*/)
 {
-	//if( MessageType.find(messageType) == MessageType.end() ) 
-	//{
-	//	std::cout << "param is invalid";
-	//	return;
-	//}
-	
-
-		
 	/*if self.MessageQue[messageType] == nil then
 		self.MessageQue[messageType] = {}
 	end
@@ -44,9 +37,22 @@ void MessageDispatchCenter::removeMessage(std::string messageType/*callback*/)
 	//end
 }
 
-void MessageDispatchCenter::dispatchMessage(std::string messageType/*callback*/)
+void MessageDispatchCenter::dispatchMessage(std::string messageType, struct MESSAGE_ANGRY_CHANGE param)
 {
-	//if self.MessageType[messageType] == nil then
+
+}
+
+void MessageDispatchCenter::dispatchMessage(std::string messageType, struct MESSAGE_BLOOD_MINUS param)
+{
+
+}
+
+void MessageDispatchCenter::dispatchMessage(std::string messageType, struct MESSAGE_SPECIAL_PERSPECTIVE param)
+{
+
+}
+
+//if self.MessageType[messageType] == nil then
 	//	print("param is invalid")
 	//	return
 	//end
@@ -58,4 +64,3 @@ void MessageDispatchCenter::dispatchMessage(std::string messageType/*callback*/)
 	//for i, v in pairs(self.MessageQue[messageType]) do
 	//	v(param)
 	//end
-}

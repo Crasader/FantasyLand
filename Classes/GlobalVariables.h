@@ -507,7 +507,7 @@ struct ReSkin_d
 	}mage;
 };
 
-//todo MESSAGEcenter
+
 struct MESSAGE_ANGRY_CHANGE
 {
 	std::string _name;
