@@ -6,7 +6,7 @@ struct ArcherValues;
 
 Archer::Archer()
 {
-	idleMode();
+	//idleMode();
 	_AIEnabled = true;
 	//this update do not do AI
 	scheduleUpdate();
