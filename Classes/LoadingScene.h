@@ -17,6 +17,7 @@ public:
 	void addBackground();
 	void addLoadingText();
 	void addLoadingIcon();
+	void addLoadingBar();
 	void cachedParticleRes();
 	void cachedTextureRes();
 

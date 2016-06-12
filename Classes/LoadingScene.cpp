@@ -20,7 +20,7 @@ bool LoadingScene::init()
 	Layer::init();
 	currentLayer = this;
 
-	_num = 6 + 4;//num(particleRes)+num(spriteFrameRes)
+	_num = 10;//=num(particleRes)+num(spriteFrameRes)
 	_totalResource = _num;
 	size = Director::getInstance()->getWinSize();
 	_pm = ParticleManager::getInstance();
@@ -34,8 +34,11 @@ bool LoadingScene::init()
 	//add loadingIcon
 	addLoadingIcon();
 
+	//add loadingBar
+	addLoadingBar();
+
 	//update
-	schedule(schedule_selector(LoadingScene::update), 1);
+	schedule(schedule_selector(LoadingScene::update), 0.1);
 
 	return true;
 }
@@ -44,19 +47,18 @@ void LoadingScene::update(float dt)
 {
 	_num = _num - 1;
 
-	//load resource
-	if (_totalResource - _num > 6)
-		cachedTextureRes();
-	else
-		cachedParticleRes();
-
-	//replace scene
+	//all loaded,enter mainMenuScene
 	if (_num == -1)
 	{
 		unschedule(schedule_selector(LoadingScene::update));
-		auto i = Director::getInstance()->getScheduler()->isScheduled(schedule_selector(LoadingScene::update), this);
 		Director::getInstance()->replaceScene(MainMenuScene::createScene());
 	}
+	_loadingBar->setPercent(100 - _num);
+	//load resource
+	/*if (_totalResource - _num > 6)
+		cachedTextureRes();
+	else
+		cachedParticleRes();*/
 }
 
 void LoadingScene::addBackground()
@@ -68,12 +70,21 @@ void LoadingScene::addBackground()
 
 void LoadingScene::addLoadingText()
 {
-	
+
 }
 
 void LoadingScene::addLoadingIcon()
 {
 
+}
+
+void LoadingScene::addLoadingBar()
+{
+	_loadingBar = ui::LoadingBar::create("loadingscene/sliderProgress.png");
+	_loadingBar->setDirection(ui::LoadingBarTypeLeft);
+	_loadingBar->setPosition(Vec2(size.width /2, size.height / 5));
+	_loadingBar->setScale(2);
+	addChild(_loadingBar);
 }
 
 void LoadingScene::cachedParticleRes()
