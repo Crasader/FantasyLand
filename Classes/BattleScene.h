@@ -10,6 +10,7 @@ public:
 	static cocos2d::Scene* createScene();
 	CREATE_FUNC(BattleScene);
 	virtual bool init();
+	void update(float dt) override;
 
 	void moveCamera(float dt);
 	void updateParticlePos();
@@ -23,10 +24,18 @@ public:
 	void enableTouch();
 	void UIcontainsPoint(Vec2 position/*position @lua*/);
 
+	void controlCamera();
+	
+	void debug();
 private:
 	Camera *specialCamera;
 	Scheduler * scheduler;
 	Vec3 cameraOffset;
 	Vec2 cameraOffsetMin;
 	Vec2 cameraOffsetMax;
+
+	bool isDebug;
+	Vec2 lastTouch;
+	Vec3 cameraVelocity;
+	Vec3 cameraAngularVelocity;
 };

@@ -3,10 +3,6 @@
 #include "ParticleManager.h"
 #include "GlobalVariables.h"
 
-//local varibles
-//local particleRes
-//local spriteFrameRes
-
 Scene* LoadingScene::createScene()
 {
 	auto scene = Scene::create();
@@ -46,6 +42,7 @@ bool LoadingScene::init()
 void LoadingScene::update(float dt)
 {
 	_num = _num - 1;
+	_loadingBar->setPercent(100 * (_totalResource - _num) / _totalResource);
 
 	//all loaded,enter mainMenuScene
 	if (_num == -1)
@@ -53,12 +50,12 @@ void LoadingScene::update(float dt)
 		unschedule(schedule_selector(LoadingScene::update));
 		Director::getInstance()->replaceScene(MainMenuScene::createScene());
 	}
-	_loadingBar->setPercent(100 - _num);
+
 	//load resource
-	/*if (_totalResource - _num > 6)
+	if (_totalResource - _num > 6)
 		cachedTextureRes();
 	else
-		cachedParticleRes();*/
+		cachedParticleRes();
 }
 
 void LoadingScene::addBackground()
@@ -82,7 +79,7 @@ void LoadingScene::addLoadingBar()
 {
 	_loadingBar = ui::LoadingBar::create("loadingscene/sliderProgress.png");
 	_loadingBar->setDirection(ui::LoadingBarTypeLeft);
-	_loadingBar->setPosition(Vec2(size.width /2, size.height / 5));
+	_loadingBar->setPosition(Vec2(size.width / 2, size.height / 5));
 	_loadingBar->setScale(2);
 	addChild(_loadingBar);
 }

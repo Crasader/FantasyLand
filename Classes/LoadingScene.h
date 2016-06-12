@@ -6,10 +6,10 @@ USING_NS_CC;
 
 class ParticleManager;
 class Slime;
-class LoadingScene:public Layer
+class LoadingScene :public Layer
 {
 public:
-	static cocos2d::Scene* createScene();
+	static Scene* createScene();
 	CREATE_FUNC(LoadingScene);
 	virtual bool init();
 	void update(float dt) override;
@@ -18,6 +18,7 @@ public:
 	void addLoadingText();
 	void addLoadingIcon();
 	void addLoadingBar();
+
 	void cachedParticleRes();
 	void cachedTextureRes();
 
