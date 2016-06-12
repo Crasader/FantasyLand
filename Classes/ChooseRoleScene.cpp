@@ -16,7 +16,7 @@ Scene* ChooseRoleScene::createScene()
 bool ChooseRoleScene::init()
 {
 	layer->init();
-
+	currentLayer = this;
 	return true;
 }
 

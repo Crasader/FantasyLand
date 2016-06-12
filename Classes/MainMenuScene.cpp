@@ -14,6 +14,7 @@ Scene* MainMenuScene::createScene()
 bool MainMenuScene::init()
 {
 	Layer::init();
+	currentLayer = this;
 	size = Director::getInstance()->getVisibleSize();
 	_isBloodLabelShowing = false;
 	//todo ccexp.AudioEngine:stopAll()
@@ -40,6 +41,11 @@ void MainMenuScene::createLayer()
 	addButton(mainLayer);
 
 	//when replease scene unschedule schedule
+
+}
+
+void MainMenuScene::onExit(Event* event)
+{
 
 }
 

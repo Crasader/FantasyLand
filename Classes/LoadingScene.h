@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "cocos2d.h"
+#include "ui/CocosGUI.h"
 
 USING_NS_CC;
 
@@ -11,9 +12,11 @@ public:
 	static cocos2d::Scene* createScene();
 	CREATE_FUNC(LoadingScene);
 	virtual bool init();
+	void update(float dt) override;
 
-	void addLoadingText(Layer *layer);
-	void slimeAction(Layer *layer);
+	void addBackground();
+	void addLoadingText();
+	void addLoadingIcon();
 	void cachedParticleRes();
 	void cachedTextureRes();
 
@@ -23,11 +26,9 @@ private:
 	Size size;
 	ParticleManager *_pm;
 
-	Slime *_slime;
-	float _slimeOriginX;
-	float _slimeOriginY;
-
 	Label **_loading;
+	ui::LoadingBar *_loadingBar;
+
 
 	String particleRes[6][2] = {
 		{ "FX/iceTrail.plist","iceTrail" },
