@@ -1,6 +1,7 @@
 ﻿#include "Mage.h"
 #include "BattleFieldUI.h"
 #include "HPCounter.h"
+#include "MessageDispatchCenter.h"
 
 Mage::Mage()
 {
@@ -16,6 +17,7 @@ Mage::Mage()
 
 bool Mage::init()
 {
+	Actor::init();
 	_useWeaponId = ReSkin.mage.weapon;
 	_useArmourId = ReSkin.mage.armour;
 	_useHelmetId = ReSkin.mage.helmet;
@@ -110,7 +112,7 @@ void Mage::specialAttack()
 	_specialAttackChance = MageValues._specialAttackChance;
 	_angry = ActorCommonValues._angry;
 	struct MESSAGE_ANGRY_CHANGE angryChange = { _name, _angry, _angryMax };
-	//MessageDispatchCenter::dispatchMessage(MessageDispatchCenter::MessageType::ANGRY_CHANGE, angryChange);
+	/MDC->dispatchMessage(MessageType::ANGRY_CHANGE, angryChange);
 
 	//mage will create 3 ice spikes on the ground
 	//get 3 positions
@@ -297,9 +299,9 @@ float Mage::hurt(BasicCollider* collider, bool dirKnockMode)
 		addEffect(blood);
 
 		struct MESSAGE_BLOOD_MINUS  bloodMinus = { _name, _maxhp, _hp, _bloodBar, _bloodBarClone, _avatar };
-		//MessageDispatchCenter::dispatchMessage(MessageDispatchCenter::MessageType::BLOOD_MINUS, bloodMinus);
+		MDC->dispatchMessage(MessageType::BLOOD_MINUS, bloodMinus);
 		struct MESSAGE_ANGRY_CHANGE anaryChange = { _name, _angry,_angryMax };
-		//MessageDispatchCenter::dispatchMessage(MessageDispatchCenter::MessageType::ANGRY_CHANCE, anaryChange);*/
+		MDC->dispatchMessage(MessageType::ANGRY_CHANGE, anaryChange);
 		return damage;
 	}
 	return 0;
