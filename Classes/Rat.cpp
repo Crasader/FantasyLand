@@ -96,13 +96,14 @@ void Rat::normalAttackSoundEffects()
 
 void Rat::init3D()
 {
-	initShadow();
+	//initShadow();
 	_sprite3d = Sprite3D::create(file);
 	_sprite3d->setScale(20);
 	//_sprite3d->addEffect(Vec3(0, 0, 0), CelLine, -1);
 	addChild(_sprite3d);
 	_sprite3d->setRotation3D(Vec3(90, 0, 0));
 	_sprite3d->setRotation(-90);
+	initShadow();
 }
 
 void Rat::initActions()
@@ -143,7 +144,7 @@ void Rat::dyingMode(Vec2 knockSource, int knockAmount)
 		auto p = _myPos;
 		auto angle = ccpToAngle(ccpSub(p, knockSource));
 		auto newPos = ccpRotateByAngle(ccpAdd(Vec2(knockAmount, 0), p), p, angle);
-		runAction(EaseCubicActionOut::create(MoveTo::create(_action.at("knocked")->getDuration() * 3, newPos)));
+		//runAction(EaseCubicActionOut::create(MoveTo::create(_action.at("knocked")->getDuration() * 3, newPos)));
 	}
 	_AIEnabled = false;
 }
@@ -180,7 +181,7 @@ float Rat::hurt(BasicCollider* collider, bool dirKnockMode)
 
 		//three param judge if crit
 		auto blood = _hpCounter->showBloodLossNum(damage, this, critical);
-		setPositionZ(Director::getInstance()->getVisibleSize().height * 0.25);
+		blood->setPositionZ(Director::getInstance()->getVisibleSize().height * 0.25);
 		addEffect(blood);
 		return damage;
 	}

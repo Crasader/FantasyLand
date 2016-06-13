@@ -12,11 +12,11 @@ bool HPCounter::init()
 
 LabelTTF *HPCounter::showBloodLossNum(float dmage, Actor *racetype, bool atack)
 {
-	if(atack)
+	if (atack)
 	{
 		auto critleAttack = Sprite::createWithSpriteFrameName("hpcounter.png");
 		//tm=1;
-		critleAttack->runAction(getAction(tm,targetScale,pointZ));
+		critleAttack->runAction(getAction(tm, targetScale, pointZ));
 		critleAttack->setRotation3D(Vec3(90, 0, 0));
 		if (racetype->getName() == "rat")
 			critleAttack->setPosition3D(Vec3(90, 0, 0));
@@ -25,7 +25,7 @@ LabelTTF *HPCounter::showBloodLossNum(float dmage, Actor *racetype, bool atack)
 		targetScale = targetScale * 2;
 	}
 	//_blood=
-	return nullptr;
+	return getBlood(racetype);
 }
 
 Vec3 HPCounter::getRandomXYZ()
@@ -39,17 +39,17 @@ Vec3 HPCounter::getRandomXYZ()
 
 LabelTTF *HPCounter::getBlood(Actor *racetype)
 {
-	//num = _num;
-	//tm = 0.5f;
-	//pointZ = 50;
+	num = _num;
+	tm = 0.5f;
+	pointZ = 50;
 
-	////*$$$$$$$$$$$$$$$$$$$$*//
-	//auto blood = LabelTTF::create("fonts/britanic bold.ttf", "fonts/britanic bold.ttf", 50);
-	//blood->enableStroke(Color3B::BLACK, 7);
-	//blood->setRotation3D(Vec3(90, 0, 0));
-	//blood->setScale(0.1);
-	//blood->setRotation3D(getRandomXYZ());
-
+	//*$$$$$$$$$$$$$$$$$$$$*//
+	auto blood = LabelTTF::create("fonts/britanic bold.ttf", "fonts/britanic bold.ttf", 50);
+	blood->enableStroke(Color3B::BLACK, 7);
+	blood->setRotation3D(Vec3(90, 0, 0));
+	blood->setScale(0.1);
+	blood->setRotation3D(getRandomXYZ());
+	blood->setString("+1s");
 	//targetScale = 0.6;
 	//if (num > 1000)
 	//	blood->setColor(Color3B(254, 58, 19));
@@ -77,7 +77,7 @@ LabelTTF *HPCounter::getBlood(Actor *racetype)
 	//racetype->addEffect(critleAttack);
 	//pointZ = 80;
 	//targetScale = targetScale * 2;
-	return nullptr;
+	return blood;
 }
 
 Spawn *HPCounter::getAction(float tm, float targetScale, float pointZ)

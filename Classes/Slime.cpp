@@ -100,7 +100,7 @@ void Slime::playAnimation(std::string name, bool loop)
 
 void Slime::init3D()
 {
-	initShadow();
+	//initShadow();
 	_sprite3d = Sprite3D::create(file);
 	_sprite3d->setTexture("model/slime/baozi.jpg");
 	_sprite3d->setScale(17);
@@ -108,6 +108,7 @@ void Slime::init3D()
 	addChild(_sprite3d);
 	_sprite3d->setRotation3D(Vec3(90, 0, 0));
 	_sprite3d->setRotation(-90);
+	initShadow();
 };
 
 void Slime::walkMode()
