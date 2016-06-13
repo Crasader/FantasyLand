@@ -8,7 +8,7 @@ class BattleFieldUI *uiLayer;
 float FXZorder = 1999;
 float CelLine = 0.009;
 std::string BossTaunt = "How dare you???";
-Size VisiableSize;
+Size VisibleSize;
 float resolutionRate; 
 AnimationCache * animationCache;
 
@@ -66,5 +66,5 @@ void gv_init()
 	RECTS.thunderBall = SpriteFrameCache::getInstance()->getSpriteFrameByName("thunderball.png")->getRect();
 
 	resolutionRate = G.winSize.width / G.winSize.height;
-	VisiableSize = Director::getInstance()->getWinSize();
+	VisibleSize = Director::getInstance()->getWinSize();
 }

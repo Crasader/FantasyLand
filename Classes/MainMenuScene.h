@@ -19,7 +19,6 @@ public:
 	void addCloud(Layer *layer);
 	void addBg(Layer *layer);
 private:
-	Size size;
 	bool _isBloodLabelShowing;
 
 	Size _logoSize;
