@@ -354,7 +354,7 @@ void Actor::dyingMode(Vec2 knockSource, int knockAmount)
 			RemoveSelf::create(), NULL));
 		_angry = 0;
 		struct MESSAGE_ANGRY_CHANGE angryChange = { _name, _angry, _angryMax };
-		MDC->dispatchMessage(MessageType::ANGRY_CHANGE, angryChange);
+//		MDC->dispatchMessage(MessageType::ANGRY_CHANGE, angryChange);
         //CallFunc::create(recycle)
 	}
 	else {
@@ -537,7 +537,7 @@ void Actor::attackUpdate(float dt)
 			};
 			struct MESSAGE_SPECIAL_PERSPECTIVE messageParam = {0.2, _myPos, _specialSlowTime, this};
 			
-			MDC->dispatchMessage(MessageType::SPECIAL_PERSPECTIVE, messageParam);
+//			MDC->dispatchMessage(MessageType::SPECIAL_PERSPECTIVE, messageParam);
 			auto attackAction = Sequence::create(_action.at("specialattack1")->clone(),
 				CallFunc::create(createCol), _action.at("specialattack2")->clone(),
 				CallFunc::create(playIdle), NULL);

@@ -124,7 +124,7 @@ void Archer::specialAttack()
 	_angry = ActorCommonValues._angry;
 
 	struct MESSAGE_ANGRY_CHANGE angryChange = { _name, _angry, _angryMax };
-	MDC->dispatchMessage(MessageType::ANGRY_CHANGE, angryChange);
+//	MDC->dispatchMessage(MessageType::ANGRY_CHANGE, angryChange);
 
 	experimental::AudioEngine::play2d(Archerproperty.specialAttackShout, false, 1);
 
@@ -343,8 +343,8 @@ float Archer::hurt(BasicCollider* collider, bool dirKnockMode)
 	addEffect(blood);
 
 	struct MESSAGE_BLOOD_MINUS bloodMinus = { _name, _maxhp, _hp, _bloodBar, _bloodBarClone, _avatar };
-	MDC->dispatchMessage(MessageType::BLOOD_MINUS, bloodMinus);
-	struct MESSAGE_ANGRY_CHANGE anaryChange = { _name, _angry,_angryMax };
-	MDC->dispatchMessage(MessageType::ANGRY_CHANGE, anaryChange);
+	//MDC->dispatchMessage(MessageType::BLOOD_MINUS, bloodMinus);
+	struct MESSAGE_ANGRY_CHANGE angryChange = { _name, _angry,_angryMax };
+//	MDC->dispatchMessage(MessageType::ANGRY_CHANGE, angryChange);
 	return damage;
 }

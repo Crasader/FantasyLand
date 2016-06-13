@@ -1,7 +1,8 @@
 ﻿#pragma once
 #include "cocos2d.h"
-
 USING_NS_CC;
+
+class Actor;
 
 enum MessageType
 {
@@ -21,15 +22,13 @@ class MessageDispatchCenter
 {
 public:
 	
-	void registerMessage( enum MessageType messageType /*callback*/);
+	void registerMessage( enum MessageType messageType , std::function<void(Actor*)> callfunc);
 
-	void removeMessage(enum MessageType messageType/*callback*/);
+	void removeMessage(enum MessageType messageType , std::function<void(Actor*)> callfunc);
 
-	void dispatchMessage(enum MessageType messageType, struct MESSAGE_ANGRY_CHANGE param);
-	void dispatchMessage(enum MessageType messageType, struct MESSAGE_BLOOD_MINUS param);
-	void dispatchMessage(enum MessageType messageType, struct MESSAGE_SPECIAL_PERSPECTIVE param);
+	void dispatchMessage(enum MessageType messageType, Actor * param);
 
 private:
-	//std::map< enum MessageType, std::vector<std::function<void(Ref*)> > > MessageQue;
+	std::map< enum MessageType, std::vector<std::function<void(Actor*) > > > MessageQue;
 
 };
