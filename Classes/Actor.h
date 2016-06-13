@@ -20,7 +20,7 @@ public:
 	void copyData();
 	void initPuff();
 	void initShadow();
-	void playAnimation(std::string name, bool loop = false);
+	virtual void playAnimation(std::string name, bool loop = false);
 
 	//getter & setter
 	EnumRaceType getRaceType();
@@ -79,7 +79,7 @@ protected:
 	float _aliveTime;	//time the actor is alive in seconds
 	float _curSpeed;	//current speed the actor is traveling in units/seconds
 	std::string _curAnimation;
-	Action* _curAnimation3d;
+	Action* _curAnimation3d = nullptr;
 
 	std::string _name;
 

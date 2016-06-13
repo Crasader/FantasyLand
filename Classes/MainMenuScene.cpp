@@ -1,6 +1,7 @@
 ﻿#include "MainMenuScene.h"
 #include "GlobalVariables.h"
 #include "audio/win32/AudioEngine-win32.h"
+#include "BattleScene.h"
 #include <ui/CocosGUI.h>
 
 Scene* MainMenuScene::createScene()
@@ -15,8 +16,11 @@ bool MainMenuScene::init()
 {
 	Layer::init();
 	currentLayer = this;
-	_isBloodLabelShowing = false;
-	//todo ccexp.AudioEngine:stopAll()
+
+	addBackground();
+	addButton();
+	enableTouch();
+
 	return true;
 }
 
@@ -293,7 +297,59 @@ void MainMenuScene::addCloud(Layer* layer)
 void MainMenuScene::addBg(Layer* layer)
 {
 	//background
-	auto bg_back = Sprite::create("mainmenuscene/bg.jpg");
+	auto bg_back = Sprite::create("mainMenuScene/bg.jpg");
 	bg_back->setPosition(VisibleSize / 2);
 	layer->addChild(bg_back, 1);
+}
+
+void MainMenuScene::addBackground()
+{
+	auto bachground = Sprite::create("mainMenuScene/bg.jpg");
+	bachground->setPosition(VisibleSize / 2);
+	addChild(bachground);
+
+	auto logo = Sprite::create("mainMenuScene/logo.png");
+	logo->setPosition(VisibleSize.width / 2, VisibleSize.height * 2 / 3);
+	logo->setScale(0.5);
+	addChild(logo);
+}
+
+void MainMenuScene::addButton()
+{
+	auto startButton = ui::Button::create("mainMenuScene/startNormal.png", "mainMenuScene/startSelected.png");
+	auto starButton = ui::Button::create("mainMenuScene/starNormal.png", "mainMenuScene/starSelected.png");
+	auto settingButton = ui::Button::create("mainMenuScene/settingNormal.png", "mainMenuScene/settingSelected.png");
+	auto exitButton = ui::Button::create("mainMenuScene/exitNormal.png", "mainMenuScene/exitSelected.png");
+
+	startButton->setPosition(Vec2(VisibleSize.width / 2, VisibleSize.height / 5));
+	starButton->setPosition(Vec2(VisibleSize.width - 150, VisibleSize.height - 50));
+	settingButton->setPosition(Vec2(VisibleSize.width - 100, VisibleSize.height - 50));
+	exitButton->setPosition(Vec2(VisibleSize.width - 50, VisibleSize.height - 50));
+
+	startButton->addTouchEventListener([](Ref*, ui::Widget::TouchEventType)
+	{
+		Director::getInstance()->replaceScene(BattleScene::createScene());
+	});
+	starButton->addTouchEventListener([](Ref*, ui::Widget::TouchEventType)
+	{
+
+	});
+	settingButton->addTouchEventListener([](Ref*, ui::Widget::TouchEventType)
+	{
+
+	});
+	exitButton->addTouchEventListener([](Ref*, ui::Widget::TouchEventType)
+	{
+		Director::getInstance()->end();
+	});
+
+	addChild(startButton);
+	addChild(starButton);
+	addChild(settingButton);
+	addChild(exitButton);
+}
+
+void MainMenuScene::enableTouch()
+{
+
 }

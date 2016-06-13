@@ -6,6 +6,7 @@ class Actor;
 
 enum MessageType
 {
+	NullMessageType,
 	BLOOD_MINUS,
 	REDUCE_SCORE,
 	KNOCKED,

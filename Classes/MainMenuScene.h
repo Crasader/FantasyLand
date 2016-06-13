@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "cocos2d.h"
+#include "ui/CocosGUI.h"
 
 USING_NS_CC;
 
@@ -18,6 +19,11 @@ public:
 	void addButton(Layer *layer);
 	void addCloud(Layer *layer);
 	void addBg(Layer *layer);
+
+
+	void addBackground();
+	void addButton();
+	void enableTouch();
 private:
 	bool _isBloodLabelShowing;
 
@@ -26,4 +32,8 @@ private:
 	Sprite *_lightSprite;
 	PointLight *_pointLight;
 	Vec2 _prePosition;
+
+	ui::Button *_star;
+	ui::Button *_start;
+	ui::Button *_setting; 
 };
