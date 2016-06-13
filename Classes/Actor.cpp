@@ -21,7 +21,6 @@ bool Actor::init()
 	_heroHeight = 150;
 	setCameraMask(2);
 
-	MDC = new MessageDispatchCenter();
 
 	//if (uiLayer != nullptr) todo
 		currentLayer->addChild(_effectNode);

@@ -22,13 +22,13 @@ class MessageDispatchCenter
 {
 public:
 	
+	static MessageDispatchCenter* getInstance();
+
 	void registerMessage( enum MessageType messageType , std::function<void(Actor*)> callfunc);
-
 	void removeMessage(enum MessageType messageType , std::function<void(Actor*)> callfunc);
-
 	void dispatchMessage(enum MessageType messageType, Actor * param);
 
 private:
 	std::map< enum MessageType, std::vector<std::function<void(Actor*) > > > MessageQue;
-
+	static MessageDispatchCenter* instance;
 };

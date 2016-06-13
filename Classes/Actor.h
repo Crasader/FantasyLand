@@ -75,8 +75,6 @@ public:
 	void walkUpdate(float dt);
 	void movementUpdate(float dt);
 
-	MessageDispatchCenter * MDC;
-
 protected:
 	float _aliveTime;	//time the actor is alive in seconds
 	float _curSpeed;	//current speed the actor is traveling in units/seconds

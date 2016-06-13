@@ -39,6 +39,7 @@ extern struct Archerproperty_d Archerproperty;
 extern struct MageProperty_d MageProperty;
 extern struct ReSkin_d ReSkin;
 
+
 struct attack_d{	float minRange;	float maxRange;	float angle;	float knock;	float damage;	enum EnumRaceType mask;	float duration;	float speed;	float criticalChance;	float DOTTimer;	float curDOTTime;	bool DOTApplied;};
 
 enum EnumRaceType

@@ -1,9 +1,17 @@
 ﻿#include "MessageDispatchCenter.h"
 #include <iostream>
 #include "GlobalVariables.h"
-#include "algorithm"
 
+MessageDispatchCenter * MessageDispatchCenter::instance = nullptr;
 
+MessageDispatchCenter* MessageDispatchCenter::getInstance()
+{
+	if( instance == nullptr)
+	{
+		instance = new MessageDispatchCenter();
+	}
+	return instance;
+}
 
 void MessageDispatchCenter::registerMessage(enum MessageType messageType, std::function<void(Actor*)> callfunc)
 {
