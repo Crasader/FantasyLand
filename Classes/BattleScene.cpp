@@ -123,7 +123,6 @@ void BattleScene::createBackground()
 	spriteBg->setPosition3D(Vec3(-2300, -1000, 0));
 	spriteBg->setPosition3D(Vec3::ZERO);
 	spriteBg->setRotation3D(Vec3(90, 0, 0));
-	spriteBg->setCameraMask(2);
 
 	//auto water = Water::create("shader3D/water.png", "shader3D/wave1.jpg", "shader3D/18.jpg", { width = 5500, height = 400 }, 0.77, 0.3797, 1.2);
 	//currentLayer->addChild(water);
@@ -136,14 +135,12 @@ void BattleScene::setCamera()
 {
 	camera = Camera::createPerspective(60.0, VisibleSize.width / VisibleSize.height, 10.0, 4000.0);
 	camera->setGlobalZOrder(10);
-	camera->setPosition3D(Vec3::ZERO);
-	camera->setCameraFlag(CameraFlag::USER1);
 	currentLayer->addChild(camera);
 
 	for (auto it : HeroManager)
 	{
-		//if (it->getPuff() != nullptr)
-			//it->getPuff()->setcamera
+		if (it->getPuff() != nullptr)
+			it->getPuff()->setCameraMask(2);// sprite._puff:setCamera(camera)
 	}
 
 	camera->addChild(uiLayer);
@@ -161,7 +158,7 @@ void BattleScene::initUILayer()
 {
 	uiLayer = BattleFieldUI::create();
 
-	uiLayer->setPositionZ(Director::getInstance()->getZEye() / 4);
+	uiLayer->setPositionZ(-Director::getInstance()->getZEye() / 4);
 	uiLayer->setScale(0.25);
 	uiLayer->ignoreAnchorPointForPosition(false);
 	uiLayer->setGlobalZOrder(3000);
@@ -179,30 +176,71 @@ void BattleScene::angryChange(Actor* heroActor)
 
 void BattleScene::specialPerspective(Actor* heroActor)
 {
-	//if specialCamera.valid == true  return 
+	if (specialCamera->getName() == "on")
+		return;
 
-	//	specialCamera.position = param.pos
-	//	specialCamera.valid = true
-	//	currentLayer:setColor(c3b(125, 125, 125))--deep grey
+	specialCamera->setPosition(heroActor->getPosition());
+	specialCamera->setName("on");
+	currentLayer->setColor(Color3B(125, 125, 125));//deep grey
 
-	//	auto function restoreTimeScale()
-	//	specialCamera.valid = false
-	//	currentLayer : setColor(c3b(255, 255, 255))--default white
-	//	Director : getInstance() : getScheduler() : setTimeScale(1.0)
-	//	param.target : setCascadeColorEnabled(true)--restore to the default state
-	//	
-	//	delayExecute(currentLayer, restoreTimeScale, param.dur)
+	auto restoreTimeScale = [this, heroActor]()
+	{
+		specialCamera->setName("off");
+		currentLayer->setColor(Color3B(255, 255, 255));//default white
+		Director::getInstance()->getScheduler()->setTimeScale(1.0);
+		heroActor->getTarget()->setCascadeColorEnabled(true);//restore to the default state
+	};
 
-	//	Director : getInstance() : getScheduler() : setTimeScale(param.speed)
+	//delayExecute(currentLayer, restoreTimeScale, heroActor);
 }
 
 void BattleScene::enableTouch()
 {
+	auto touchEventListener = EventListenerTouchOneByOne::create();
+
+	touchEventListener->onTouchBegan = [this](Touch *touch, Event*)
+	{
+		//log("onTouchBegin: %0.2f, %0.2f", touch->getLocation());
+		return true;
+	};
+
+
+	touchEventListener->onTouchMoved = [this](Touch *touch, Event*)
+	{
+		if (UIcontainsPoint(touch->getLocation()) == MessageType::NullMessageType)
+			auto delta = touch->getDelta();
+		//cameraOffset = cc.pGetClampPoint(ccpSub(cameraOffset, delta), cameraOffsetMin, cameraOffsetMax);
+	};
+	touchEventListener->onTouchEnded = [this](Touch *touch, Event*)
+	{
+		auto  message = UIcontainsPoint(touch->getLocation());
+		//if (message != MessageType::NullMessageType)
+		//	MessageDispatchCenter->dispatchMessage(message, 1);
+	};
+
+	currentLayer->getEventDispatcher()->addEventListenerWithSceneGraphPriority(touchEventListener, currentLayer);
 }
 
-void BattleScene::UIcontainsPoint(Vec2 position)
+MessageType BattleScene::UIcontainsPoint(Vec2 position)
 {
+	MessageType message;
 
+	auto rectKnight = uiLayer->KnightPngFrame->getBoundingBox();
+	auto rectArcher = uiLayer->ArcherPngFrame->getBoundingBox();
+	auto rectMage = uiLayer->MagePngFrame->getBoundingBox();
+
+	if (rectKnight.containsPoint(position) && uiLayer->KnightAngry->getPercentage() == 100)
+		//cclog("rectKnight")
+		message = MessageType::SPECIAL_KNIGHT;
+	else if (rectArcher.containsPoint(position) && uiLayer->ArcherAngry->getPercentage() == 100)
+		//cclog("rectArcher")
+		message = MessageType::SPECIAL_ARCHER;
+	else if (rectMage.containsPoint(position) && uiLayer->MageAngry->getPercentage() == 100)
+		//cclog("rectMage")
+		message = MessageType::SPECIAL_MAGE;
+	else
+		return MessageType::NullMessageType;
+	return message;
 }
 
 void BattleScene::controlCamera()

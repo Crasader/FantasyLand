@@ -5,6 +5,7 @@ USING_NS_CC;
 
 enum MessageType
 {
+	NullMessageType,
 	BLOOD_MINUS,
 	REDUCE_SCORE,
 	KNOCKED,
@@ -20,8 +21,8 @@ enum MessageType
 class MessageDispatchCenter
 {
 public:
-	
-	void registerMessage( enum MessageType messageType /*callback*/);
+
+	void registerMessage(enum MessageType messageType /*callback*/);
 
 	void removeMessage(enum MessageType messageType/*callback*/);
 

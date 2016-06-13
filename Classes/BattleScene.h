@@ -4,6 +4,7 @@
 USING_NS_CC;
 
 class Actor;
+enum MessageType;
 class BattleScene :public Layer
 {
 public:
@@ -22,7 +23,7 @@ public:
 	void angryChange(Actor *heroActor/*angry @lua*/);
 	void specialPerspective(Actor *heroActor/*param @lua*/);
 	void enableTouch();
-	void UIcontainsPoint(Vec2 position/*position @lua*/);
+	MessageType UIcontainsPoint(Vec2 position/*position @lua*/);
 
 	void controlCamera();
 	
