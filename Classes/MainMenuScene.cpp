@@ -15,7 +15,6 @@ bool MainMenuScene::init()
 {
 	Layer::init();
 	currentLayer = this;
-	size = Director::getInstance()->getVisibleSize();
 	_isBloodLabelShowing = false;
 	//todo ccexp.AudioEngine:stopAll()
 	return true;
@@ -54,7 +53,7 @@ void MainMenuScene::addLogo(Layer* layer)
 	//add logo
 	auto logo = Sprite::create("mainmenuscene/logo.png");
 	_logoSize = logo->getContentSize();
-	logo->setPosition(size.width*0.53, size.height*0.55);
+	logo->setPosition(VisibleSize.width*0.53, VisibleSize.height*0.55);
 	logo->setScale(0.1);
 	_logo = logo;
 	layer->addChild(logo, 4);
@@ -82,7 +81,7 @@ void MainMenuScene::getLightSprite()
 	//_lightSprite->setBlendFunc(gl); todo
 	_lightSprite->setScale(1.2);
 
-	_lightSprite->setPosition3D(Vec3(size.width*0.5, size.height*0.5, 0));
+	_lightSprite->setPosition3D(Vec3(VisibleSize.width*0.5, VisibleSize.height*0.5, 0));
 	auto light_size = _lightSprite->getContentSize();
 	auto rotate_top = RotateBy::create(0.05, 50);
 	auto rotate_bottom = RotateBy::create(0.05, -50);
@@ -159,13 +158,13 @@ void MainMenuScene::addPointLight(Layer* layer)
 	auto getBezierAction = [this]()
 	{
 		ccBezierConfig bezierConfig1;
-		bezierConfig1.controlPoint_1 = ccp(size.width*0.9, size.height*0.4);
-		bezierConfig1.controlPoint_2 = ccp(size.width*0.9, size.height*0.8);
-		bezierConfig1.endPosition = ccp(size.width*0.5, size.height*0.8);
+		bezierConfig1.controlPoint_1 = ccp(VisibleSize.width*0.9, VisibleSize.height*0.4);
+		bezierConfig1.controlPoint_2 = ccp(VisibleSize.width*0.9, VisibleSize.height*0.8);
+		bezierConfig1.endPosition = ccp(VisibleSize.width*0.5, VisibleSize.height*0.8);
 		ccBezierConfig bezierConfig2;
-		bezierConfig2.controlPoint_1 = ccp(size.width*0.1, size.height*0.8);
-		bezierConfig2.controlPoint_2 = ccp(size.width*0.1, size.height*0.4);
-		bezierConfig2.endPosition = ccp(size.width*0.5, size.height*0.4);
+		bezierConfig2.controlPoint_1 = ccp(VisibleSize.width*0.1, VisibleSize.height*0.8);
+		bezierConfig2.controlPoint_2 = ccp(VisibleSize.width*0.1, VisibleSize.height*0.4);
+		bezierConfig2.endPosition = ccp(VisibleSize.width*0.5, VisibleSize.height*0.4);
 
 		auto bezier1 = BezierTo::create(5, bezierConfig1);
 		auto bezier2 = BezierTo::create(5, bezierConfig2);
@@ -237,7 +236,7 @@ void MainMenuScene::addButton(Layer* layer)
 	};
 
 	auto button = ui::Button::create("start.png", "", "", ui::TextureResType::PLIST);
-	button->setPosition(Vec2(size.width*0.5, size.height*0.15));
+	button->setPosition(Vec2(VisibleSize.width*0.5, VisibleSize.height*0.15));
 	//button->addTouchEventListener(button_callback);
 	layer->addChild(button, 4);
 
@@ -265,9 +264,9 @@ void MainMenuScene::addCloud(Layer* layer)
 	cloud3->setScale(scale);
 
 	//setPosition
-	cloud0->setPosition(size.width*1.1, size.height*0.9);
-	cloud1->setPosition(size.width*0.38, size.height*0.6);
-	cloud3->setPosition(size.width*0.95, size.height*0.5);
+	cloud0->setPosition(VisibleSize.width*1.1, VisibleSize.height*0.9);
+	cloud1->setPosition(VisibleSize.width*0.38, VisibleSize.height*0.6);
+	cloud3->setPosition(VisibleSize.width*0.95, VisibleSize.height*0.5);
 
 	//add to layer
 	layer->addChild(cloud0, 2);
@@ -295,6 +294,6 @@ void MainMenuScene::addBg(Layer* layer)
 {
 	//background
 	auto bg_back = Sprite::create("mainmenuscene/bg.jpg");
-	bg_back->setPosition(size / 2);
+	bg_back->setPosition(VisibleSize / 2);
 	layer->addChild(bg_back, 1);
 }

@@ -13,7 +13,7 @@ extern float CelLine;
 extern std::string BossTaunt;
 extern AnimationCache * animationCache ;
 extern float resolutionRate;
-extern Size VisiableSize;
+extern Size VisibleSize;
 
 extern struct RECTS_d RECTS;
 extern struct G_d G;
