@@ -49,6 +49,7 @@ void LoadingScene::update(float dt)
 	{
 		unschedule(schedule_selector(LoadingScene::update));
 		Director::getInstance()->replaceScene(MainMenuScene::createScene());
+		return;
 	}
 
 	//load resource

@@ -27,9 +27,11 @@ public:
 	ProgressTimer* MageBloodClone;
 	ProgressTimer* ArcherBlood;
 	ProgressTimer* ArcherAngry;
+	ProgressTimer* ArcherAngryClone;
 	ProgressTimer* ArcherBloodClone;
 	ProgressTimer* KnightBlood;
 	ProgressTimer* KnightAngry;
+	ProgressTimer* KnightAngryClone;
 	ProgressTimer* KnightBloodClone;
 	Sprite *MagePng;
 	Sprite *MagePngFrame;
