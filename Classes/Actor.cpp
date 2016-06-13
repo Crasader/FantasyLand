@@ -104,8 +104,10 @@ void Actor::initShadow()
 	_circle = Sprite::createWithSpriteFrameName("shadow.png");
 	//use Shadow size for aesthetic, use radius to see collision size
 	_circle->setScale(_shadowSize / 16);
+	//_circle->setGlobalZOrder(_sprite3d->getGlobalZOrder()+1);
 	_circle->setOpacity(255 * 0.7);
 	this->addChild(_circle);
+	_sprite3d->setGlobalZOrder(1);
 }
 
 void Actor::playAnimation(std::string name, bool loop) 
@@ -152,7 +154,7 @@ void Actor::setStateType(EnumStateType type)
 {
 	_statetype = type;
 	//add puff particle
-	if (_puff) {
+	if (_puff != nullptr) {
 		if (type == EnumStateType::WALKING)
 			_puff->setEmissionRate(5);
 		else
@@ -335,7 +337,7 @@ void Actor::knockMode(BasicCollider* collider, bool dirKnockMode)
 	auto p = _myPos;
 	auto angle = dirKnockMode?collider->getFacing():ccpToAngle(ccpSub(p, getPosTable(collider)));
 	auto newPos = ccpRotateByAngle(ccpAdd(Vec2(collider->getKnock(), 0), p), p, angle);
-	runAction(EaseCubicActionOut::create(MoveTo::create(_action.at("knocked")->getDuration() * 3, newPos)));
+	//runAction(EaseCubicActionOut::create(MoveTo::create(_action.at("knocked")->getDuration() * 3, newPos)));
 	////self:setCascadeColorEnabled(true)--if special attack is interrupted then change the value to true
 }
 
@@ -352,7 +354,7 @@ void Actor::dyingMode(Vec2 knockSource, int knockAmount)
 			RemoveSelf::create(), NULL));
 		_angry = 0;
 		struct MESSAGE_ANGRY_CHANGE angryChange = { _name, _angry, _angryMax };
-		MDC->dispatchMessage(MessageType::ANGRY_CHANGE, angryChange);
+//		MDC->dispatchMessage(MessageType::ANGRY_CHANGE, angryChange);
         //CallFunc::create(recycle)
 	}
 	else {
@@ -370,7 +372,7 @@ void Actor::dyingMode(Vec2 knockSource, int knockAmount)
 		auto p = _myPos;
 		auto angle = ccpToAngle(ccpSub(p, knockSource));
 		auto newPos = ccpRotateByAngle(ccpAdd(Vec2(knockAmount, 0), p), p, angle);
-		runAction(EaseCubicActionOut::create(MoveTo::create(_action.at("knocked")->getDuration() * 3, newPos)));
+		//runAction(EaseCubicActionOut::create(MoveTo::create(_action.at("knocked")->getDuration() * 3, newPos)));
 	}
 	_AIEnabled = false;
 }
@@ -535,7 +537,7 @@ void Actor::attackUpdate(float dt)
 			};
 			struct MESSAGE_SPECIAL_PERSPECTIVE messageParam = {0.2, _myPos, _specialSlowTime, this};
 			
-			MDC->dispatchMessage(MessageType::SPECIAL_PERSPECTIVE, messageParam);
+//			MDC->dispatchMessage(MessageType::SPECIAL_PERSPECTIVE, messageParam);
 			auto attackAction = Sequence::create(_action.at("specialattack1")->clone(),
 				CallFunc::create(createCol), _action.at("specialattack2")->clone(),
 				CallFunc::create(playIdle), NULL);

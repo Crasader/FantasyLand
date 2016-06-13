@@ -124,7 +124,7 @@ void Archer::specialAttack()
 	_angry = ActorCommonValues._angry;
 
 	struct MESSAGE_ANGRY_CHANGE angryChange = { _name, _angry, _angryMax };
-	MDC->dispatchMessage(MessageType::ANGRY_CHANGE, angryChange);
+//	MDC->dispatchMessage(MessageType::ANGRY_CHANGE, angryChange);
 
 	experimental::AudioEngine::play2d(Archerproperty.specialAttackShout, false, 1);
 
@@ -157,7 +157,7 @@ void Archer::specialAttack()
 
 void Archer::init3D()
 {
-	initShadow();
+	//initShadow();
 	initPuff();
 	_sprite3d = Sprite3D::create(file);
 	_sprite3d->setScale(1.6);
@@ -166,6 +166,7 @@ void Archer::init3D()
 	_sprite3d->setRotation3D(Vec3(90, 0, 0));
 	_sprite3d->setRotation(-90);
 	setDefaultEqt();
+	initShadow();
 }
 
 void Archer::initActions()
@@ -338,12 +339,12 @@ float Archer::hurt(BasicCollider* collider, bool dirKnockMode)
 	/* 这里需要修改 */
 	auto blood = _hpCounter->showBloodLossNum(damage, this, critical);
 	if (_name == "Rat")
-		setPositionZ(Director::getInstance()->getVisibleSize().height * 0.25);
+		blood->setPositionZ(Director::getInstance()->getVisibleSize().height * 0.25);
 	addEffect(blood);
 
 	struct MESSAGE_BLOOD_MINUS bloodMinus = { _name, _maxhp, _hp, _bloodBar, _bloodBarClone, _avatar };
-	MDC->dispatchMessage(MessageType::BLOOD_MINUS, bloodMinus);
-	struct MESSAGE_ANGRY_CHANGE anaryChange = { _name, _angry,_angryMax };
-	MDC->dispatchMessage(MessageType::ANGRY_CHANGE, anaryChange);
+	//MDC->dispatchMessage(MessageType::BLOOD_MINUS, bloodMinus);
+	struct MESSAGE_ANGRY_CHANGE angryChange = { _name, _angry,_angryMax };
+//	MDC->dispatchMessage(MessageType::ANGRY_CHANGE, angryChange);
 	return damage;
 }

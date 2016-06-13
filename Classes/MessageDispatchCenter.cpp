@@ -1,55 +1,42 @@
 ﻿#include "MessageDispatchCenter.h"
 #include <iostream>
 #include "GlobalVariables.h"
+#include "algorithm"
 
 
-void MessageDispatchCenter::registerMessage(enum MessageType messageType/*callback*/)
+
+void MessageDispatchCenter::registerMessage(enum MessageType messageType, std::function<void(Actor*)> callfunc)
 {
-	/*if self.MessageQue[messageType] == nil then
-		self.MessageQue[messageType] = {}
-	end
-	local index = table.getn(self.MessageQue[messageType])
-	self.MessageQue[messageType][index + 1] = callback*/
+	if(MessageQue.find(messageType) != MessageQue.end() )
+	{
+		std::vector<std::function<void(Actor*)> > &funcList = MessageQue.at(messageType);
+		funcList.push_back(callfunc);
+	}
+	else
+	{
+		std::vector<std::function<void(Actor*)> > funcList;
+		funcList.push_back(callfunc);
+		MessageQue[messageType] = funcList;
+	}
 }
 
-void MessageDispatchCenter::removeMessage(enum MessageType  messageType/*callback*/)
+void MessageDispatchCenter::removeMessage(MessageType messageType, std::function<void(Actor*)> callfunc)
 {
-	//if self.MessageType[messageType] == nil or type(callback) ~= "function" then
-	//	print("param is invalid")
-	//	return
-	//end
-	//for i, v in pairs(self.MessageQue[messageType]) do
-	//	if callback == v then
-	//		table.remove(self.MessageQue[messageType], i)
-	//		return
-	//	end
-	//end
+	/*std::vector<std::function<void(Actor*)>> funcList = MessageQue.at(messageType);
+
+	funcList.erase(std::find(funcList.begin(), funcList.end(), callfunc));*/
 }
 
-void MessageDispatchCenter::dispatchMessage(enum MessageType  messageType, struct MESSAGE_ANGRY_CHANGE param)
+void MessageDispatchCenter::dispatchMessage(enum MessageType messageType, Actor* param)
 {
+	if(MessageQue.find(messageType) != MessageQue.end())
+	{
+		std::vector<std::function<void(Actor*)>> funcList = MessageQue.at(messageType);
 
+		for( auto func : funcList)
+		{
+			func(param);
+		}
+	}
 }
 
-void MessageDispatchCenter::dispatchMessage(enum MessageType  messageType, struct MESSAGE_BLOOD_MINUS param)
-{
-
-}
-
-void MessageDispatchCenter::dispatchMessage(enum MessageType  messageType, struct MESSAGE_SPECIAL_PERSPECTIVE param)
-{
-
-}
-
-//if self.MessageType[messageType] == nil then
-	//	print("param is invalid")
-	//	return
-	//end
-
-	//	
-	//if self.MessageQue[messageType] == nil then
-	//	return
-	//end
-	//for i, v in pairs(self.MessageQue[messageType]) do
-	//	v(param)
-	//end

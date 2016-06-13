@@ -115,7 +115,7 @@ void Knight::specialAttack()
 	_specialAttackChance = KnightValues._specialAttackChance;
 	_angry = ActorCommonValues._angry;
 	struct MESSAGE_ANGRY_CHANGE angryChange = { _name, _angry, _angryMax };
-	MDC->dispatchMessage(MessageType::ANGRY_CHANGE, angryChange);
+//	MDC->dispatchMessage(MessageType::ANGRY_CHANGE, angryChange);
 
 	//knight will create 2 attacks one by one  
 	experimental::AudioEngine::play2d(WarriorProperty.specialAttackShout, false, 0.7);
@@ -169,7 +169,7 @@ void Knight::initAttackEffect()
 
 void Knight::init3D()
 {
-	initShadow();
+	//initShadow();
 	initPuff();
 	_sprite3d = Sprite3D::create(file);
 	_sprite3d->setScale(25);
@@ -178,6 +178,7 @@ void Knight::init3D()
 	_sprite3d->setRotation3D(Vec3(90, 0, 0));
 	_sprite3d->setRotation(-90);
 	setDefaultEqt();
+	initShadow();
 }
 
 void Knight::initActions()
@@ -325,9 +326,9 @@ float Knight::hurt(BasicCollider* collider, bool dirKnockMode)
 		addEffect(blood);
 
 		struct MESSAGE_BLOOD_MINUS bloodMinus = { _name, _maxhp, _hp, _bloodBar, _bloodBarClone, _avatar };
-		MDC->dispatchMessage(MessageType::BLOOD_MINUS, bloodMinus);
+		//MDC->dispatchMessage(MessageType::BLOOD_MINUS, bloodMinus);
 		struct MESSAGE_ANGRY_CHANGE angryChange = { _name, _angry,_angryMax };
-		MDC->dispatchMessage(MessageType::ANGRY_CHANGE, angryChange);
+		//MDC->dispatchMessage(MessageType::ANGRY_CHANGE, angryChange);
 		_angry += damage;
 		return damage;
 	}

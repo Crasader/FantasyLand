@@ -12,11 +12,11 @@ bool HPCounter::init()
 
 LabelTTF *HPCounter::showBloodLossNum(float dmage, Actor *racetype, bool atack)
 {
-	if(atack)
+	if (atack)
 	{
 		auto critleAttack = Sprite::createWithSpriteFrameName("hpcounter.png");
 		//tm=1;
-		critleAttack->runAction(getAction(tm,targetScale,pointZ));
+		critleAttack->runAction(getAction(tm, targetScale, pointZ));
 		critleAttack->setRotation3D(Vec3(90, 0, 0));
 		if (racetype->getName() == "rat")
 			critleAttack->setPosition3D(Vec3(90, 0, 0));
@@ -24,7 +24,7 @@ LabelTTF *HPCounter::showBloodLossNum(float dmage, Actor *racetype, bool atack)
 		pointZ = 80;
 		targetScale = targetScale * 2;
 	}
-	
+	//_blood=
 	return getBlood(racetype);
 }
 
@@ -49,34 +49,34 @@ LabelTTF *HPCounter::getBlood(Actor *racetype)
 	blood->setRotation3D(Vec3(90, 0, 0));
 	blood->setScale(0.1);
 	blood->setRotation3D(getRandomXYZ());
+	blood->setString("+1s");
+	//targetScale = 0.6;
+	//if (num > 1000)
+	//	blood->setColor(Color3B(254, 58, 19));
+	//else if (num > 300)
+	//{
+	//	targetScale = 0.45;
+	//	blood->setColor(Color3B(255, 247, 153));
+	//}
+	//else
+	//{
+	//	targetScale = 0.55;
+	//	blood->setColor(Color3B(189, 0, 0));
+	//}
 
-	targetScale = 0.6;
-	if (num > 1000)
-		blood->setColor(Color3B(254, 58, 19));
-	else if (num > 300)
-	{
-		targetScale = 0.45;
-		blood->setColor(Color3B(255, 247, 153));
-	}
-	else
-	{
-		targetScale = 0.55;
-		blood->setColor(Color3B(189, 0, 0));
-	}
+	////todo racetype
+	//if (racetype->getRaceType() == EnumRaceType::MONSTER)
+	//	blood->setColor(Color3B(0, 180, 255));
 
-	//todo racetype
-	if (racetype->getRaceType() == EnumRaceType::MONSTER)
-		blood->setColor(Color3B(0, 180, 255));
-
-	auto critleAttack = Sprite::createWithSpriteFrameName("hpcounter.png");
-	//tm=1;
-	critleAttack->runAction(getAction(tm, targetScale, pointZ));
-	critleAttack->setRotation3D(Vec3(90, 0, 0));
-	if (racetype->getName() == "rat")
-		critleAttack->setPosition3D(Vec3(90, 0, 0));
-	racetype->addEffect(critleAttack);
-	pointZ = 80;
-	targetScale = targetScale * 2;
+	//auto critleAttack = Sprite::createWithSpriteFrameName("hpcounter.png");
+	////tm=1;
+	//critleAttack->runAction(getAction(tm, targetScale, pointZ));
+	//critleAttack->setRotation3D(Vec3(90, 0, 0));
+	//if (racetype->getName() == "rat")
+	//	critleAttack->setPosition3D(Vec3(90, 0, 0));
+	//racetype->addEffect(critleAttack);
+	//pointZ = 80;
+	//targetScale = targetScale * 2;
 	return blood;
 }
 

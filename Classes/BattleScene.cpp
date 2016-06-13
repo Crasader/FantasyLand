@@ -8,10 +8,13 @@
 #include "Knight.h"
 #include "Piglet.h"
 
+
+//DEBUG
 Mage* mage;
 Dragon* dragon;
 Piglet* piglet;
 Knight* knight;
+//DEBUG
 
 Scene* BattleScene::createScene()
 {
@@ -285,10 +288,14 @@ void BattleScene::controlCamera()
 		case EventKeyboard::KeyCode::KEY_D:--cameraVelocity.x; break;
 		case EventKeyboard::KeyCode::KEY_Q:++cameraVelocity.z; break;
 		case EventKeyboard::KeyCode::KEY_E:--cameraVelocity.z; break;
-		case EventKeyboard::KeyCode::KEY_Z:	mage->dyingMode(Vec2(-500, -500), 100); break;
-		case EventKeyboard::KeyCode::KEY_X:	dragon->dyingMode(Vec2(-400, -500), 100); break;
-		case EventKeyboard::KeyCode::KEY_C:	knight->dyingMode(Vec2(-300, -500), 100); break;
-		case EventKeyboard::KeyCode::KEY_V:	piglet->dyingMode(Vec2(-500, -500), 100); break;
+		case EventKeyboard::KeyCode::KEY_Z:	mage->dyingMode(Vec2(-500, -500), 1); break;
+		case EventKeyboard::KeyCode::KEY_X:	dragon->dyingMode(Vec2(-400,-500), 1); break;
+		case EventKeyboard::KeyCode::KEY_C:	knight->dyingMode(Vec2(-300, -500), 1); break;
+		case EventKeyboard::KeyCode::KEY_V:	piglet->dyingMode(Vec2(-500, -500), 1); break;
+		case EventKeyboard::KeyCode::KEY_B:	mage->hurt(DragonAttack::CreateWithPos(Vec2(-500,-500),50,DragonValues._normalAttack)); break;
+		case EventKeyboard::KeyCode::KEY_N:	dragon->walkMode(); break;
+		case EventKeyboard::KeyCode::KEY_M:	knight->walkMode(); break;
+		case EventKeyboard::KeyCode::KEY_COMMA:	piglet->walkMode(); break;
 			//dragon->dyingMode(Vec2(-500, 0), 100);
 			//knight->dyingMode(Vec2(-500, 0), 100);
 			//piglet->dyingMode(Vec2(-500, 0), 100); 
@@ -302,7 +309,7 @@ void BattleScene::debug()
 {
 	//the camera->position is Vec3(-500, 80, 0)
 	mage = Mage::create();
-	mage->setPosition3D(Vec3(-500, 0, -500));
+	mage->setPosition3D(Vec3(-500, 0,-500));
 	mage->setRotation3D(Vec3(-90, 0, 0));
 	currentLayer->addChild(mage);
 	dragon = Dragon::create();

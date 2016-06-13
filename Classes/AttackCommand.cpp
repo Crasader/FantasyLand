@@ -300,8 +300,8 @@ void MageNormalAttack::onCollide(Actor* target)
 	hurtEffect(target);
 	playHitAudio();
 	_owner->setAngry(_owner->getAngry() + target->hurt(this) * 0.3);
-	struct MESSAGE_ANGRY_CHANGE anaryChange = { MageValues._name, _owner->getAngry(), _owner->getAngryMax() };
-    _owner->MDC->dispatchMessage(MessageType::ANGRY_CHANGE, anaryChange);
+	struct MESSAGE_ANGRY_CHANGE angryChange = { MageValues._name, _owner->getAngry(), _owner->getAngryMax() };
+//    _owner->MDC->dispatchMessage(MessageType::ANGRY_CHANGE, angryChange);
 	//set cur duration to its max duration, so it will be removed when checking time out
 	_curDuration++;
 }
@@ -417,9 +417,9 @@ void MageIceSpikes::onCollide(Actor* target)
 	if (_curDOTTime >= _DOTTimer) {
 		hurtEffect(target);
 		playHitAudio();
-		_owner->setAngry(_owner->getAngry() + target->hurt(this, true) * 0.3);
+	//	_owner->setAngry(_owner->getAngry() + target->hurt(this, true) * 0.3);
 		struct MESSAGE_ANGRY_CHANGE  angryChange = { ArcherValues._name, _owner->getAngry(), _owner->getAngryMax() };
-		_owner->MDC->dispatchMessage(MessageType::ANGRY_CHANGE, angryChange);
+//		_owner->MDC->dispatchMessage(MessageType::ANGRY_CHANGE, angryChange);
 		_DOTApplied = true;
 	}
 }
@@ -466,7 +466,7 @@ void ArcherNormalAttack::onCollide(Actor* target)
 	playHitAudio();
 	_owner->setAngry(_owner->getAngry() + target->hurt(this, true) * 0.3);
 	struct MESSAGE_ANGRY_CHANGE angryChange = { ArcherValues._name, _owner->getAngry(),  _owner->getAngryMax() };
-	_owner->MDC->dispatchMessage(MessageType::ANGRY_CHANGE, angryChange);
+//	_owner->MDC->dispatchMessage(MessageType::ANGRY_CHANGE, angryChange);
 	//set cur duration to its max duration, so it will be removed when checking time out
 	_curDuration = _duration + 1;
 }
@@ -509,8 +509,8 @@ void ArcherSpecialAttack::onCollide(Actor* target)
 		hurtEffect(target);
 		playHitAudio();
 		_owner->setAngry(_owner->getAngry() + target->hurt(this, true) * 0.3);
-		struct MESSAGE_ANGRY_CHANGE anaryChange = { ArcherValues._name, _owner->getAngry(), _owner->getAngryMax() };
-		//MessageDispatchCenter::dispatchMessage(MessageDispatchCenter::MessageType::ANGRY_CHANGE, anaryChange);*/
+		struct MESSAGE_ANGRY_CHANGE angryChange = { ArcherValues._name, _owner->getAngry(), _owner->getAngryMax() };
+		//MessageDispatchCenter::dispatchMessage(MessageDispatchCenter::MessageType::ANGRY_CHANGE, angryChange);*/
 		_DOTApplied = true;
 	}
 }
@@ -627,7 +627,7 @@ void DragonAttack::onCollide(Actor* target)
 	hurtEffect(target);
 	playHitAudio();
 	target->hurt(this);
-	//MessageDispatchCenter::dispatchMessage(MessageDispatchCenter::MessageType::ANGRY_CHANGE, anaryChange);
+	//MessageDispatchCenter::dispatchMessage(MessageDispatchCenter::MessageType::ANGRY_CHANGE, angryChange);
 	//set cur duration to its max duration, so it will be removed when checking time out
 	_curDuration = _duration + 1;
 }

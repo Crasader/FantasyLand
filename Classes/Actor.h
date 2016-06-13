@@ -108,7 +108,7 @@ protected:
 	Node* _effectNode;
 	int _monsterHeight;
 	int _heroHeight;
-	ParticleSystem* _puff;
+	ParticleSystem* _puff = nullptr;
 	Sprite* _circle;
 	Map<std::string, ActionInterval*> _action;
 

@@ -143,7 +143,7 @@ void Mage::specialAttack()
 
 void Mage::init3D()
 {
-	initShadow();
+	//initShadow();
 	initPuff();
 	_sprite3d = Sprite3D::create(file);
 	_sprite3d->setScale(1.9);
@@ -152,6 +152,7 @@ void Mage::init3D()
 	_sprite3d->setRotation3D(Vec3(90, 0, 0));
 	_sprite3d->setRotation(-90);
 	setDefaultEqt();
+	initShadow();
 }
 
 void Mage::initActions()
@@ -295,13 +296,13 @@ float Mage::hurt(BasicCollider* collider, bool dirKnockMode)
 
 		auto blood = _hpCounter->showBloodLossNum(damage, this, critical);
 		if (_name == "Rat")
-			setPositionZ(Director::getInstance()->getVisibleSize().height * 0.25);
+			blood->setPositionZ(Director::getInstance()->getVisibleSize().height * 0.25);
 		addEffect(blood);
 
 		struct MESSAGE_BLOOD_MINUS  bloodMinus = { _name, _maxhp, _hp, _bloodBar, _bloodBarClone, _avatar };
-		MDC->dispatchMessage(MessageType::BLOOD_MINUS, bloodMinus);
-		struct MESSAGE_ANGRY_CHANGE anaryChange = { _name, _angry,_angryMax };
-		MDC->dispatchMessage(MessageType::ANGRY_CHANGE, anaryChange);
+//		MDC->dispatchMessage(MessageType::BLOOD_MINUS, bloodMinus);
+		struct MESSAGE_ANGRY_CHANGE angryChange = { _name, _angry,_angryMax };
+	//	MDC->dispatchMessage(MessageType::ANGRY_CHANGE, angryChange);
 		return damage;
 	}
 	return 0;
