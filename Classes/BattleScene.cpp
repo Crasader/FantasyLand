@@ -305,7 +305,7 @@ void BattleScene::controlCamera()
 		case EventKeyboard::KeyCode::KEY_C:	knight->hurt(DragonAttack::CreateWithPos(Vec2(-500, -500), 50, DragonValues._normalAttack)); break;
 		case EventKeyboard::KeyCode::KEY_V:	piglet->dyingMode(Vec2(-500, -500), 1); break;
 		case EventKeyboard::KeyCode::KEY_B:	piglet->hurt(DragonAttack::CreateWithPos(Vec2(-500,-500),50,DragonValues._normalAttack)); break;
-		case EventKeyboard::KeyCode::KEY_N: piglet->idleMode(); break;
+		case EventKeyboard::KeyCode::KEY_N: mage->walkMode(); break;
 		case EventKeyboard::KeyCode::KEY_M:	knight->idleMode(); break;
 		case EventKeyboard::KeyCode::KEY_COMMA:	piglet->idleMode(); break;
 			//dragon->dyingMode(Vec2(-500, 0), 100);
