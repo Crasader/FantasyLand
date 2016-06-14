@@ -28,7 +28,7 @@ void MessageDispatchCenter::registerMessage(enum MessageType messageType, std::f
 	}
 }
 
-void MessageDispatchCenter::removeMessage(MessageType messageType, std::function<void(Actor*)> callfunc)
+void MessageDispatchCenter::removeMessage(enum MessageType messageType, std::function<void(Actor*)> callfunc)
 {
 	/*std::vector<std::function<void(Actor*)>> funcList = MessageQue.at(messageType);
 

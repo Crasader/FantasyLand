@@ -17,7 +17,12 @@ Archer::Archer()
 	//		return;
 	//	_specialAttackChance = 1;
 	//};
-	//MessageDispatchCenter::registerMessage(MessageDispatchCenter::MessageType::SPECIAL_ARCHER, specialAttack);
+	MessageDispatchCenter::getInstance()->registerMessage(SPECIAL_ARCHER, [](Actor * data)
+	{
+		if (data->getSpecialAttackChance() == 1)
+			return;
+		data->setSpecialAttackChance(1);
+	});
 };
 
 bool Archer::init()
@@ -124,6 +129,7 @@ void Archer::specialAttack()
 	_angry = ActorCommonValues._angry;
 
 	struct MESSAGE_ANGRY_CHANGE angryChange = { _name, _angry, _angryMax };
+	MessageDispatchCenter::getInstance()->dispatchMessage(ANGRY_CHANGE, this);
 //	MDC->dispatchMessage(MessageType::ANGRY_CHANGE, angryChange);
 
 	experimental::AudioEngine::play2d(Archerproperty.specialAttackShout, false, 1);
@@ -343,8 +349,10 @@ float Archer::hurt(BasicCollider* collider, bool dirKnockMode)
 	addEffect(blood);
 
 	struct MESSAGE_BLOOD_MINUS bloodMinus = { _name, _maxhp, _hp, _bloodBar, _bloodBarClone, _avatar };
+	MessageDispatchCenter::getInstance()->dispatchMessage(BLOOD_MINUS, this);
 	//MDC->dispatchMessage(MessageType::BLOOD_MINUS, bloodMinus);
 	struct MESSAGE_ANGRY_CHANGE angryChange = { _name, _angry,_angryMax };
+	MessageDispatchCenter::getInstance()->dispatchMessage(ANGRY_CHANGE, this);
 //	MDC->dispatchMessage(MessageType::ANGRY_CHANGE, angryChange);
 	return damage;
 }
