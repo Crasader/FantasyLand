@@ -13,6 +13,12 @@ Knight::Knight()
 			return;
 		_specialAttackChance = 1;
 	};
+	MessageDispatchCenter::getInstance()->registerMessage(SPECIAL_KNIGHT,[](Actor *data)
+	{
+		if (data->getSpecialAttackChance() == 1)
+			return;
+		data->setSpecialAttackChance(1);
+	});
 	//MDC->registerMessage(MessageDispatchCenter::MessageType::SPECIAL_KNIGHT, specialAttack);
 }
 
@@ -115,6 +121,7 @@ void Knight::specialAttack()
 	_specialAttackChance = KnightValues._specialAttackChance;
 	_angry = ActorCommonValues._angry;
 	struct MESSAGE_ANGRY_CHANGE angryChange = { _name, _angry, _angryMax };
+	MessageDispatchCenter::getInstance()->dispatchMessage(ANGRY_CHANGE, this);
 //	MDC->dispatchMessage(MessageType::ANGRY_CHANGE, angryChange);
 
 	//knight will create 2 attacks one by one  
@@ -326,8 +333,12 @@ float Knight::hurt(BasicCollider* collider, bool dirKnockMode)
 		addEffect(blood);
 
 		struct MESSAGE_BLOOD_MINUS bloodMinus = { _name, _maxhp, _hp, _bloodBar, _bloodBarClone, _avatar };
+		MessageDispatchCenter::getInstance()->dispatchMessage(BLOOD_MINUS, this);
+
 		//MDC->dispatchMessage(MessageType::BLOOD_MINUS, bloodMinus);
 		struct MESSAGE_ANGRY_CHANGE angryChange = { _name, _angry,_angryMax };
+		MessageDispatchCenter::getInstance()->dispatchMessage(ANGRY_CHANGE, this);
+
 		//MDC->dispatchMessage(MessageType::ANGRY_CHANGE, angryChange);
 		_angry += damage;
 		return damage;

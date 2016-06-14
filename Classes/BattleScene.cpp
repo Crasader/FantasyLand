@@ -70,9 +70,18 @@ bool BattleScene::init()
 	setCamera();
 	//scheduler->schedule(gameController, this, 0, false, "gameController");
 
-	//MessageDispatchCenter::registerMessage(MessageType::BLOOD_MINUS, bloodMinus);
-	//MessageDispatchCenter::registerMessage(MessageType::ANGRY_CHANGE, angryChange);
-	//MessageDispatchCenter::registerMessage(MessageType::SPECIAL_PERSPECTIVE, specialPerspective);
+	MessageDispatchCenter::getInstance()->registerMessage(MessageType::BLOOD_MINUS, [](Actor * heroActor)
+	{
+		uiLayer->bloodDrop(heroActor);
+	});
+	MessageDispatchCenter::getInstance()->registerMessage(MessageType::ANGRY_CHANGE, [](Actor * heroActor)
+	{
+		uiLayer->angryChange(heroActor);
+	});
+	MessageDispatchCenter::getInstance()->registerMessage(MessageType::SPECIAL_PERSPECTIVE, [](Actor *heroActor)
+	{
+		
+	});
 
 	controlCamera();
 

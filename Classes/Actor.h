@@ -44,6 +44,8 @@ public:
 	bool getGoRight();
 	Node* getEffectNode();
 	ParticleSystem* getPuff();
+	float getSpecialAttackChance();
+	void setSpecialAttackChance(float chance);
 
 	virtual float hurt(BasicCollider* collider, bool dirKnockMode = false);
 	virtual void hurtSoundEffects();
