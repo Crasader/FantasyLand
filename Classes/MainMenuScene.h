@@ -23,7 +23,8 @@ public:
 
 	void addBackground();
 	void addButton();
-	void enableTouch();
+	void addAboutLayer();
+	void removeAboutLayer();
 private:
 	bool _isBloodLabelShowing;
 
@@ -36,4 +37,6 @@ private:
 	ui::Button *_star;
 	ui::Button *_start;
 	ui::Button *_setting; 
+
+	Layer *_aboutLayer;
 };

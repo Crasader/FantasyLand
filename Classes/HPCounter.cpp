@@ -12,87 +12,96 @@ bool HPCounter::init()
 
 LabelTTF *HPCounter::showBloodLossNum(float dmage, Actor *racetype, bool atack)
 {
-	if (atack)
+	auto time = 1;
+	auto getRandomXYZ = [time]()
 	{
-		auto critleAttack = Sprite::createWithSpriteFrameName("hpcounter.png");
-		//tm=1;
-		critleAttack->runAction(getAction(tm, targetScale, pointZ));
-		critleAttack->setRotation3D(Vec3(90, 0, 0));
-		if (racetype->getName() == "rat")
-			critleAttack->setPosition3D(Vec3(90, 0, 0));
-		racetype->addEffect(critleAttack);
-		pointZ = 80;
-		targetScale = targetScale * 2;
+		auto rand_x = 20 * sin(rand_0_1()*(time*0.5 + 4356));
+		auto rand_y = 20 * sin(rand_0_1()*(time*0.37 + 5436));
+		auto rand_z = 20 * sin(rand_0_1()*(time*0.2 + 54325));
+		return Vec3(rand_x, rand_y, rand_z);
+	};
+
+	auto getBlood = [this, getRandomXYZ, racetype, atack]()
+	{
+		num = _num;
+		this->tm = 0.5f;
+		pointZ = 50;
+
+		auto blood = LabelTTF::create("-", "fonts/britanic bold.ttf", 400);
+		blood->enableStroke(Color3B::BLACK, 7);
+		blood->setRotation3D(Vec3(90, 0, 0));
+		blood->setScale(0.1);
+		blood->setRotation3D(getRandomXYZ());
+		blood->setString("+1s");
+
+		targetScale = 0.6;
+		if (num > 1000)
+			blood->setColor(Color3B(254, 58, 19));
+		else if (num > 300)
+		{
+			targetScale = 0.45;
+			blood->setColor(Color3B(255, 247, 153));
+		}
+		else
+		{
+			targetScale = 0.55;
+			blood->setColor(Color3B(189, 0, 0));
+		}
+
+		if (racetype->getRaceType() == EnumRaceType::MONSTER)
+			blood->setColor(Color3B(0, 180, 255));
+
+		auto getAction = [this]()
+		{
+			auto sequence = Sequence::create(
+				EaseElasticOut::create(ScaleTo::create(tm / 2, targetScale), 0.4),
+				FadeOut::create(tm / 2),
+				RemoveSelf::create(),
+				CallFunc::create([this]()
+			{
+				_isBlooding = false;
+				_num = 0;
+			})
+				);
+
+			auto spawn = Spawn::create(
+				sequence,
+				MoveBy::create(tm, Vec3(0, 0, pointZ)),
+				RotateBy::create(tm, rand_0_1() * 80 - 40));
+			return spawn;
+		};
+
+		if (atack)
+		{
+			auto critleAttack = Sprite::createWithSpriteFrameName("hpcounter.png");
+			this->tm = 1;
+			critleAttack->runAction(getAction());
+			critleAttack->setRotation3D(Vec3(90, 0, 0));
+			if (racetype->getName() == "Rat")
+				critleAttack->setPositionZ(G.winSize.height*0.25);
+			racetype->addEffect(critleAttack);
+			
+			pointZ = 80;
+			targetScale = targetScale * 2;
+		}
+
+		_blood = blood;
+		_blood->runAction(getAction());
+
+		return _blood;
+	};
+
+	if(_isBlooding==false)
+	{
+		_isBlooding = true;
+		_num = dmage;
 	}
-	//_blood=
-	return getBlood(racetype);
-}
+	else
+	{
+		_blood->stopAllActions();
+		_blood->removeFromParent();
+		_num = _num + dmage;
+	}
 
-Vec3 HPCounter::getRandomXYZ()
-{
-	int time = 1;
-	auto rand_x = 20 * sin(rand_0_1()*(time*0.5 + 4356));
-	auto rand_y = 20 * sin(rand_0_1()*(time*0.37 + 5436));
-	auto rand_z = 20 * sin(rand_0_1()*(time*0.2 + 54325));
-	return Vec3(rand_x, rand_y, rand_z);
-}
-
-LabelTTF *HPCounter::getBlood(Actor *racetype)
-{
-	num = _num;
-	tm = 0.5f;
-	pointZ = 50;
-
-	//*$$$$$$$$$$$$$$$$$$$$*//
-	auto blood = LabelTTF::create("fonts/britanic bold.ttf", "fonts/britanic bold.ttf", 50);
-	blood->enableStroke(Color3B::BLACK, 7);
-	blood->setRotation3D(Vec3(90, 0, 0));
-	blood->setScale(0.1);
-	blood->setRotation3D(getRandomXYZ());
-	blood->setString("+1s");
-	//targetScale = 0.6;
-	//if (num > 1000)
-	//	blood->setColor(Color3B(254, 58, 19));
-	//else if (num > 300)
-	//{
-	//	targetScale = 0.45;
-	//	blood->setColor(Color3B(255, 247, 153));
-	//}
-	//else
-	//{
-	//	targetScale = 0.55;
-	//	blood->setColor(Color3B(189, 0, 0));
-	//}
-
-	////todo racetype
-	//if (racetype->getRaceType() == EnumRaceType::MONSTER)
-	//	blood->setColor(Color3B(0, 180, 255));
-
-	//auto critleAttack = Sprite::createWithSpriteFrameName("hpcounter.png");
-	////tm=1;
-	//critleAttack->runAction(getAction(tm, targetScale, pointZ));
-	//critleAttack->setRotation3D(Vec3(90, 0, 0));
-	//if (racetype->getName() == "rat")
-	//	critleAttack->setPosition3D(Vec3(90, 0, 0));
-	//racetype->addEffect(critleAttack);
-	//pointZ = 80;
-	//targetScale = targetScale * 2;
-	return blood;
-}
-
-Spawn *HPCounter::getAction(float tm, float targetScale, float pointZ)
-{
-	//auto sequence = Sequence::create(
-	//	EaseElasticOut::create(ScaleTo::create(tm / 2, targetScale), 0.4),
-	//	FadeOut::create(tm / 2),
-	//	RemoveSelf::create(),
-	//	CallFunc::create(new std::function<double>)
-	//	);
-
-	//auto spawn = Spawn::create(
-	//	sequence,
-	//	MoveBy::create(tm, Vec3(0, 0, pointZ)),
-	//	RotateBy::create(tm, rand_0_1() * 80 - 40));
-	//return spawn;
-	return nullptr;
+	return getBlood();
 }

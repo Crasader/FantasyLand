@@ -20,7 +20,4 @@ private:
 	float pointZ;
 	float targetScale;
 
-	Vec3 getRandomXYZ();
-	LabelTTF *getBlood(Actor *racetype);
-	Spawn *getAction(float tm, float targetScale, float pointZ);
 };
