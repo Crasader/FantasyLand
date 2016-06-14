@@ -32,7 +32,7 @@ LabelTTF *HPCounter::showBloodLossNum(float dmage, Actor *racetype, bool atack)
 		blood->setRotation3D(Vec3(90, 0, 0));
 		blood->setScale(0.1);
 		blood->setRotation3D(getRandomXYZ());
-		blood->setString("+1s");
+		blood->setString(Value("-").asString()+Value(num).asString());
 
 		targetScale = 0.6;
 		if (num > 1000)
@@ -58,16 +58,16 @@ LabelTTF *HPCounter::showBloodLossNum(float dmage, Actor *racetype, bool atack)
 				FadeOut::create(tm / 2),
 				RemoveSelf::create(),
 				CallFunc::create([this]()
-			{
+			    {
 				_isBlooding = false;
 				_num = 0;
-			})
+			    }), NULL
 				);
 
 			auto spawn = Spawn::create(
 				sequence,
 				MoveBy::create(tm, Vec3(0, 0, pointZ)),
-				RotateBy::create(tm, rand_0_1() * 80 - 40));
+				RotateBy::create(tm, rand_0_1() * 80 - 40), NULL);
 			return spawn;
 		};
 

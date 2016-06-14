@@ -10,9 +10,11 @@ std::vector<BasicCollider*> AttackManager;
 
 void solveAttacks(float dt)
 {
-	for (auto val = AttackManager.end(); val != AttackManager.begin(); --val) {
-		BasicCollider* attack = *val;
-		Vec2 apos = getPosTable(attack);
+	//for (auto val = AttackManager.begin(); val != AttackManager.end() && AttackManager.size() != 0; ++val) {
+	for (int i = 0; i < AttackManager.size();++i) {
+		if (AttackManager[i] == nullptr) continue;
+		auto attack = AttackManager[i];
+		auto apos = attack->getPosition();
 		if (attack->getMask() == EnumRaceType::HERO) {
 			//if heroes attack, then lets check monsters
 			for (auto mkey = MonsterManager.rend(); mkey != MonsterManager.rbegin(); ++mkey) {
@@ -48,7 +50,8 @@ void solveAttacks(float dt)
 		attack->setCurDuration(attack->getDuration() + dt);
 		if (attack->getCurDuration() > attack->getDuration()) {
 			attack->onTimeOut();
-			AttackManager.erase(val);
+			//AttackManager.erase(val);
+			AttackManager.erase(AttackManager.begin() + i);
 		}
 		else attack->onUpdate();
 	}
@@ -57,22 +60,35 @@ void solveAttacks(float dt)
 BasicCollider::BasicCollider()
 {
 	setCascadeColorEnabled(true);
+	_minRange = 0;	//the min radius of the fan
+	_maxRange = 150;	//the max radius of the fan
+	_angle = 120;	//arc of attack, in radians
+	_knock = 150;	//default knock, knocks 150 units
+	_mask = 1;	//1 is Heroes, 2 is enemy, 3 ? ?
+	_damage = 100;
+	_facing = 0;	//this is radians
+	_duration = 0;
+	_curDuration = 0;
+	_speed = 0;	//travel speed
+	_criticalChance = 0;
+	//this->setCameraMask(997);
+	
 }
 
 BasicCollider* BasicCollider::CreateWithPos(Vec2 pos, int facing, struct attack_d attackInfo)
 {
 	BasicCollider* newBasicCollider = BasicCollider::create();
-	newBasicCollider->_minRange = 0;	//the min radius of the fan
-	newBasicCollider->_maxRange = 150;	//the max radius of the fan
-	newBasicCollider->_angle = 120;	//arc of attack, in radians
-	newBasicCollider->_knock = 150;	//default knock, knocks 150 units
-	newBasicCollider->_mask = 1;	//1 is Heroes, 2 is enemy, 3 ? ?
-	newBasicCollider->_damage = 100;
-	newBasicCollider->_facing = 0;	//this is radians
-	newBasicCollider->_duration = 0;
-	newBasicCollider->_curDuration = 0;
-	newBasicCollider->_speed = 0;	//travel speed
-	newBasicCollider->_criticalChance = 0;
+	//newBasicCollider->_minRange = 0;	//the min radius of the fan
+	//newBasicCollider->_maxRange = 150;	//the max radius of the fan
+	//newBasicCollider->_angle = 120;	//arc of attack, in radians
+	//newBasicCollider->_knock = 150;	//default knock, knocks 150 units
+	//newBasicCollider->_mask = 1;	//1 is Heroes, 2 is enemy, 3 ? ?
+	//newBasicCollider->_damage = 100;
+	//newBasicCollider->_facing = 0;	//this is radians
+	//newBasicCollider->_duration = 0;
+	//newBasicCollider->_curDuration = 0;
+	//newBasicCollider->_speed = 0;	//travel speed
+	//newBasicCollider->_criticalChance = 0;
 	newBasicCollider->initData(pos, facing, attackInfo);
 	return newBasicCollider;
 }
@@ -87,7 +103,7 @@ bool BasicCollider::init()
 
 void BasicCollider::onTimeOut()
 {
-    this->removeFromParent();
+	this->removeFromParent();
 }
 
 void BasicCollider::playHitAudio()
@@ -99,7 +115,7 @@ void BasicCollider::hurtEffect(Actor* target)
 {
 	auto hurtAction = Animate::create(animationCache->getAnimation("hurtAnimation"));
 	auto hurtEffect = BillBoard::create();
-	hurtEffect->setScale(1.5);
+	hurtEffect->setScale(150);
 	hurtEffect->runAction(Sequence::create(hurtAction, RemoveSelf::create()));
 	hurtEffect->setPosition3D(Vec3(0, 0, 50));
 	target->addChild(hurtEffect);
@@ -196,7 +212,7 @@ float BasicCollider::getCurDuration() {
 
 void BasicCollider::setCurDuration(float curDuration) {
 	_curDuration = curDuration;
-	
+
 }
 
 KnightNormalAttack::KnightNormalAttack()
@@ -207,7 +223,7 @@ KnightNormalAttack::KnightNormalAttack()
 KnightNormalAttack* KnightNormalAttack::CreateWithPos(Vec2 pos, int facing, struct attack_d attackInfo, Actor* knight)
 {
 	auto newKnightNormalAttack = KnightNormalAttack::create();
-    newKnightNormalAttack->initData(pos, facing, attackInfo);
+	newKnightNormalAttack->initData(pos, facing, attackInfo);
 	newKnightNormalAttack->_owner = knight;
 	return newKnightNormalAttack;
 };
@@ -234,7 +250,7 @@ MageNormalAttack* MageNormalAttack::CreateWithPos(Vec2 pos, int facing, struct a
 	newMageNormalAttack->_target = target;
 	newMageNormalAttack->_owner = owner;
 	newMageNormalAttack->_sp = BillBoard::create("FX/FX.png", RECTS.iceBolt);
-
+	newMageNormalAttack->_sp->setCameraMask(996);
 	newMageNormalAttack->setPosition3D(Vec3(0, 0, 50));
 	newMageNormalAttack->setScale(2);
 	newMageNormalAttack->addChild(newMageNormalAttack->_sp);
@@ -302,8 +318,8 @@ void MageNormalAttack::onCollide(Actor* target)
 	_owner->setAngry(_owner->getAngry() + target->hurt(this) * 0.3);
 	struct MESSAGE_ANGRY_CHANGE angryChange = { MageValues._name, _owner->getAngry(), _owner->getAngryMax() };
 	MessageDispatchCenter::getInstance()->dispatchMessage(ANGRY_CHANGE, _owner);
-//    _owner->MDC->dispatchMessage(MessageType::ANGRY_CHANGE, angryChange);
-	//set cur duration to its max duration, so it will be removed when checking time out
+	//    _owner->MDC->dispatchMessage(MessageType::ANGRY_CHANGE, angryChange);
+		//set cur duration to its max duration, so it will be removed when checking time out
 	_curDuration++;
 }
 
@@ -324,7 +340,7 @@ void MageNormalAttack::onUpdate(float dt)
 
 MageIceSpikes::MageIceSpikes()
 {
-	
+
 }
 
 MageIceSpikes* MageIceSpikes::CreateWithPos(Vec2 pos, int facing, struct attack_d attackInfo, Actor* owner)
@@ -335,6 +351,7 @@ MageIceSpikes* MageIceSpikes::CreateWithPos(Vec2 pos, int facing, struct attack_
 	ret->_sp = Sprite::createWithSpriteFrameName("shadow.png");
 	ret->_sp->setGlobalZOrder(-ret->getPositionY() + FXZorder);
 	ret->_sp->setOpacity(100);
+	ret->_sp->setCameraMask(996);
 	ret->setPosition3D(Vec3(0, 0, 1));
 	ret->setScale(ret->getMaxRange() / 12);
 	ret->addChild(ret->_sp);
@@ -344,8 +361,9 @@ MageIceSpikes* MageIceSpikes::CreateWithPos(Vec2 pos, int facing, struct attack_
 	ret->_spikes = x;
 	ret->addChild(x);
 	for (int var = 0; var <= 10; var++) {
-		int rand = CCRANDOM_0_1() * 3;
-		auto spike = Sprite::createWithSpriteFrameName("iceSpike" + Value(rand).asString() + ".png");
+		int rand = CCRANDOM_0_1() * 3 + 1;
+		std::string spriteFrameName = Value("iceSpike").asString() + Value(rand).asString() + Value(".png").asString();
+		auto spike = Sprite::createWithSpriteFrameName(spriteFrameName);
 		spike->setAnchorPoint(Vec2(0.5, 0));
 		spike->setRotation3D(Vec3(90, 0, 0));
 		x->addChild(spike);
@@ -418,10 +436,10 @@ void MageIceSpikes::onCollide(Actor* target)
 	if (_curDOTTime >= _DOTTimer) {
 		hurtEffect(target);
 		playHitAudio();
-	//	_owner->setAngry(_owner->getAngry() + target->hurt(this, true) * 0.3);
+		//	_owner->setAngry(_owner->getAngry() + target->hurt(this, true) * 0.3);
 		struct MESSAGE_ANGRY_CHANGE  angryChange = { ArcherValues._name, _owner->getAngry(), _owner->getAngryMax() };
 		MessageDispatchCenter::getInstance()->dispatchMessage(ANGRY_CHANGE, _owner);
-//		_owner->MDC->dispatchMessage(MessageType::ANGRY_CHANGE, angryChange);
+		//		_owner->MDC->dispatchMessage(MessageType::ANGRY_CHANGE, angryChange);
 		_DOTApplied = true;
 	}
 }
@@ -438,16 +456,17 @@ void MageIceSpikes::onUpdate(float dt)
 
 ArcherNormalAttack::ArcherNormalAttack()
 {
-	
+
 }
 
 ArcherNormalAttack* ArcherNormalAttack::CreateWithPos(Vec2 pos, int facing, struct attack_d attackInfo, Actor* owner)
 {
-    auto ret = ArcherNormalAttack::create();
+	auto ret = ArcherNormalAttack::create();
 	ret->initData(pos, facing, attackInfo);
 	ret->_owner = owner;
 	ret->_sp = Archer::createArrow();
 	ret->_sp->setRotation(RADIANS_TO_DEGREES(-facing) - 90);
+	ret->_sp->setCameraMask(996);
 	ret->addChild(ret->_sp);
 	return ret;
 }
@@ -470,8 +489,8 @@ void ArcherNormalAttack::onCollide(Actor* target)
 	struct MESSAGE_ANGRY_CHANGE angryChange = { ArcherValues._name, _owner->getAngry(),  _owner->getAngryMax() };
 	MessageDispatchCenter::getInstance()->dispatchMessage(ANGRY_CHANGE, _owner);
 
-//	_owner->MDC->dispatchMessage(MessageType::ANGRY_CHANGE, angryChange);
-	//set cur duration to its max duration, so it will be removed when checking time out
+	//	_owner->MDC->dispatchMessage(MessageType::ANGRY_CHANGE, angryChange);
+		//set cur duration to its max duration, so it will be removed when checking time out
 	_curDuration = _duration + 1;
 }
 
@@ -493,6 +512,7 @@ ArcherSpecialAttack* ArcherSpecialAttack::CreateWithPos(Vec2 pos, int facing, st
 	ret->_owner = owner;
 	ret->_sp = Archer::createArrow();
 	ret->_sp->setRotation(RADIANS_TO_DEGREES(-facing) - 90);
+	ret->_sp->setCameraMask(996);
 	ret->addChild(ret->_sp);
 	return ret;
 }
@@ -547,6 +567,7 @@ Nova* Nova::CreateWithPos(Vec2 pos, int facing)
 	ret->_sp->setPosition3D(Vec3(0, 0, 1));
 	ret->addChild(ret->_sp);
 	ret->_sp->setScale(0);
+	ret->_sp->setCameraMask(996);
 	ret->_sp->runAction(EaseCircleActionOut::create(ScaleTo::create(0.3, 3)));
 	ret->_sp->runAction(FadeOut::create(0.7));
 	return ret;
@@ -560,7 +581,7 @@ bool Nova::init()
 
 void Nova::onTimeOut()
 {
-	runAction(Sequence::create(DelayTime::create(1), RemoveSelf::create(),NULL));
+	runAction(Sequence::create(DelayTime::create(1), RemoveSelf::create(), NULL));
 }
 
 void Nova::onCollide(Actor* target)
@@ -592,7 +613,7 @@ DragonAttack* DragonAttack::CreateWithPos(Vec2 pos, int facing, struct attack_d 
 	auto ret = DragonAttack::create();
 	ret->initData(pos, facing, attackInfo);
 	ret->_sp = BillBoard::create("FX/FX.png", RECTS.fireBall);
-	ret->_sp->setPosition3D(Vec3(0, 0, 48));
+    ret->_sp->setPosition3D(Vec3(0, 0, 48));
 	ret->addChild(ret->_sp);
 	ret->_sp->setScale(1.7);
 	return ret;
@@ -600,7 +621,6 @@ DragonAttack* DragonAttack::CreateWithPos(Vec2 pos, int facing, struct attack_d 
 
 bool DragonAttack::init()
 {
-
 	return true;
 }
 
@@ -619,6 +639,8 @@ void DragonAttack::onTimeOut()
 	magic->setEndColor(ccc4f(1, 0.5, 0, 1));
 
 	auto fireballAction = Animate::create(AnimationCache::getInstance()->getAnimation("fireBallAnim"));
+	//_sp->setCameraMask(943);
+	_sp->setCameraMask(460);
 	_sp->runAction(fireballAction);
 	_sp->setScale(2);
 }
@@ -657,6 +679,7 @@ BossNormal* BossNormal::CreateWithPos(Vec2 pos, int facing, struct attack_d atta
 	ret->_sp->setPosition3D(Vec3(0, 0, 48));
 	ret->addChild(ret->_sp);
 	ret->_sp->setScale(1.7);
+	ret->_sp->setCameraMask(996);
 	return ret;
 }
 
@@ -716,6 +739,7 @@ BossSuper* BossSuper::CreateWithPos(Vec2 pos, int facing, struct attack_d attack
 	ret->_sp->setPosition3D(Vec3(0, 0, 48));
 	ret->addChild(ret->_sp);
 	ret->_sp->setScale(1.7);
+	ret->_sp->setCameraMask(996);
 	return ret;
 }
 

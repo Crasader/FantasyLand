@@ -17,6 +17,11 @@ Mage* mage;
 Archer* dragon;
 Slime* piglet;
 Rat* knight;
+MageIceSpikes *da;
+ArcherSpecialAttack* db;
+DragonAttack* dc;
+ArcherNormalAttack* dd;
+
 //DEBUG
 
 Scene* BattleScene::createScene()
@@ -300,12 +305,23 @@ void BattleScene::controlCamera()
 		case EventKeyboard::KeyCode::KEY_D:--cameraVelocity.x; break;
 		case EventKeyboard::KeyCode::KEY_Q:++cameraVelocity.z; break;
 		case EventKeyboard::KeyCode::KEY_E:--cameraVelocity.z; break;
-		case EventKeyboard::KeyCode::KEY_Z:	mage->hurt(DragonAttack::CreateWithPos(Vec2(-500, -500), 50, DragonValues._normalAttack)); break;
-		case EventKeyboard::KeyCode::KEY_X:	dragon->hurt(DragonAttack::CreateWithPos(Vec2(-500, -500), 50, DragonValues._normalAttack)); break;
-		case EventKeyboard::KeyCode::KEY_C:	knight->hurt(DragonAttack::CreateWithPos(Vec2(-500, -500), 50, DragonValues._normalAttack)); break;
-		case EventKeyboard::KeyCode::KEY_V:	piglet->dyingMode(Vec2(-500, -500), 1); break;
-		case EventKeyboard::KeyCode::KEY_B:	piglet->hurt(DragonAttack::CreateWithPos(Vec2(-500, -500), 50, DragonValues._normalAttack)); break;
-		case EventKeyboard::KeyCode::KEY_N: piglet->idleMode(); break;
+		case EventKeyboard::KeyCode::KEY_Z:da = MageIceSpikes::CreateWithPos(Vec2(0, 0), 50, MageValues._specialAttack, dragon); 
+			mage->addChild(da); 
+			mage->hurt(da); break;
+		case EventKeyboard::KeyCode::KEY_X:db = ArcherSpecialAttack::CreateWithPos(Vec2(0, 0), 50, ArcherValues._specialAttack, piglet);
+			dragon->addChild(db);
+			dragon->hurt(db);  break;
+		case EventKeyboard::KeyCode::KEY_C:dc = DragonAttack::CreateWithPos(Vec2(0, 0), 50, DragonValues._normalAttack);
+			knight->addChild(dc);
+			knight->hurt(dc);  break;
+		case EventKeyboard::KeyCode::KEY_V:dd = ArcherNormalAttack::CreateWithPos(Vec2(0, 0), 50, BossValues._normalAttack, dragon);
+			piglet->addChild(dd); 
+			piglet->hurt(dd); break;
+		case EventKeyboard::KeyCode::KEY_B: //da = DragonAttack::CreateWithPos(Vec2(0,0), 50, DragonValues._normalAttack);
+			//piglet->hurt(DragonAttack::CreateWithPos(Vec2(110,110), 50, DragonValues._normalAttack)); 
+			break;
+		case EventKeyboard::KeyCode::KEY_N: piglet->idleMode();
+			knight->idleMode(); dragon->idleMode(); mage->idleMode(); break;
 		case EventKeyboard::KeyCode::KEY_M:	knight->idleMode(); break;
 		case EventKeyboard::KeyCode::KEY_COMMA:	piglet->idleMode(); break;
 			//dragon->dyingMode(Vec2(-500, 0), 100);

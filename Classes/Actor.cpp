@@ -277,6 +277,7 @@ float Actor::hurt(BasicCollider* collider, bool dirKnockMode)
 			dyingMode(getPosTable(collider), knock);
 		}
 		auto blood = _hpCounter->showBloodLossNum(damage, this, critical);
+		blood->setCameraMask(995);
 		addEffect(blood);
 		return damage;
 	}

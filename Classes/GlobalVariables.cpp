@@ -37,6 +37,7 @@ struct MageProperty_d MageProperty;
 struct ReSkin_d ReSkin;
 
 
+
 void gv_init()
 {
 	camera = Camera::create();
