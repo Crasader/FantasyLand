@@ -486,7 +486,7 @@ void GameMaster::showWarning()
 		experimental::AudioEngine::play2d("audios/effects/boss/boss.mp3", false, 1);
 	};
 
-	//warning_logo->runAction(Sequence::create(DelayTime::create(0.5), EaseSineOut::create(Blink::create(1, 5, 3)), CallFunc::create(showdialog)));
+	warning_logo->runAction(Sequence::create(DelayTime::create(0.5), EaseSineOut::create(Blink::create(1, 5)), CallFunc::create(showdialog)));
 	warning->addChild(warning_logo);
 
 	warning->setScale(0.5);
@@ -569,7 +569,7 @@ void GameMaster::showDialog()
 		Director::getInstance()->getScheduler()->unscheduleScriptEntry(scheduleid);
 	};
 
-	//scheduleid = Director::getInstance()->getScheduler()->scheduleScriptFunc(exitDialog, 3, false);
+	//scheduleid = Director::getInstance()->getScheduler()->schedule(exitDialog, 3.0f, false,"lamaba");
 
 	Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGB565);
 }

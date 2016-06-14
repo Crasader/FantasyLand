@@ -19,7 +19,6 @@ bool MainMenuScene::init()
 
 	addBackground();
 	addButton();
-	enableTouch();
 
 	return true;
 }
@@ -330,9 +329,9 @@ void MainMenuScene::addButton()
 	{
 		Director::getInstance()->replaceScene(BattleScene::createScene());
 	});
-	starButton->addTouchEventListener([](Ref*, ui::Widget::TouchEventType)
+	starButton->addTouchEventListener([this](Ref*, ui::Widget::TouchEventType)
 	{
-
+		addAboutLayer();
 	});
 	settingButton->addTouchEventListener([](Ref*, ui::Widget::TouchEventType)
 	{
@@ -349,7 +348,18 @@ void MainMenuScene::addButton()
 	addChild(exitButton);
 }
 
-void MainMenuScene::enableTouch()
+void MainMenuScene::addAboutLayer()
 {
+	setColor(Color3B::GRAY);
+	_aboutLayer = Layer::create();
+	_aboutLayer->setColor(Color3B::GRAY);
+	addChild(_aboutLayer);
+}
 
+void MainMenuScene::removeAboutLayer()
+{
+	setColor(Color3B::WHITE);
+
+
+	removeChild(_aboutLayer);
 }
