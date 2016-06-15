@@ -554,8 +554,8 @@ void Actor::attackUpdate(float dt)
 			struct MESSAGE_SPECIAL_PERSPECTIVE messageParam = {0.2, _myPos, _specialSlowTime, this};
 			MessageDispatchCenter::getInstance()->dispatchMessage(SPECIAL_PERSPECTIVE, this);
 //			MDC->dispatchMessage(MessageType::SPECIAL_PERSPECTIVE, messageParam);
-			auto attackAction = Sequence::create(_action.at("specialattack1")->clone(),
-				CallFunc::create(createCol), _action.at("specialattack2")->clone(),
+			auto attackAction = Sequence::create(_action.at("attack1")->clone(),
+				CallFunc::create(createCol), _action.at("attack2")->clone(),
 				CallFunc::create(playIdle), NULL);
 			_sprite3d->stopAction(_curAnimation3d);
 			_sprite3d->runAction(attackAction);
@@ -568,7 +568,7 @@ void Actor::attackUpdate(float dt)
 void Actor::walkUpdate(float dt) 
 {
 	//Walking state, switch to attack state when target in range
-	if (_target&&_target->isAlive()) 
+	if (_target&&_target->_isalive) 
 	{
 		auto attackDistance = _attackRange + _target->_radius - 1;
 		auto p1 = _myPos;
