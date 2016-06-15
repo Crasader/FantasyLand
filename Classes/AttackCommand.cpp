@@ -33,9 +33,8 @@ void solveAttacks(float dt)
 		}
 		else if (attack->getMask() == EnumRaceType::MONSTER) {
 			//if heroes attack, then lets check monsters
-			for (auto hkey = HeroManager.end(); hkey != HeroManager.begin(); --hkey) {
+			for (auto hero:HeroManager) {
 				//check distance first
-				Actor* hero = *hkey;
 				Vec2 hpos = hero->getMyPos();
 				auto dist = ccpDistance(getPosTable(attack), hpos);
 				if (dist < (attack->getMaxRange() + hero->getRadius()) && (dist > attack->getMinRange())) {
