@@ -74,7 +74,6 @@ BasicCollider::BasicCollider()
 	_speed = 0;	//travel speed
 	_criticalChance = 0;
 	this->setCameraMask(943);
-	
 }
 
 BasicCollider* BasicCollider::CreateWithPos(Vec2 pos, int facing, struct attack_d attackInfo)
@@ -117,8 +116,8 @@ void BasicCollider::hurtEffect(Actor* target)
 {
 	auto hurtAction = Animate::create(animationCache->getAnimation("hurtAnimation"));
 	auto hurtEffect = BillBoard::create();
-	hurtEffect->setScale(150);
-	hurtEffect->runAction(Sequence::create(hurtAction, RemoveSelf::create()));
+	hurtEffect->setScale(1.5);
+	hurtEffect->runAction(Sequence::create(hurtAction, RemoveSelf::create(), NULL));
 	hurtEffect->setPosition3D(Vec3(0, 0, 50));
 	target->addChild(hurtEffect);
 	log("Animation played");
@@ -292,7 +291,7 @@ void MageNormalAttack::onTimeOut()
 {
 	_part1->stopSystem();
 	_part2->stopSystem();
-	runAction(Sequence::create(DelayTime::create(1), RemoveSelf::create()));
+	runAction(Sequence::create(DelayTime::create(1), RemoveSelf::create(), NULL));
 	auto pm = ParticleManager::getInstance()->getPlistData("magic");
 	auto magic = ParticleSystemQuad::create(pm);
 	auto magicf = SpriteFrameCache::getInstance()->getSpriteFrameByName("particle.png");

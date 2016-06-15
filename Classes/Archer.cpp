@@ -7,23 +7,12 @@ struct ArcherValues;
 
 Archer::Archer()
 {
-	
-	//idleMode();
-	_AIEnabled = true;
-	//this update do not do AI
-	scheduleUpdate();
-	
+	//this update do not do AI	
 	//auto specialAttack = [&]() {
 	//	if (_specialAttackChance == 1)
 	//		return;
 	//	_specialAttackChance = 1;
 	//};
-	MessageDispatchCenter::getInstance()->registerMessage(SPECIAL_ARCHER, [](Actor * data)
-	{
-		if (data->getSpecialAttackChance() == 1)
-			return;
-		data->setSpecialAttackChance(1);
-	});
 };
 
 bool Archer::init()
@@ -40,7 +29,17 @@ bool Archer::init()
 	}
 
 	init3D();
-	initActions();
+	initActions();    
+	
+	idleMode();
+	_AIEnabled = true;
+	scheduleUpdateWithPriority(0);
+	MessageDispatchCenter::getInstance()->registerMessage(SPECIAL_ARCHER, [](Actor * data)
+	{
+		if (data->getSpecialAttackChance() == 1)
+			return;
+		data->setSpecialAttackChance(1);
+	});
 	return true;
 }
 

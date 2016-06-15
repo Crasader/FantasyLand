@@ -2,8 +2,7 @@
 
 Piglet::Piglet()
 {
-	_AIEnabled = true;
-	scheduleUpdateWithPriority(0.5);
+	
 };
 
 bool Piglet::init()
@@ -16,6 +15,10 @@ bool Piglet::init()
 	copyData_Piglet();
 	init3D();
 	initActions();
+	
+	_AIEnabled = true;
+	scheduleUpdateWithPriority(1);
+
 	return true;
 }
 

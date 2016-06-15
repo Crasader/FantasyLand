@@ -4,8 +4,7 @@
 
 Rat::Rat()
 {
-	_AIEnabled = true;
-	scheduleUpdateWithPriority(0.5);
+	
 }
 
 bool Rat::init()
@@ -16,6 +15,10 @@ bool Rat::init()
 	copyData_Rat();
 	init3D();
 	initActions();
+	
+	_AIEnabled = true;
+	scheduleUpdateWithPriority(1);
+
 	return true;
 }
 

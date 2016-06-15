@@ -5,19 +5,7 @@
 
 Mage::Mage()
 {
-	_AIEnabled = true;
-	scheduleUpdateWithPriority(0);
-	auto specialAttack = [&]() {
-		if (_specialAttackChance == 1)
-			return;
-		_specialAttackChance = 1;
-	};
-	MessageDispatchCenter::getInstance()->registerMessage(MessageType::SPECIAL_MAGE, [](Actor* data)
-	{
-		if (data->getSpecialAttackChance() == 1)
-			return;
-		data->setSpecialAttackChance(1);
-	});
+	
 }
 
 bool Mage::init()
@@ -38,6 +26,21 @@ bool Mage::init()
 
 	init3D();
 	initActions();
+	
+	_AIEnabled = true;
+	scheduleUpdateWithPriority(0);
+	auto specialAttack = [&]() {
+		if (_specialAttackChance == 1)
+			return;
+		_specialAttackChance = 1;
+	};
+	MessageDispatchCenter::getInstance()->registerMessage(MessageType::SPECIAL_MAGE, [](Actor* data)
+	{
+		if (data->getSpecialAttackChance() == 1)
+			return;
+		data->setSpecialAttackChance(1);
+	});
+
 	return true;
 }
 
