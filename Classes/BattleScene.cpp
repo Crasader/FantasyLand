@@ -38,7 +38,7 @@ bool BattleScene::init()
 	Layer::init();
 	currentLayer = this;
 
-	isDebug = true;
+	isDebug = false;
 	if (isDebug)
 	{
 		//add camera
@@ -53,6 +53,8 @@ bool BattleScene::init()
 		//add background
 		auto battlefield = Sprite3D::create("battleScene/changjing.c3b");
 		battlefield->setCameraMask(2);
+		battlefield->setPosition3D(Vec3(-2300, -1000, 0));
+		battlefield->setRotation3D(Vec3(90, 0, 0));
 		addChild(battlefield);
 
 
@@ -87,7 +89,7 @@ bool BattleScene::init()
 	});
 	MessageDispatchCenter::getInstance()->registerMessage(MessageType::SPECIAL_PERSPECTIVE, [](Actor *heroActor)
 	{
-
+		
 	});
 
 	controlCamera();
@@ -146,7 +148,6 @@ void BattleScene::createBackground()
 	currentLayer->addChild(spriteBg);
 	spriteBg->setScale(2.65);
 	spriteBg->setPosition3D(Vec3(-2300, -1000, 0));
-	spriteBg->setPosition3D(Vec3::ZERO);
 	spriteBg->setRotation3D(Vec3(90, 0, 0));
 	spriteBg->setCameraMask(2);
 	//No Water
