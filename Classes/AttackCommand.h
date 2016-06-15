@@ -201,3 +201,5 @@ private:
 
 void solveAttacks(float dt);
 
+extern std::vector<BasicCollider*> AttackManager;
+

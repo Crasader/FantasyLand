@@ -17,6 +17,11 @@ Mage* mage;
 Archer* dragon;
 Slime* piglet;
 Rat* knight;
+MageIceSpikes *da;
+ArcherSpecialAttack* db;
+DragonAttack* dc;
+ArcherNormalAttack* dd;
+
 //DEBUG
 
 Scene* BattleScene::createScene()
@@ -44,20 +49,14 @@ bool BattleScene::init()
 		addChild(camera);
 		controlCamera();
 
-		specialCamera= Camera::createPerspective(60, VisibleSize.width / VisibleSize.height, 10, 4000);
-
 		//add background
 		auto battlefield = Sprite3D::create("battleScene/changjing.c3b");
 		battlefield->setCameraMask(2);
 		addChild(battlefield);
 
-		//gameMaster = new GameMaster();
-
 		debug();
-
-		//scheduleUpdate();
+		scheduleUpdate();
 		setCameraMask(2, true);
-		
 		return true;
 	}
 
@@ -72,7 +71,7 @@ bool BattleScene::init()
 	enableTouch();
 	createBackground();
 	initUILayer();
-	//gameMaster = GameMaster::create();
+	gameMaster = GameMaster::create();
 	setCamera();
 	//scheduler->schedule(gameController, this, 0, false, "gameController");
 
@@ -86,11 +85,13 @@ bool BattleScene::init()
 	});
 	MessageDispatchCenter::getInstance()->registerMessage(MessageType::SPECIAL_PERSPECTIVE, [](Actor *heroActor)
 	{
-		//todo
+
 	});
 
 	controlCamera();
-
+	setCameraMask(2);
+	scheduleUpdate();
+	//gameController(0.1);
 	return true;
 }
 
@@ -110,14 +111,13 @@ void BattleScene::moveCamera(float dt)
 
 	auto cameraPosition = getPosTable(camera);
 	auto focusPoint = getFocusPointOfHeros();
-	//if (/*specialCamera->isBrushValid()?*/)
+	//if (specialCamera->isBrushValid()/*?*/)
 	//{
 	//	auto position = ccpLerp(cameraPosition, ccp(specialCamera->getPosition().x, (cameraOffset.y + focusPoint.y - VisibleSize.height * 3 / 4)*0.5), 5 * dt);
 	//	camera->setPosition(position);
 	//	camera->lookAt(Vec3(position.x, specialCamera->getPosition().y, 50.0), Vec3(0.0, 1.0, 0.0));
 	//}
-	//else 
-	if (HeroManager.size() > 0)
+	/*else */if (HeroManager.size() > 0)
 	{
 		auto temp = ccpLerp(cameraPosition, ccp(focusPoint.x + cameraOffset.x, cameraOffset.y + focusPoint.y - VisibleSize.height * 3 / 4), 2 * dt);
 		auto position = Vec3(temp.x, temp.y, VisibleSize.height / 2 - 100);
@@ -146,18 +146,15 @@ void BattleScene::createBackground()
 	spriteBg->setPosition3D(Vec3(-2300, -1000, 0));
 	spriteBg->setPosition3D(Vec3::ZERO);
 	spriteBg->setRotation3D(Vec3(90, 0, 0));
-
-	//auto water = Water::create("shader3D/water.png", "shader3D/wave1.jpg", "shader3D/18.jpg", { width = 5500, height = 400 }, 0.77, 0.3797, 1.2);
-	//currentLayer->addChild(water);
-	//water->setPosition3D(V3(-3500, -580, -110));
-	//water->setAnchorPoint(0, 0);
-	//water->setGlobalZOrder(0);
+	spriteBg->setCameraMask(2);
+	//No Water
 }
 
 void BattleScene::setCamera()
 {
 	camera = Camera::createPerspective(60.0, VisibleSize.width / VisibleSize.height, 10.0, 4000.0);
 	camera->setGlobalZOrder(10);
+	camera->setCameraFlag(CameraFlag::USER1);
 	currentLayer->addChild(camera);
 
 	for (auto it : HeroManager)
@@ -171,7 +168,7 @@ void BattleScene::setCamera()
 
 void BattleScene::gameController(float dt)
 {
-	gameMaster->update(dt);
+//	gameMaster->update(dt);
 	collisionDetect(dt);
 	solveAttacks(dt);
 	moveCamera(dt);
@@ -308,12 +305,23 @@ void BattleScene::controlCamera()
 		case EventKeyboard::KeyCode::KEY_D:--cameraVelocity.x; break;
 		case EventKeyboard::KeyCode::KEY_Q:++cameraVelocity.z; break;
 		case EventKeyboard::KeyCode::KEY_E:--cameraVelocity.z; break;
-		case EventKeyboard::KeyCode::KEY_Z:	mage->hurt(DragonAttack::CreateWithPos(Vec2(-500, -500), 50, DragonValues._normalAttack)); break;
-		case EventKeyboard::KeyCode::KEY_X:	dragon->hurt(DragonAttack::CreateWithPos(Vec2(-500, -500), 50, DragonValues._normalAttack)); break;
-		case EventKeyboard::KeyCode::KEY_C:	knight->hurt(DragonAttack::CreateWithPos(Vec2(-500, -500), 50, DragonValues._normalAttack)); break;
-		case EventKeyboard::KeyCode::KEY_V:	piglet->dyingMode(Vec2(-500, -500), 1); break;
-		case EventKeyboard::KeyCode::KEY_B:	piglet->hurt(DragonAttack::CreateWithPos(Vec2(-500,-500),50,DragonValues._normalAttack)); break;
-		case EventKeyboard::KeyCode::KEY_N: piglet->idleMode(); break;
+		case EventKeyboard::KeyCode::KEY_Z:da = MageIceSpikes::CreateWithPos(Vec2(0, 0), 50, MageValues._specialAttack, dragon); 
+			mage->addChild(da); 
+			mage->hurt(da); break;
+		case EventKeyboard::KeyCode::KEY_X:db = ArcherSpecialAttack::CreateWithPos(Vec2(0, 0), 50, ArcherValues._specialAttack, piglet);
+			dragon->addChild(db);
+			dragon->hurt(db);  break;
+		case EventKeyboard::KeyCode::KEY_C:dc = DragonAttack::CreateWithPos(Vec2(0, 0), 50, DragonValues._normalAttack);
+			knight->addChild(dc);
+			knight->hurt(dc);  break;
+		case EventKeyboard::KeyCode::KEY_V:dd = ArcherNormalAttack::CreateWithPos(Vec2(0, 0), 50, BossValues._normalAttack, dragon);
+			piglet->addChild(dd); 
+			piglet->hurt(dd); break;
+		case EventKeyboard::KeyCode::KEY_B: //da = DragonAttack::CreateWithPos(Vec2(0,0), 50, DragonValues._normalAttack);
+			//piglet->hurt(DragonAttack::CreateWithPos(Vec2(110,110), 50, DragonValues._normalAttack)); 
+			break;
+		case EventKeyboard::KeyCode::KEY_N: piglet->idleMode();
+			knight->idleMode(); dragon->idleMode(); mage->idleMode(); break;
 		case EventKeyboard::KeyCode::KEY_M:	knight->idleMode(); break;
 		case EventKeyboard::KeyCode::KEY_COMMA:	piglet->idleMode(); break;
 			//dragon->dyingMode(Vec2(-500, 0), 100);
@@ -329,7 +337,7 @@ void BattleScene::debug()
 {
 	//the camera->position is Vec3(-500, 80, 0)
 	mage = Mage::create();
-	mage->setPosition3D(Vec3(-500, 0,-500));
+	mage->setPosition3D(Vec3(-500, 0, -500));
 	mage->setRotation3D(Vec3(-90, 0, 0));
 	currentLayer->addChild(mage);
 	dragon = Archer::create();
