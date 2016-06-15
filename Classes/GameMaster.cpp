@@ -27,15 +27,21 @@ bool GameMaster::init()
 	_totaltime = 0;
 	_logicFrq = 1.0;
 	AddHeros();
-	AddHeros();
+	addMonsters();
 	stage = 0;
-
+	
 	srand(time(NULL));
 	for (int i = 1; i <= 4; i++)
 		randomshowMonster(true);
 
 	stage = 1;
 	return true;
+}
+
+GameMaster::GameMaster()
+{
+	
+	init();
 }
 
 void GameMaster::update(float dt)
@@ -194,7 +200,6 @@ void GameMaster::AddHeros()
 	knight->idleMode();
 	HeroManager.push_back(knight);
 	
-	
 	auto mage = Mage::create();
 	mage->setPosition(battleSiteX[1], 100);
 	currentLayer->addChild(mage);
@@ -273,7 +278,7 @@ void GameMaster::showDragon(bool isFront)
 		dragon->reset();
 
 		auto appearPos = getFocusPointOfHeros();
-		auto randomvarX = random()*0.2 + 1;
+		auto randomvarX = CCRANDOM_0_1()*0.2 + 1;
 
 		if( stage == 0 )
 		{
@@ -294,7 +299,7 @@ void GameMaster::showDragon(bool isFront)
 			}
 		}
 
-		auto  randomvarY = 2 * random() - 1;
+		auto  randomvarY = 2 * CCRANDOM_0_1() - 1;
 		appearPos.y = appearPos.y + randomvarY*distanceWithHeroY;
 		dragon->setPosition(appearPos);
 		dragon->getMyPos() = appearPos;
@@ -314,7 +319,7 @@ void GameMaster::showPiglet(bool isFront)
 		piglet->reset();
 
 		auto appearPos = getFocusPointOfHeros();
-		auto randomvarX = random()*0.2 + 1;
+		auto randomvarX = CCRANDOM_0_1()*0.2 + 1;
 
 		if (stage == 0)
 		{
@@ -335,7 +340,7 @@ void GameMaster::showPiglet(bool isFront)
 			}
 		}
 
-		auto  randomvarY = 2 * random() - 1;
+		auto  randomvarY = 2 * CCRANDOM_0_1() - 1;
 		appearPos.y = appearPos.y + randomvarY*distanceWithHeroY;
 		piglet->setPosition(appearPos);
 		piglet->getMyPos() = appearPos;
@@ -376,7 +381,7 @@ void GameMaster::showRat(bool isFront)
 
 void GameMaster::randomshowMonster(bool isFront)
 {
-	auto random_var = rand();
+	auto random_var = CCRANDOM_0_1();
 
 	if( random_var < 0.15 )
 	{
@@ -425,11 +430,11 @@ void GameMaster::showBoss()
 void GameMaster::jumpInto(Actor* obj, bool isFront)
 {
 	auto appearPos = getFocusPointOfHeros();
-	auto randomvar = 2 * rand() - 1;
+	float randomvar = 2 * CCRANDOM_0_1() - 1;
 
 	if (isFront)
 	{
-		appearPos.x = appearPos.x + frontDistanceWithHeroX + randomvar*distanceWithHeroX;
+		appearPos.x += frontDistanceWithHeroX + randomvar*distanceWithHeroX;
 	}
 	else
 	{
@@ -452,19 +457,23 @@ void GameMaster::jumpInto(Actor* obj, bool isFront)
 
 	if ( stage == 0 )
 	{
-		obj->runAction(Sequence::create(DelayTime::create(rand()), CallFunc::create(visibleMonster), JumpBy3D::create(0.5, Vec3(-200 * (rand()*0.6 + 0.7), -400 * (rand()*0.4 + 0.8), 0), 150, 1), CallFunc::create(enableAI)));
+		obj->setAIEnabled(true);
+		obj->runAction(JumpBy3D::create(0.5, Vec3(-200 * (CCRANDOM_0_1()*0.6 + 0.7), -400 * (CCRANDOM_0_1()*0.4 + 0.8), 0), 150, 1));
+		obj->runAction(DelayTime::create(CCRANDOM_0_1()));
+		obj->setVisible(true);
+		//obj->runAction(Sequence::create(DelayTime::create(CCRANDOM_0_1()), CallFunc::create(visibleMonster), JumpBy3D::create(0.5, Vec3(-200 * (CCRANDOM_0_1()*0.6 + 0.7), -400 * (CCRANDOM_0_1()*0.4 + 0.8), 0), 150, 1), CallFunc::create(enableAI)));
 		obj->setFacing(135);
 	}
 	else
 	{
 		if (isFront)
 		{
-			obj->runAction(Sequence::create(DelayTime::create(rand()), CallFunc::create(visibleMonster), JumpBy3D::create(0.5, Vec3(0, -400 * (rand()*0.4 + 0.8), 0), 150, 1), CallFunc::create(enableAI)));
+			obj->runAction(Sequence::create(DelayTime::create(CCRANDOM_0_1()), CallFunc::create(visibleMonster), JumpBy3D::create(0.5, Vec3(0, -400 * (rand()*0.4 + 0.8), 0), 150, 1), CallFunc::create(enableAI)));
 			obj->setFacing(135);
 		}
 		else
 		{
-			obj->runAction(Sequence::create(DelayTime::create(rand()), CallFunc::create(visibleMonster), JumpBy3D::create(0.5, Vec3((200 * rand()*0.6 + 0.7), -400 * (rand()*0.4 + 0.8), 0), 150, 1), CallFunc::create(enableAI)));
+			obj->runAction(Sequence::create(DelayTime::create(CCRANDOM_0_1()), CallFunc::create(visibleMonster), JumpBy3D::create(0.5, Vec3((200 * rand()*0.6 + 0.7), -400 * (rand()*0.4 + 0.8), 0), 150, 1), CallFunc::create(enableAI)));
 			obj->setFacing(45);
 		}
 	}

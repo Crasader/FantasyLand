@@ -2,8 +2,10 @@
 #include "Helper.h"
 #include "AudioEngine.h"
 
+class GameMaster;
+
 extern Layer * currentLayer;
-extern class GameMaster *gameMaster;
+extern GameMaster *gameMaster;
 extern class BattleFieldUI *uiLayer;
 
 void gv_init();

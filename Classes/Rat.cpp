@@ -122,7 +122,9 @@ void Rat::dyingMode(Vec2 knockSource, int knockAmount)
 	playAnimation("dead");
 	playDyingEffects();
 
-	remove(MonsterManager.begin(), MonsterManager.end(), this);
+	std::vector<Actor *>::iterator it = std::find(MonsterManager.begin(), MonsterManager.end(), this);
+	MonsterManager.erase(it);
+	
 	auto recycle = [&]() {
 		removeFromParent();
 		if (gameMaster != NULL)

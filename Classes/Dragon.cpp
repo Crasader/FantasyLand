@@ -88,7 +88,8 @@ void Dragon::dyingMode(Vec2 knockSource, int knockAmount)
 	}
 	_AIEnabled = false;
 
-	remove(MonsterManager.begin(), MonsterManager.end(), this);
+	std::vector<Actor *>::iterator it = std::find(MonsterManager.begin(), MonsterManager.end(), this);
+	MonsterManager.erase(it);
 
 	auto recycle = [&]() {
 		setVisible(false);

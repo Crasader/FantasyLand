@@ -71,7 +71,7 @@ bool BattleScene::init()
 	enableTouch();
 	createBackground();
 	initUILayer();
-	gameMaster = GameMaster::create();
+	gameMaster =  new GameMaster();
 	setCamera();
 	//scheduler->schedule(gameController, this, 0, false, "gameController");
 

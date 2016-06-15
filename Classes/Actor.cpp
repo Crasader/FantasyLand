@@ -8,6 +8,8 @@
 
 bool Actor::init() 
 {
+	Node::init();
+
 	this->setCascadeColorEnabled(true);
 	_action.clear();
 	copyData();
@@ -358,7 +360,9 @@ void Actor::dyingMode(Vec2 knockSource, int knockAmount)
 	playDyingEffects();
 	if (_racetype == EnumRaceType::HERO) {
 		uiLayer->heroDead(this);
-		remove(HeroManager.begin(), HeroManager.end(), this);
+
+		std::vector<Actor *>::iterator it = std::find(HeroManager.begin(), HeroManager.end(), this);
+		HeroManager.erase(it);
 		runAction(Sequence::create(DelayTime::create(3), 
 			MoveBy::create(1.0, Vec3(0, 0, -50)), 
 			RemoveSelf::create(), NULL));
@@ -369,7 +373,8 @@ void Actor::dyingMode(Vec2 knockSource, int knockAmount)
         //CallFunc::create(recycle)
 	}
 	else {
-		remove(MonsterManager.begin(), MonsterManager.end(), this);
+		std::vector<Actor *>::iterator it = std::find(MonsterManager.begin(), MonsterManager.end(), this);
+		HeroManager.erase(it);
 		auto recycle = [&]() {
 			setVisible(false);
 			getPoolByName(_name).push_back(this);	
@@ -563,7 +568,8 @@ void Actor::attackUpdate(float dt)
 void Actor::walkUpdate(float dt) 
 {
 	//Walking state, switch to attack state when target in range
-	if (_target&&_target->_isalive) {
+	if (_target&&_target->isAlive()) 
+	{
 		auto attackDistance = _attackRange + _target->_radius - 1;
 		auto p1 = _myPos;
 		auto p2 = _target->_myPos;

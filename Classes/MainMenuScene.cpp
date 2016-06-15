@@ -325,8 +325,12 @@ void MainMenuScene::addButton()
 	settingButton->setPosition(Vec2(VisibleSize.width - 100, VisibleSize.height - 50));
 	exitButton->setPosition(Vec2(VisibleSize.width - 50, VisibleSize.height - 50));
 
-	startButton->addTouchEventListener([](Ref*, ui::Widget::TouchEventType)
+	isTouchedStart = false;
+	startButton->addTouchEventListener([startButton,this](Ref*, ui::Widget::TouchEventType)
 	{
+		if (isTouchedStart)
+			return;
+		isTouchedStart = true;
 		Director::getInstance()->replaceScene(BattleScene::createScene());
 	});
 	starButton->addTouchEventListener([this](Ref*, ui::Widget::TouchEventType)
