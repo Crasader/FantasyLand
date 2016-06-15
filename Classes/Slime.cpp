@@ -11,6 +11,7 @@ bool Slime::init()
 	Actor::init();
 	//copyTable(ActorCommonValues, this);
 	//copyTable(SlimeValues, this);
+	copyData_Slime();
 	_angryFace = false;
 	init3D();
 	initActions();
@@ -23,6 +24,7 @@ void Slime::reset()
 {
 	//copyTable(ActorCommonValues, this);
 	//copyTable(SlimeValues, this);
+	copyData_Slime();
 	bool allDead;
 	_findEnemy(_racetype, allDead);
 	walkMode();

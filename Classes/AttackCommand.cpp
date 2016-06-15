@@ -17,7 +17,7 @@ void solveAttacks(float dt)
 		auto apos = getPosTable(attack);
 		if (attack->getMask() == EnumRaceType::HERO) {
 			//if heroes attack, then lets check monsters
-			for (auto j = MonsterManager.size() - 1; j >= 0; --j) {
+			for (int j = MonsterManager.size() - 1; j >= 0; --j) {
 			//for (auto mkey = MonsterManager.rbegin(); mkey != MonsterManager.rend(); ++mkey) {
 				//check distance first
 				auto monster = MonsterManager[j];
@@ -34,7 +34,7 @@ void solveAttacks(float dt)
 		}
 		else if (attack->getMask() == EnumRaceType::MONSTER) {
 			//if heroes attack, then lets check monsters
-			for (auto j = HeroManager.size() - 1; j >= 0; --j) {
+			for (int j = HeroManager.size() - 1; j >= 0; --j) {
 			//for (auto hkey = HeroManager.end(); hkey != HeroManager.begin(); --hkey) {
 				//check distance first
 				auto hero = HeroManager[j];

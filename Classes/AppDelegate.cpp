@@ -47,7 +47,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
 	gv_init();
     // create a scene. it's an autorelease object
-    auto scene = ChooseRoleScene::createScene();
+    auto scene = LoadingScene::createScene();
 
     // run
     director->runWithScene(scene);

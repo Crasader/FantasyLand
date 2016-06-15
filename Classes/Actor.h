@@ -98,32 +98,32 @@ protected:
 	
 	//target variables
 	float _targetFacing;//direction the actor Wants to turn to
-	Actor* _target;	//the enemy actor;
+	Actor* _target = nullptr;	//the enemy actor;
 	Vec2 _myPos;
 	float _angry;
 	float _angryMax;
 
 	//other variables
-	HPCounter* _hpCounter;
-	Node* _effectNode;
+	HPCounter* _hpCounter = nullptr;
+	Node* _effectNode = nullptr;
 	int _monsterHeight;
 	int _heroHeight;
 	ParticleSystem* _puff = nullptr;
-	Sprite* _circle;
+	Sprite* _circle = nullptr;
 	Map<std::string, ActionInterval*> _action;
 
 	int _useWeaponId;
 	int _useArmourId;
 	int _useHelmetId;
-	ProgressTimer* _bloodBar;
-	ProgressTimer* _bloodBarClone;
-	Sprite* _avatar;
+	ProgressTimer* _bloodBar = nullptr;
+	ProgressTimer* _bloodBarClone = nullptr;
+	Sprite* _avatar = nullptr;
 
 	//
 	enum EnumRaceType _racetype;	//type of the actor
 	enum EnumStateType _statetype;	//AI state machine
-	Sprite* _sprite;
-    Sprite3D* _sprite3d;	//place to hold 3d model
+	Sprite* _sprite = nullptr;
+    Sprite3D* _sprite3d = nullptr;	//place to hold 3d model
 
     float _radius;	//actor collider size
 	float _shadowSize;	//weight of the role, it affects collision
