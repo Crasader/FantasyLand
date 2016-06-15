@@ -17,9 +17,10 @@ void solveAttacks(float dt)
 		auto apos = getPosTable(attack);
 		if (attack->getMask() == EnumRaceType::HERO) {
 			//if heroes attack, then lets check monsters
-			for (auto mkey = MonsterManager.rbegin(); mkey != MonsterManager.rend(); ++mkey) {
+			for (auto j = MonsterManager.size() - 1; j >= 0; --j) {
+			//for (auto mkey = MonsterManager.rbegin(); mkey != MonsterManager.rend(); ++mkey) {
 				//check distance first
-				Actor* monster = *mkey;
+				auto monster = MonsterManager[j];
 				Vec2 mpos = monster->getMyPos();
 				auto dist = ccpDistance(apos, mpos);
 				if (dist < (attack->getMaxRange() + monster->getRadius()) && (dist > attack->getMinRange())) {
@@ -33,9 +34,10 @@ void solveAttacks(float dt)
 		}
 		else if (attack->getMask() == EnumRaceType::MONSTER) {
 			//if heroes attack, then lets check monsters
-			for (auto hkey = HeroManager.end(); hkey != HeroManager.begin(); --hkey) {
+			for (auto j = HeroManager.size() - 1; j >= 0; --j) {
+			//for (auto hkey = HeroManager.end(); hkey != HeroManager.begin(); --hkey) {
 				//check distance first
-				Actor* hero = *hkey;
+				auto hero = HeroManager[j];
 				Vec2 hpos = hero->getMyPos();
 				auto dist = ccpDistance(getPosTable(attack), hpos);
 				if (dist < (attack->getMaxRange() + hero->getRadius()) && (dist > attack->getMinRange())) {
