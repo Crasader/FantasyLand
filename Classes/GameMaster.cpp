@@ -40,7 +40,6 @@ bool GameMaster::init()
 
 GameMaster::GameMaster()
 {
-	
 	init();
 }
 
