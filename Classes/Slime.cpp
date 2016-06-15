@@ -1,9 +1,9 @@
 ﻿#include "Slime.h"
+#include "JumpBy3D.h"
 
 Slime::Slime()
 {
-	_AIEnabled = true;
-	scheduleUpdateWithPriority(1);	
+	_AIEnabled = true;	
 }
 
 bool Slime::init()
@@ -14,6 +14,7 @@ bool Slime::init()
 	_angryFace = false;
 	init3D();
 	initActions();
+	scheduleUpdateWithPriority(1);
 	play3DAnim();
 	return true;
 }
@@ -156,7 +157,7 @@ void Slime::initActions()
 	auto walk = Spawn::create(
 		Sequence::create(
 			DelayTime::create(dur / 8),
-			JumpTiles3D::create(dur * 7 / 8, Size(0,0), 30, 1),
+			JumpBy3D::create(dur * 7 / 8, Vec3(0,0,0), 30, 1),
 			NULL
 			),
 		Sequence::create(
@@ -178,12 +179,12 @@ void Slime::initActions()
 	idle->retain();
 	auto attack1 = Spawn::create(
 		MoveBy::create(dur / 2, Vec3(0, 0, 20)),
-		RotateBy::create(dur * 3 / 4, Vec3(-70, 0, 0)),
+		RotateBy::create(dur / 2, Vec3(70, 0, 0)),
 		EaseBounceOut::create(MoveTo::create(dur / 2, Vec2(40, 0))),
 		NULL
 		);
 	auto attack2 = Spawn::create(
-		MoveBy::create(dur / 2, Vec3(0, 0, 0)),
+		MoveTo::create(dur, Vec3(0, 0, 0)),
 		RotateBy::create(dur * 3 / 4, Vec3(-70, 0, 0)),
 		EaseBounceOut::create(MoveTo::create(dur, Vec2(0, 0))),
 		NULL
@@ -192,7 +193,7 @@ void Slime::initActions()
 	attack2->retain();
 	auto die = Spawn::create(
 		Sequence::create(
-			JumpBy::create(dur / 2, Vec2(0, 0), 30, 1),
+			JumpBy3D::create(dur / 2, Vec3(0, 0, 0), 30, 1),
 			ScaleBy::create(dur, 2, 2, 0.1),
 			NULL
 			),
