@@ -430,11 +430,14 @@ Actor* Actor::_findEnemy(EnumRaceType HeroOrMonster, bool &allDead)
 		manager = &HeroManager;
 	else
 		manager = &MonsterManager;
-	for (auto val = manager->begin(); val != manager->end(); ++val) {
+	for (auto val = manager->begin(); val != manager->end(); ++val) 
+	{
 		auto temp = *val;
 		auto dis = ccpDistance(_myPos, temp->_myPos);
-		if (temp->_isalive) {
-			if (dis < shortest) {
+		if (temp->_isalive) 
+		{
+			if (dis < shortest)
+			{
 				shortest = dis;
 				target = temp;
 			}
