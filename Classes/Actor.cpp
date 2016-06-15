@@ -81,7 +81,8 @@ void Actor::addEffect(Node* effect)
 	if (_racetype != EnumRaceType::MONSTER)
 		effect->setPositionZ(this->getPositionZ() + _heroHeight);
 	else
-		effect->setPositionZ(this->getPositionZ() + _heroHeight);
+		effect->setPositionZ(this->getPositionZ() + _monsterHeight + effect->getPositionZ());
+	effect->setCameraMask(994);
 	currentLayer->addChild(effect);
 }
 
@@ -349,7 +350,7 @@ void Actor::knockMode(BasicCollider* collider, bool dirKnockMode)
 	auto p = _myPos;
 	auto angle = dirKnockMode?collider->getFacing():ccpToAngle(ccpSub(p, getPosTable(collider)));
 	auto newPos = ccpRotateByAngle(ccpAdd(Vec2(collider->getKnock(), 0), p), p, angle);
-	//runAction(EaseCubicActionOut::create(MoveTo::create(_action.at("knocked")->getDuration() * 3, newPos)));
+	runAction(EaseCubicActionOut::create(MoveTo::create(_action.at("knocked")->getDuration() * 3, newPos)));
 	////self:setCascadeColorEnabled(true)--if special attack is interrupted then change the value to true
 }
 
@@ -374,7 +375,7 @@ void Actor::dyingMode(Vec2 knockSource, int knockAmount)
 	}
 	else {
 		std::vector<Actor *>::iterator it = std::find(MonsterManager.begin(), MonsterManager.end(), this);
-		HeroManager.erase(it);
+	    MonsterManager.erase(it);
 		auto recycle = [&]() {
 			setVisible(false);
 			getPoolByName(_name).push_back(this);	
@@ -388,7 +389,7 @@ void Actor::dyingMode(Vec2 knockSource, int knockAmount)
 		auto p = _myPos;
 		auto angle = ccpToAngle(ccpSub(p, knockSource));
 		auto newPos = ccpRotateByAngle(ccpAdd(Vec2(knockAmount, 0), p), p, angle);
-		//runAction(EaseCubicActionOut::create(MoveTo::create(_action.at("knocked")->getDuration() * 3, newPos)));
+		runAction(EaseCubicActionOut::create(MoveTo::create(_action.at("knocked")->getDuration() * 3, newPos)));
 	}
 	_AIEnabled = false;
 }
@@ -604,6 +605,7 @@ void Actor::movementUpdate(float dt)
 			_curFacing -= turnby;
 		else //left
 			_curFacing += turnby;
+		setRotation(-RADIANS_TO_DEGREES(_curFacing));
 	}
 	//position update
 	if (getStateType() != EnumStateType::WALKING)

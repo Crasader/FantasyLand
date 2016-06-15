@@ -113,6 +113,7 @@ void Mage::normalAttack()
 	experimental::AudioEngine::play2d(MageProperty.normalAttackShout, false, 0.4);
 	experimental::AudioEngine::play2d(MageProperty.ice_normal, false, 0.8);
 	MageNormalAttack::CreateWithPos(getPosTable(this), _curFacing, _normalAttack, _target, this);
+	
 }
 
 void Mage::specialAttack()
