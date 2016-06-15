@@ -49,13 +49,12 @@ bool BattleScene::init()
 		addChild(camera);
 		controlCamera();
 
-		gameMaster = new GameMaster;
+		gameMaster = new GameMaster();
 		//add background
 		auto battlefield = Sprite3D::create("battleScene/changjing.c3b");
 		battlefield->setCameraMask(2);
 		addChild(battlefield);
 
-		gameMaster = new GameMaster();
 
 		debug();
 		scheduleUpdate();

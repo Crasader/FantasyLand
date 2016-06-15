@@ -56,8 +56,12 @@ void ChooseRoleScene::addBattleButton()
 	auto battleButton = ui::Button::create("chooseRoleScene/battleNormal.png", "chooseRoleScene/battleSelected.png");
 	battleButton->setPosition(Vec2(VisibleSize.width / 2, VisibleSize.height / 5));
 
-	battleButton->addClickEventListener([](Ref*)
+	isTouchedStart = false;
+	battleButton->addClickEventListener([this](Ref*)
 	{
+		if (isTouchedStart)
+			return;
+		isTouchedStart = true;
 		Director::getInstance()->replaceScene(BattleScene::createScene());
 	});
 
