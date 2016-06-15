@@ -55,6 +55,8 @@ bool BattleScene::init()
 		battlefield->setCameraMask(2);
 		addChild(battlefield);
 
+		gameMaster = new GameMaster();
+
 		debug();
 		scheduleUpdate();
 		setCameraMask(2, true);
