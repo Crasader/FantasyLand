@@ -44,14 +44,20 @@ bool BattleScene::init()
 		addChild(camera);
 		controlCamera();
 
+		specialCamera= Camera::createPerspective(60, VisibleSize.width / VisibleSize.height, 10, 4000);
+
 		//add background
 		auto battlefield = Sprite3D::create("battleScene/changjing.c3b");
 		battlefield->setCameraMask(2);
 		addChild(battlefield);
 
+		//gameMaster = new GameMaster();
+
 		debug();
-		scheduleUpdate();
+
+		//scheduleUpdate();
 		setCameraMask(2, true);
+		
 		return true;
 	}
 
@@ -80,7 +86,7 @@ bool BattleScene::init()
 	});
 	MessageDispatchCenter::getInstance()->registerMessage(MessageType::SPECIAL_PERSPECTIVE, [](Actor *heroActor)
 	{
-		
+		//todo
 	});
 
 	controlCamera();
@@ -93,6 +99,7 @@ void BattleScene::update(float dt)
 	camera->setPosition3D(camera->getPosition3D() + cameraVelocity * 5);
 	auto i = camera->getPosition3D();
 	//camera->setPosition(camera->getPosition() + cameraVelocity);
+	gameController(dt);
 }
 
 void BattleScene::moveCamera(float dt)
@@ -103,13 +110,14 @@ void BattleScene::moveCamera(float dt)
 
 	auto cameraPosition = getPosTable(camera);
 	auto focusPoint = getFocusPointOfHeros();
-	if (specialCamera->isBrushValid()/*?*/)
-	{
-		auto position = ccpLerp(cameraPosition, ccp(specialCamera->getPosition().x, (cameraOffset.y + focusPoint.y - VisibleSize.height * 3 / 4)*0.5), 5 * dt);
-		camera->setPosition(position);
-		camera->lookAt(Vec3(position.x, specialCamera->getPosition().y, 50.0), Vec3(0.0, 1.0, 0.0));
-	}
-	else if (HeroManager.size() > 0)
+	//if (/*specialCamera->isBrushValid()?*/)
+	//{
+	//	auto position = ccpLerp(cameraPosition, ccp(specialCamera->getPosition().x, (cameraOffset.y + focusPoint.y - VisibleSize.height * 3 / 4)*0.5), 5 * dt);
+	//	camera->setPosition(position);
+	//	camera->lookAt(Vec3(position.x, specialCamera->getPosition().y, 50.0), Vec3(0.0, 1.0, 0.0));
+	//}
+	//else 
+	if (HeroManager.size() > 0)
 	{
 		auto temp = ccpLerp(cameraPosition, ccp(focusPoint.x + cameraOffset.x, cameraOffset.y + focusPoint.y - VisibleSize.height * 3 / 4), 2 * dt);
 		auto position = Vec3(temp.x, temp.y, VisibleSize.height / 2 - 100);

@@ -4,12 +4,12 @@
 USING_NS_CC;
 
 class Actor;
-class GameMaster:public Node
+class GameMaster
 {
 public:
-	CREATE_FUNC(GameMaster);
-	virtual bool init();
-	virtual void update(float dt);
+	GameMaster();
+	bool init();
+	void update(float dt);
 
 	void logicUpdate();
 	void AddHeros();
