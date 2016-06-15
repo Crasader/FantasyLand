@@ -54,6 +54,8 @@ bool BattleScene::init()
 		battlefield->setCameraMask(2);
 		addChild(battlefield);
 
+		gameMaster = new GameMaster();
+
 		debug();
 		scheduleUpdate();
 		setCameraMask(2, true);
@@ -168,7 +170,7 @@ void BattleScene::setCamera()
 
 void BattleScene::gameController(float dt)
 {
-//	gameMaster->update(dt);
+	gameMaster->update(dt);
 	collisionDetect(dt);
 	solveAttacks(dt);
 	moveCamera(dt);

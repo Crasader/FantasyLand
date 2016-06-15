@@ -38,6 +38,5 @@ private:
 	ui::Button *_start;
 	ui::Button *_setting; 
 	bool isTouchedStart;
-
 	Layer *_aboutLayer;
 };
