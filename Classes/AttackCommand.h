@@ -63,7 +63,7 @@ public:
 	void onTimeOut();
 
 private:
-	Actor* _owner;
+	Actor* _owner = nullptr;
 };
 
 class MageNormalAttack : public BasicCollider
@@ -78,11 +78,11 @@ public:
 	void onCollide(Actor* target);
 	void onUpdate(float dt);
 private:
-	Actor* _owner;
-	Actor* _target;
-	ParticleSystemQuad* _part1;
-	ParticleSystemQuad* _part2;
-	Sprite* _sp;
+	Actor* _owner = nullptr;
+	Actor* _target = nullptr;
+	ParticleSystemQuad* _part1 = nullptr;
+	ParticleSystemQuad* _part2 = nullptr;
+	Sprite* _sp = nullptr;
 };
 
 class MageIceSpikes : public BasicCollider
@@ -98,10 +98,10 @@ public:
 	void onUpdate(float dt);
 
 private:
-	Actor* _owner;
-	Sprite* _sp;
-	Actor* _target;
-	Node* _spikes;
+	Actor* _owner = nullptr;
+	Sprite* _sp = nullptr;
+	Actor* _target = nullptr;
+	Node* _spikes = nullptr;
 };
 
 class ArcherNormalAttack : public BasicCollider
@@ -116,8 +116,8 @@ public:
 	void onUpdate(float dt);
 
 private:
-	Actor* _owner;
-	Sprite3D* _sp;
+	Actor* _owner = nullptr;
+	Sprite3D* _sp = nullptr;
 };
 
 class ArcherSpecialAttack : public BasicCollider
@@ -132,8 +132,8 @@ public:
 	void onUpdate(float dt);
 
 private:
-	Actor* _owner;
-	Sprite3D* _sp;
+	Actor* _owner = nullptr;
+	Sprite3D* _sp = nullptr;
 };
 
 class Nova : public BasicCollider
@@ -148,7 +148,7 @@ public:
 	void onUpdate(float dt);
 
 private:
-	Sprite* _sp;
+	Sprite* _sp = nullptr;
 };
 
 class DragonAttack : public BasicCollider
@@ -164,7 +164,7 @@ public:
 	void onUpdate(float dt);
 
 private:
-	Sprite* _sp;
+	Sprite* _sp = nullptr;
 };
 
 class BossNormal : public BasicCollider
@@ -180,7 +180,7 @@ public:
 	void onUpdate(float dt);
 
 private:
-	Sprite* _sp;
+	Sprite* _sp = nullptr;
 };
 
 class BossSuper : public BasicCollider
@@ -196,7 +196,7 @@ public:
 	void onUpdate(float dt);
 
 private:
-	Sprite* _sp;
+	Sprite* _sp = nullptr;
 };
 
 void solveAttacks(float dt);
