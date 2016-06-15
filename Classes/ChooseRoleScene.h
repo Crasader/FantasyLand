@@ -14,5 +14,6 @@ protected:
 	void addBackground();
 	void addHeros();
 	void addBattleButton();
+	bool isTouchedStart;
 
 };
