@@ -3,11 +3,12 @@
 Slime::Slime()
 {
 	_AIEnabled = true;
-	scheduleUpdateWithPriority(0.5);	
+	scheduleUpdateWithPriority(1);	
 }
 
 bool Slime::init()
 {
+	Actor::init();
 	//copyTable(ActorCommonValues, this);
 	//copyTable(SlimeValues, this);
 	_angryFace = false;

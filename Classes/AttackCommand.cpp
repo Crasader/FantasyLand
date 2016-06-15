@@ -387,7 +387,7 @@ MageIceSpikes* MageIceSpikes::CreateWithPos(Vec2 pos, int facing, struct attack_
 	auto magic = ParticleSystemQuad::create(pm);
 	auto magicf = SpriteFrameCache::getInstance()->getSpriteFrameByName("particle.png");
 	magic->setTextureWithRect(magicf->getTexture(), magicf->getRect());
-	magic->setCameraMask(943);
+	//magic->setCameraMask(943);
 	magic->setScale(1.5);
 	ret->addChild(magic);
 	magic->setGlobalZOrder(-ret->getPositionY() * 2 + FXZorder);
@@ -410,7 +410,7 @@ void MageIceSpikes::onTimeOut()
 	//local puff = cc.ParticleSystemQuad : create("FX/puffRing.plist")
 	auto puffFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName("puff.png");
 	puff->setTextureWithRect(puffFrame->getTexture(), puffFrame->getRect());
-	//puff->setCamera(camera);
+	puff->setCameraMask(943);
 	puff->setScale(3);
 	addChild(puff);
 	puff->setGlobalZOrder(-getPositionY() + FXZorder);
@@ -421,7 +421,7 @@ void MageIceSpikes::onTimeOut()
 	//local puff = cc.ParticleSystemQuad : create("FX/puffRing.plist")
 	auto magicf = SpriteFrameCache::getInstance()->getSpriteFrameByName("particle.png");
 	magic->setTextureWithRect(magicf->getTexture(), magicf->getRect());
-	_sp->setCameraMask(943);
+	magic->setCameraMask(943);
 	//magic->setCamera(camera);
 	magic->setScale(1.5);
 	addChild(magic);
@@ -741,7 +741,7 @@ BossSuper* BossSuper::CreateWithPos(Vec2 pos, int facing, struct attack_d attack
 	ret->_sp->setPosition3D(Vec3(0, 0, 48));
 	ret->addChild(ret->_sp);
 	ret->_sp->setScale(1.7);
-	ret->_sp->setCameraMask(996);
+	//ret->_sp->setCameraMask(996);
 	return ret;
 }
 
@@ -757,6 +757,7 @@ void BossSuper::onTimeOut()
 	auto magic = ParticleSystemQuad::create(pm);
 	auto magicf = SpriteFrameCache::getInstance()->getSpriteFrameByName("particle.png");
 	magic->setTextureWithRect(magicf->getTexture(), magicf->getRect());
+	magic->setCameraMask(943);
 	magic->setScale(1.5);
 	magic->setRotation3D(Vec3(90, 0, 0));
 	addChild(magic);
