@@ -11,13 +11,13 @@ std::vector<BasicCollider*> AttackManager;
 void solveAttacks(float dt)
 {
 	//for (auto val = AttackManager.begin(); val != AttackManager.end() && AttackManager.size() != 0; ++val) {
-	for (int i = 0; i < AttackManager.size();++i) {
-		if (AttackManager[i] == nullptr) continue;
+	for (int i = AttackManager.size() - 1; i >= 0; --i) {
+		//if (AttackManager[i] == nullptr) continue;
 		auto attack = AttackManager[i];
-		auto apos = attack->getPosition();
+		auto apos = getPosTable(attack);
 		if (attack->getMask() == EnumRaceType::HERO) {
 			//if heroes attack, then lets check monsters
-			for (auto mkey = MonsterManager.rend(); mkey != MonsterManager.rbegin(); ++mkey) {
+			for (auto mkey = MonsterManager.rbegin(); mkey != MonsterManager.rend(); ++mkey) {
 				//check distance first
 				Actor* monster = *mkey;
 				Vec2 mpos = monster->getMyPos();
@@ -71,7 +71,7 @@ BasicCollider::BasicCollider()
 	_curDuration = 0;
 	_speed = 0;	//travel speed
 	_criticalChance = 0;
-	//this->setCameraMask(997);
+	this->setCameraMask(943);
 	
 }
 
@@ -119,6 +119,7 @@ void BasicCollider::hurtEffect(Actor* target)
 	hurtEffect->runAction(Sequence::create(hurtAction, RemoveSelf::create()));
 	hurtEffect->setPosition3D(Vec3(0, 0, 50));
 	target->addChild(hurtEffect);
+	log("Animation played");
 }
 
 void BasicCollider::onCollide(Actor* target)
@@ -301,6 +302,7 @@ void MageNormalAttack::onTimeOut()
 	magic->setPositionZ(0);
 
 	_sp->setTextureRect(RECTS.iceSpike);
+	_sp->setCameraMask(943);
 	_sp->runAction(FadeOut::create(1));
 	_sp->setScale(4);
 }
@@ -385,7 +387,7 @@ MageIceSpikes* MageIceSpikes::CreateWithPos(Vec2 pos, int facing, struct attack_
 	auto magic = ParticleSystemQuad::create(pm);
 	auto magicf = SpriteFrameCache::getInstance()->getSpriteFrameByName("particle.png");
 	magic->setTextureWithRect(magicf->getTexture(), magicf->getRect());
-	magic->setCameraMask(997);
+	magic->setCameraMask(943);
 	magic->setScale(1.5);
 	ret->addChild(magic);
 	magic->setGlobalZOrder(-ret->getPositionY() * 2 + FXZorder);
@@ -419,6 +421,7 @@ void MageIceSpikes::onTimeOut()
 	//local puff = cc.ParticleSystemQuad : create("FX/puffRing.plist")
 	auto magicf = SpriteFrameCache::getInstance()->getSpriteFrameByName("particle.png");
 	magic->setTextureWithRect(magicf->getTexture(), magicf->getRect());
+	_sp->setCameraMask(943);
 	//magic->setCamera(camera);
 	magic->setScale(1.5);
 	addChild(magic);
@@ -567,7 +570,7 @@ Nova* Nova::CreateWithPos(Vec2 pos, int facing)
 	ret->_sp->setPosition3D(Vec3(0, 0, 1));
 	ret->addChild(ret->_sp);
 	ret->_sp->setScale(0);
-	ret->_sp->setCameraMask(996);
+	ret->_sp->setCameraMask(943);
 	ret->_sp->runAction(EaseCircleActionOut::create(ScaleTo::create(0.3, 3)));
 	ret->_sp->runAction(FadeOut::create(0.7));
 	return ret;
@@ -639,8 +642,7 @@ void DragonAttack::onTimeOut()
 	magic->setEndColor(ccc4f(1, 0.5, 0, 1));
 
 	auto fireballAction = Animate::create(AnimationCache::getInstance()->getAnimation("fireBallAnim"));
-	//_sp->setCameraMask(943);
-	_sp->setCameraMask(460);
+	_sp->setCameraMask(943);
 	_sp->runAction(fireballAction);
 	_sp->setScale(2);
 }
