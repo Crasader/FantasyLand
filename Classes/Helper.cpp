@@ -64,5 +64,5 @@ msgStruct createKnockedMsgStruct(Actor * object)
 void delayExecute(Actor* target, void(*func)(), float delay)
 {
 	auto wait = DelayTime::create(delay);
-	target->runAction(Sequence::create(wait, CallFunc::create(func)));
+	target->runAction(Sequence::create(wait, CallFunc::create(func),NULL));
 }
