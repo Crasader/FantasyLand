@@ -49,6 +49,7 @@ bool BattleScene::init()
 		addChild(camera);
 		controlCamera();
 
+		gameMaster = new GameMaster;
 		//add background
 		auto battlefield = Sprite3D::create("battleScene/changjing.c3b");
 		battlefield->setCameraMask(2);
@@ -73,7 +74,7 @@ bool BattleScene::init()
 	enableTouch();
 	createBackground();
 	initUILayer();
-	gameMaster =  new GameMaster();
+	gameMaster = new GameMaster();
 	setCamera();
 	//scheduler->schedule(gameController, this, 0, false, "gameController");
 
@@ -307,8 +308,8 @@ void BattleScene::controlCamera()
 		case EventKeyboard::KeyCode::KEY_D:--cameraVelocity.x; break;
 		case EventKeyboard::KeyCode::KEY_Q:++cameraVelocity.z; break;
 		case EventKeyboard::KeyCode::KEY_E:--cameraVelocity.z; break;
-		case EventKeyboard::KeyCode::KEY_Z:da = MageIceSpikes::CreateWithPos(Vec2(0, 0), 50, MageValues._specialAttack, dragon); 
-			mage->addChild(da); 
+		case EventKeyboard::KeyCode::KEY_Z:da = MageIceSpikes::CreateWithPos(Vec2(0, 0), 50, MageValues._specialAttack, dragon);
+			mage->addChild(da);
 			mage->hurt(da); break;
 		case EventKeyboard::KeyCode::KEY_X:db = ArcherSpecialAttack::CreateWithPos(Vec2(0, 0), 50, ArcherValues._specialAttack, piglet);
 			dragon->addChild(db);
@@ -317,7 +318,7 @@ void BattleScene::controlCamera()
 			knight->addChild(dc);
 			knight->hurt(dc);  break;
 		case EventKeyboard::KeyCode::KEY_V:dd = ArcherNormalAttack::CreateWithPos(Vec2(0, 0), 50, BossValues._normalAttack, dragon);
-			piglet->addChild(dd); 
+			piglet->addChild(dd);
 			piglet->hurt(dd); break;
 		case EventKeyboard::KeyCode::KEY_B: //da = DragonAttack::CreateWithPos(Vec2(0,0), 50, DragonValues._normalAttack);
 			//piglet->hurt(DragonAttack::CreateWithPos(Vec2(110,110), 50, DragonValues._normalAttack)); 
