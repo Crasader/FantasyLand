@@ -8,7 +8,7 @@ class BasicCollider : public Node
 {
 public:
 	BasicCollider();
-	static BasicCollider* CreateWithPos(Vec3 pos, float facing, struct attack_d attackInfo);
+	static BasicCollider* CreateWithPos(Vec2 pos, float facing, struct attack_d attackInfo);
 	CREATE_FUNC(BasicCollider);
 	virtual bool init();
 	virtual void onTimeOut();
@@ -16,7 +16,7 @@ public:
 	virtual void hurtEffect(Actor* target);
 	virtual void onCollide(Actor* target);
 	virtual void onUpdate();
-	void initData(Vec3 pos, float facing, struct attack_d attackInfo);
+	void initData(Vec2 pos, float facing, struct attack_d attackInfo);
 
 	//set & get
 	float getDamage();
@@ -57,7 +57,7 @@ class KnightNormalAttack : public BasicCollider
 {
 public:
 	KnightNormalAttack();
-	static KnightNormalAttack* CreateWithPos(Vec3 pos, float facing, struct attack_d attackInfo, Actor* knight);
+	static KnightNormalAttack* CreateWithPos(Vec2 pos, float facing, struct attack_d attackInfo, Actor* knight);
 	CREATE_FUNC(KnightNormalAttack);
 	virtual bool init();
 	void onTimeOut();
@@ -70,7 +70,7 @@ class MageNormalAttack : public BasicCollider
 {
 public:
 	MageNormalAttack();
-	static MageNormalAttack* CreateWithPos(Vec3 pos, float facing, struct attack_d attackInfo, Actor* target, Actor* owner);
+	static MageNormalAttack* CreateWithPos(Vec2 pos, float facing, struct attack_d attackInfo, Actor* target, Actor* owner);
 	CREATE_FUNC(MageNormalAttack);
 	virtual bool init();
 	void onTimeOut();
