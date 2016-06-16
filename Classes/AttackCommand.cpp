@@ -267,10 +267,11 @@ MageNormalAttack* MageNormalAttack::CreateWithPos(Vec2 pos, float facing, struct
 	newMageNormalAttack->_owner = owner;
 	newMageNormalAttack->_sp = BillBoard::create("FX/FX.png", RECTS.iceBolt);
 	newMageNormalAttack->_sp->setCameraMask(2);
-	//owner->addChild(newMageNormalAttack);
+	//owner->addChild(newMageNormalAttack);	
+	newMageNormalAttack->_sp->setPosition3D(Vec3(0, 0, 50));
+	newMageNormalAttack->_sp->setScale(2);
 	newMageNormalAttack->addChild(newMageNormalAttack->_sp);
-	newMageNormalAttack->setPosition3D(Vec3(0, 0, 50));
-	newMageNormalAttack->setScale(2);
+
 
 
 	auto pm = ParticleManager::getInstance()->getPlistData("iceTrail");
@@ -357,6 +358,7 @@ void MageNormalAttack::onUpdate(float dt)
 		Vec2 selfPos = getPosTable(this);
 		nextPos = ccpRotateByAngle(ccpAdd(Vec2(_speed*dt, 0), selfPos), selfPos, _facing);
 	}
+	setPosition(nextPos);
 }
 
 MageIceSpikes::MageIceSpikes()
@@ -373,8 +375,8 @@ MageIceSpikes* MageIceSpikes::CreateWithPos(Vec2 pos, float facing, struct attac
 	ret->_sp->setGlobalZOrder(-ret->getPositionY() + FXZorder);
 	ret->_sp->setOpacity(100);
 	//ret->_sp->setCameraMask(996);
-	ret->setPosition3D(Vec3(0, 0, 1));
-	ret->setScale(ret->getMaxRange() / 12);
+	ret->_sp->setPosition3D(Vec3(0, 0, 1));
+	ret->_sp->setScale(ret->getMaxRange() / 12);
 	ret->addChild(ret->_sp);
 
 	//create 3 spikes
