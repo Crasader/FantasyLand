@@ -13,15 +13,9 @@ bool BattleFieldUI::init()
 	touchButtonInit();
 	timeInit();
 	//showVictoryUI();
-	scheduleUpdate();
 	experimental::AudioEngine::stopAll();
 	AUDIO_ID.BATTLEFIELDBGM = experimental::AudioEngine::play2d(BGM_RES.BATTLEFIELDBGM, true, 0.6);
 	return true;
-}
-
-void BattleFieldUI::update(float dt)
-{
-	MagePng->setPosition(MagePng->getPosition() + Vec2(pngVelocity.x, pngVelocity.y));
 }
 
 void BattleFieldUI::avatarInit()
@@ -29,25 +23,25 @@ void BattleFieldUI::avatarInit()
 	auto offset = 8;
 	auto scale = 0.7;
 	MagePng = Sprite::createWithSpriteFrameName("UI-1136-640_18.png");
-	MagePng->setPosition3D(Vec3(VisibleSize.width, 100, 2));
+	MagePng->setPosition3D(Vec3(VisibleSize.width - 60, 70, 2));
 	MagePng->setScale(scale);
 	addChild(MagePng, 2);
 	MagePngFrame = Sprite::createWithSpriteFrameName("UI-2.png");
 	MagePngFrame->setScale(scale);
-	MagePngFrame->setPosition3D(Vec3(MagePng->getPositionX() + 100, MagePng->getPositionY() - offset + 100, 1));
+	MagePngFrame->setPosition3D(Vec3(MagePng->getPositionX() + 1, MagePng->getPositionY() - offset, 1));
 	addChild(MagePngFrame, 1);
 
 	KnightPng = Sprite::createWithSpriteFrameName("UI-1136-640_03.png");
-	KnightPng->setPosition3D(Vec3(-MagePng->getContentSize().width * 2 + MagePng->getPositionX() + 100, 70 / 640 * G.winSize.height, 2 + 100));
+	KnightPng->setPosition3D(Vec3(MagePng->getPositionX() - 100, MagePng->getPositionY(), 2));
 	KnightPng->setScale(scale);
 	addChild(KnightPng, 2);
 	KnightPngFrame = Sprite::createWithSpriteFrameName("UI-2.png");
 	KnightPngFrame->setScale(scale);
-	KnightPngFrame->setPosition3D(Vec3(KnightPng->getPositionX() + 1, KnightPng->getPositionY() - offset + 100, 1));
+	KnightPngFrame->setPosition3D(Vec3(KnightPng->getPositionX() + 1, KnightPng->getPositionY() - offset, 1));
 	addChild(KnightPngFrame, 1);
 
 	ArcherPng = Sprite::createWithSpriteFrameName("UI-1136-640_11.png");
-	ArcherPng->setPosition3D(Vec3(-MagePng->getContentSize().width + MagePng->getPositionX() + 20, 70 / 640 * G.winSize.height, 2));
+	ArcherPng->setPosition3D(Vec3(KnightPng->getPositionX() - 100, KnightPng->getPositionY(), 2));
 	ArcherPng->setScale(scale);
 	addChild(ArcherPng, 2);
 	ArcherPngFrame = Sprite::createWithSpriteFrameName("UI-2.png");
@@ -217,29 +211,29 @@ void BattleFieldUI::angrybarInit()
 void BattleFieldUI::touchButtonInit()
 {
 	auto _setBtn = Sprite::createWithSpriteFrameName("UI-1136-640_06.png");
-	_setBtn->setPosition3D(Vec3(1093 / 1136 * G.winSize.width, 591 / 640 * G.winSize.height, 3));
+	_setBtn->setPosition3D(Vec3(VisibleSize.width - 50, VisibleSize.height - 50, 3));
 	_setBtn->setScale(0.8);
 	addChild(_setBtn, 3);
 
 	auto _chest = Sprite::createWithSpriteFrameName("chest.png");
-	_chest->setPosition3D(Vec3(861 / 1136 * G.winSize.width, 595 / 640 * G.winSize.height, 3));
+	_chest->setPosition3D(Vec3(VisibleSize.width - 100, VisibleSize.height - 50, 3));
 	_chest->setScale(0.8);
 	addChild(_chest, 3);
 
 	auto _coin = Sprite::createWithSpriteFrameName("coins.png");
-	_coin->setPosition3D(Vec3(1028.49 / 1136 * G.winSize.width, 593 / 640 * G.winSize.height, 3));
+	_coin->setPosition3D(Vec3(VisibleSize.width - 300, VisibleSize.height - 50, 3));
 	_coin->setScaleX(0.8);
 	_coin->setScaleY(0.8);
 	addChild(_coin, 3);
 
 	auto _chestAmount = Sprite::createWithSpriteFrameName("UI-1.png");
-	_chestAmount->setPosition3D(Vec3(785 / 1136 * G.winSize.width, 590 / 640 * G.winSize.height, 2));
+	_chestAmount->setPosition3D(Vec3(VisibleSize.width - 170, VisibleSize.height - 50, 3));
 	_chestAmount->setScaleX(0.8);
 	_chestAmount->setScaleY(0.7);
 	addChild(_chestAmount, 2);
 
 	auto _coinAmount = Sprite::createWithSpriteFrameName("UI-1.png");
-	_coinAmount->setPosition3D(Vec3(957 / 1136 * G.winSize.width, 590 / 640 * G.winSize.height, 2));
+	_coinAmount->setPosition3D(Vec3(VisibleSize.width - 370, VisibleSize.height - 50, 3));
 	_coinAmount->setScaleX(0.8);
 	_coinAmount->setScaleY(0.7);
 	addChild(_coinAmount, 2);
@@ -440,48 +434,4 @@ void BattleFieldUI::showVictoryUI()
 	eventDispatcher->addEventListenerWithSceneGraphPriority(listener, layer);
 
 	addChild(layer);
-}
-
-void BattleFieldUI::controlPng()
-{
-	auto touchListener = EventListenerTouchOneByOne::create();
-	touchListener->onTouchBegan = [this](Touch* touch, Event*)
-	{
-		lastTouchPosition = touch->getLocation();
-		return true;
-	};
-	touchListener->onTouchMoved = [this](Touch* touch, Event*)
-	{
-		auto touchPosition = touch->getLocation();
-
-		lastTouchPosition = touchPosition;
-	};
-	auto keyboardListener = EventListenerKeyboard::create();
-	keyboardListener->onKeyPressed = [this](EventKeyboard::KeyCode keycode, Event*)
-	{
-		switch (keycode)
-		{
-		case EventKeyboard::KeyCode::KEY_W:++pngVelocity.y; break;
-		case EventKeyboard::KeyCode::KEY_A:--pngVelocity.x; break;
-		case EventKeyboard::KeyCode::KEY_S:--pngVelocity.y; break;
-		case EventKeyboard::KeyCode::KEY_D:++pngVelocity.x; break;
-		case EventKeyboard::KeyCode::KEY_Q:--pngVelocity.z; break;
-		case EventKeyboard::KeyCode::KEY_E:++pngVelocity.z; break;
-		}
-	};
-	_eventDispatcher->addEventListenerWithFixedPriority(touchListener, 0);
-
-	keyboardListener->onKeyReleased = [this](EventKeyboard::KeyCode keycode, Event*)
-	{
-		switch (keycode)
-		{
-		case EventKeyboard::KeyCode::KEY_W:--pngVelocity.y; break;
-		case EventKeyboard::KeyCode::KEY_A:++pngVelocity.x; break;
-		case EventKeyboard::KeyCode::KEY_S:++pngVelocity.y; break;
-		case EventKeyboard::KeyCode::KEY_D:--pngVelocity.x; break;
-		case EventKeyboard::KeyCode::KEY_Q:++pngVelocity.z; break;
-		case EventKeyboard::KeyCode::KEY_E:--pngVelocity.z; break;
-		}
-	};
-	_eventDispatcher->addEventListenerWithSceneGraphPriority(keyboardListener, this);
 }
