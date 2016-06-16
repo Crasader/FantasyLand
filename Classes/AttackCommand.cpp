@@ -409,7 +409,7 @@ void MageIceSpikes::onTimeOut()
 	_spikes->setVisible(false);
 	auto pm = ParticleManager::getInstance()->getPlistData("puffRing");
 	auto puff = ParticleSystemQuad::create(pm);
-	//local puff = cc.ParticleSystemQuad : create("FX/puffRing.plist")
+	// puff = ParticleSystemQuad : create("FX/puffRing.plist")
 	auto puffFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName("puff.png");
 	puff->setTextureWithRect(puffFrame->getTexture(), puffFrame->getRect());
 	puff->setCameraMask(943);
@@ -420,7 +420,7 @@ void MageIceSpikes::onTimeOut()
 
 	auto pmf = ParticleManager::getInstance()->getPlistData("magic");
 	auto magic = ParticleSystemQuad::create(pmf);
-	//local puff = cc.ParticleSystemQuad : create("FX/puffRing.plist")
+	// puff = ParticleSystemQuad : create("FX/puffRing.plist")
 	auto magicf = SpriteFrameCache::getInstance()->getSpriteFrameByName("particle.png");
 	magic->setTextureWithRect(magicf->getTexture(), magicf->getRect());
 	magic->setCameraMask(943);

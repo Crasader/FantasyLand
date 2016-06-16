@@ -42,8 +42,6 @@ void MainMenuScene::createLayer()
 	//add button
 	addButton(mainLayer);
 
-	//when replease scene unschedule schedule
-
 }
 
 void MainMenuScene::onExit(Event* event)

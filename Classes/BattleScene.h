@@ -26,8 +26,6 @@ public:
 	MessageType UIcontainsPoint(Vec2 position/*position @lua*/);
 
 	void controlCamera();
-	
-	void debug();
 private:
 	Camera *specialCamera;
 	Scheduler * scheduler;

@@ -1,5 +1,6 @@
 ﻿#include "BattleFieldUI.h"
 #include "GlobalVariables.h"
+#include "ChooseRoleScene.h"
 #include "Actor.h"
 
 bool BattleFieldUI::init()
@@ -11,9 +12,10 @@ bool BattleFieldUI::init()
 	angrybarInit();
 	touchButtonInit();
 	timeInit();
+	//showVictoryUI();
 
 	experimental::AudioEngine::stopAll();
-	//AUDIO_ID.BATTLEFIELDBGM = experimental::AudioEngine::play2d(BGM_RES.BATTLEFIELDBGM, true, 0.6);
+	AUDIO_ID.BATTLEFIELDBGM = experimental::AudioEngine::play2d(BGM_RES.BATTLEFIELDBGM, true, 0.6);
 	return true;
 }
 
@@ -144,7 +146,7 @@ void BattleFieldUI::angrybarInit()
 	KnightAngryClone->setScaleY(0.75);
 	addChild(KnightAngryClone, 3);
 
-	auto KnightAngryFullSignal = Sprite::createWithSpriteFrameName("specialLight.png");
+	KnightAngryFullSignal = Sprite::createWithSpriteFrameName("specialLight.png");
 	KnightAngryFullSignal->setPosition3D(Vec3(KnightPng->getPositionX(), KnightPng->getPositionY() + fullAngerStarOffset, 4));
 	KnightAngryFullSignal->runAction(action);
 	KnightAngryFullSignal->setScale(1);
@@ -172,7 +174,7 @@ void BattleFieldUI::angrybarInit()
 	ArcherAngryClone->setScaleY(0.75);
 	addChild(ArcherAngryClone, 3);
 
-	auto ArcherAngryFullSignal = Sprite::createWithSpriteFrameName("specialLight.png");
+	ArcherAngryFullSignal = Sprite::createWithSpriteFrameName("specialLight.png");
 	ArcherAngryFullSignal->setPosition3D(Vec3(ArcherPng->getPositionX(), ArcherPng->getPositionY() + fullAngerStarOffset, 4));
 	addChild(ArcherAngryFullSignal, 4);
 	ArcherAngryFullSignal->runAction(action->clone());
@@ -189,7 +191,7 @@ void BattleFieldUI::angrybarInit()
 	MageAngry->setScale(0.7);
 	addChild(MageAngry, 4);
 
-	auto MageAngryClone = ProgressTimer::create(Sprite::createWithSpriteFrameName("UI-1136-640_36_clone.png"));
+	MageAngryClone = ProgressTimer::create(Sprite::createWithSpriteFrameName("UI-1136-640_36_clone.png"));
 	MageAngryClone->setColor(grey);
 	MageAngryClone->setType(ProgressTimer::Type::BAR);
 	MageAngryClone->setBarChangeRate(Vec2(1, 0));
@@ -200,7 +202,7 @@ void BattleFieldUI::angrybarInit()
 	MageAngryClone->setScaleY(0.75);
 	addChild(MageAngryClone, 3);
 
-	auto MageAngryFullSignal = Sprite::createWithSpriteFrameName("specialLight.png");
+	MageAngryFullSignal = Sprite::createWithSpriteFrameName("specialLight.png");
 	MageAngryFullSignal->setPosition3D(Vec3(MagePng->getPositionX(), MagePng->getPositionY() + fullAngerStarOffset, 4));
 	addChild(MageAngryFullSignal, 4);
 	MageAngryFullSignal->runAction(action->clone());
@@ -239,185 +241,203 @@ void BattleFieldUI::touchButtonInit()
 	addChild(_coinAmount, 2);
 }
 
-void BattleFieldUI::shakeAvatar()
+Repeat* BattleFieldUI::shakeAvatar()
 {
-	Repeat::create(Spawn::create(Sequence::create(ScaleTo::create(0.075, 0.75),
+	return Repeat::create(Spawn::create(Sequence::create(ScaleTo::create(0.075, 0.75),
 		ScaleTo::create(0.075, 0.7)),
 		Sequence::create(MoveBy::create(0.05, { 6.5, 0 }),
 			MoveBy::create(0.05, { -13, 0 }),
-			MoveBy::create(0.05, { 6.5, 0 }))), 2);
-	return;
+			MoveBy::create(0.05, { 6.5, 0 }),
+			NULL)), 2);
 }
 
 void BattleFieldUI::bloodDrop(Actor* heroActor)
 {
-	//auto progressTo;
-	//auto progressToClone;
-	//auto tintTo;
-	//auto percent = heroActor->get / heroActor._maxhp * 100;
-	//heroActor._bloodBar:stopAllActions();
-	//heroActor._bloodBarClone->stopAllActions();
-	//heroActor._avatar->runAction(BattlefieldUI->shakeAvatar());
+	TintTo* tintTo;
+	FiniteTimeAction* progressTo;
+	Action* progressToClone;
+	auto percent = heroActor->getHP() / heroActor->getMaxHP() * 100;
+	heroActor->getBloodBar()->stopAllActions();
+	heroActor->getBloodBarClone()->stopAllActions();
+	heroActor->getAvatar()->runAction(BattleFieldUI::shakeAvatar());
 
-	//if heroActor._hp > 0 and percent > 50 then
+	if (heroActor->getHP() > 0 && percent > 50)
+	{
+		progressTo = ProgressTo::create(0.3, percent);
+		progressToClone = ProgressTo::create(1, percent);
+		heroActor->getBloodBar()->runAction(progressTo);
+		heroActor->getBloodBarClone()->runAction(progressToClone);
+	}
+	else
+	{
+		if (heroActor->getHP() > 0 && percent <= 50)
+		{
+			progressTo = ProgressTo::create(0.3, percent);
+			progressToClone = ProgressTo::create(1, percent);
+			tintTo = TintTo::create(0.5, 254, 225, 26);
 
-	//	progressTo = ProgressTo:create(0.3, percent)
-	//	progressToClone = ProgressTo->create(1, percent)
-	//	heroActor._bloodBar->runAction(progressTo)
-	//	heroActor._bloodBarClone->runAction(progressToClone)
+			heroActor->getBloodBar()->runAction(Spawn::create(progressTo, tintTo));
+			heroActor->getBloodBarClone()->runAction(progressToClone);
+		}
+		else if (heroActor->getHP() > 0 && percent <= 30)
+		{
 
-	//	elseif heroActor._hp > 0 and percent <= 50 then
+			progressTo = ProgressTo::create(0.3, percent);
+			progressToClone = ProgressTo::create(1, percent);
 
-	//	progressTo = ProgressTo:create(0.3, percent)
-	//	progressToClone = ProgressTo->create(1, percent)
-	//	tintTo = TintTo->create(0.5, 254, 225, 26)
+			tintTo = TintTo::create(0.5, 254, 26, 69);
+			heroActor->getBloodBar()->runAction(Spawn::create(progressTo, tintTo));
+			heroActor->getBloodBarClone()->runAction(progressToClone);
+		}
+		else if (heroActor->getHP() <= 0)
+		{
+			progressTo = ProgressTo::create(0.3, 0);
+			progressToClone = ProgressTo::create(1, 2);
 
-	//	heroActor._bloodBar->runAction(Spawn : create(progressTo, tintTo))
-	//	heroActor._bloodBarClone->runAction(progressToClone)
-	//	elseif heroActor._hp > 0 and percent <= 30 then
-
-	//	progressTo = ProgressTo:create(0.3, percent)
-	//	progressToClone = ProgressTo->create(1, percent)
-
-	//	tintTo = TintTo->create(0.5, 254, 26, 69)
-	//	heroActor._bloodBar->runAction(Spawn : create(progressTo, tintTo))
-	//	heroActor._bloodBarClone->runAction(progressToClone)
-	//	elseif heroActor._hp <= 0 then
-	//	progressTo = ProgressTo->create(0.3, 0)
-	//	progressToClone = ProgressTo->create(1, 2)
-
-	//	heroActor._bloodBar->runAction(progressTo)
-	//	heroActor._bloodBarClone->runAction(progressToClone)
-	//	end
+			heroActor->getBloodBar()->runAction(progressTo);
+			heroActor->getBloodBarClone()->runAction(progressToClone);
+		}
+	}
 }
 
-void BattleFieldUI::heroDead(Actor* heroActor)
+void BattleFieldUI::heroDead(Actor* hero)
 {
 
-	/*if hero._name == "Knight" then
-		GreyShader : setGreyShader(KnightPng)
-		GreyShader->setGreyShader(KnightPngFrame)
-		KnightAngryFullSignal->setVisible(false)
-		KnightAngryClone->setVisible(false)
-		elseif hero._name == "Mage" then
-		GreyShader->setGreyShader(MagePng)
-		GreyShader->setGreyShader(MagePngFrame)
-		MageAngryFullSignal->setVisible(false)
-		MageAngryClone->setVisible(false)
-		elseif hero._name == "Archer" then
-		GreyShader->setGreyShader(ArcherPng)
-		GreyShader->setGreyShader(ArcherPngFrame)
-		ArcherAngryFullSignal->setVisible(false)
-		ArcherAngryClone->setVisible(false)
-		end*/
+	if (hero->getname() == "Knight")
+	{
+		//GreyShader:setGreyShader(KnightPng);
+		//GreyShader: setGreyShader(KnightPngFrame);
+	KnightAngryFullSignal: setVisible(false);
+	KnightAngryClone: setVisible(false);
+	}
+
+	else if (hero->getname() == "Mage") {
+		//GreyShader: setGreyShader(MagePng);
+		//GreyShader: setGreyShader(MagePngFrame);
+	MageAngryFullSignal: setVisible(false);
+	MageAngryClone: setVisible(false);
+	}
+
+	else if (hero->getname() == "Archer")
+	{
+		//GreyShader: setGreyShader(ArcherPng);
+		//GreyShader: setGreyShader(ArcherPngFrame);
+	ArcherAngryFullSignal: setVisible(false);
+	ArcherAngryClone: setVisible(false);
+	}
+
 }
 
-void BattleFieldUI::angryChange(Actor* heroActor)
+void BattleFieldUI::angryChange(Actor* angry)
 {
-	/*auto tintTo
-		auto percent = angry._angry / angry._angryMax * 100
-		auto progressTo = ProgressTo:create(0.3, percent)
-		auto progressToClone = ProgressTo->create(1, percent + 2)
+	auto percent = angry->getAngry() / angry->getAngry() * 100;
+	auto progressTo = ProgressTo::create(0.3, percent);
+	auto progressToClone = ProgressTo::create(1, percent + 2);
 
-		auto bar
-		if angry._name == KnightValues._name then
-			bar = KnightAngry
-			if percent >= 100 then
-				KnightAngryFullSignal->setVisible(true)
-				elseif percent == 0 then
-				KnightAngryFullSignal->setVisible(false)
-				end
-				elseif angry._name == ArcherValues._name then
-				bar = ArcherAngry
-				if percent >= 100 then
-					ArcherAngryFullSignal->setVisible(true)
-					elseif percent == 0 then
-					ArcherAngryFullSignal->setVisible(false)
-					end
-					elseif angry._name == MageValues._name then
-					bar = MageAngry
-					if percent >= 100 then
-						MageAngryFullSignal->setVisible(true)
-						elseif percent == 0 then
-						MageAngryFullSignal->setVisible(false)
-						end
-						end
+	ProgressTimer* bar;
+	if (angry->getname() == KnightValues._name)
+	{
+		bar = KnightAngry;
+		if (percent >= 100)
+			KnightAngryFullSignal->setVisible(true);
+		else if (percent == 0)
+			KnightAngryFullSignal->setVisible(false);
+	}
 
-						bar->runAction(progressTo)*/
+	else if (angry->getname() == ArcherValues._name)
+	{
+		bar = ArcherAngry;
+		if (percent >= 100)
+			ArcherAngryFullSignal->setVisible(true);
+		else if (percent == 0)
+			ArcherAngryFullSignal->setVisible(false);
+	}
+
+	else if (angry->getname() == MageValues._name)
+	{
+		bar = MageAngry;
+		if (percent >= 100)
+			MageAngryFullSignal->setVisible(true);
+		else if (percent == 0)
+			MageAngryFullSignal->setVisible(false);
+	}
+
+	bar->runAction(progressTo);
 }
 
 void BattleFieldUI::timeInit()
 {
-	//auto tm = { "00","00" }
-	//	tm = table.concat(tm, ":")
+	auto tm = "00:00";
+	//tm = table.concat(tm, ":")
 
-	//	auto ttfconfig = { outlineSize = 1,fontSize = 25,fontFilePath = "fonts/britanic bold.ttf" }
-	//	auto tm_label = Label:createWithTTF(ttfconfig, tm)
-	//	tm_label->setAnchorPoint(0, 0)
-	//	tm_label->setPosition3D(Vec3(G.winSize.width*0.02, G.winSize.height*0.915, 2))
-	//	tm_label->enableOutline(c4b(0, 0, 0, 255))
-	//	_tmlabel = tm_label
-	//	addChild(tm_label, 5)
-	//	--time update
-	//	auto time = 0
-	//	auto function tmUpdate()
-	//	time = time + 1
-	//	if time >= 3600 then
-	//time = 0
-	//end
+	TTFConfig ttfconfig;
+	ttfconfig.outlineSize = 1;
+	ttfconfig.fontSize = 25;
+	ttfconfig.fontFilePath = "fonts/britanic bold.ttf";
+	auto tm_label = Label::createWithTTF(ttfconfig, tm);//todo 
+	tm_label->setAnchorPoint(Vec2(0, 0));
+	tm_label->setPosition3D(Vec3(G.winSize.width*0.02, G.winSize.height*0.915, 2));
+	tm_label->enableOutline(Color4B(0, 0, 0, 255));
+	_tmlabel = tm_label;
+	addChild(tm_label, 5);
+	//time update
+	auto time = 0;
+	auto tmUpdate = [this, &time](float dt)
+	{
+		time = time + 1;
+		if (time >= 3600)
+			time = 0;
 
-	//auto dev = time
-	//auto min = math.floor(dev / 60)
-	//auto sec = dev % 60
-	//if min < 10 then
-	//min = "0"..min
-	//end
-	//if sec < 10 then
-	//sec = "0"..sec
-	//end
-	//_tmlabel->setString(min..":"..sec)
-	//end
+		int dev = time;
+		int min = dev / 60;
+		int sec = dev % 60;
+		//if (min < 10)
+		//	min = "0"..min;
+		//if (sec < 10)
+		//	sec = "0"..sec;
+		_tmlabel->setString(std::to_string(min) + ":" + std::to_string(sec));
+	};
 
-	//_tmSchedule = Director->getInstance()->getScheduler()->scheduleScriptFunc(tmUpdate, 1, false)
-
+	Director::getInstance()->getScheduler()->schedule(tmUpdate, this, 1, -1, "timeSchedule");
 }
 
 void BattleFieldUI::showVictoryUI()
 {
-	//--diable AI
+	//diable AI
 
-	//	--color layer
-	//	auto layer = LayerColor:create(c4b(10, 10, 10, 150))
-	//	layer->ignoreAnchorPointForPosition(false)
-	//	layer->setPosition3D(Vec3(G.winSize.width*0.5, G.winSize.height*0.5, 0))
-	//	--add victory
-	//	auto victory = Sprite::createWithSpriteFrameName("victory.png")
-	//	victory->setPosition3D(Vec3(G.winSize.width*0.5, G.winSize.height*0.5, 3))
-	//	victory->setScale(0.1)
-	//	layer->addChild(victory, 1)
+	//color layer
+	auto layer = LayerColor::create(Color4B(10, 10, 10, 150));
+	layer->ignoreAnchorPointForPosition(false);
+	layer->setPosition3D(Vec3(G.winSize.width*0.5, G.winSize.height*0.5, 0));
+	//add victory
+	auto victory = Sprite::createWithSpriteFrameName("victory.png");
+	victory->setPosition3D(Vec3(G.winSize.width*0.5, G.winSize.height*0.5, 3));
+	victory->setScale(0.1);
+	layer->addChild(victory, 1);
 
-	//	--victory runaction
-	//	auto action = EaseElasticOut->create(ScaleTo:create(1.5, 1))
-	//	victory->runAction(action)
+	//victory runaction
+	auto action = EaseElasticOut::create(ScaleTo::create(1.5, 1));
+	victory->runAction(action);
 
-	//	--touch event
-	//	auto function onTouchBegan(touch, event)
-	//	return true
-	//	end
-	//	auto function onTouchEnded(touch, event)
-	//	--stop schedule
-	//	Director : getInstance()->getScheduler()->unscheduleScriptEntry(_tmSchedule)
-	//	Director->getInstance()->getScheduler()->unscheduleScriptEntry(gameControllerScheduleID)
-	//	--stop sound
-	//	ccexp.AudioEngine->stop(AUDIO_ID.BATTLEFIELDBGM)
-	//	--replace scene
-	//	Director->getInstance()->replaceScene(require("ChooseRoleScene")->create())
-	//	end
-	//	auto listener = EventListenerTouchOneByOne->create()
-	//	listener->registerScriptHandler(onTouchBegan, Handler.EVENT_TOUCH_BEGAN)
-	//	listener->registerScriptHandler(onTouchEnded, Handler.EVENT_TOUCH_ENDED)
-	//	auto eventDispatcher = layer->getEventDispatcher()
-	//	eventDispatcher->addEventListenerWithSceneGraphPriority(listener, layer)
+	auto listener = EventListenerTouchOneByOne::create();
+	//touch event
+	listener->onTouchBegan = [](Touch*, Event*)
+	{
+		return true;
+	};
+	listener->onTouchEnded = [this](Touch*, Event*)
+	{
+		//stop schedule
+		Director::getInstance()->getScheduler()->unschedule("timeSchedule", this);
+		// todo Director::getInstance()->getScheduler()->unscheduleScriptEntry(gameControllerScheduleID);
+		//stop sound
+		experimental::AudioEngine::stop(AUDIO_ID.BATTLEFIELDBGM);
+		//replace scene
+		Director::getInstance()->replaceScene(ChooseRoleScene::createScene());
+	};
 
-	//	addChild(layer)
+	auto eventDispatcher = layer->getEventDispatcher();
+	eventDispatcher->addEventListenerWithSceneGraphPriority(listener, layer);
+
+	addChild(layer);
 }

@@ -111,7 +111,7 @@ void Knight::normalAttack()
 {
 	experimental::AudioEngine::play2d(WarriorProperty.normalAttackShout, false, 1);
 	KnightNormalAttack::CreateWithPos(getPosTable(this), _curFacing, _normalAttack, this);
-	//self._sprite:runAction(self._action.attackEffect:clone()) 
+	//_sprite:runAction(_action.attackEffect:clone()) 
 	AUDIO_ID.KNIGHTNORMALATTACK = experimental::AudioEngine::play2d(WarriorProperty.normalAttack1, false, 1);
 	experimental::AudioEngine::setFinishCallback(AUDIO_ID.KNIGHTNORMALATTACK, KnightNormalAttackCallback);
 }

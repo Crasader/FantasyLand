@@ -1,28 +1,8 @@
 ﻿#include "BattleScene.h"
-#include "Manager.h"
-#include "Actor.h"
+#include "GlobalVariables.h"
 #include "BattleFieldUI.h"
+#include "Actor.h"
 #include "MessageDispatchCenter.h"
-#include "Mage.h"
-#include "Dragon.h"
-#include "Knight.h"
-#include "Piglet.h"
-#include "Rat.h"
-#include "Archer.h"
-#include "Slime.h"
-
-
-//DEBUG
-Mage* mage;
-Archer* dragon;
-Slime* piglet;
-Rat* knight;
-MageIceSpikes *da;
-ArcherSpecialAttack* db;
-DragonAttack* dc;
-ArcherNormalAttack* dd;
-
-//DEBUG
 
 Scene* BattleScene::createScene()
 {
@@ -57,8 +37,6 @@ bool BattleScene::init()
 		battlefield->setRotation3D(Vec3(90, 0, 0));
 		addChild(battlefield);
 
-
-		debug();
 		scheduleUpdate();
 		setCameraMask(2, true);
 		return true;
@@ -232,7 +210,7 @@ void BattleScene::enableTouch()
 	{
 		if (UIcontainsPoint(touch->getLocation()) == MessageType::NullMessageType)
 			auto delta = touch->getDelta();
-		//cameraOffset = cc.pGetClampPoint(ccpSub(cameraOffset, delta), cameraOffsetMin, cameraOffsetMax);
+		//cameraOffset = pGetClampPoint(ccpSub(cameraOffset, delta), cameraOffsetMin, cameraOffsetMax);
 	};
 	touchEventListener->onTouchEnded = [this](Touch *touch, Event*)
 	{
@@ -288,12 +266,12 @@ void BattleScene::controlCamera()
 	{
 		switch (keycode)
 		{
-		case EventKeyboard::KeyCode::KEY_W:++cameraVelocity.y; break;
-		case EventKeyboard::KeyCode::KEY_A:--cameraVelocity.x; break;
-		case EventKeyboard::KeyCode::KEY_S:--cameraVelocity.y; break;
-		case EventKeyboard::KeyCode::KEY_D:++cameraVelocity.x; break;
-		case EventKeyboard::KeyCode::KEY_Q:--cameraVelocity.z; break;
-		case EventKeyboard::KeyCode::KEY_E:++cameraVelocity.z; break;
+		case EventKeyboard::KeyCode::KEY_UP_ARROW:++cameraVelocity.y; break;
+		case EventKeyboard::KeyCode::KEY_LEFT_ARROW:--cameraVelocity.x; break;
+		case EventKeyboard::KeyCode::KEY_DOWN_ARROW:--cameraVelocity.y; break;
+		case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:++cameraVelocity.x; break;
+		case EventKeyboard::KeyCode::KEY_PG_UP:--cameraVelocity.z; break;
+		case EventKeyboard::KeyCode::KEY_KP_PG_DOWN:++cameraVelocity.z; break;
 		}
 	};
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
@@ -302,58 +280,13 @@ void BattleScene::controlCamera()
 	{
 		switch (keycode)
 		{
-		case EventKeyboard::KeyCode::KEY_W:--cameraVelocity.y; break;
-		case EventKeyboard::KeyCode::KEY_A:++cameraVelocity.x; break;
-		case EventKeyboard::KeyCode::KEY_S:++cameraVelocity.y; break;
-		case EventKeyboard::KeyCode::KEY_D:--cameraVelocity.x; break;
-		case EventKeyboard::KeyCode::KEY_Q:++cameraVelocity.z; break;
-		case EventKeyboard::KeyCode::KEY_E:--cameraVelocity.z; break;
-		case EventKeyboard::KeyCode::KEY_Z:da = MageIceSpikes::CreateWithPos(Vec2(0, 0), 50, MageValues._specialAttack, dragon);
-			mage->addChild(da);
-			mage->hurt(da); break;
-		case EventKeyboard::KeyCode::KEY_X:db = ArcherSpecialAttack::CreateWithPos(Vec2(0, 0), 50, ArcherValues._specialAttack, piglet);
-			dragon->addChild(db);
-			dragon->hurt(db);  break;
-		case EventKeyboard::KeyCode::KEY_C:dc = DragonAttack::CreateWithPos(Vec2(0, 0), 50, DragonValues._normalAttack);
-			knight->addChild(dc);
-			knight->hurt(dc);  break;
-		case EventKeyboard::KeyCode::KEY_V:dd = ArcherNormalAttack::CreateWithPos(Vec2(0, 0), 50, BossValues._normalAttack, dragon);
-			piglet->addChild(dd);
-			piglet->hurt(dd); break;
-		case EventKeyboard::KeyCode::KEY_B: //da = DragonAttack::CreateWithPos(Vec2(0,0), 50, DragonValues._normalAttack);
-			//piglet->hurt(DragonAttack::CreateWithPos(Vec2(110,110), 50, DragonValues._normalAttack)); 
-			break;
-		case EventKeyboard::KeyCode::KEY_N: piglet->idleMode();
-			knight->idleMode(); dragon->idleMode(); mage->idleMode(); break;
-		case EventKeyboard::KeyCode::KEY_M:	knight->idleMode(); break;
-		case EventKeyboard::KeyCode::KEY_COMMA:	piglet->idleMode(); break;
-			//dragon->dyingMode(Vec2(-500, 0), 100);
-			//knight->dyingMode(Vec2(-500, 0), 100);
-			//piglet->dyingMode(Vec2(-500, 0), 100); 
-			//break;
+		case EventKeyboard::KeyCode::KEY_UP_ARROW:--cameraVelocity.y; break;
+		case EventKeyboard::KeyCode::KEY_LEFT_ARROW:++cameraVelocity.x; break;
+		case EventKeyboard::KeyCode::KEY_DOWN_ARROW:++cameraVelocity.y; break;
+		case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:--cameraVelocity.x; break;
+		case EventKeyboard::KeyCode::KEY_PG_UP:++cameraVelocity.z; break;
+		case EventKeyboard::KeyCode::KEY_KP_PG_DOWN:--cameraVelocity.z; break;
 		}
 	};
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(keyboardListener, this);
-}
-
-void BattleScene::debug()
-{
-	//the camera->position is Vec3(-500, 80, 0)
-	mage = Mage::create();
-	mage->setPosition3D(Vec3(-500, 0, -500));
-	mage->setRotation3D(Vec3(-90, 0, 0));
-	currentLayer->addChild(mage);
-	dragon = Archer::create();
-	dragon->setPosition3D(Vec3(-400, 0, -500));
-	dragon->setRotation3D(Vec3(-90, 0, 0));
-	currentLayer->addChild(dragon);
-	knight = Rat::create();
-	knight->setPosition3D(Vec3(-300, 0, -500));
-	knight->setRotation3D(Vec3(-90, 0, 0));
-	currentLayer->addChild(knight);
-	piglet = Slime::create();
-	piglet->setPosition3D(Vec3(-200, 0, -500));
-	piglet->setRotation3D(Vec3(-90, 0, 0));
-	currentLayer->addChild(piglet);
-
 }

@@ -23,6 +23,13 @@ public:
 	virtual void playAnimation(std::string name, bool loop = false);
 
 	//getter & setter
+	float getHP();
+	float getMaxHP();
+	std::string getname();
+	ProgressTimer* getBloodBar();
+	ProgressTimer* getBloodBarClone();
+	Sprite* getAvatar();
+	void setname(std::string name);
 	EnumRaceType getRaceType();
 	void setRaceType(EnumRaceType type);
 	EnumStateType getStateType();
@@ -98,32 +105,32 @@ protected:
 	
 	//target variables
 	float _targetFacing;//direction the actor Wants to turn to
-	Actor* _target = nullptr;	//the enemy actor;
+	Actor* _target;	//the enemy actor;
 	Vec2 _myPos;
 	float _angry;
 	float _angryMax;
 
 	//other variables
-	HPCounter* _hpCounter = nullptr;
-	Node* _effectNode = nullptr;
+	HPCounter* _hpCounter;
+	Node* _effectNode;
 	int _monsterHeight;
 	int _heroHeight;
 	ParticleSystem* _puff = nullptr;
-	Sprite* _circle = nullptr;
+	Sprite* _circle;
 	Map<std::string, ActionInterval*> _action;
 
 	int _useWeaponId;
 	int _useArmourId;
 	int _useHelmetId;
-	ProgressTimer* _bloodBar = nullptr;
-	ProgressTimer* _bloodBarClone = nullptr;
-	Sprite* _avatar = nullptr;
+	ProgressTimer* _bloodBar;
+	ProgressTimer* _bloodBarClone;
+	Sprite* _avatar;
 
 	//
 	enum EnumRaceType _racetype;	//type of the actor
 	enum EnumStateType _statetype;	//AI state machine
-	Sprite* _sprite = nullptr;
-    Sprite3D* _sprite3d = nullptr;	//place to hold 3d model
+	Sprite* _sprite;
+    Sprite3D* _sprite3d;	//place to hold 3d model
 
     float _radius;	//actor collider size
 	float _shadowSize;	//weight of the role, it affects collision

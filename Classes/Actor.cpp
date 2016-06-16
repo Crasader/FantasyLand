@@ -125,6 +125,41 @@ void Actor::playAnimation(std::string name, bool loop)
 	}
 }
 
+float Actor::getHP()
+{
+	return _hp;
+}
+
+float Actor::getMaxHP()
+{
+	return _maxhp;
+}
+
+std::string Actor::getname()
+{
+	return _name;
+}
+
+ProgressTimer* Actor::getBloodBar()
+{
+	return _bloodBar;
+}
+
+ProgressTimer* Actor::getBloodBarClone()
+{
+	return _bloodBarClone;
+}
+
+Sprite* Actor::getAvatar()
+{
+	return _avatar;
+}
+
+void Actor::setname(std::string name)
+{
+	_name = name;
+}
+
 //getter & setter
 
 //get hero type
@@ -430,14 +465,11 @@ Actor* Actor::_findEnemy(EnumRaceType HeroOrMonster, bool &allDead)
 		manager = &HeroManager;
 	else
 		manager = &MonsterManager;
-	for (auto val = manager->begin(); val != manager->end(); ++val) 
-	{
+	for (auto val = manager->begin(); val != manager->end(); ++val) {
 		auto temp = *val;
 		auto dis = ccpDistance(_myPos, temp->_myPos);
-		if (temp->_isalive) 
-		{
-			if (dis < shortest)
-			{
+		if (temp->_isalive) {
+			if (dis < shortest) {
 				shortest = dis;
 				target = temp;
 			}
@@ -484,7 +516,7 @@ void Actor::AI()
 				return;
 				//else
 				//Since im attacking, I cant just switch to another mode immediately
-				//print(self._name, "says : what should I do?", self._statetype)	
+				//print(_name, "says : what should I do?", _statetype)	
 			}
 		}
 		else if (_statetype != EnumStateType::WALKING && _goRight == true) {

@@ -14,7 +14,7 @@ public:
 	void bloodbarInit();
 	void angrybarInit();
 	void touchButtonInit();
-	void shakeAvatar();
+	Repeat* shakeAvatar();
 	void bloodDrop(Actor *heroActor);
 	void heroDead(Actor *heroActor);
 	void angryChange(Actor *heroActor);
@@ -39,4 +39,12 @@ public:
 	Sprite *KnightPngFrame;
 	Sprite *ArcherPng;
 	Sprite *ArcherPngFrame;
+
+
+	Label *_tmlabel;
+	unsigned int _tmSchedule;
+	Sprite* KnightAngryFullSignal;
+	Sprite* ArcherAngryFullSignal;
+	ProgressTimer* MageAngryClone;
+	Sprite* MageAngryFullSignal;
 };

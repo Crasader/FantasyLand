@@ -500,7 +500,7 @@ void GameMaster::showWarning()
 	warning->setScale(0.5);
 	warning->setPositionZ(-Director::getInstance()->getZEye() / 2);
 	warning->ignoreAnchorPointForPosition(false);
-	warning->setLocalZOrder(999);
+	warning->setZOrder(999);
 	camera->addChild(warning, 2);
 }
 
