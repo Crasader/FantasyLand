@@ -55,141 +55,141 @@ void GameMaster::update(float dt)
 
 void GameMaster::logicUpdate()
 {
-	showWarning();
-	//if (stage == 1)
-	//{
-	//	if (MonsterManager.size() < EXIST_MIN_MONSTER)
-	//	{
-	//		srand(time(NULL));
-	//		for (int i = 1; i <= 4; i++)
-	//		{
-	//			randomshowMonster(true);
-	//		}
-	//		stage = 2;
-	//	}
-	//}
-	//else if (stage == 2)
-	//{
-	//	if (MonsterManager.size() < EXIST_MIN_MONSTER)
-	//	{
-	//		srand(time(NULL));
-	//		for (int i = 1; i <= 4; i++)
-	//		{
-	//			randomshowMonster(true);
-	//		}
-	//		stage = 3;
-	//	}
-	//}
-	//else if (stage == 3)
-	//{
-	//	if (MonsterManager.size() == 0)
-	//	{
-	//		for (int i = 0; i < HeroManager.size(); i++)
-	//		{
-	//			auto hero = HeroManager[i];
-	//			if (hero != NULL)
-	//			{
-	//				hero->setGoRight(true) ;
-	//			}
-	//		}
-	//		stage = 4;
-	//	}
-	//}
-	//else if (stage == 4)
-	//{
-	//	if (getFocusPointOfHeros().x > battleSiteX[2])
-	//	{
-	//		srand(time(NULL));
-	//		for (int i = 1; i <= 3; i++)
-	//		{
-	//			randomshowMonster(true);
-	//		}
-	//		for (int i = 1; i <= 4; i++)
-	//		{
-	//			randomshowMonster(false);
-	//		}
-	//		stage = 5;
-	//	}
-	//}
-	//else if (stage == 5)
-	//{
-	//	if (MonsterManager.size() < EXIST_MIN_MONSTER)
-	//	{
-	//		srand(time(NULL));
-	//		for (int i = 1; i <= 4; i++)
-	//		{
-	//			randomshowMonster(true);
-	//		}
-	//		stage = 6;
-	//	}
-	//}
-	//else if (stage == 6)
-	//{
-	//	if (MonsterManager.size() < EXIST_MIN_MONSTER)
-	//	{
-	//		srand(time(NULL));
-	//		for (int i = 1; i <= 4; i++)
-	//		{
-	//			randomshowMonster(false);
-	//		}
-	//		stage = 7;
-	//	}
-	//}
-	//else if (stage == 7)
-	//{
-	//	if (MonsterManager.size() == 0)
-	//	{
-	//		for (int i = 0; i < HeroManager.size(); i++)
-	//		{
-	//			auto hero = HeroManager[i];
-	//			if (hero != NULL)
-	//			{
-	//				hero->setGoRight(true);
-	//			}
-	//		}
-	//		for (int i = 0; i < PigletPool.size(); i++)
-	//		{
-	//			auto monster = PigletPool[i];
-	//			if (monster != NULL)
-	//			{
-	//				monster->removeFromParent();
-	//			}
-	//		}
-	//		for (int i = 0; i < SlimePool.size(); i++)
-	//		{
-	//			auto monster = SlimePool[i];
-	//			if (monster != NULL)
-	//			{
-	//				monster->removeFromParent();
-	//			}
-	//		}
-	//		for (int i = 0; i < DragonPool.size(); i++)
-	//		{
-	//			auto monster = DragonPool[i];
-	//			if (monster != NULL)
-	//			{
-	//				monster->removeFromParent();
-	//			}
-	//		}
-	//		for (int i = 0; i < RatPool.size(); i++)
-	//		{
-	//			auto monster = RatPool[i];
-	//			if (monster != NULL)
-	//			{
-	//				monster->removeFromParent();
-	//			}
-	//		}
-	//		stage = 8;
-	//	}
-	//}
-	//else if (stage == 8)
-	//{
-	//	if (getFocusPointOfHeros().x > battleSiteX[3])
-	//	{
-	//		showWarning();
-	//		stage = 9;
-	//	}
-	//}
+	//todo showwarning
+	if (stage == 1)
+	{
+		if (MonsterManager.size() < EXIST_MIN_MONSTER)
+		{
+			srand(time(NULL));
+			for (int i = 1; i <= 4; i++)
+			{
+				randomshowMonster(true);
+			}
+			stage = 2;
+		}
+	}
+	else if (stage == 2)
+	{
+		if (MonsterManager.size() < EXIST_MIN_MONSTER)
+		{
+			srand(time(NULL));
+			for (int i = 1; i <= 4; i++)
+			{
+				randomshowMonster(true);
+			}
+			stage = 3;
+		}
+	}
+	else if (stage == 3)
+	{
+		if (MonsterManager.size() == 0)
+		{
+			for (int i = 0; i < HeroManager.size(); i++)
+			{
+				auto hero = HeroManager[i];
+				if (hero != NULL)
+				{
+					hero->setGoRight(true) ;
+				}
+			}
+			stage = 4;
+		}
+	}
+	else if (stage == 4)
+	{
+		if (getFocusPointOfHeros().x > battleSiteX[2])
+		{
+			srand(time(NULL));
+			for (int i = 1; i <= 3; i++)
+			{
+				randomshowMonster(true);
+			}
+			for (int i = 1; i <= 4; i++)
+			{
+				randomshowMonster(false);
+			}
+			stage = 5;
+		}
+	}
+	else if (stage == 5)
+	{
+		if (MonsterManager.size() < EXIST_MIN_MONSTER)
+		{
+			srand(time(NULL));
+			for (int i = 1; i <= 4; i++)
+			{
+				randomshowMonster(true);
+			}
+			stage = 6;
+		}
+	}
+	else if (stage == 6)
+	{
+		if (MonsterManager.size() < EXIST_MIN_MONSTER)
+		{
+			srand(time(NULL));
+			for (int i = 1; i <= 4; i++)
+			{
+				randomshowMonster(false);
+			}
+			stage = 7;
+		}
+	}
+	else if (stage == 7)
+	{
+		if (MonsterManager.size() == 0)
+		{
+			for (int i = 0; i < HeroManager.size(); i++)
+			{
+				auto hero = HeroManager[i];
+				if (hero != NULL)
+				{
+					hero->setGoRight(true);
+				}
+			}
+			for (int i = 0; i < PigletPool.size(); i++)
+			{
+				auto monster = PigletPool[i];
+				if (monster != NULL)
+				{
+					monster->removeFromParent();
+				}
+			}
+			for (int i = 0; i < SlimePool.size(); i++)
+			{
+				auto monster = SlimePool[i];
+				if (monster != NULL)
+				{
+					monster->removeFromParent();
+				}
+			}
+			for (int i = 0; i < DragonPool.size(); i++)
+			{
+				auto monster = DragonPool[i];
+				if (monster != NULL)
+				{
+					monster->removeFromParent();
+				}
+			}
+			for (int i = 0; i < RatPool.size(); i++)
+			{
+				auto monster = RatPool[i];
+				if (monster != NULL)
+				{
+					monster->removeFromParent();
+				}
+			}
+			stage = 8;
+		}
+	}
+	else if (stage == 8)
+	{
+		if (getFocusPointOfHeros().x > battleSiteX[3])
+		{
+			showWarning();
+			stage = 9;
+		}
+	}
 }
 
 void GameMaster::AddHeros()
