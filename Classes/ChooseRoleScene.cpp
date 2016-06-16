@@ -18,6 +18,11 @@ bool ChooseRoleScene::init()
 	Layer::init();
 	currentLayer = this;
 
+
+
+
+
+
 	addBackground();
 	addHeros();
 	addBattleButton();
@@ -67,8 +72,8 @@ void ChooseRoleScene::addBattleButton()
 
 	addChild(battleButton);
 }
-//
+
 //void ChooseRoleScene::playAudioWhenRotate()
 //{
-//	//auto hero = getChildByTag();
+//	auto hero = getChildByTag();
 //}

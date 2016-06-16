@@ -314,7 +314,7 @@ void MainMenuScene::addBackground()
 
 void MainMenuScene::addButton()
 {
-	auto startButton = ui::Button::create("mainMenuScene/startNormal.png", "mainMenuScene/startSelected.png");
+	auto startButton = ui::Button::create("mainMenuScene/start_normal.png", "mainMenuScene/start.png");
 	auto starButton = ui::Button::create("mainMenuScene/starNormal.png", "mainMenuScene/starSelected.png");
 	auto settingButton = ui::Button::create("mainMenuScene/settingNormal.png", "mainMenuScene/settingSelected.png");
 	auto exitButton = ui::Button::create("mainMenuScene/exitNormal.png", "mainMenuScene/exitSelected.png");
