@@ -15,7 +15,7 @@ public:
 	virtual void playHitAudio();
 	virtual void hurtEffect(Actor* target);
 	virtual void onCollide(Actor* target);
-	virtual void onUpdate();
+	virtual void onUpdate(float dt);
 	void initData(Vec2 pos, float facing, struct attack_d attackInfo);
 
 	//set & get
