@@ -575,11 +575,10 @@ void GameMaster::showDialog()
 		};
 
 		dialog->runAction(Sequence::create(ScaleTo::create(0.5, 0.1), CallFunc::create(removeDialog),NULL));
-		Director::getInstance()->getScheduler()->unscheduleScriptEntry(scheduleid);
+		//todo Director::getInstance()->getScheduler()->unscheduleScriptEntry(scheduleid);
 	};
 	//todo scheduleid = cc.Director:getInstance():getScheduler():scheduleScriptFunc(exitDialog,3,false)
 
-	Director::getInstance()->getScheduler();
 
 	Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGB565);
 }
