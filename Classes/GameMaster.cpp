@@ -55,140 +55,141 @@ void GameMaster::update(float dt)
 
 void GameMaster::logicUpdate()
 {
-	if (stage == 1)
-	{
-		if (MonsterManager.size() < EXIST_MIN_MONSTER)
-		{
-			srand(time(NULL));
-			for (int i = 1; i <= 4; i++)
-			{
-				randomshowMonster(true);
-			}
-			stage = 2;
-		}
-	}
-	else if (stage == 2)
-	{
-		if (MonsterManager.size() < EXIST_MIN_MONSTER)
-		{
-			srand(time(NULL));
-			for (int i = 1; i <= 4; i++)
-			{
-				randomshowMonster(true);
-			}
-			stage = 3;
-		}
-	}
-	else if (stage == 3)
-	{
-		if (MonsterManager.size() == 0)
-		{
-			for (int i = 0; i < HeroManager.size(); i++)
-			{
-				auto hero = HeroManager[i];
-				if (hero != NULL)
-				{
-					hero->setGoRight(true) ;
-				}
-			}
-			stage = 4;
-		}
-	}
-	else if (stage == 4)
-	{
-		if (getFocusPointOfHeros().x > battleSiteX[2])
-		{
-			srand(time(NULL));
-			for (int i = 1; i <= 3; i++)
-			{
-				randomshowMonster(true);
-			}
-			for (int i = 1; i <= 4; i++)
-			{
-				randomshowMonster(false);
-			}
-			stage = 5;
-		}
-	}
-	else if (stage == 5)
-	{
-		if (MonsterManager.size() < EXIST_MIN_MONSTER)
-		{
-			srand(time(NULL));
-			for (int i = 1; i <= 4; i++)
-			{
-				randomshowMonster(true);
-			}
-			stage = 6;
-		}
-	}
-	else if (stage == 6)
-	{
-		if (MonsterManager.size() < EXIST_MIN_MONSTER)
-		{
-			srand(time(NULL));
-			for (int i = 1; i <= 4; i++)
-			{
-				randomshowMonster(false);
-			}
-			stage = 7;
-		}
-	}
-	else if (stage == 7)
-	{
-		if (MonsterManager.size() == 0)
-		{
-			for (int i = 0; i < HeroManager.size(); i++)
-			{
-				auto hero = HeroManager[i];
-				if (hero != NULL)
-				{
-					hero->setGoRight(true);
-				}
-			}
-			for (int i = 0; i < PigletPool.size(); i++)
-			{
-				auto monster = PigletPool[i];
-				if (monster != NULL)
-				{
-					monster->removeFromParent();
-				}
-			}
-			for (int i = 0; i < SlimePool.size(); i++)
-			{
-				auto monster = SlimePool[i];
-				if (monster != NULL)
-				{
-					monster->removeFromParent();
-				}
-			}
-			for (int i = 0; i < DragonPool.size(); i++)
-			{
-				auto monster = DragonPool[i];
-				if (monster != NULL)
-				{
-					monster->removeFromParent();
-				}
-			}
-			for (int i = 0; i < RatPool.size(); i++)
-			{
-				auto monster = RatPool[i];
-				if (monster != NULL)
-				{
-					monster->removeFromParent();
-				}
-			}
-			stage = 8;
-		}
-	}
-	else if (stage == 8)
-	{
-		if (getFocusPointOfHeros().x > battleSiteX[3])
-		{
-			showWarning();
-			stage = 9;
-		}
-	}
+	showWarning();
+	//if (stage == 1)
+	//{
+	//	if (MonsterManager.size() < EXIST_MIN_MONSTER)
+	//	{
+	//		srand(time(NULL));
+	//		for (int i = 1; i <= 4; i++)
+	//		{
+	//			randomshowMonster(true);
+	//		}
+	//		stage = 2;
+	//	}
+	//}
+	//else if (stage == 2)
+	//{
+	//	if (MonsterManager.size() < EXIST_MIN_MONSTER)
+	//	{
+	//		srand(time(NULL));
+	//		for (int i = 1; i <= 4; i++)
+	//		{
+	//			randomshowMonster(true);
+	//		}
+	//		stage = 3;
+	//	}
+	//}
+	//else if (stage == 3)
+	//{
+	//	if (MonsterManager.size() == 0)
+	//	{
+	//		for (int i = 0; i < HeroManager.size(); i++)
+	//		{
+	//			auto hero = HeroManager[i];
+	//			if (hero != NULL)
+	//			{
+	//				hero->setGoRight(true) ;
+	//			}
+	//		}
+	//		stage = 4;
+	//	}
+	//}
+	//else if (stage == 4)
+	//{
+	//	if (getFocusPointOfHeros().x > battleSiteX[2])
+	//	{
+	//		srand(time(NULL));
+	//		for (int i = 1; i <= 3; i++)
+	//		{
+	//			randomshowMonster(true);
+	//		}
+	//		for (int i = 1; i <= 4; i++)
+	//		{
+	//			randomshowMonster(false);
+	//		}
+	//		stage = 5;
+	//	}
+	//}
+	//else if (stage == 5)
+	//{
+	//	if (MonsterManager.size() < EXIST_MIN_MONSTER)
+	//	{
+	//		srand(time(NULL));
+	//		for (int i = 1; i <= 4; i++)
+	//		{
+	//			randomshowMonster(true);
+	//		}
+	//		stage = 6;
+	//	}
+	//}
+	//else if (stage == 6)
+	//{
+	//	if (MonsterManager.size() < EXIST_MIN_MONSTER)
+	//	{
+	//		srand(time(NULL));
+	//		for (int i = 1; i <= 4; i++)
+	//		{
+	//			randomshowMonster(false);
+	//		}
+	//		stage = 7;
+	//	}
+	//}
+	//else if (stage == 7)
+	//{
+	//	if (MonsterManager.size() == 0)
+	//	{
+	//		for (int i = 0; i < HeroManager.size(); i++)
+	//		{
+	//			auto hero = HeroManager[i];
+	//			if (hero != NULL)
+	//			{
+	//				hero->setGoRight(true);
+	//			}
+	//		}
+	//		for (int i = 0; i < PigletPool.size(); i++)
+	//		{
+	//			auto monster = PigletPool[i];
+	//			if (monster != NULL)
+	//			{
+	//				monster->removeFromParent();
+	//			}
+	//		}
+	//		for (int i = 0; i < SlimePool.size(); i++)
+	//		{
+	//			auto monster = SlimePool[i];
+	//			if (monster != NULL)
+	//			{
+	//				monster->removeFromParent();
+	//			}
+	//		}
+	//		for (int i = 0; i < DragonPool.size(); i++)
+	//		{
+	//			auto monster = DragonPool[i];
+	//			if (monster != NULL)
+	//			{
+	//				monster->removeFromParent();
+	//			}
+	//		}
+	//		for (int i = 0; i < RatPool.size(); i++)
+	//		{
+	//			auto monster = RatPool[i];
+	//			if (monster != NULL)
+	//			{
+	//				monster->removeFromParent();
+	//			}
+	//		}
+	//		stage = 8;
+	//	}
+	//}
+	//else if (stage == 8)
+	//{
+	//	if (getFocusPointOfHeros().x > battleSiteX[3])
+	//	{
+	//		showWarning();
+	//		stage = 9;
+	//	}
+	//}
 }
 
 void GameMaster::AddHeros()
@@ -484,7 +485,7 @@ void GameMaster::showWarning()
 	auto warning = Layer::create();
 	auto warning_logo = Sprite::createWithSpriteFrameName("caution.png");
 	Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGB565);
-	warning_logo->setPosition(G.winSize.width*0.5, G.winSize.height*0.5);
+	warning_logo->setPosition(VisibleSize.width*0.5, VisibleSize.height*0.5);
 	warning_logo->setPositionZ(1);
 
 	auto showdialog = [warning,this]()
@@ -512,33 +513,33 @@ void GameMaster::showDialog()
 	colorLayer->setPositionZ(-Director::getInstance()->getZEye() / 5);
 	colorLayer->setGlobalZOrder(0);
 	camera->addChild(colorLayer);
-
+	
 	auto dialog = Layer::create();
-	dialog->setPositionX(-G.winSize.width*0.025);
+	dialog->setPositionX(-VisibleSize.width*0.025);
 
 	auto outframe = Sprite::createWithSpriteFrameName("outframe.png");
-	outframe->setPosition(G.winSize.width * 0.55, G.winSize.height * 0.27);
+	outframe->setPosition(VisibleSize.width * 0.55, VisibleSize.height * 0.27);
 	outframe->setScale(0.6*resolutionRate);
 	dialog->addChild(outframe);
 
 	auto inframe = Sprite::createWithSpriteFrameName("inframe.png");
-	inframe->setPosition(G.winSize.width * 0.67, G.winSize.height * 0.27);
+	inframe->setPosition(VisibleSize.width * 0.67, VisibleSize.height * 0.27);
 	inframe->setScale(0.5*resolutionRate);
 	dialog->addChild(inframe);
 
 	auto bossicon = Sprite::createWithSpriteFrameName("bossicon.png");
-	bossicon->setPosition(G.winSize.width*0.42, G.winSize.height*0.46);
+	bossicon->setPosition(VisibleSize.width*0.42, VisibleSize.height*0.46);
 	bossicon->setScale(0.75*resolutionRate);
 	bossicon->setFlippedX(true);
 	dialog->addChild(bossicon);
 
 	auto bosslogo = Sprite::createWithSpriteFrameName("bosslogo.png");
-	bosslogo->setPosition(G.winSize.width*0.417, G.winSize.height*0.265);
+	bosslogo->setPosition(VisibleSize.width*0.417, VisibleSize.height*0.265);
 	bosslogo->setScale(0.74*resolutionRate);
 	dialog->addChild(bosslogo);
 
 	auto text = Label::createWithTTF(BossTaunt, "fonts/britanic bold.ttf", 24);
-	text->setPosition(G.winSize.width*0.68, G.winSize.height*0.27);
+	text->setPosition(VisibleSize.width*0.68, VisibleSize.height*0.27);
 	dialog->addChild(text);
 
 	dialog->setScale(0.1);
@@ -576,8 +577,9 @@ void GameMaster::showDialog()
 		dialog->runAction(Sequence::create(ScaleTo::create(0.5, 0.1), CallFunc::create(removeDialog),NULL));
 		Director::getInstance()->getScheduler()->unscheduleScriptEntry(scheduleid);
 	};
+	//todo scheduleid = cc.Director:getInstance():getScheduler():scheduleScriptFunc(exitDialog,3,false)
 
-	//scheduleid = Director::getInstance()->getScheduler()->schedule(exitDialog, 3.0f, false,"lamaba");
+	Director::getInstance()->getScheduler();
 
 	Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGB565);
 }

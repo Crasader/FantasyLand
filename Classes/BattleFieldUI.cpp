@@ -38,7 +38,7 @@ void BattleFieldUI::avatarInit()
 	addChild(MagePngFrame, 1);
 
 	KnightPng = Sprite::createWithSpriteFrameName("UI-1136-640_03.png");
-	KnightPng->setPosition3D(Vec3(-MagePng->getContentSize().width * 2 + MagePng->getPositionX() + 100, 70 / 640 * G.winSize.height, 2 + 100));
+	KnightPng->setPosition3D(Vec3(-MagePng->getContentSize().width * 2 + MagePng->getPositionX() + 100, 70 / 640 * VisibleSize.height, 2 + 100));
 	KnightPng->setScale(scale);
 	addChild(KnightPng, 2);
 	KnightPngFrame = Sprite::createWithSpriteFrameName("UI-2.png");
@@ -47,7 +47,7 @@ void BattleFieldUI::avatarInit()
 	addChild(KnightPngFrame, 1);
 
 	ArcherPng = Sprite::createWithSpriteFrameName("UI-1136-640_11.png");
-	ArcherPng->setPosition3D(Vec3(-MagePng->getContentSize().width + MagePng->getPositionX() + 20, 70 / 640 * G.winSize.height, 2));
+	ArcherPng->setPosition3D(Vec3(-MagePng->getContentSize().width + MagePng->getPositionX() + 20, 70 / 640 * VisibleSize.height, 2));
 	ArcherPng->setScale(scale);
 	addChild(ArcherPng, 2);
 	ArcherPngFrame = Sprite::createWithSpriteFrameName("UI-2.png");
@@ -217,12 +217,12 @@ void BattleFieldUI::angrybarInit()
 void BattleFieldUI::touchButtonInit()
 {
 	auto _setBtn = Sprite::createWithSpriteFrameName("UI-1136-640_06.png");
-	_setBtn->setPosition3D(Vec3(1093 / 1136 * G.winSize.width, 591 / 640 * G.winSize.height, 3));
+	_setBtn->setPosition3D(Vec3(1093 / 1136 * VisibleSize.width, 591 / 640 * VisibleSize.height, 3));
 	_setBtn->setScale(0.8);
 	addChild(_setBtn, 3);
 
 	auto _chest = Sprite::createWithSpriteFrameName("chest.png");
-	_chest->setPosition3D(Vec3(861 / 1136 * G.winSize.width, 595 / 640 * G.winSize.height, 3));
+	_chest->setPosition3D(Vec3(861 / 1136 * VisibleSize.width, 595 / 640 * VisibleSize.height, 3));
 	_chest->setScale(0.8);
 	addChild(_chest, 3);
 
