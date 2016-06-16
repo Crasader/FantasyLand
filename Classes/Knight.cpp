@@ -27,6 +27,7 @@ bool Knight::init()
 	init3D();
 	initActions();
 	
+	idleMode();
 	_AIEnabled = true;
 	scheduleUpdateWithPriority(0);
 
@@ -300,6 +301,7 @@ int Knight::getArmourID()
 
 float Knight::hurt(BasicCollider* collider, bool dirKnockMode)
 {
+	log("I am hurted");
 	if (isAlive()) {
 		//TODO add sound effect
 		auto damage = collider->getDamage();
