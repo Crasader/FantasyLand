@@ -558,7 +558,7 @@ void GameMaster::showDialog()
 
 	dialog->runAction(Sequence::create(ScaleTo::create(0.5, 0.5), CallFunc::create(pausegame),NULL));
 	uiLayer->setVisible(false);
-
+	//todo
 	//auto exitDialog = [dialog, colorLayer, this]()
 	//{
 	//	auto removeDialog = [dialog, colorLayer, this]()
