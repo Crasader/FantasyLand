@@ -29,14 +29,13 @@ protected:
 	//void playAudioWhenRotate();
 
 
-	//local sortorder = { 1,2,3 }; //hero's tag
-	//local rtt = { { x = -90,y = -60,z = 0 },{ x = -90,y = -70,z = 0 },{ x = -90,y = -60,z = 0 } };
-	//local visibleSize = cc.Director:getInstance() : getVisibleSize();
-	//Vec2 pos = { {  visibleSize.width*0.14, visibleSize.height*0.35, -180 },{ x = visibleSize.width*0.34,y = visibleSize.height*0.25,z = -40 },{ x = visibleSize.width*0.5,y = visibleSize.height*0.35,z = -180 } };
-	Vec2 weapon_item_pos = { 832, 280 };
-	Vec2 armour_item_pos = { 916, 280 };
-	Vec2 helmet_item_pos = { 1000, 280 };
-	bool isMoving = false;
-	int direction = 0;
-	Rect heroSize = Rect(155, 120, 465, 420);
+	//int sortorder[3] = { 1,2,3 }; //hero's tag
+	//Vec3 rtt[3] = { {  -90, -60, 0 },{  -90, -70, 0 },{  -90, -60, 0 } };
+	//Vec2 pos = { {  VisibleSize.width*0.14, visibleSize.height*0.35, -180 },{ x = visibleSize.width*0.34,y = visibleSize.height*0.25,z = -40 },{ x = visibleSize.width*0.5,y = visibleSize.height*0.35,z = -180 } };
+	//Vec2 weapon_item_pos = { 832, 280 };
+	//Vec2 armour_item_pos = { 916, 280 };
+	//Vec2 helmet_item_pos = { 1000, 280 };
+	//bool isMoving = false;
+	//int direction = 0;
+	//Rect heroSize = Rect(155, 120, 465, 420);
 };

@@ -55,7 +55,6 @@ void GameMaster::update(float dt)
 
 void GameMaster::logicUpdate()
 {
-	//todo showwarning
 	if (stage == 1)
 	{
 		if (MonsterManager.size() < EXIST_MIN_MONSTER)
@@ -194,33 +193,23 @@ void GameMaster::logicUpdate()
 
 void GameMaster::AddHeros()
 {
-	//auto knight = Knight::create();
-	//knight->setPosition(battleSiteX[1], 10);
-	//currentLayer->addChild(knight);
-	//knight->idleMode();
-	//HeroManager.push_back(knight);
-	//
-	//auto mage = Mage::create();
-	//mage->setPosition(battleSiteX[1], 100);
-	//currentLayer->addChild(mage);
-	//mage->idleMode();
-	//HeroManager.push_back(mage);
+	auto knight = Knight::create();
+	knight->setPosition(battleSiteX[1], 10);
+	currentLayer->addChild(knight);
+	knight->idleMode();
+	HeroManager.push_back(knight);
+	
+	auto mage = Mage::create();
+	mage->setPosition(battleSiteX[1], 100);
+	currentLayer->addChild(mage);
+	mage->idleMode();
+	HeroManager.push_back(mage);
 
 	auto archer = Archer::create();
 	archer->setPosition(battleSiteX[1], -80);
 	currentLayer->addChild(archer);
 	archer->idleMode();
 	HeroManager.push_back(archer);
-	auto archer1 = Archer::create();
-	archer1->setPosition(battleSiteX[1], 10);
-	currentLayer->addChild(archer1);
-	archer1->idleMode();
-	HeroManager.push_back(archer1);
-	auto archer2 = Archer::create();
-	archer2->setPosition(battleSiteX[1], 100);
-	currentLayer->addChild(archer2);
-	archer2->idleMode();
-	HeroManager.push_back(archer2);
 }
 
 void GameMaster::addMonsters()
@@ -570,27 +559,38 @@ void GameMaster::showDialog()
 	dialog->runAction(Sequence::create(ScaleTo::create(0.5, 0.5), CallFunc::create(pausegame),NULL));
 	uiLayer->setVisible(false);
 
-	auto exitDialog = [dialog, colorLayer, this]()
+	//auto exitDialog = [dialog, colorLayer, this]()
+	//{
+	//	auto removeDialog = [dialog, colorLayer, this]()
+	//	{
+	//		dialog->removeFromParent();
+	//		colorLayer->removeFromParent();
+	//		uiLayer->setVisible(true);
+	//		for (int var = 0; var < HeroManager.size(); var++)
+	//		{
+	//			HeroManager[var]->setAIEnabled(true);
+	//		}
+	//		this->showBoss();
+	//	};
+
+	//	dialog->runAction(Sequence::create(ScaleTo::create(0.5, 0.1), CallFunc::create(removeDialog),NULL));
+	//	// Director::getInstance()->getScheduler()->unscheduleScriptEntry(scheduleid);
+	//};
+	//// scheduleid = cc.Director:getInstance():getScheduler():scheduleScriptFunc(exitDialog,3,false)
+	auto removeDialog = [dialog, colorLayer, this]()
 	{
-		auto removeDialog = [dialog, colorLayer, this]()
+		dialog->removeFromParent();
+		colorLayer->removeFromParent();
+		uiLayer->setVisible(true);
+		for (int var = 0; var < HeroManager.size(); var++)
 		{
-			dialog->removeFromParent();
-			colorLayer->removeFromParent();
-			uiLayer->setVisible(true);
-			for (int var = 0; var < HeroManager.size(); var++)
-			{
-				HeroManager[var]->setAIEnabled(true);
-			}
-			this->showBoss();
-		};
-
-		dialog->runAction(Sequence::create(ScaleTo::create(0.5, 0.1), CallFunc::create(removeDialog),NULL));
-		Director::getInstance()->getScheduler()->unscheduleScriptEntry(scheduleid);
+			HeroManager[var]->setAIEnabled(true);
+		}
+		this->showBoss();
 	};
-	//todo scheduleid = cc.Director:getInstance():getScheduler():scheduleScriptFunc(exitDialog,3,false)
+	dialog->runAction(Sequence::create(ScaleTo::create(0.5, 0.1), CallFunc::create(removeDialog), NULL));
 
-	Director::getInstance()->getScheduler();
-
+	
 	Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGB565);
 }
 
