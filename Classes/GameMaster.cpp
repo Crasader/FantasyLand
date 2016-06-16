@@ -55,7 +55,6 @@ void GameMaster::update(float dt)
 
 void GameMaster::logicUpdate()
 {
-	//todo showwarning
 	if (stage == 1)
 	{
 		if (MonsterManager.size() < EXIST_MIN_MONSTER)
@@ -206,11 +205,11 @@ void GameMaster::AddHeros()
 	mage->idleMode();
 	HeroManager.push_back(mage);
 
-	//auto archer = Archer::create();
-	//archer->setPosition(battleSiteX[1], -80);
-	//currentLayer->addChild(archer);
-	//archer->idleMode();
-	//HeroManager.push_back(archer);
+	auto archer = Archer::create();
+	archer->setPosition(battleSiteX[1], -80);
+	currentLayer->addChild(archer);
+	archer->idleMode();
+	HeroManager.push_back(archer);
 }
 
 void GameMaster::addMonsters()
@@ -560,27 +559,38 @@ void GameMaster::showDialog()
 	dialog->runAction(Sequence::create(ScaleTo::create(0.5, 0.5), CallFunc::create(pausegame),NULL));
 	uiLayer->setVisible(false);
 
-	auto exitDialog = [dialog, colorLayer, this]()
+	//auto exitDialog = [dialog, colorLayer, this]()
+	//{
+	//	auto removeDialog = [dialog, colorLayer, this]()
+	//	{
+	//		dialog->removeFromParent();
+	//		colorLayer->removeFromParent();
+	//		uiLayer->setVisible(true);
+	//		for (int var = 0; var < HeroManager.size(); var++)
+	//		{
+	//			HeroManager[var]->setAIEnabled(true);
+	//		}
+	//		this->showBoss();
+	//	};
+
+	//	dialog->runAction(Sequence::create(ScaleTo::create(0.5, 0.1), CallFunc::create(removeDialog),NULL));
+	//	//todo Director::getInstance()->getScheduler()->unscheduleScriptEntry(scheduleid);
+	//};
+	////todo scheduleid = cc.Director:getInstance():getScheduler():scheduleScriptFunc(exitDialog,3,false)
+	auto removeDialog = [dialog, colorLayer, this]()
 	{
-		auto removeDialog = [dialog, colorLayer, this]()
+		dialog->removeFromParent();
+		colorLayer->removeFromParent();
+		uiLayer->setVisible(true);
+		for (int var = 0; var < HeroManager.size(); var++)
 		{
-			dialog->removeFromParent();
-			colorLayer->removeFromParent();
-			uiLayer->setVisible(true);
-			for (int var = 0; var < HeroManager.size(); var++)
-			{
-				HeroManager[var]->setAIEnabled(true);
-			}
-			this->showBoss();
-		};
-
-		dialog->runAction(Sequence::create(ScaleTo::create(0.5, 0.1), CallFunc::create(removeDialog),NULL));
-		Director::getInstance()->getScheduler()->unscheduleScriptEntry(scheduleid);
+			HeroManager[var]->setAIEnabled(true);
+		}
+		this->showBoss();
 	};
-	//todo scheduleid = cc.Director:getInstance():getScheduler():scheduleScriptFunc(exitDialog,3,false)
+	dialog->runAction(Sequence::create(ScaleTo::create(0.5, 0.1), CallFunc::create(removeDialog), NULL));
 
-	Director::getInstance()->getScheduler();
-
+	
 	Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGB565);
 }
 
