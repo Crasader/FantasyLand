@@ -305,7 +305,7 @@ float Mage::hurt(BasicCollider* collider, bool dirKnockMode)
 		//three param judge if crit
 
 		auto blood = _hpCounter->showBloodLossNum(damage, this, critical);
-		blood->setCameraMask(995);
+		//blood->setCameraMask(995);
 		if (_name == "Rat")
 			blood->setPositionZ(Director::getInstance()->getVisibleSize().height * 0.25);
 		addEffect(blood);

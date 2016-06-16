@@ -17,7 +17,9 @@ void solveAttacks(float dt)
 		auto apos = getPosTable(attack);
 		if (attack->getMask() == EnumRaceType::HERO) {
 			//if heroes attack, then lets check monsters
-			for (int j = MonsterManager.size() - 1; j >= 0; --j) {
+			int mmSize = MonsterManager.size();
+			if (mmSize >= 1)
+			for (int j = mmSize - 1; j >= 0; --j) {
 			//for (auto mkey = MonsterManager.rbegin(); mkey != MonsterManager.rend(); ++mkey) {
 				//check distance first
 				auto monster = MonsterManager[j];
@@ -34,10 +36,12 @@ void solveAttacks(float dt)
 		}
 		else if (attack->getMask() == EnumRaceType::MONSTER) {
 			//if heroes attack, then lets check monsters
-			for (int j = HeroManager.size() - 1; j >= 0; --j) {
+			int hmSize = HeroManager.size();
+			if (hmSize >= 1)
+			for (int k = hmSize - 1; k >= 0; --k) {
 			//for (auto hkey = HeroManager.end(); hkey != HeroManager.begin(); --hkey) {
 				//check distance first
-				auto hero = HeroManager[j];
+				auto hero = HeroManager[k];
 				Vec2 hpos = hero->getMyPos();
 				auto dist = ccpDistance(getPosTable(attack), hpos);
 				if (dist < (attack->getMaxRange() + hero->getRadius()) && (dist > attack->getMinRange())) {
@@ -61,7 +65,6 @@ void solveAttacks(float dt)
 
 BasicCollider::BasicCollider()
 {
-	setCascadeColorEnabled(true);
 	_minRange = 0;	//the min radius of the fan
 	_maxRange = 150;	//the max radius of the fan
 	_angle = 120;	//arc of attack, in radians
@@ -73,6 +76,8 @@ BasicCollider::BasicCollider()
 	_curDuration = 0;
 	_speed = 0;	//travel speed
 	_criticalChance = 0;
+
+	
 }
 
 BasicCollider* BasicCollider::CreateWithPos(Vec2 pos, float facing, struct attack_d attackInfo)
@@ -118,6 +123,7 @@ void BasicCollider::hurtEffect(Actor* target)
 	hurtEffect->setScale(1.5);
 	hurtEffect->runAction(Sequence::create(hurtAction, RemoveSelf::create(), NULL));
 	hurtEffect->setPosition3D(Vec3(0, 0, 50));
+	//hurtEffect->setCameraMask(2);
 	target->addChild(hurtEffect);
 	log("Animation played");
 }
@@ -136,6 +142,7 @@ void BasicCollider::onUpdate()
 
 void BasicCollider::initData(Vec2 pos, float facing, struct attack_d attackInfo)
 {
+	setCascadeColorEnabled(true);
 	_minRange = attackInfo.minRange;
 	_maxRange = attackInfo.maxRange;
 	_angle = attackInfo.angle;
@@ -150,10 +157,16 @@ void BasicCollider::initData(Vec2 pos, float facing, struct attack_d attackInfo)
 	_DOTApplied = attackInfo.DOTApplied;
 	if (facing != 0)
 		_facing = facing;
+	AttackManager.push_back(this);	
 	setPosition(pos);
-	AttackManager.push_back(this);
-	currentLayer->addChild(this, -10);
-	setCameraMask(996);
+    currentLayer->addChild(this, 100);
+	this->setGlobalZOrder(100);
+
+	//_spritey = Sprite::create("img.jpg");
+	//currentLayer->addChild(_spritey);
+	//this->addChild(_spritey);
+	//_spritey->setCameraMask(2);
+	//_spritey->setPosition(pos);
 }
 
 void BasicCollider::setDamage(float damage) {
@@ -252,17 +265,19 @@ MageNormalAttack* MageNormalAttack::CreateWithPos(Vec2 pos, float facing, struct
 	newMageNormalAttack->_target = target;
 	newMageNormalAttack->_owner = owner;
 	newMageNormalAttack->_sp = BillBoard::create("FX/FX.png", RECTS.iceBolt);
-	newMageNormalAttack->_sp->setCameraMask(996);
+	newMageNormalAttack->_sp->setCameraMask(2);
+	//owner->addChild(newMageNormalAttack);
+	newMageNormalAttack->addChild(newMageNormalAttack->_sp);
 	newMageNormalAttack->setPosition3D(Vec3(0, 0, 50));
 	newMageNormalAttack->setScale(2);
-	newMageNormalAttack->addChild(newMageNormalAttack->_sp);
+
 
 	auto pm = ParticleManager::getInstance()->getPlistData("iceTrail");
 	auto smoke = ParticleSystemQuad::create(pm);
 	auto magicf = SpriteFrameCache::getInstance()->getSpriteFrameByName("puff.png");
 	smoke->setTextureWithRect(magicf->getTexture(), magicf->getRect());
 	smoke->setScale(2);
-	smoke->setCameraMask(996);
+	//smoke->setCameraMask(996);
 	newMageNormalAttack->addChild(smoke);
 	smoke->setRotation3D(Vec3(90, 0, 0));
 	smoke->setGlobalZOrder(-newMageNormalAttack->getPositionY() * 2 + FXZorder);
@@ -305,7 +320,7 @@ void MageNormalAttack::onTimeOut()
 	magic->setPositionZ(0);
 
 	_sp->setTextureRect(RECTS.iceSpike);
-	_sp->setCameraMask(943);
+	//_sp->setCameraMask(943);
 	_sp->runAction(FadeOut::create(1));
 	_sp->setScale(4);
 }
@@ -356,7 +371,7 @@ MageIceSpikes* MageIceSpikes::CreateWithPos(Vec2 pos, float facing, struct attac
 	ret->_sp = Sprite::createWithSpriteFrameName("shadow.png");
 	ret->_sp->setGlobalZOrder(-ret->getPositionY() + FXZorder);
 	ret->_sp->setOpacity(100);
-	ret->_sp->setCameraMask(996);
+	//ret->_sp->setCameraMask(996);
 	ret->setPosition3D(Vec3(0, 0, 1));
 	ret->setScale(ret->getMaxRange() / 12);
 	ret->addChild(ret->_sp);
@@ -413,7 +428,7 @@ void MageIceSpikes::onTimeOut()
 	// puff = ParticleSystemQuad : create("FX/puffRing.plist")
 	auto puffFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName("puff.png");
 	puff->setTextureWithRect(puffFrame->getTexture(), puffFrame->getRect());
-	puff->setCameraMask(943);
+	puff->setCameraMask(2);
 	puff->setScale(3);
 	addChild(puff);
 	puff->setGlobalZOrder(-getPositionY() + FXZorder);
@@ -424,7 +439,7 @@ void MageIceSpikes::onTimeOut()
 	// puff = ParticleSystemQuad : create("FX/puffRing.plist")
 	auto magicf = SpriteFrameCache::getInstance()->getSpriteFrameByName("particle.png");
 	magic->setTextureWithRect(magicf->getTexture(), magicf->getRect());
-	magic->setCameraMask(943);
+	magic->setCameraMask(2);
 	//magic->setCamera(camera);
 	magic->setScale(1.5);
 	addChild(magic);
@@ -472,7 +487,7 @@ ArcherNormalAttack* ArcherNormalAttack::CreateWithPos(Vec2 pos, float facing, st
 	ret->_owner = owner;
 	ret->_sp = Archer::createArrow();
 	ret->_sp->setRotation(RADIANS_TO_DEGREES(-facing) - 90);
-	ret->_sp->setCameraMask(996);
+	//ret->_sp->setCameraMask(996);
 	ret->addChild(ret->_sp);
 	return ret;
 }
@@ -518,7 +533,7 @@ ArcherSpecialAttack* ArcherSpecialAttack::CreateWithPos(Vec2 pos, float facing, 
 	ret->_owner = owner;
 	ret->_sp = Archer::createArrow();
 	ret->_sp->setRotation(RADIANS_TO_DEGREES(-facing) - 90);
-	ret->_sp->setCameraMask(996);
+	//ret->_sp->setCameraMask(996);
 	ret->addChild(ret->_sp);
 	return ret;
 }
@@ -573,7 +588,7 @@ Nova* Nova::CreateWithPos(Vec2 pos, float facing)
 	ret->_sp->setPosition3D(Vec3(0, 0, 1));
 	ret->addChild(ret->_sp);
 	ret->_sp->setScale(0);
-	ret->_sp->setCameraMask(943);
+	//ret->_sp->setCameraMask(943);
 	ret->_sp->runAction(EaseCircleActionOut::create(ScaleTo::create(0.3, 3)));
 	ret->_sp->runAction(FadeOut::create(0.7));
 	return ret;
@@ -642,10 +657,10 @@ void DragonAttack::onTimeOut()
 	addChild(magic);
 	magic->setGlobalZOrder(-getPositionY() * 2 + FXZorder);
 	magic->setPositionZ(0);
-	magic->setEndColor(ccc4f(1, 0.5, 0, 1));
+	magic->setEndColor(ccc4f(255, 128, 0, 255));
 
 	auto fireballAction = Animate::create(AnimationCache::getInstance()->getAnimation("fireBallAnim"));
-	_sp->setCameraMask(943);
+	//_sp->setCameraMask(943);
 	_sp->runAction(fireballAction);
 	_sp->setScale(2);
 }
@@ -684,7 +699,7 @@ BossNormal* BossNormal::CreateWithPos(Vec2 pos, float facing, struct attack_d at
 	ret->_sp->setPosition3D(Vec3(0, 0, 48));
 	ret->addChild(ret->_sp);
 	ret->_sp->setScale(1.7);
-	ret->_sp->setCameraMask(996);
+	//ret->_sp->setCameraMask(996);
 	return ret;
 }
 
@@ -705,7 +720,7 @@ void BossNormal::onTimeOut()
 	addChild(magic);
 	magic->setGlobalZOrder(-getPositionY() * 2 + FXZorder);
 	magic->setPositionZ(0);
-	magic->setEndColor(ccc4f(1, 0.5, 0, 1));
+	magic->setEndColor(ccc4f(255, 128, 0, 255));
 
 	auto fireballAction = Animate::create(AnimationCache::getInstance()->getAnimation("fireBallAnim"));
 	_sp->runAction(fireballAction);
@@ -760,13 +775,13 @@ void BossSuper::onTimeOut()
 	auto magic = ParticleSystemQuad::create(pm);
 	auto magicf = SpriteFrameCache::getInstance()->getSpriteFrameByName("particle.png");
 	magic->setTextureWithRect(magicf->getTexture(), magicf->getRect());
-	magic->setCameraMask(943);
+	//magic->setCameraMask(943);
 	magic->setScale(1.5);
 	magic->setRotation3D(Vec3(90, 0, 0));
 	addChild(magic);
 	magic->setGlobalZOrder(-getPositionY() * 2 + FXZorder);
 	magic->setPositionZ(0);
-	magic->setEndColor(ccc4f(1, 0.5, 0, 1));
+	magic->setEndColor(ccc4f(255, 128, 0, 255));
 	auto fireballAction = Animate::create(AnimationCache::getInstance()->getAnimation("fireBallAnim"));
 	_sp->runAction(fireballAction);
 	_sp->setScale(2);

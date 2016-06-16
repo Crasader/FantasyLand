@@ -21,7 +21,7 @@ bool Actor::init()
 
 	_monsterHeight = 70;
 	_heroHeight = 150;
-	setCameraMask(2);
+	//setCameraMask(2);
 
 
 	//if (uiLayer != nullptr) todo
@@ -82,7 +82,7 @@ void Actor::addEffect(Node* effect)
 		effect->setPositionZ(this->getPositionZ() + _heroHeight);
 	else
 		effect->setPositionZ(this->getPositionZ() + _monsterHeight + effect->getPositionZ());
-	effect->setCameraMask(994);
+	effect->setCameraMask(2);
 	currentLayer->addChild(effect);
 }
 
@@ -315,9 +315,12 @@ float Actor::hurt(BasicCollider* collider, bool dirKnockMode)
 			dyingMode(getPosTable(collider), knock);
 		}
 		auto blood = _hpCounter->showBloodLossNum(damage, this, critical);
-		blood->setCameraMask(995);
+		//auto str = blood->getString();
+		//log("%s", str);
+		//blood->setCameraMask(7);
 		addEffect(blood);
 		return damage;
+
 	}
 	return 0;
 }

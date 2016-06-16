@@ -334,7 +334,7 @@ float Knight::hurt(BasicCollider* collider, bool dirKnockMode)
 
 		/* 这里需要修改 */
 		auto blood = _hpCounter->showBloodLossNum(damage, this, critical);
-		blood->setCameraMask(995);
+		//blood->setCameraMask(995);
 		addEffect(blood);
 
 		struct MESSAGE_BLOOD_MINUS bloodMinus = { _name, _maxhp, _hp, _bloodBar, _bloodBarClone, _avatar };

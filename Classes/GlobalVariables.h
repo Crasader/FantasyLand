@@ -4,7 +4,7 @@
 
 class GameMaster;
 
-extern Layer * currentLayer;
+extern Layer *currentLayer;
 extern GameMaster *gameMaster;
 extern class BattleFieldUI *uiLayer;
 
@@ -13,7 +13,7 @@ void gv_init();
 extern float FXZorder;
 extern float CelLine;
 extern std::string BossTaunt;
-extern AnimationCache * animationCache ;
+extern AnimationCache *animationCache ;
 extern float resolutionRate;
 extern Size VisibleSize;
 

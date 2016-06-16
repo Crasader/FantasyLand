@@ -10,7 +10,7 @@ float CelLine = 0.009;
 std::string BossTaunt = "How dare you???";
 Size VisibleSize;
 float resolutionRate; 
-AnimationCache * animationCache;
+AnimationCache *animationCache;
 
 struct RECTS_d RECTS;
 struct G_d G;

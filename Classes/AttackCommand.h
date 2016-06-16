@@ -51,6 +51,7 @@ protected:
 	float _curDOTTime;
 	float _DOTTimer;
 	bool _DOTApplied;
+	Sprite* _spritey;
 };
 
 class KnightNormalAttack : public BasicCollider
