@@ -372,7 +372,8 @@ void Actor::dyingMode(Vec2 knockSource, int knockAmount)
 //		MDC->dispatchMessage(MessageType::ANGRY_CHANGE, angryChange);
         //CallFunc::create(recycle)
 	}
-	else {
+	else 
+	{
 		std::vector<Actor *>::iterator it = std::find(MonsterManager.begin(), MonsterManager.end(), this);
 		HeroManager.erase(it);
 		auto recycle = [&]() {
