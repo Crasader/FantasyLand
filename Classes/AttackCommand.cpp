@@ -788,6 +788,7 @@ void BossSuper::onTimeOut()
 	magic->setGlobalZOrder(-getPositionY() * 2 + FXZorder);
 	magic->setPositionZ(0);
 	magic->setEndColor(ccc4f(255, 128, 0, 255));
+
 	auto fireballAction = Animate::create(AnimationCache::getInstance()->getAnimation("fireBallAnim"));
 	_sp->runAction(fireballAction);
 	_sp->setScale(2);
