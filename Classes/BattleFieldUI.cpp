@@ -241,12 +241,13 @@ void BattleFieldUI::touchButtonInit()
 
 Repeat* BattleFieldUI::shakeAvatar()
 {
-	return Repeat::create(Spawn::create(Sequence::create(ScaleTo::create(0.075, 0.75),
+	auto repead = Repeat::create(Spawn::create(Sequence::create(ScaleTo::create(0.075, 0.75),
 		ScaleTo::create(0.075, 0.7)),
 		Sequence::create(MoveBy::create(0.05, { 6.5, 0 }),
 			MoveBy::create(0.05, { -13, 0 }),
 			MoveBy::create(0.05, { 6.5, 0 }),
 			NULL)), 2);
+	return repead;
 }
 
 void BattleFieldUI::bloodDrop(Actor* heroActor)

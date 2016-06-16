@@ -193,11 +193,11 @@ void GameMaster::logicUpdate()
 
 void GameMaster::AddHeros()
 {
-	//auto knight = Knight::create();
-	//knight->setPosition(battleSiteX[1], 10);
-	//currentLayer->addChild(knight);
-	//knight->idleMode();
-	//HeroManager.push_back(knight);
+	auto knight = Knight::create();
+	knight->setPosition(battleSiteX[1], 10);
+	currentLayer->addChild(knight);
+	knight->idleMode();
+	HeroManager.push_back(knight);
 	
 	auto mage = Mage::create();
 	mage->setPosition(battleSiteX[1], 100);

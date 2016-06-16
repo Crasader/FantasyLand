@@ -53,13 +53,14 @@ void solveAttacks(float dt)
 				}
 			}
 		}
-		attack->setCurDuration(attack->getDuration() + dt);
+		attack->setCurDuration(attack->getCurDuration() + dt);
 		if (attack->getCurDuration() > attack->getDuration()) {
 			attack->onTimeOut();
 			//AttackManager.erase(val);
 			AttackManager.erase(AttackManager.begin() + i);
 		}
-		else attack->onUpdate();
+		else
+			attack->onUpdate(dt);
 	}
 }
 
@@ -135,7 +136,7 @@ void BasicCollider::onCollide(Actor* target)
 	target->hurt(this);
 }
 
-void BasicCollider::onUpdate()
+void BasicCollider::onUpdate(float dt)
 {
 	//implement this function if this is a projectile
 }
@@ -163,10 +164,10 @@ void BasicCollider::initData(Vec2 pos, float facing, struct attack_d attackInfo)
 	this->setGlobalZOrder(100);
 
 	//_spritey = Sprite::create("img.jpg");
-	//currentLayer->addChild(_spritey);
+	//currentLayer->addChild(this);
 	//this->addChild(_spritey);
 	//_spritey->setCameraMask(2);
-	//_spritey->setPosition(pos);
+	//_spritey->setPosition3D(Vec3(0,0,0));
 }
 
 void BasicCollider::setDamage(float damage) {
@@ -636,6 +637,7 @@ DragonAttack* DragonAttack::CreateWithPos(Vec2 pos, float facing, struct attack_
 	ret->_sp = BillBoard::create("FX/FX.png", RECTS.fireBall);
     ret->_sp->setPosition3D(Vec3(0, 0, 48));
 	ret->addChild(ret->_sp);
+	ret->_sp->setCameraMask(2);
 	ret->_sp->setScale(1.7);
 	return ret;
 }
@@ -660,7 +662,7 @@ void DragonAttack::onTimeOut()
 	magic->setEndColor(ccc4f(255, 128, 0, 255));
 
 	auto fireballAction = Animate::create(AnimationCache::getInstance()->getAnimation("fireBallAnim"));
-	//_sp->setCameraMask(943);
+	_sp->setCameraMask(2);
 	_sp->runAction(fireballAction);
 	_sp->setScale(2);
 }
