@@ -242,11 +242,11 @@ void BattleFieldUI::touchButtonInit()
 Repeat* BattleFieldUI::shakeAvatar()
 {
 	auto repead = Repeat::create(Spawn::create(Sequence::create(ScaleTo::create(0.075, 0.75),
-		ScaleTo::create(0.075, 0.7)),
+		ScaleTo::create(0.075, 0.7), NULL),
 		Sequence::create(MoveBy::create(0.05, { 6.5, 0 }),
 			MoveBy::create(0.05, { -13, 0 }),
 			MoveBy::create(0.05, { 6.5, 0 }),
-			NULL)), 2);
+			NULL), NULL), 2);
 	return repead;
 }
 
@@ -258,8 +258,8 @@ void BattleFieldUI::bloodDrop(Actor* heroActor)
 	auto percent = heroActor->getHP() / heroActor->getMaxHP() * 100;
 	heroActor->getBloodBar()->stopAllActions();
 	heroActor->getBloodBarClone()->stopAllActions();
-	heroActor->getAvatar()->runAction(BattleFieldUI::shakeAvatar());
-
+	auto i = heroActor->getAvatar();
+	i->runAction(BattleFieldUI::shakeAvatar());
 	if (heroActor->getHP() > 0 && percent > 50)
 	{
 		progressTo = ProgressTo::create(0.3, percent);
@@ -275,7 +275,7 @@ void BattleFieldUI::bloodDrop(Actor* heroActor)
 			progressToClone = ProgressTo::create(1, percent);
 			tintTo = TintTo::create(0.5, 254, 225, 26);
 
-			heroActor->getBloodBar()->runAction(Spawn::create(progressTo, tintTo));
+			heroActor->getBloodBar()->runAction(Spawn::create(progressTo, tintTo, NULL));
 			heroActor->getBloodBarClone()->runAction(progressToClone);
 		}
 		else if (heroActor->getHP() > 0 && percent <= 30)
@@ -285,7 +285,7 @@ void BattleFieldUI::bloodDrop(Actor* heroActor)
 			progressToClone = ProgressTo::create(1, percent);
 
 			tintTo = TintTo::create(0.5, 254, 26, 69);
-			heroActor->getBloodBar()->runAction(Spawn::create(progressTo, tintTo));
+			heroActor->getBloodBar()->runAction(Spawn::create(progressTo, tintTo, NULL));
 			heroActor->getBloodBarClone()->runAction(progressToClone);
 		}
 		else if (heroActor->getHP() <= 0)
