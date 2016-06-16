@@ -13,10 +13,15 @@ bool BattleFieldUI::init()
 	touchButtonInit();
 	timeInit();
 	//showVictoryUI();
-
+	scheduleUpdate();
 	experimental::AudioEngine::stopAll();
 	AUDIO_ID.BATTLEFIELDBGM = experimental::AudioEngine::play2d(BGM_RES.BATTLEFIELDBGM, true, 0.6);
 	return true;
+}
+
+void BattleFieldUI::update(float dt)
+{
+	MagePng->setPosition(MagePng->getPosition() + Vec2(pngVelocity.x, pngVelocity.y));
 }
 
 void BattleFieldUI::avatarInit()
@@ -24,21 +29,21 @@ void BattleFieldUI::avatarInit()
 	auto offset = 8;
 	auto scale = 0.7;
 	MagePng = Sprite::createWithSpriteFrameName("UI-1136-640_18.png");
-	MagePng->setPosition3D(Vec3(1070 / 1136 * G.winSize.width, 70 / 640 * G.winSize.height, 2));
+	MagePng->setPosition3D(Vec3(VisibleSize.width, 100, 2));
 	MagePng->setScale(scale);
 	addChild(MagePng, 2);
 	MagePngFrame = Sprite::createWithSpriteFrameName("UI-2.png");
 	MagePngFrame->setScale(scale);
-	MagePngFrame->setPosition3D(Vec3(MagePng->getPositionX() + 1, MagePng->getPositionY() - offset, 1));
+	MagePngFrame->setPosition3D(Vec3(MagePng->getPositionX() + 100, MagePng->getPositionY() - offset + 100, 1));
 	addChild(MagePngFrame, 1);
 
 	KnightPng = Sprite::createWithSpriteFrameName("UI-1136-640_03.png");
-	KnightPng->setPosition3D(Vec3(-MagePng->getContentSize().width * 2 + MagePng->getPositionX() + 40, 70 / 640 * G.winSize.height, 2));
+	KnightPng->setPosition3D(Vec3(-MagePng->getContentSize().width * 2 + MagePng->getPositionX() + 100, 70 / 640 * G.winSize.height, 2 + 100));
 	KnightPng->setScale(scale);
 	addChild(KnightPng, 2);
 	KnightPngFrame = Sprite::createWithSpriteFrameName("UI-2.png");
 	KnightPngFrame->setScale(scale);
-	KnightPngFrame->setPosition3D(Vec3(KnightPng->getPositionX() + 1, KnightPng->getPositionY() - offset, 1));
+	KnightPngFrame->setPosition3D(Vec3(KnightPng->getPositionX() + 1, KnightPng->getPositionY() - offset + 100, 1));
 	addChild(KnightPngFrame, 1);
 
 	ArcherPng = Sprite::createWithSpriteFrameName("UI-1136-640_11.png");
@@ -95,7 +100,6 @@ void BattleFieldUI::bloodbarInit()
 	ArcherBloodClone->setScale(scale);
 	addChild(ArcherBloodClone, 3);
 
-	//杜：此处修改多处，因为我需要返回各种Blood和Clone
 	MageBlood = ProgressTimer::create(Sprite::createWithSpriteFrameName("UI-1136-640_36_clone.png"));
 	MageBlood->setColor(Color3B(149, 254, 26));
 	MageBlood->setType(ProgressTimerType::BAR);
@@ -367,6 +371,7 @@ void BattleFieldUI::angryChange(Actor* angry)
 
 void BattleFieldUI::timeInit()
 {
+	time = 0;
 	auto tm = "00:00";
 	//tm = table.concat(tm, ":")
 
@@ -374,28 +379,23 @@ void BattleFieldUI::timeInit()
 	ttfconfig.outlineSize = 1;
 	ttfconfig.fontSize = 25;
 	ttfconfig.fontFilePath = "fonts/britanic bold.ttf";
-	auto tm_label = Label::createWithTTF(ttfconfig, tm);//todo 
-	tm_label->setAnchorPoint(Vec2(0, 0));
-	tm_label->setPosition3D(Vec3(G.winSize.width*0.02, G.winSize.height*0.915, 2));
-	tm_label->enableOutline(Color4B(0, 0, 0, 255));
-	_tmlabel = tm_label;
-	addChild(tm_label, 5);
+	_tmlabel = Label::createWithTTF(ttfconfig, tm);
+	_tmlabel->setAnchorPoint(Vec2(0, 0));
+	_tmlabel->setPosition3D(Vec3(G.winSize.width*0.02, G.winSize.height*0.915, 2));
+	_tmlabel->enableOutline(Color4B(0, 0, 0, 255));
+
+	addChild(_tmlabel, 5);
 	//time update
-	auto time = 0;
-	auto tmUpdate = [this, &time](float dt)
+	auto tmUpdate = [this](float dt)
 	{
-		time = time + 1;
-		if (time >= 3600)
+		if (++time >= 3600)
 			time = 0;
 
-		int dev = time;
-		int min = dev / 60;
-		int sec = dev % 60;
-		//if (min < 10)
-		//	min = "0"..min;
-		//if (sec < 10)
-		//	sec = "0"..sec;
-		_tmlabel->setString(std::to_string(min) + ":" + std::to_string(sec));
+		int min = time / 60;
+		int sec = time % 60;
+
+		_tmlabel->setString(((min < 10) ? "0" : "") + std::to_string(min) + ":"
+			+ ((sec < 10) ? "0" : "") + std::to_string(sec));
 	};
 
 	Director::getInstance()->getScheduler()->schedule(tmUpdate, this, 1, -1, "timeSchedule");
@@ -440,4 +440,48 @@ void BattleFieldUI::showVictoryUI()
 	eventDispatcher->addEventListenerWithSceneGraphPriority(listener, layer);
 
 	addChild(layer);
+}
+
+void BattleFieldUI::controlPng()
+{
+	auto touchListener = EventListenerTouchOneByOne::create();
+	touchListener->onTouchBegan = [this](Touch* touch, Event*)
+	{
+		lastTouchPosition = touch->getLocation();
+		return true;
+	};
+	touchListener->onTouchMoved = [this](Touch* touch, Event*)
+	{
+		auto touchPosition = touch->getLocation();
+
+		lastTouchPosition = touchPosition;
+	};
+	auto keyboardListener = EventListenerKeyboard::create();
+	keyboardListener->onKeyPressed = [this](EventKeyboard::KeyCode keycode, Event*)
+	{
+		switch (keycode)
+		{
+		case EventKeyboard::KeyCode::KEY_W:++pngVelocity.y; break;
+		case EventKeyboard::KeyCode::KEY_A:--pngVelocity.x; break;
+		case EventKeyboard::KeyCode::KEY_S:--pngVelocity.y; break;
+		case EventKeyboard::KeyCode::KEY_D:++pngVelocity.x; break;
+		case EventKeyboard::KeyCode::KEY_Q:--pngVelocity.z; break;
+		case EventKeyboard::KeyCode::KEY_E:++pngVelocity.z; break;
+		}
+	};
+	_eventDispatcher->addEventListenerWithFixedPriority(touchListener, 0);
+
+	keyboardListener->onKeyReleased = [this](EventKeyboard::KeyCode keycode, Event*)
+	{
+		switch (keycode)
+		{
+		case EventKeyboard::KeyCode::KEY_W:--pngVelocity.y; break;
+		case EventKeyboard::KeyCode::KEY_A:++pngVelocity.x; break;
+		case EventKeyboard::KeyCode::KEY_S:++pngVelocity.y; break;
+		case EventKeyboard::KeyCode::KEY_D:--pngVelocity.x; break;
+		case EventKeyboard::KeyCode::KEY_Q:++pngVelocity.z; break;
+		case EventKeyboard::KeyCode::KEY_E:--pngVelocity.z; break;
+		}
+	};
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(keyboardListener, this);
 }

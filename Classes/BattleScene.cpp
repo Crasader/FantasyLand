@@ -271,7 +271,7 @@ void BattleScene::controlCamera()
 		case EventKeyboard::KeyCode::KEY_DOWN_ARROW:--cameraVelocity.y; break;
 		case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:++cameraVelocity.x; break;
 		case EventKeyboard::KeyCode::KEY_PG_UP:--cameraVelocity.z; break;
-		case EventKeyboard::KeyCode::KEY_KP_PG_DOWN:++cameraVelocity.z; break;
+		case EventKeyboard::KeyCode::KEY_PG_DOWN:++cameraVelocity.z; break;
 		}
 	};
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
@@ -285,7 +285,7 @@ void BattleScene::controlCamera()
 		case EventKeyboard::KeyCode::KEY_DOWN_ARROW:++cameraVelocity.y; break;
 		case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:--cameraVelocity.x; break;
 		case EventKeyboard::KeyCode::KEY_PG_UP:++cameraVelocity.z; break;
-		case EventKeyboard::KeyCode::KEY_KP_PG_DOWN:--cameraVelocity.z; break;
+		case EventKeyboard::KeyCode::KEY_PG_DOWN:--cameraVelocity.z; break;
 		}
 	};
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(keyboardListener, this);

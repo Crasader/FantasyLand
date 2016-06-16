@@ -10,19 +10,22 @@
     <Filter Include="src">
       <UniqueIdentifier>{bb6c862e-70e9-49d9-81b7-3829a6f50471}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Actor">
-      <UniqueIdentifier>{05273b11-b693-443c-9170-37e3df5c1f0f}</UniqueIdentifier>
+    <Filter Include="src\Logic">
+      <UniqueIdentifier>{06b0218f-3b77-4dd4-806a-11e5096f33ba}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\Scene">
-      <UniqueIdentifier>{d05c1ed5-09ba-4484-91dc-b2d7e6f98425}</UniqueIdentifier>
+      <UniqueIdentifier>{90c2605a-ed21-494f-b420-95896263872d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Logic">
-      <UniqueIdentifier>{3127f6a3-9060-4f5c-870f-92d97e8bbccb}</UniqueIdentifier>
+    <Filter Include="src\Actor">
+      <UniqueIdentifier>{bddf2431-3b65-4dac-8c42-1dcf068972d3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Sample.cpp">
+      <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\AppDelegate.cpp">
       <Filter>src</Filter>
@@ -36,38 +39,23 @@
     <ClCompile Include="..\Classes\Dragon.cpp">
       <Filter>src\Actor</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Knight.cpp">
-      <Filter>src\Actor</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Mage.cpp">
-      <Filter>src\Actor</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Rat.cpp">
-      <Filter>src\Actor</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Piglet.cpp">
-      <Filter>src\Actor</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Slime.cpp">
-      <Filter>src\Actor</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\AttackCommand.cpp">
       <Filter>src\Actor</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\ChooseRoleScene.cpp">
+    <ClCompile Include="..\Classes\BattleFieldUI.cpp">
       <Filter>src\Scene</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\BattleScene.cpp">
       <Filter>src\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\BattleFieldUI.cpp">
+    <ClCompile Include="..\Classes\ChooseRoleScene.cpp">
       <Filter>src\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\MainMenuScene.cpp">
-      <Filter>src\Scene</Filter>
+    <ClCompile Include="..\Classes\Piglet.cpp">
+      <Filter>src\Actor</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\LoadingScene.cpp">
-      <Filter>src\Scene</Filter>
+    <ClCompile Include="..\Classes\Rat.cpp">
+      <Filter>src\Actor</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\GameMaster.cpp">
       <Filter>src\Logic</Filter>
@@ -78,6 +66,15 @@
     <ClCompile Include="..\Classes\Helper.cpp">
       <Filter>src\Logic</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\HPCounter.cpp">
+      <Filter>src\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\JumpBy3D.cpp">
+      <Filter>src\Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\MainMenuScene.cpp">
+      <Filter>src\Scene</Filter>
+    </ClCompile>
     <ClCompile Include="..\Classes\Manager.cpp">
       <Filter>src\Logic</Filter>
     </ClCompile>
@@ -87,19 +84,25 @@
     <ClCompile Include="..\Classes\ParticleManager.cpp">
       <Filter>src\Logic</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\HPCounter.cpp">
+    <ClCompile Include="..\Classes\LoadingScene.cpp">
       <Filter>src\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Sample.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="..\Classes\Knight.cpp">
+      <Filter>src\Actor</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\JumpBy3D.cpp">
-      <Filter>src\Logic</Filter>
+    <ClCompile Include="..\Classes\Mage.cpp">
+      <Filter>src\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Slime.cpp">
+      <Filter>src\Actor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
       <Filter>win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Sample.h">
+      <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\AppDelegate.h">
       <Filter>src</Filter>
@@ -113,38 +116,23 @@
     <ClInclude Include="..\Classes\Dragon.h">
       <Filter>src\Actor</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\Knight.h">
+    <ClInclude Include="..\Classes\AttackCommand.h">
       <Filter>src\Actor</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\Mage.h">
-      <Filter>src\Actor</Filter>
+    <ClInclude Include="..\Classes\BattleFieldUI.h">
+      <Filter>src\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\BattleScene.h">
+      <Filter>src\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ChooseRoleScene.h">
+      <Filter>src\Scene</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Rat.h">
       <Filter>src\Actor</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Piglet.h">
       <Filter>src\Actor</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Slime.h">
-      <Filter>src\Actor</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\AttackCommand.h">
-      <Filter>src\Actor</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\ChooseRoleScene.h">
-      <Filter>src\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\BattleScene.h">
-      <Filter>src\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\BattleFieldUI.h">
-      <Filter>src\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\MainMenuScene.h">
-      <Filter>src\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\LoadingScene.h">
-      <Filter>src\Scene</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\GameMaster.h">
       <Filter>src\Logic</Filter>
@@ -155,6 +143,15 @@
     <ClInclude Include="..\Classes\Helper.h">
       <Filter>src\Logic</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\HPCounter.h">
+      <Filter>src\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\JumpBy3D.h">
+      <Filter>src\Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\MainMenuScene.h">
+      <Filter>src\Scene</Filter>
+    </ClInclude>
     <ClInclude Include="..\Classes\Manager.h">
       <Filter>src\Logic</Filter>
     </ClInclude>
@@ -164,14 +161,17 @@
     <ClInclude Include="..\Classes\ParticleManager.h">
       <Filter>src\Logic</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\HPCounter.h">
+    <ClInclude Include="..\Classes\LoadingScene.h">
       <Filter>src\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\Sample.h">
-      <Filter>src</Filter>
+    <ClInclude Include="..\Classes\Mage.h">
+      <Filter>src\Actor</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\JumpBy3D.h">
-      <Filter>src\Logic</Filter>
+    <ClInclude Include="..\Classes\Knight.h">
+      <Filter>src\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Slime.h">
+      <Filter>src\Actor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

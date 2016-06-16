@@ -9,6 +9,7 @@ class BattleFieldUI :public Layer
 public:
 	CREATE_FUNC(BattleFieldUI);
 	virtual bool init();
+	virtual void update(float dt);
 
 	void avatarInit();
 	void bloodbarInit();
@@ -47,4 +48,10 @@ public:
 	Sprite* ArcherAngryFullSignal;
 	ProgressTimer* MageAngryClone;
 	Sprite* MageAngryFullSignal;
+
+	unsigned time;
+
+	void controlPng();
+	Vec3 pngVelocity;
+	Vec2 lastTouchPosition;
 };
