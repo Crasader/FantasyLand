@@ -68,6 +68,6 @@ void gv_init()
 
 	G.winSize = Director::getInstance()->getWinSize();
 
-	resolutionRate = G.winSize.width / G.winSize.height;
+	resolutionRate = VisibleSize.width / VisibleSize.height;
 	VisibleSize = Director::getInstance()->getWinSize();
 }
