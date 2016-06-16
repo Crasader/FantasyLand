@@ -3,6 +3,7 @@
 #include "audio/win32/AudioEngine-win32.h"
 #include "BattleScene.h"
 #include <ui/CocosGUI.h>
+#include "SimpleAudioEngine.h"
 
 Scene* MainMenuScene::createScene()
 {
