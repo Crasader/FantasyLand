@@ -67,3 +67,8 @@ void ChooseRoleScene::addBattleButton()
 
 	addChild(battleButton);
 }
+//
+//void ChooseRoleScene::playAudioWhenRotate()
+//{
+//	//auto hero = getChildByTag();
+//}
