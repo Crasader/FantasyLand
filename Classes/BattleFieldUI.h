@@ -9,7 +9,6 @@ class BattleFieldUI :public Layer
 public:
 	CREATE_FUNC(BattleFieldUI);
 	virtual bool init();
-	virtual void update(float dt);
 
 	void avatarInit();
 	void bloodbarInit();
