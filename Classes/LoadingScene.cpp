@@ -61,7 +61,7 @@ void LoadingScene::update(float dt)
 
 void LoadingScene::addBackground()
 {
-	auto background = Sprite::create("loadingscene/background.jpg");
+	auto background = Sprite::create("loadingscene/bg.jpg");
 	background->setPosition(size / 2);
 	addChild(background);
 }

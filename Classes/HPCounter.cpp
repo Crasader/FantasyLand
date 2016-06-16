@@ -10,7 +10,7 @@ bool HPCounter::init()
 	return true;
 }
 
-LabelTTF *HPCounter::showBloodLossNum(float dmage, Actor *racetype, bool atack)
+Label *HPCounter::showBloodLossNum(float dmage, Actor *racetype, bool atack)
 {
 	auto time = 1;
 	auto getRandomXYZ = [time]()
@@ -27,12 +27,16 @@ LabelTTF *HPCounter::showBloodLossNum(float dmage, Actor *racetype, bool atack)
 		this->tm = 0.5f;
 		pointZ = 50;
 
-		auto blood = LabelTTF::create("-", "fonts/britanic bold.ttf", 400);
-		blood->enableStroke(Color3B::BLACK, 7);
+
+		TTFConfig ttfconfig;
+		ttfconfig.outlineSize = 7;
+		ttfconfig.fontSize = 50;
+		ttfconfig.fontFilePath = "fonts/britanic bold.ttf";
+		auto blood = Label::createWithTTF(ttfconfig, "-" + std::to_string(num), TextHAlignment::CENTER, 400);
+		blood->enableOutline(Color4B(0, 0, 0, 255));
 		blood->setRotation3D(Vec3(90, 0, 0));
 		blood->setScale(0.1);
-		blood->setRotation3D(getRandomXYZ());
-		blood->setString(Value("-").asString()+Value(num).asString());
+		//blood->setRotation3D(getRandomXYZ());
 
 		targetScale = 0.6;
 		if (num > 1000)
@@ -48,7 +52,7 @@ LabelTTF *HPCounter::showBloodLossNum(float dmage, Actor *racetype, bool atack)
 			blood->setColor(Color3B(189, 0, 0));
 		}
 
-		if (racetype->getRaceType() == EnumRaceType::MONSTER)
+		if (racetype->getRaceType() != EnumRaceType::MONSTER)
 			blood->setColor(Color3B(0, 180, 255));
 
 		auto getAction = [this]()
@@ -58,16 +62,18 @@ LabelTTF *HPCounter::showBloodLossNum(float dmage, Actor *racetype, bool atack)
 				FadeOut::create(tm / 2),
 				RemoveSelf::create(),
 				CallFunc::create([this]()
-			    {
+			{
 				_isBlooding = false;
 				_num = 0;
-			    }), NULL
+			}), 
+				NULL
 				);
 
 			auto spawn = Spawn::create(
 				sequence,
 				MoveBy::create(tm, Vec3(0, 0, pointZ)),
-				RotateBy::create(tm, rand_0_1() * 80 - 40), NULL);
+				RotateBy::create(tm, rand_0_1() * 80 - 40), 
+				NULL);
 			return spawn;
 		};
 
@@ -80,7 +86,7 @@ LabelTTF *HPCounter::showBloodLossNum(float dmage, Actor *racetype, bool atack)
 			if (racetype->getName() == "Rat")
 				critleAttack->setPositionZ(G.winSize.height*0.25);
 			racetype->addEffect(critleAttack);
-			
+			_cirtleAttack = critleAttack;
 			pointZ = 80;
 			targetScale = targetScale * 2;
 		}
@@ -91,7 +97,7 @@ LabelTTF *HPCounter::showBloodLossNum(float dmage, Actor *racetype, bool atack)
 		return _blood;
 	};
 
-	if(_isBlooding==false)
+	if (_isBlooding == false)
 	{
 		_isBlooding = true;
 		_num = dmage;

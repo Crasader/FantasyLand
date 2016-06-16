@@ -121,7 +121,7 @@ void BattleScene::updateParticlePos()
 
 void BattleScene::createBackground()
 {
-	auto spriteBg = Sprite3D::create("battleScene/changjing.c3b");
+	auto spriteBg = Sprite3D::create("model/scene/changing.c3b");
 
 	currentLayer->addChild(spriteBg);
 	spriteBg->setScale(2.65);
