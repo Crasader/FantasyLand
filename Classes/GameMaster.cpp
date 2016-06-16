@@ -574,9 +574,9 @@ void GameMaster::showDialog()
 	//	};
 
 	//	dialog->runAction(Sequence::create(ScaleTo::create(0.5, 0.1), CallFunc::create(removeDialog),NULL));
-	//	//todo Director::getInstance()->getScheduler()->unscheduleScriptEntry(scheduleid);
+	//	// Director::getInstance()->getScheduler()->unscheduleScriptEntry(scheduleid);
 	//};
-	////todo scheduleid = cc.Director:getInstance():getScheduler():scheduleScriptFunc(exitDialog,3,false)
+	//// scheduleid = cc.Director:getInstance():getScheduler():scheduleScriptFunc(exitDialog,3,false)
 	auto removeDialog = [dialog, colorLayer, this]()
 	{
 		dialog->removeFromParent();

@@ -45,7 +45,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     FileUtils::getInstance()->addSearchPath("res");
 
-	gv_init();
+	init_globalvariables();
     // create a scene. it's an autorelease object
     auto scene = LoadingScene::createScene();
 
