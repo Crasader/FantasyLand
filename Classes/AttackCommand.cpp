@@ -374,7 +374,7 @@ MageIceSpikes* MageIceSpikes::CreateWithPos(Vec2 pos, float facing, struct attac
 	ret->_sp = Sprite::createWithSpriteFrameName("shadow.png");
 	ret->_sp->setGlobalZOrder(-ret->getPositionY() + FXZorder);
 	ret->_sp->setOpacity(100);
-	//ret->_sp->setCameraMask(996);
+	ret->_sp->setCameraMask(2);
 	ret->_sp->setPosition3D(Vec3(0, 0, 1));
 	ret->_sp->setScale(ret->getMaxRange() / 12);
 	ret->addChild(ret->_sp);
@@ -489,9 +489,11 @@ ArcherNormalAttack* ArcherNormalAttack::CreateWithPos(Vec2 pos, float facing, st
 	ret->initData(pos, facing, attackInfo);
 	ret->_owner = owner;
 	ret->_sp = Archer::createArrow();
-	ret->_sp->setRotation(RADIANS_TO_DEGREES(-facing) - 90);
-	//ret->_sp->setCameraMask(996);
+	
 	ret->addChild(ret->_sp);
+	ret->_sp->setRotation(RADIANS_TO_DEGREES(-facing) - 90);
+	ret->_sp->setCameraMask(2);
+
 	return ret;
 }
 
@@ -536,7 +538,7 @@ ArcherSpecialAttack* ArcherSpecialAttack::CreateWithPos(Vec2 pos, float facing, 
 	ret->_owner = owner;
 	ret->_sp = Archer::createArrow();
 	ret->_sp->setRotation(RADIANS_TO_DEGREES(-facing) - 90);
-	//ret->_sp->setCameraMask(996);
+	ret->_sp->setCameraMask(2);
 	ret->addChild(ret->_sp);
 	return ret;
 }
@@ -591,7 +593,7 @@ Nova* Nova::CreateWithPos(Vec2 pos, float facing)
 	ret->_sp->setPosition3D(Vec3(0, 0, 1));
 	ret->addChild(ret->_sp);
 	ret->_sp->setScale(0);
-	//ret->_sp->setCameraMask(943);
+	ret->_sp->setCameraMask(2);
 	ret->_sp->runAction(EaseCircleActionOut::create(ScaleTo::create(0.3, 3)));
 	ret->_sp->runAction(FadeOut::create(0.7));
 	return ret;
@@ -703,7 +705,7 @@ BossNormal* BossNormal::CreateWithPos(Vec2 pos, float facing, struct attack_d at
 	ret->_sp->setPosition3D(Vec3(0, 0, 48));
 	ret->addChild(ret->_sp);
 	ret->_sp->setScale(1.7);
-	//ret->_sp->setCameraMask(996);
+	ret->_sp->setCameraMask(2);
 	return ret;
 }
 
@@ -763,7 +765,7 @@ BossSuper* BossSuper::CreateWithPos(Vec2 pos, float facing, struct attack_d atta
 	ret->_sp->setPosition3D(Vec3(0, 0, 48));
 	ret->addChild(ret->_sp);
 	ret->_sp->setScale(1.7);
-	//ret->_sp->setCameraMask(996);
+	ret->_sp->setCameraMask(2);
 	return ret;
 }
 

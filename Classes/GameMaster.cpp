@@ -194,23 +194,33 @@ void GameMaster::logicUpdate()
 
 void GameMaster::AddHeros()
 {
-	auto knight = Knight::create();
-	knight->setPosition(battleSiteX[1], 10);
-	currentLayer->addChild(knight);
-	knight->idleMode();
-	HeroManager.push_back(knight);
-	
-	auto mage = Mage::create();
-	mage->setPosition(battleSiteX[1], 100);
-	currentLayer->addChild(mage);
-	mage->idleMode();
-	HeroManager.push_back(mage);
+	//auto knight = Knight::create();
+	//knight->setPosition(battleSiteX[1], 10);
+	//currentLayer->addChild(knight);
+	//knight->idleMode();
+	//HeroManager.push_back(knight);
+	//
+	//auto mage = Mage::create();
+	//mage->setPosition(battleSiteX[1], 100);
+	//currentLayer->addChild(mage);
+	//mage->idleMode();
+	//HeroManager.push_back(mage);
 
-	//auto archer = Archer::create();
-	//archer->setPosition(battleSiteX[1], -80);
-	//currentLayer->addChild(archer);
-	//archer->idleMode();
-	//HeroManager.push_back(archer);
+	auto archer = Archer::create();
+	archer->setPosition(battleSiteX[1], -80);
+	currentLayer->addChild(archer);
+	archer->idleMode();
+	HeroManager.push_back(archer);
+	auto archer1 = Archer::create();
+	archer1->setPosition(battleSiteX[1], 10);
+	currentLayer->addChild(archer1);
+	archer1->idleMode();
+	HeroManager.push_back(archer1);
+	auto archer2 = Archer::create();
+	archer2->setPosition(battleSiteX[1], 100);
+	currentLayer->addChild(archer2);
+	archer2->idleMode();
+	HeroManager.push_back(archer2);
 }
 
 void GameMaster::addMonsters()
