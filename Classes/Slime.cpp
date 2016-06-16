@@ -3,7 +3,7 @@
 
 Slime::Slime()
 {
-	_AIEnabled = true;	
+	
 }
 
 bool Slime::init()
@@ -17,6 +17,7 @@ bool Slime::init()
 	initActions();
 	scheduleUpdateWithPriority(1);
 	play3DAnim();
+	_AIEnabled = true;	
 	return true;
 }
 

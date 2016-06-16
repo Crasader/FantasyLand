@@ -5,20 +5,7 @@
 
 Knight::Knight()
 {
-	_AIEnabled = true;
-	scheduleUpdateWithPriority(0);
-
-	auto specialAttack = [&]() {
-		if (_specialAttackChance == 1)
-			return;
-		_specialAttackChance = 1;
-	};
-	MessageDispatchCenter::getInstance()->registerMessage(SPECIAL_KNIGHT,[](Actor *data)
-	{
-		if (data->getSpecialAttackChance() == 1)
-			return;
-		data->setSpecialAttackChance(1);
-	});
+	
 	//MDC->registerMessage(MessageDispatchCenter::MessageType::SPECIAL_KNIGHT, specialAttack);
 }
 
@@ -39,6 +26,22 @@ bool Knight::init()
 
 	init3D();
 	initActions();
+	
+	idleMode();
+	_AIEnabled = true;
+	scheduleUpdateWithPriority(0);
+
+	auto specialAttack = [&]() {
+		if (_specialAttackChance == 1)
+			return;
+		_specialAttackChance = 1;
+	};
+	MessageDispatchCenter::getInstance()->registerMessage(SPECIAL_KNIGHT,[](Actor *data)
+	{
+		if (data->getSpecialAttackChance() == 1)
+			return;
+		data->setSpecialAttackChance(1);
+	});
 	return true;
 }
 
@@ -298,6 +301,7 @@ int Knight::getArmourID()
 
 float Knight::hurt(BasicCollider* collider, bool dirKnockMode)
 {
+	log("I am hurted");
 	if (isAlive()) {
 		//TODO add sound effect
 		auto damage = collider->getDamage();

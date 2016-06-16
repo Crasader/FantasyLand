@@ -73,11 +73,9 @@ BasicCollider::BasicCollider()
 	_curDuration = 0;
 	_speed = 0;	//travel speed
 	_criticalChance = 0;
-	this->setCameraMask(943);
-	
 }
 
-BasicCollider* BasicCollider::CreateWithPos(Vec2 pos, int facing, struct attack_d attackInfo)
+BasicCollider* BasicCollider::CreateWithPos(Vec2 pos, float facing, struct attack_d attackInfo)
 {
 	BasicCollider* newBasicCollider = BasicCollider::create();
 	//newBasicCollider->_minRange = 0;	//the min radius of the fan
@@ -117,8 +115,8 @@ void BasicCollider::hurtEffect(Actor* target)
 {
 	auto hurtAction = Animate::create(animationCache->getAnimation("hurtAnimation"));
 	auto hurtEffect = BillBoard::create();
-	hurtEffect->setScale(150);
-	hurtEffect->runAction(Sequence::create(hurtAction, RemoveSelf::create()));
+	hurtEffect->setScale(1.5);
+	hurtEffect->runAction(Sequence::create(hurtAction, RemoveSelf::create(), NULL));
 	hurtEffect->setPosition3D(Vec3(0, 0, 50));
 	target->addChild(hurtEffect);
 	log("Animation played");
@@ -136,7 +134,7 @@ void BasicCollider::onUpdate()
 	//implement this function if this is a projectile
 }
 
-void BasicCollider::initData(Vec2 pos, int facing, struct attack_d attackInfo)
+void BasicCollider::initData(Vec2 pos, float facing, struct attack_d attackInfo)
 {
 	_minRange = attackInfo.minRange;
 	_maxRange = attackInfo.maxRange;
@@ -150,11 +148,12 @@ void BasicCollider::initData(Vec2 pos, int facing, struct attack_d attackInfo)
 	_DOTTimer = attackInfo.DOTTimer;
 	_curDOTTime = attackInfo.curDOTTime;
 	_DOTApplied = attackInfo.DOTApplied;
-
-	_facing = facing | _facing;
+	if (facing != 0)
+		_facing = facing;
 	setPosition(pos);
-	AttackManager.insert(AttackManager.end(), this);
+	AttackManager.push_back(this);
 	currentLayer->addChild(this, -10);
+	setCameraMask(996);
 }
 
 void BasicCollider::setDamage(float damage) {
@@ -181,11 +180,11 @@ float BasicCollider::getCriticalChance() {
 	return _criticalChance;
 }
 
-void BasicCollider::setFacing(int facing) {
+void BasicCollider::setFacing(float facing) {
 	_facing = facing;
 }
 
-int BasicCollider::getFacing() {
+float BasicCollider::getFacing() {
 	return _facing;
 }
 
@@ -223,7 +222,7 @@ KnightNormalAttack::KnightNormalAttack()
 
 }
 
-KnightNormalAttack* KnightNormalAttack::CreateWithPos(Vec2 pos, int facing, struct attack_d attackInfo, Actor* knight)
+KnightNormalAttack* KnightNormalAttack::CreateWithPos(Vec2 pos, float facing, struct attack_d attackInfo, Actor* knight)
 {
 	auto newKnightNormalAttack = KnightNormalAttack::create();
 	newKnightNormalAttack->initData(pos, facing, attackInfo);
@@ -246,7 +245,7 @@ MageNormalAttack::MageNormalAttack()
 
 }
 
-MageNormalAttack* MageNormalAttack::CreateWithPos(Vec2 pos, int facing, struct attack_d attackInfo, Actor* target, Actor* owner)
+MageNormalAttack* MageNormalAttack::CreateWithPos(Vec2 pos, float facing, struct attack_d attackInfo, Actor* target, Actor* owner)
 {
 	auto newMageNormalAttack = MageNormalAttack::create();
 	newMageNormalAttack->initData(pos, facing, attackInfo);
@@ -263,6 +262,7 @@ MageNormalAttack* MageNormalAttack::CreateWithPos(Vec2 pos, int facing, struct a
 	auto magicf = SpriteFrameCache::getInstance()->getSpriteFrameByName("puff.png");
 	smoke->setTextureWithRect(magicf->getTexture(), magicf->getRect());
 	smoke->setScale(2);
+	smoke->setCameraMask(996);
 	newMageNormalAttack->addChild(smoke);
 	smoke->setRotation3D(Vec3(90, 0, 0));
 	smoke->setGlobalZOrder(-newMageNormalAttack->getPositionY() * 2 + FXZorder);
@@ -273,6 +273,7 @@ MageNormalAttack* MageNormalAttack::CreateWithPos(Vec2 pos, int facing, struct a
 	auto pixif = SpriteFrameCache::getInstance()->getSpriteFrameByName("particle.png");
 	pixi->setTextureWithRect(pixif->getTexture(), pixif->getRect());
 	pixi->setScale(2);
+	pixi->addChild(smoke);
 	newMageNormalAttack->addChild(pixi);
 	pixi->setRotation3D(Vec3(90, 0, 0));
 	pixi->setGlobalZOrder(-newMageNormalAttack->getPositionY() * 2 + FXZorder);
@@ -292,7 +293,7 @@ void MageNormalAttack::onTimeOut()
 {
 	_part1->stopSystem();
 	_part2->stopSystem();
-	runAction(Sequence::create(DelayTime::create(1), RemoveSelf::create()));
+	runAction(Sequence::create(DelayTime::create(1), RemoveSelf::create(), NULL));
 	auto pm = ParticleManager::getInstance()->getPlistData("magic");
 	auto magic = ParticleSystemQuad::create(pm);
 	auto magicf = SpriteFrameCache::getInstance()->getSpriteFrameByName("particle.png");
@@ -347,7 +348,7 @@ MageIceSpikes::MageIceSpikes()
 
 }
 
-MageIceSpikes* MageIceSpikes::CreateWithPos(Vec2 pos, int facing, struct attack_d attackInfo, Actor* owner)
+MageIceSpikes* MageIceSpikes::CreateWithPos(Vec2 pos, float facing, struct attack_d attackInfo, Actor* owner)
 {
 	auto ret = MageIceSpikes::create();
 	ret->initData(pos, facing, attackInfo);
@@ -464,7 +465,7 @@ ArcherNormalAttack::ArcherNormalAttack()
 
 }
 
-ArcherNormalAttack* ArcherNormalAttack::CreateWithPos(Vec2 pos, int facing, struct attack_d attackInfo, Actor* owner)
+ArcherNormalAttack* ArcherNormalAttack::CreateWithPos(Vec2 pos, float facing, struct attack_d attackInfo, Actor* owner)
 {
 	auto ret = ArcherNormalAttack::create();
 	ret->initData(pos, facing, attackInfo);
@@ -510,7 +511,7 @@ ArcherSpecialAttack::ArcherSpecialAttack()
 {
 }
 
-ArcherSpecialAttack* ArcherSpecialAttack::CreateWithPos(Vec2 pos, int facing, struct attack_d attackInfo, Actor* owner)
+ArcherSpecialAttack* ArcherSpecialAttack::CreateWithPos(Vec2 pos, float facing, struct attack_d attackInfo, Actor* owner)
 {
 	auto ret = ArcherSpecialAttack::create();
 	ret->initData(pos, facing, attackInfo);
@@ -563,7 +564,7 @@ Nova::Nova()
 
 }
 
-Nova* Nova::CreateWithPos(Vec2 pos, int facing)
+Nova* Nova::CreateWithPos(Vec2 pos, float facing)
 {
 	auto ret = Nova::create();
 	ret->initData(pos, facing, BossValues.nova);
@@ -613,7 +614,7 @@ DragonAttack::DragonAttack()
 
 }
 
-DragonAttack* DragonAttack::CreateWithPos(Vec2 pos, int facing, struct attack_d attackInfo)
+DragonAttack* DragonAttack::CreateWithPos(Vec2 pos, float facing, struct attack_d attackInfo)
 {
 	auto ret = DragonAttack::create();
 	ret->initData(pos, facing, attackInfo);
@@ -675,7 +676,7 @@ BossNormal::BossNormal()
 
 }
 
-BossNormal* BossNormal::CreateWithPos(Vec2 pos, int facing, struct attack_d attackInfo)
+BossNormal* BossNormal::CreateWithPos(Vec2 pos, float facing, struct attack_d attackInfo)
 {
 	auto ret = BossNormal::create();
 	ret->initData(pos, facing, attackInfo);
@@ -735,7 +736,7 @@ BossSuper::BossSuper()
 
 }
 
-BossSuper* BossSuper::CreateWithPos(Vec2 pos, int facing, struct attack_d attackInfo)
+BossSuper* BossSuper::CreateWithPos(Vec2 pos, float facing, struct attack_d attackInfo)
 {
 	auto ret = BossSuper::create();
 	ret->initData(pos, facing, attackInfo);

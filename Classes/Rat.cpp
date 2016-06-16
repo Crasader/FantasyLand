@@ -4,8 +4,7 @@
 
 Rat::Rat()
 {
-	_AIEnabled = true;
-	scheduleUpdateWithPriority(0.5);
+	
 }
 
 bool Rat::init()
@@ -16,6 +15,10 @@ bool Rat::init()
 	copyData_Rat();
 	init3D();
 	initActions();
+	
+	_AIEnabled = true;
+	scheduleUpdateWithPriority(1);
+
 	return true;
 }
 
@@ -146,7 +149,7 @@ void Rat::dyingMode(Vec2 knockSource, int knockAmount)
 		auto p = _myPos;
 		auto angle = ccpToAngle(ccpSub(p, knockSource));
 		auto newPos = ccpRotateByAngle(ccpAdd(Vec2(knockAmount, 0), p), p, angle);
-		//runAction(EaseCubicActionOut::create(MoveTo::create(_action.at("knocked")->getDuration() * 3, newPos)));
+		runAction(EaseCubicActionOut::create(MoveTo::create(_action.at("knocked")->getDuration() * 3, newPos)));
 	}
 	_AIEnabled = false;
 }

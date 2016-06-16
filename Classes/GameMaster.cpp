@@ -422,7 +422,7 @@ void GameMaster::showBoss()
 	{
 		boss->setAIEnabled(true);
 	};
-	boss->runAction(Sequence::create(EaseBounceOut::create(MoveBy::create(0.5, Vec3(0, 0, -300))), CallFunc::create(enableAI)));
+	boss->runAction(Sequence::create(EaseBounceOut::create(MoveBy::create(0.5, Vec3(0, 0, -300))), CallFunc::create(enableAI),NULL));
 	MonsterManager.push_back(boss); 
 }
 
@@ -460,19 +460,19 @@ void GameMaster::jumpInto(Actor* obj, bool isFront)
 		obj->runAction(JumpBy3D::create(0.5, Vec3(-200 * (CCRANDOM_0_1()*0.6 + 0.7), -400 * (CCRANDOM_0_1()*0.4 + 0.8), 0), 150, 1));
 		obj->runAction(DelayTime::create(CCRANDOM_0_1()));
 		obj->setVisible(true);
-		//obj->runAction(Sequence::create(DelayTime::create(CCRANDOM_0_1()), CallFunc::create(visibleMonster), JumpBy3D::create(0.5, Vec3(-200 * (CCRANDOM_0_1()*0.6 + 0.7), -400 * (CCRANDOM_0_1()*0.4 + 0.8), 0), 150, 1), CallFunc::create(enableAI)));
+		obj->runAction(Sequence::create(DelayTime::create(CCRANDOM_0_1()), CallFunc::create(visibleMonster), JumpBy3D::create(0.5, Vec3(-200 * (CCRANDOM_0_1()*0.6 + 0.7), -400 * (CCRANDOM_0_1()*0.4 + 0.8), 0), 150, 1), CallFunc::create(enableAI),NULL));
 		obj->setFacing(135);
 	}
 	else
 	{
 		if (isFront)
 		{
-			obj->runAction(Sequence::create(DelayTime::create(CCRANDOM_0_1()), CallFunc::create(visibleMonster), JumpBy3D::create(0.5, Vec3(0, -400 * (rand()*0.4 + 0.8), 0), 150, 1), CallFunc::create(enableAI)));
+			obj->runAction(Sequence::create(DelayTime::create(CCRANDOM_0_1()), CallFunc::create(visibleMonster), JumpBy3D::create(0.5, Vec3(0, -400 * (rand()*0.4 + 0.8), 0), 150, 1), CallFunc::create(enableAI),NULL));
 			obj->setFacing(135);
 		}
 		else
 		{
-			obj->runAction(Sequence::create(DelayTime::create(CCRANDOM_0_1()), CallFunc::create(visibleMonster), JumpBy3D::create(0.5, Vec3((200 * rand()*0.6 + 0.7), -400 * (rand()*0.4 + 0.8), 0), 150, 1), CallFunc::create(enableAI)));
+			obj->runAction(Sequence::create(DelayTime::create(CCRANDOM_0_1()), CallFunc::create(visibleMonster), JumpBy3D::create(0.5, Vec3((200 * rand()*0.6 + 0.7), -400 * (rand()*0.4 + 0.8), 0), 150, 1), CallFunc::create(enableAI),NULL));
 			obj->setFacing(45);
 		}
 	}
@@ -494,7 +494,7 @@ void GameMaster::showWarning()
 		experimental::AudioEngine::play2d("audios/effects/boss/boss.mp3", false, 1);
 	};
 
-	warning_logo->runAction(Sequence::create(DelayTime::create(0.5), EaseSineOut::create(Blink::create(1, 5)), CallFunc::create(showdialog)));
+	warning_logo->runAction(Sequence::create(DelayTime::create(0.5), EaseSineOut::create(Blink::create(1, 5)), CallFunc::create(showdialog),NULL));
 	warning->addChild(warning_logo);
 
 	warning->setScale(0.5);
@@ -556,7 +556,7 @@ void GameMaster::showDialog()
 		}
 	};
 
-	dialog->runAction(Sequence::create(ScaleTo::create(0.5, 0.5), CallFunc::create(pausegame)));
+	dialog->runAction(Sequence::create(ScaleTo::create(0.5, 0.5), CallFunc::create(pausegame),NULL));
 	uiLayer->setVisible(false);
 
 	auto exitDialog = [dialog, colorLayer, this]()
@@ -573,7 +573,7 @@ void GameMaster::showDialog()
 			this->showBoss();
 		};
 
-		dialog->runAction(Sequence::create(ScaleTo::create(0.5, 0.1), CallFunc::create(removeDialog)));
+		dialog->runAction(Sequence::create(ScaleTo::create(0.5, 0.1), CallFunc::create(removeDialog),NULL));
 		Director::getInstance()->getScheduler()->unscheduleScriptEntry(scheduleid);
 	};
 

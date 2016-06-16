@@ -2,8 +2,6 @@
 
 Dragon::Dragon()
 {
-	_AIEnabled = true;
-	scheduleUpdateWithPriority(1);
 }
 
 bool Dragon::init()
@@ -14,6 +12,10 @@ bool Dragon::init()
 	copyData_Dragon();
 	init3D();
 	initActions();
+
+	idleMode();
+	_AIEnabled = true;
+	scheduleUpdateWithPriority(1);
 	return true;
 }
 
