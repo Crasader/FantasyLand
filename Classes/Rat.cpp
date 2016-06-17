@@ -104,8 +104,8 @@ void Rat::init3D()
 	_sprite3d->setScale(20);
 	//_sprite3d->addEffect(Vec3(0, 0, 0), CelLine, -1);
 	addChild(_sprite3d);
-	setRotation3D(Vec3(90, 0, 0));
-	setRotation(-90);
+	_sprite3d->setRotation3D(Vec3(90, 0, 0));
+	_sprite3d->setRotation(-90);
 	initShadow();
 }
 
