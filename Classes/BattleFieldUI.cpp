@@ -14,6 +14,7 @@ bool BattleFieldUI::init()
 	timeInit();
 
 	setGlobalZOrder(10);
+	setCameraMask(2);
 	//showVictoryUI();
 	experimental::AudioEngine::stopAll();
 	AUDIO_ID.BATTLEFIELDBGM = experimental::AudioEngine::play2d(BGM_RES.BATTLEFIELDBGM, true, 0.6);
@@ -460,7 +461,7 @@ void BattleFieldUI::showVictoryUI()
 		//replace scene
 		Director::getInstance()->replaceScene(ChooseRoleScene::createScene());
 	};
-
+	victory->setCameraMask(2);
 	auto eventDispatcher = layer->getEventDispatcher();
 	eventDispatcher->addEventListenerWithSceneGraphPriority(listener, layer);
 
