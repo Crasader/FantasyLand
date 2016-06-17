@@ -55,7 +55,7 @@ void GameMaster::update(float dt)
 
 void GameMaster::logicUpdate()
 {
-	/*if (stage == 1)
+	if (stage == 1)
 	{
 		if (MonsterManager.size() < EXIST_MIN_MONSTER)
 		{
@@ -188,12 +188,7 @@ void GameMaster::logicUpdate()
 			showWarning();
 			stage = 9;
 		}
-	}*/
-    if (stage == 1)
-    {
-		showWarning();
-		stage = 2;
-    }
+	}
 }
 
 void GameMaster::AddHeros()
@@ -282,7 +277,7 @@ void GameMaster::showDragon(bool isFront)
 		dragon->reset();
 
 		auto appearPos = getFocusPointOfHeros();
-		auto randomvarX = CCRANDOM_0_1()*0.2 + 1;
+		float randomvarX = CCRANDOM_0_1()*0.2 + 1;
 
 		if( stage == 0 )
 		{
@@ -423,7 +418,6 @@ void GameMaster::showBoss()
 	boss->setMyPos(Vec2(apperPos.x,apperPos.y));
 	boss->setFacing(180);
 	boss->setGoRight(false);
-	//boss->setRotation3D(Vec3(-90, 0, 0));
 	boss->setCameraMask(2);
 
 	auto enableAI = [boss]()
@@ -489,14 +483,14 @@ void GameMaster::jumpInto(Actor* obj, bool isFront)
 void GameMaster::showWarning()
 {
 	Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::AUTO);
+
 	auto warning = Layer::create();
-	warning->setPosition(VisibleSize.width*0.5, VisibleSize.height*0.5);
 	auto warning_logo = Sprite::createWithSpriteFrameName("caution.png");
 	Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGB565);
 	warning_logo->setPosition(VisibleSize.width*0.5, VisibleSize.height*0.5);
 	warning_logo->setPositionZ(1);
-
-	auto showdialog = [warning,this]()
+	
+	auto showdialog = [warning, this]()
 	{
 		warning->removeFromParent();
 		this->showDialog();
@@ -510,7 +504,7 @@ void GameMaster::showWarning()
 	warning->setPositionZ(-Director::getInstance()->getZEye() / 2);
 	warning->ignoreAnchorPointForPosition(false);
 	warning->setLocalZOrder(999); 
-	//camera->addChild(warning);
+	warning->setPosition(VisibleSize.width*0.5, VisibleSize.height*0.5);
 	currentLayer->addChild(warning);
 }
 
@@ -521,9 +515,10 @@ void GameMaster::showDialog()
 	colorLayer->ignoreAnchorPointForPosition(false);
 	colorLayer->setPositionZ(-Director::getInstance()->getZEye() / 5);
 	colorLayer->setGlobalZOrder(0);
-	colorLayer->setScale(2);
+
+	colorLayer->setScale(1.5);
+	colorLayer->setPosition(VisibleSize.width / 2, VisibleSize.height / 2);
 	currentLayer->addChild(colorLayer);
-	colorLayer->setPosition(VisibleSize.width*0.5, VisibleSize.height*0.5);
 	
 	auto dialog = Layer::create();
 	dialog->setPositionX(-VisibleSize.width*0.025);
@@ -553,12 +548,13 @@ void GameMaster::showDialog()
 	text->setPosition(VisibleSize.width*0.68, VisibleSize.height*0.27);
 	dialog->addChild(text);
 
-	dialog->setScale(0.2);
+	dialog->setScale(0.1);
 	dialog->ignoreAnchorPointForPosition(false);
 	dialog->setPositionZ(Director::getInstance()->getZEye() / 3);
 	dialog->setGlobalZOrder(0);
+
+	dialog->setPosition(VisibleSize.width * 0.45, VisibleSize.height /2);
 	currentLayer->addChild(dialog);
-	dialog->setPosition(VisibleSize.width*0.5, VisibleSize.height*0.5);
 
 	auto pausegame = []()
 	{
@@ -569,27 +565,9 @@ void GameMaster::showDialog()
 		}
 	};
 
-	dialog->runAction(Sequence::create(ScaleTo::create(0.5, 0.7), CallFunc::create(pausegame),NULL));
+	dialog->runAction(Sequence::create(ScaleTo::create(0.5, 0.65), CallFunc::create(pausegame),NULL));
 	uiLayer->setVisible(false);
-	//todo
-	//auto exitDialog = [dialog, colorLayer, this]()
-	//{
-	//	auto removeDialog = [dialog, colorLayer, this]()
-	//	{
-	//		dialog->removeFromParent();
-	//		colorLayer->removeFromParent();
-	//		uiLayer->setVisible(true);
-	//		for (int var = 0; var < HeroManager.size(); var++)
-	//		{
-	//			HeroManager[var]->setAIEnabled(true);
-	//		}
-	//		this->showBoss();
-	//	};
-
-	//	dialog->runAction(Sequence::create(ScaleTo::create(0.5, 0.1), CallFunc::create(removeDialog),NULL));
-	//	// Director::getInstance()->getScheduler()->unscheduleScriptEntry(scheduleid);
-	//};
-	//// scheduleid = cc.Director:getInstance():getScheduler():scheduleScriptFunc(exitDialog,3,false)
+	
 	auto removeDialog = [dialog, colorLayer, this]()
 	{
 		dialog->removeFromParent();
@@ -601,13 +579,14 @@ void GameMaster::showDialog()
 		}
 		this->showBoss();
 	};
-	dialog->runAction(Sequence::create(DelayTime::create(3), ScaleTo::create(0.5, 0.1), CallFunc::create(removeDialog), NULL));
+	dialog->runAction(Sequence::create(DelayTime::create(3),ScaleTo::create(0.5, 0.1), CallFunc::create(removeDialog), NULL));
 
 	Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGB565);
 }
 
 void GameMaster::showVictoryUI()
 {
+	//todo 清空
 	uiLayer->showVictoryUI();
 }
 

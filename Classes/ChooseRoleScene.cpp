@@ -555,36 +555,36 @@ void ChooseRoleScene::switchTextWhenRotate()
 		actor = Sprite::createWithSpriteFrameName("knight.png");
 		point = ccp(size.width*0.395, size.height*0.9);
 		attr = "23""\n"
-			+ to_string(KnightValues._normalAttack.damage) + "\n"
-			+ to_string(KnightValues._hp) + "\n"
-			+ to_string(KnightValues._defense) + "\n"
-			+ to_string(KnightValues._AIFrequency * 100) + "\n"
-			+ to_string(KnightValues._specialAttack.damage) + "\n"
-			+ to_string(KnightValues._specialAttack.damage);
+			+ to_string(int(KnightValues._normalAttack.damage)) + "\n"
+			+ to_string(int(KnightValues._hp)) + "\n"
+			+ to_string(int(KnightValues._defense)) + "\n"
+			+ to_string(int(KnightValues._AIFrequency) * 100) + "\n"
+			+ to_string(int(KnightValues._specialAttack.damage)) + "\n"
+			+ to_string(int(KnightValues._specialAttack.damage));
 	}
 	else if (hero->getname() == "Archer")  //archer
 	{
 		actor = Sprite::createWithSpriteFrameName("archer.png");
 		point = Vec2(size.width*0.4, size.height*0.905);
 		attr = "23""\n"
-			+ to_string(ArcherValues._normalAttack.damage) + "\n"
-			+ to_string(ArcherValues._hp) + "\n"
-			+ to_string(ArcherValues._defense) + "\n"
-			+ to_string(ArcherValues._AIFrequency * 100) + "\n"
-			+ to_string(ArcherValues._specialAttack.damage) + "\n"
-			+ to_string(ArcherValues._specialAttack.damage);
+			+ to_string(int(ArcherValues._normalAttack.damage)) + "\n"
+			+ to_string(int(ArcherValues._hp)) + "\n"
+			+ to_string(int(ArcherValues._defense)) + "\n"
+			+ to_string(int(ArcherValues._AIFrequency) * 100) + "\n"
+			+ to_string(int(ArcherValues._specialAttack.damage)) + "\n"
+			+ to_string(int(ArcherValues._specialAttack.damage));
 	}
 	else if (hero->getname() == "Mage")  //sorceress
 	{
 		actor = Sprite::createWithSpriteFrameName("mage.png");
 		point = Vec2(size.width*0.38, size.height*0.9);
 		attr = "23""\n"
-			+ to_string(MageValues._normalAttack.damage) + "\n"
-			+ to_string(MageValues._hp) + "\n"
-			+ to_string(MageValues._defense) + "\n"
-			+ to_string(MageValues._AIFrequency * 100) + "\n"
-			+ to_string(MageValues._specialAttack.damage) + "\n"
-			+ to_string(MageValues._specialAttack.damage);
+			+ to_string(int(MageValues._normalAttack.damage)) + "\n"
+			+ to_string(int(MageValues._hp)) + "\n"
+			+ to_string(int(MageValues._defense)) + "\n"
+			+ to_string(int(MageValues._AIFrequency) * 100) + "\n"
+			+ to_string(int(MageValues._specialAttack.damage)) + "\n"
+			+ to_string(int(MageValues._specialAttack.damage));
 	}
 
 	//add to bag
