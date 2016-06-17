@@ -78,8 +78,8 @@ Sprite* ChooseRoleScene::addBag()
 	_helmetItem->setPosition(helmet_item_pos);
 	bag->addChild(_helmetItem, 2);
 
-	bag->setNormalizedPosition({ 0.75,0.5 });
-	bag->setScale(resolutionRate);
+	bag->setPosition(Vec2(VisibleSize.width* 0.75, VisibleSize.height *0.5));
+	bag->setScale(resolutionRate / 2);
 
 	addChild(bag);
 
@@ -97,15 +97,15 @@ void ChooseRoleScene::addButton()
 			touch_next = true;
 		if (eventType == ui::Widget::TouchEventType::BEGAN)
 		{
-			//ReSkin.knight = { weapon = self.layer:getChildByTag(2) : getWeaponID(),
-			//	armour = self.layer : getChildByTag(2) : getArmourID(),
-			//	helmet = self.layer : getChildByTag(2) : getHelmetID() }
-			//	ReSkin.arhcer = { weapon = self.layer:getChildByTag(1) : getWeaponID(),
-			//	armour = self.layer : getChildByTag(1) : getArmourID(),
-			//	helmet = self.layer : getChildByTag(1) : getHelmetID() }
-			//	ReSkin.mage = { weapon = self.layer:getChildByTag(3) : getWeaponID(),
-			//	armour = self.layer : getChildByTag(3) : getArmourID(),
-			//	helmet = self.layer : getChildByTag(3) : getHelmetID() }
+			ReSkin.knight.weapon = ((Actor*)getChildByTag(2))->getWeaponID();
+			ReSkin.knight.armour = ((Actor*)getChildByTag(2))->getArmourID();
+			ReSkin.knight.helmet = ((Actor*)getChildByTag(2))->getHelmetID();
+			ReSkin.archer.weapon = ((Actor*)getChildByTag(1))->getWeaponID();
+			ReSkin.archer.armour = ((Actor*)getChildByTag(1))->getArmourID();
+			ReSkin.archer.helmet = ((Actor*)getChildByTag(1))->getHelmetID();
+			ReSkin.mage.weapon = ((Actor*)getChildByTag(3))->getWeaponID();
+			ReSkin.mage.armour = ((Actor*)getChildByTag(3))->getArmourID();
+			ReSkin.mage.helmet = ((Actor*)getChildByTag(3))->getHelmetID();
 
 			auto playid = experimental::AudioEngine::play2d(BGM_RES.MAINMENUSTART, false, 1);
 			//stop schedule
@@ -125,9 +125,8 @@ void ChooseRoleScene::addButton()
 
 	auto next_Button = ui::Button::create("button1.png", "button2.png", "", ui::TextureResType::PLIST);
 	next_Button->setTouchEnabled(true);
-	next_Button->setNormalizedPosition(Vec2(0.34, 0.13));
-	next_Button->setPosition(VisibleSize / 2);
-	next_Button->setScale(resolutionRate);
+	next_Button->setPosition(Vec2(VisibleSize.width*0.34, VisibleSize.height*0.13));
+	next_Button->setScale(resolutionRate / 2);
 	next_Button->addTouchEventListener(touchEvent_next);
 	addChild(next_Button);
 }
@@ -164,14 +163,13 @@ void ChooseRoleScene::addHeros()
 	{
 		auto rotation = getChildByTag(sortorder[1])->getRotation3D();
 		getChildByTag(sortorder[1])->setRotation3D(Vec3(rotation.x, rotation.y + rotate, 0));
-
 	};
 	Director::getInstance()->getScheduler()->schedule(hero_rotate, this, 0, -1, "hero_rotate");
 }
 
 void ChooseRoleScene::addBk()
 {
-	auto bk = Sprite::create("chooseRole/cr_bk.jpg");
+	bk = Sprite::create("chooseRole/cr_bk.jpg");
 	bk->setAnchorPoint(Vec2(0.5, 0.5));
 	bk->setPosition(origin.x + VisibleSize.width / 2, origin.y + VisibleSize.height / 2);
 	addChild(bk);
@@ -261,6 +259,8 @@ void ChooseRoleScene::initTouchDispatcher()
 	};
 	listenner->onTouchEnded = [this](Touch*touch, Event*)
 	{
+		auto hero = (Actor*)getChildByTag(sortorder[1]);
+		auto heroName = hero->getname();
 		if (isRotateavaliable) //rotate
 			isRotateavaliable = false;
 		else if (isWeaponItemavaliable)
@@ -269,7 +269,12 @@ void ChooseRoleScene::initTouchDispatcher()
 			_weaponItem->setPosition(weapon_item_pos);
 			_weaponItem->setScale(1);
 			_weaponItem->setOpacity(255);
-			//getChildByTag(sortorder[1])->switchWeapon();
+			if (heroName == "Archer")
+				static_cast<Archer*>(hero)->switchWeapon();
+			else if (heroName == "Mage")
+				static_cast<Mage*>(hero)->switchWeapon();
+			else if (heroName == "Knight")
+				static_cast<Knight*>(hero)->switchWeapon();
 			_weaponItem->setSpriteFrame(getWeaponTextureName());
 		}
 
@@ -279,7 +284,12 @@ void ChooseRoleScene::initTouchDispatcher()
 			_armourItem->setPosition(armour_item_pos);
 			_armourItem->setScale(1);
 			_armourItem->setOpacity(255);
-			//getChildByTag(sortorder[1])->switchArmour();
+			if (heroName == "Archer")
+				static_cast<Archer*>(hero)->switchArmour();
+			else if (heroName == "Mage")
+				static_cast<Mage*>(hero)->switchArmour();
+			else if (heroName == "Knight")
+				static_cast<Knight*>(hero)->switchArmour();
 			_armourItem->setSpriteFrame(getArmourTextureName());
 		}
 
@@ -289,7 +299,12 @@ void ChooseRoleScene::initTouchDispatcher()
 			_helmetItem->setPosition(helmet_item_pos);
 			_helmetItem->setScale(1);
 			_helmetItem->setOpacity(255);
-			//getChildByTag(sortorder[1])->switchHelmet();
+			if (heroName == "Archer")
+				static_cast<Archer*>(hero)->switchHelmet();
+			else if (heroName == "Mage")
+				static_cast<Mage*>(hero)->switchHelmet();
+			else if (heroName == "Knight")
+				static_cast<Knight*>(hero)->switchHelmet();
 			_helmetItem->setSpriteFrame(getHelmetTextureName());
 		}
 	};
@@ -335,27 +350,27 @@ void ChooseRoleScene::rotate3Heroes(bool isRight)
 	else
 	{
 		auto middle = getChildByTag(sortorder[1]);
-	middle: runAction(Sequence::create(
-		CallFunc::create([this]()
-	{
-		isMoving = true;
-	}
-			),
-		Spawn::create(EaseCircleActionInOut::create(MoveTo::create(rotatetime, pos[0])), NULL),
-		CallFunc::create([this]()
-	{
-		isMoving = false;
-		playAudioWhenRotate();
-	}),
-		NULL));
-			auto left = getChildByTag(sortorder[0]);
-			left->runAction(EaseCircleActionInOut::create(MoveTo::create(rotatetime, pos[2])));
-			auto right = getChildByTag(sortorder[2]);
-			right->runAction(EaseCircleActionInOut::create(MoveTo::create(rotatetime, pos[1])));
-			auto t = sortorder[0];
-			sortorder[0] = sortorder[1];
-			sortorder[1] = sortorder[2];
-			sortorder[2] = t;
+		middle->runAction(Sequence::create(
+			CallFunc::create([this]()
+		{
+			isMoving = true;
+		}
+				),
+			Spawn::create(EaseCircleActionInOut::create(MoveTo::create(rotatetime, pos[0])), NULL),
+			CallFunc::create([this]()
+		{
+			isMoving = false;
+			playAudioWhenRotate();
+		}),
+			NULL));
+		auto left = getChildByTag(sortorder[0]);
+		left->runAction(EaseCircleActionInOut::create(MoveTo::create(rotatetime, pos[2])));
+		auto right = getChildByTag(sortorder[2]);
+		right->runAction(EaseCircleActionInOut::create(MoveTo::create(rotatetime, pos[1])));
+		auto t = sortorder[0];
+		sortorder[0] = sortorder[1];
+		sortorder[1] = sortorder[2];
+		sortorder[2] = t;
 	}
 
 	switchItemtextureWhenRotate();
@@ -543,7 +558,7 @@ void ChooseRoleScene::switchTextWhenRotate()
 			+ to_string(KnightValues._normalAttack.damage) + "\n"
 			+ to_string(KnightValues._hp) + "\n"
 			+ to_string(KnightValues._defense) + "\n"
-			+ to_string(KnightValues._AIFrequency * 100) + "n"
+			+ to_string(KnightValues._AIFrequency * 100) + "\n"
 			+ to_string(KnightValues._specialAttack.damage) + "\n"
 			+ to_string(KnightValues._specialAttack.damage);
 	}

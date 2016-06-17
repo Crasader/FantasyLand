@@ -42,8 +42,8 @@ public:
 	float getMass();
 	float getAngry();
 	virtual int getWeaponID();
-	int getArmourID();
-	int getHelmetID();
+	virtual int getArmourID();
+	virtual int getHelmetID();
 	Actor* getTarget();
 	void setAngry(float angry);
 	float getAngryMax();
