@@ -418,6 +418,7 @@ void GameMaster::showBoss()
 	boss->setMyPos(Vec2(apperPos.x,apperPos.y));
 	boss->setFacing(180);
 	boss->setGoRight(false);
+	boss->setCameraMask(2);
 
 	auto enableAI = [boss]()
 	{
