@@ -499,7 +499,7 @@ void GameMaster::showWarning()
 	warning_logo->runAction(Sequence::create(DelayTime::create(0.5), EaseSineOut::create(Blink::create(1, 5)), CallFunc::create(showdialog),NULL));
 	warning->addChild(warning_logo);
 
-	warning->setScale(0.5);
+	warning->setScale(2);
 	warning->setPositionZ(-Director::getInstance()->getZEye() / 2);
 	warning->ignoreAnchorPointForPosition(false);
 	warning->setLocalZOrder(999); 
