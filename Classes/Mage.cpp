@@ -122,6 +122,7 @@ void Mage::specialAttack()
 	_angry = ActorCommonValues._angry;
 	struct MESSAGE_ANGRY_CHANGE angryChange = { _name, _angry, _angryMax };
 	MessageDispatchCenter::getInstance()->dispatchMessage(ANGRY_CHANGE, this);
+	log("mage special attack %f,%f", _angry, _angryMax);
 	//MDC->dispatchMessage(MessageType::ANGRY_CHANGE, angryChange);
 
 	//mage will create 3 ice spikes on the ground
@@ -321,7 +322,8 @@ float Mage::hurt(BasicCollider* collider, bool dirKnockMode)
 //		MDC->dispatchMessage(MessageType::BLOOD_MINUS, bloodMinus);
 		struct MESSAGE_ANGRY_CHANGE angryChange = { _name, _angry,_angryMax };
 		MessageDispatchCenter::getInstance()->dispatchMessage(ANGRY_CHANGE, this);
-
+		log("Mage hurt %f,%f", _angry, _angryMax);
+		_angry += damage;
 	//	MDC->dispatchMessage(MessageType::ANGRY_CHANGE, angryChange);
 		return damage;
 	}

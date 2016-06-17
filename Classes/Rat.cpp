@@ -104,8 +104,8 @@ void Rat::init3D()
 	_sprite3d->setScale(20);
 	//_sprite3d->addEffect(Vec3(0, 0, 0), CelLine, -1);
 	addChild(_sprite3d);
-	_sprite3d->setRotation3D(Vec3(90, 0, 0));
-	_sprite3d->setRotation(-90);
+	setRotation3D(Vec3(-90, 0, 0));
+	setRotation(-90);
 	initShadow();
 }
 
@@ -143,7 +143,14 @@ void Rat::dyingMode(Vec2 knockSource, int knockAmount)
 			}
 		}
 	};
-	runAction(Sequence::create(DelayTime::create(3), CallFunc::create(disableHeroAI), MoveBy::create(1.0, Vec3(0, 0, -50)), CallFunc::create(recycle), NULL));
+	auto recycleShadow = [&]()
+	{
+		_circle->setVisible(false);
+	};
+	runAction(Sequence::create(DelayTime::create(3), 
+		CallFunc::create(disableHeroAI), CallFunc::create(recycleShadow),
+		MoveBy::create(1.0, Vec3(0, 0, -50)), 
+		CallFunc::create(recycle), NULL));
 	
 	if (knockAmount) {
 		auto p = _myPos;

@@ -329,7 +329,7 @@ void BattleFieldUI::heroDead(Actor* hero)
 
 void BattleFieldUI::angryChange(Actor* angry)
 {
-	auto percent = angry->getAngry() / angry->getAngry() * 100;
+	auto percent = angry->getAngry() / angry->getAngryMax() * 100;
 	auto progressTo = ProgressTo::create(0.3, percent);
 	auto progressToClone = ProgressTo::create(1, percent + 2);
 

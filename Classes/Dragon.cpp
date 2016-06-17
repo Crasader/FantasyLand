@@ -97,7 +97,12 @@ void Dragon::dyingMode(Vec2 knockSource, int knockAmount)
 		setVisible(false);
 		getPoolByName(_name).push_back(this);
 	};
+	auto recycleShadow = [&]()
+	{
+		_circle->setVisible(false);
+	};
 	runAction(Sequence::create(DelayTime::create(3),
+		CallFunc::create(recycleShadow),
 		MoveBy::create(1.0, Vec3(0, 0, -50)),
 		CallFunc::create(recycle), NULL));
 }
@@ -133,9 +138,7 @@ void Dragon::init3D()
 	addChild(_sprite3d);
 	_sprite3d->setRotation3D(Vec3(90, 0, 0));
 	_sprite3d->setRotation(-90);
-	initShadow();
-	
-	
+	initShadow();	
 }
 
 void Dragon::initActions()

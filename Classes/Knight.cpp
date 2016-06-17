@@ -125,6 +125,7 @@ void Knight::specialAttack()
 	_angry = ActorCommonValues._angry;
 	struct MESSAGE_ANGRY_CHANGE angryChange = { _name, _angry, _angryMax };
 	MessageDispatchCenter::getInstance()->dispatchMessage(ANGRY_CHANGE, this);
+	log("Knight::specialAttack,%f,%f",_angry, _angryMax);
 //	MDC->dispatchMessage(MessageType::ANGRY_CHANGE, angryChange);
 
 	//knight will create 2 attacks one by one  
@@ -345,6 +346,7 @@ float Knight::hurt(BasicCollider* collider, bool dirKnockMode)
 		//MDC->dispatchMessage(MessageType::BLOOD_MINUS, bloodMinus);
 		struct MESSAGE_ANGRY_CHANGE angryChange = { _name, _angry,_angryMax };
 		MessageDispatchCenter::getInstance()->dispatchMessage(ANGRY_CHANGE, this);
+		log("knight hurt %f,%f", _angry, _angryMax);
 
 		//MDC->dispatchMessage(MessageType::ANGRY_CHANGE, angryChange);
 		_angry += damage;

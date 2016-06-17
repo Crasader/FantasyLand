@@ -231,13 +231,13 @@ MessageType BattleScene::UIcontainsPoint(Vec2 position)
 	auto rectMage = uiLayer->MagePngFrame->getBoundingBox();
 
 	if (rectKnight.containsPoint(position) && uiLayer->KnightAngry->getPercentage() == 100)
-		//cclog("rectKnight")
+		//log("rectKnight")
 		message = MessageType::SPECIAL_KNIGHT;
 	else if (rectArcher.containsPoint(position) && uiLayer->ArcherAngry->getPercentage() == 100)
-		//cclog("rectArcher")
+		//log("rectArcher")
 		message = MessageType::SPECIAL_ARCHER;
 	else if (rectMage.containsPoint(position) && uiLayer->MageAngry->getPercentage() == 100)
-		//cclog("rectMage")
+		//log("rectMage")
 		message = MessageType::SPECIAL_MAGE;
 	else
 		return MessageType::NullMessageType;

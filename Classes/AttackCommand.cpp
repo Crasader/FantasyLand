@@ -124,9 +124,9 @@ void BasicCollider::hurtEffect(Actor* target)
 	hurtEffect->setScale(1.5);
 	hurtEffect->runAction(Sequence::create(hurtAction, RemoveSelf::create(), NULL));
 	hurtEffect->setPosition3D(Vec3(0, 0, 50));
-	//hurtEffect->setCameraMask(2);
+	hurtEffect->setCameraMask(2);
 	target->addChild(hurtEffect);
-	log("Animation played");
+	//log("Animation played");
 }
 
 void BasicCollider::onCollide(Actor* target)
@@ -160,13 +160,13 @@ void BasicCollider::initData(Vec2 pos, float facing, struct attack_d attackInfo)
 		_facing = facing;
 	AttackManager.push_back(this);	
 	setPosition(pos);
-    currentLayer->addChild(this, 100);
-	this->setGlobalZOrder(100);
+    currentLayer->addChild(this, -10);
+	//this->setGlobalZOrder(100);
 
 	//_spritey = Sprite::create("img.jpg");
 	//currentLayer->addChild(this);
 	//this->addChild(_spritey);
-	//_spritey->setCameraMask(2);
+	//setCameraMask(2);
 	//_spritey->setPosition3D(Vec3(0,0,0));
 }
 
@@ -340,6 +340,7 @@ void MageNormalAttack::onCollide(Actor* target)
 	_owner->setAngry(_owner->getAngry() + target->hurt(this) * 0.3);
 	struct MESSAGE_ANGRY_CHANGE angryChange = { MageValues._name, _owner->getAngry(), _owner->getAngryMax() };
 	MessageDispatchCenter::getInstance()->dispatchMessage(ANGRY_CHANGE, _owner);
+	log("MageNormalAttack %f,%f", _owner->getAngry(), _owner->getAngryMax());
 	//    _owner->MDC->dispatchMessage(MessageType::ANGRY_CHANGE, angryChange);
 		//set cur duration to its max duration, so it will be removed when checking time out
 	_curDuration++;
@@ -460,9 +461,11 @@ void MageIceSpikes::onCollide(Actor* target)
 	if (_curDOTTime >= _DOTTimer) {
 		hurtEffect(target);
 		playHitAudio();
-		//	_owner->setAngry(_owner->getAngry() + target->hurt(this, true) * 0.3);
-		struct MESSAGE_ANGRY_CHANGE  angryChange = { ArcherValues._name, _owner->getAngry(), _owner->getAngryMax() };
+		_owner->setAngry(_owner->getAngry() + target->hurt(this, true) * 0.1);
+		struct MESSAGE_ANGRY_CHANGE  angryChange = { MageValues._name, _owner->getAngry(), _owner->getAngryMax() };
 		MessageDispatchCenter::getInstance()->dispatchMessage(ANGRY_CHANGE, _owner);
+		log("MageIceSpikes %f,%f", _owner->getAngry(), _owner->getAngryMax());
+
 		//		_owner->MDC->dispatchMessage(MessageType::ANGRY_CHANGE, angryChange);
 		_DOTApplied = true;
 	}
@@ -488,11 +491,11 @@ ArcherNormalAttack* ArcherNormalAttack::CreateWithPos(Vec2 pos, float facing, st
 	auto ret = ArcherNormalAttack::create();
 	ret->initData(pos, facing, attackInfo);
 	ret->_owner = owner;
+	//ret->_sp = Archer::createArrow();
 	ret->_sp = Archer::createArrow();
-	
-	ret->addChild(ret->_sp);
 	ret->_sp->setRotation(RADIANS_TO_DEGREES(-facing) - 90);
 	ret->_sp->setCameraMask(2);
+	ret->addChild(ret->_sp);
 
 	return ret;
 }
@@ -514,6 +517,7 @@ void ArcherNormalAttack::onCollide(Actor* target)
 	_owner->setAngry(_owner->getAngry() + target->hurt(this, true) * 0.3);
 	struct MESSAGE_ANGRY_CHANGE angryChange = { ArcherValues._name, _owner->getAngry(),  _owner->getAngryMax() };
 	MessageDispatchCenter::getInstance()->dispatchMessage(ANGRY_CHANGE, _owner);
+	log("ArcherNormalAttack %f,%f",_owner->getAngry(), _owner->getAngryMax());
 
 	//	_owner->MDC->dispatchMessage(MessageType::ANGRY_CHANGE, angryChange);
 		//set cur duration to its max duration, so it will be removed when checking time out
@@ -561,6 +565,7 @@ void ArcherSpecialAttack::onCollide(Actor* target)
 		_owner->setAngry(_owner->getAngry() + target->hurt(this, true) * 0.3);
 		struct MESSAGE_ANGRY_CHANGE angryChange = { ArcherValues._name, _owner->getAngry(), _owner->getAngryMax() };
 		MessageDispatchCenter::getInstance()->dispatchMessage(ANGRY_CHANGE, _owner);
+		log("ArcherSpecialAttack %f,%f", _owner->getAngry(), _owner->getAngryMax());
 
 		//MessageDispatchCenter::dispatchMessage(MessageDispatchCenter::MessageType::ANGRY_CHANGE, angryChange);*/
 		_DOTApplied = true;
