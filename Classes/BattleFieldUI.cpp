@@ -453,6 +453,17 @@ void BattleFieldUI::showVictoryUI()
 	};
 	listener->onTouchEnded = [this](Touch*, Event*)
 	{
+		//clear GlobalVaribals
+		HeroPool.clear();
+		DragonPool.clear();
+		SlimePool.clear();
+		RatPool.clear();
+		BossPool.clear();
+		PigletPool.clear();
+
+		HeroManager.clear();
+		MonsterManager.clear();
+
 		//stop schedule
 		currentLayer->unscheduleUpdate();
 		Director::getInstance()->getScheduler()->unschedule("gameController", currentLayer);
