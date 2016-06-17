@@ -55,7 +55,7 @@ void GameMaster::update(float dt)
 
 void GameMaster::logicUpdate()
 {
-	if (stage == 1)
+	/*if (stage == 1)
 	{
 		if (MonsterManager.size() < EXIST_MIN_MONSTER)
 		{
@@ -188,7 +188,12 @@ void GameMaster::logicUpdate()
 			showWarning();
 			stage = 9;
 		}
-	}
+	}*/
+    if (stage == 1)
+    {
+		showWarning();
+		stage = 2;
+    }
 }
 
 void GameMaster::AddHeros()
@@ -418,6 +423,8 @@ void GameMaster::showBoss()
 	boss->setMyPos(Vec2(apperPos.x,apperPos.y));
 	boss->setFacing(180);
 	boss->setGoRight(false);
+	//boss->setRotation3D(Vec3(-90, 0, 0));
+	boss->setCameraMask(2);
 
 	auto enableAI = [boss]()
 	{
@@ -482,8 +489,8 @@ void GameMaster::jumpInto(Actor* obj, bool isFront)
 void GameMaster::showWarning()
 {
 	Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::AUTO);
-
 	auto warning = Layer::create();
+	warning->setPosition(VisibleSize.width*0.5, VisibleSize.height*0.5);
 	auto warning_logo = Sprite::createWithSpriteFrameName("caution.png");
 	Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGB565);
 	warning_logo->setPosition(VisibleSize.width*0.5, VisibleSize.height*0.5);
@@ -499,11 +506,12 @@ void GameMaster::showWarning()
 	warning_logo->runAction(Sequence::create(DelayTime::create(0.5), EaseSineOut::create(Blink::create(1, 5)), CallFunc::create(showdialog),NULL));
 	warning->addChild(warning_logo);
 
-	warning->setScale(0.5);
+	warning->setScale(2);
 	warning->setPositionZ(-Director::getInstance()->getZEye() / 2);
 	warning->ignoreAnchorPointForPosition(false);
 	warning->setLocalZOrder(999); 
-	camera->addChild(warning, 2);
+	//camera->addChild(warning);
+	currentLayer->addChild(warning);
 }
 
 void GameMaster::showDialog()
@@ -513,7 +521,9 @@ void GameMaster::showDialog()
 	colorLayer->ignoreAnchorPointForPosition(false);
 	colorLayer->setPositionZ(-Director::getInstance()->getZEye() / 5);
 	colorLayer->setGlobalZOrder(0);
-	camera->addChild(colorLayer);
+	colorLayer->setScale(2);
+	currentLayer->addChild(colorLayer);
+	colorLayer->setPosition(VisibleSize.width*0.5, VisibleSize.height*0.5);
 	
 	auto dialog = Layer::create();
 	dialog->setPositionX(-VisibleSize.width*0.025);
@@ -543,11 +553,12 @@ void GameMaster::showDialog()
 	text->setPosition(VisibleSize.width*0.68, VisibleSize.height*0.27);
 	dialog->addChild(text);
 
-	dialog->setScale(0.1);
+	dialog->setScale(0.2);
 	dialog->ignoreAnchorPointForPosition(false);
 	dialog->setPositionZ(Director::getInstance()->getZEye() / 3);
 	dialog->setGlobalZOrder(0);
-	camera->addChild(dialog);
+	currentLayer->addChild(dialog);
+	dialog->setPosition(VisibleSize.width*0.5, VisibleSize.height*0.5);
 
 	auto pausegame = []()
 	{
@@ -558,7 +569,7 @@ void GameMaster::showDialog()
 		}
 	};
 
-	dialog->runAction(Sequence::create(ScaleTo::create(0.5, 0.5), CallFunc::create(pausegame),NULL));
+	dialog->runAction(Sequence::create(ScaleTo::create(0.5, 0.7), CallFunc::create(pausegame),NULL));
 	uiLayer->setVisible(false);
 	//todo
 	//auto exitDialog = [dialog, colorLayer, this]()
@@ -590,7 +601,7 @@ void GameMaster::showDialog()
 		}
 		this->showBoss();
 	};
-	dialog->runAction(Sequence::create(ScaleTo::create(0.5, 0.1), CallFunc::create(removeDialog), NULL));
+	dialog->runAction(Sequence::create(DelayTime::create(3), ScaleTo::create(0.5, 0.1), CallFunc::create(removeDialog), NULL));
 
 	Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGB565);
 }
