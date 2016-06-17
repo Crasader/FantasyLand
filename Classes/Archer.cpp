@@ -95,7 +95,7 @@ Sprite3D* Archer::createArrow()
 	auto sprite3d = Sprite3D::create("model/archer/arrow.obj");
 	sprite3d->setTexture("model/archer/hunter01_tex_head.jpg");
 	sprite3d->setScale(2);
-	sprite3d->setPosition3D(Vec3(0, 0, 50));
+	sprite3d->setPosition3D(Vec3(0, 0, 80));
 	sprite3d->setRotation3D(Vec3(-90, 0, 0));
 	return sprite3d;
 }
@@ -350,7 +350,6 @@ float Archer::hurt(BasicCollider* collider, bool dirKnockMode)
 
 		//three param judge if crit
 
-		/* 这里需要修改 */
 		auto blood = _hpCounter->showBloodLossNum(damage, this, critical);
 		blood->setCameraMask(2);
 		if (_name == "Rat")
@@ -360,7 +359,7 @@ float Archer::hurt(BasicCollider* collider, bool dirKnockMode)
 		struct MESSAGE_BLOOD_MINUS bloodMinus = { _name, _maxhp, _hp, _bloodBar, _bloodBarClone, _avatar };
 		MessageDispatchCenter::getInstance()->dispatchMessage(BLOOD_MINUS, this);
 		//MDC->dispatchMessage(MessageType::BLOOD_MINUS, bloodMinus);
-		struct MESSAGE_ANGRY_CHANGE angryChange = { _name, _angry,_angryMax };
+		struct MESSAGE_ANGRY_CHANGE angryChange = { _name, _angry, _angryMax };
 		MessageDispatchCenter::getInstance()->dispatchMessage(ANGRY_CHANGE, this);
 		log("Archer hurt %f,%f", _angry, _angryMax);
 		//	MDC->dispatchMessage(MessageType::ANGRY_CHANGE, angryChange);

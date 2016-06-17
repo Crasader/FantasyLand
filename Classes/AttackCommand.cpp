@@ -337,7 +337,9 @@ void MageNormalAttack::onCollide(Actor* target)
 {
 	hurtEffect(target);
 	playHitAudio();
-	_owner->setAngry(_owner->getAngry() + target->hurt(this) * 0.3);
+	auto hurt = target->hurt(this);
+	_owner->setAngry(_owner->getAngry() + hurt * 0.3);
+	log("NORMAL HURT %f", hurt);
 	struct MESSAGE_ANGRY_CHANGE angryChange = { MageValues._name, _owner->getAngry(), _owner->getAngryMax() };
 	MessageDispatchCenter::getInstance()->dispatchMessage(ANGRY_CHANGE, _owner);
 	log("MageNormalAttack %f,%f", _owner->getAngry(), _owner->getAngryMax());
@@ -461,7 +463,9 @@ void MageIceSpikes::onCollide(Actor* target)
 	if (_curDOTTime >= _DOTTimer) {
 		hurtEffect(target);
 		playHitAudio();
-		_owner->setAngry(_owner->getAngry() + target->hurt(this, true) * 0.1);
+		auto hurt = target->hurt(this);
+		_owner->setAngry(_owner->getAngry() + hurt * 0.1);
+		log("NORMAL HURT %f", hurt);
 		struct MESSAGE_ANGRY_CHANGE  angryChange = { MageValues._name, _owner->getAngry(), _owner->getAngryMax() };
 		MessageDispatchCenter::getInstance()->dispatchMessage(ANGRY_CHANGE, _owner);
 		log("MageIceSpikes %f,%f", _owner->getAngry(), _owner->getAngryMax());
