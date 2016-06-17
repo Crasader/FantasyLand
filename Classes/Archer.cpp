@@ -159,6 +159,12 @@ void Archer::specialAttack()
 	//delayExecute(this, spike2, 0.2); todo
 	//delayExecute(this, spike3, 0.4); todo
 
+	auto wait2 = DelayTime::create(0.2);
+	this->runAction(Sequence::create(wait2, CallFunc::create(spike2), NULL));
+
+	auto wait3 = DelayTime::create(0.4);
+	this->runAction(Sequence::create(wait3, CallFunc::create(spike3), NULL));
+
 }
 
 void Archer::init3D()
