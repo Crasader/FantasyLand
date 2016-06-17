@@ -277,7 +277,7 @@ void GameMaster::showDragon(bool isFront)
 		dragon->reset();
 
 		auto appearPos = getFocusPointOfHeros();
-		float randomvarX = CCRANDOM_0_1()*0.2 + 1;
+		auto randomvarX = CCRANDOM_0_1()*0.2 + 1;
 
 		if( stage == 0 )
 		{
@@ -489,8 +489,8 @@ void GameMaster::showWarning()
 	Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGB565);
 	warning_logo->setPosition(VisibleSize.width*0.5, VisibleSize.height*0.5);
 	warning_logo->setPositionZ(1);
-	
-	auto showdialog = [warning, this]()
+
+	auto showdialog = [warning,this]()
 	{
 		warning->removeFromParent();
 		this->showDialog();
@@ -500,12 +500,11 @@ void GameMaster::showWarning()
 	warning_logo->runAction(Sequence::create(DelayTime::create(0.5), EaseSineOut::create(Blink::create(1, 5)), CallFunc::create(showdialog),NULL));
 	warning->addChild(warning_logo);
 
-	warning->setScale(2);
+	warning->setScale(0.5);
 	warning->setPositionZ(-Director::getInstance()->getZEye() / 2);
 	warning->ignoreAnchorPointForPosition(false);
 	warning->setLocalZOrder(999); 
-	warning->setPosition(VisibleSize.width*0.5, VisibleSize.height*0.5);
-	currentLayer->addChild(warning);
+	camera->addChild(warning, 2);
 }
 
 void GameMaster::showDialog()
@@ -586,7 +585,6 @@ void GameMaster::showDialog()
 
 void GameMaster::showVictoryUI()
 {
-	//todo 清空
 	uiLayer->showVictoryUI();
 }
 
