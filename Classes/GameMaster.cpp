@@ -418,6 +418,7 @@ void GameMaster::showBoss()
 	boss->setMyPos(Vec2(apperPos.x,apperPos.y));
 	boss->setFacing(180);
 	boss->setGoRight(false);
+	boss->setCameraMask(2);
 
 	auto enableAI = [boss]()
 	{
@@ -513,7 +514,10 @@ void GameMaster::showDialog()
 	colorLayer->ignoreAnchorPointForPosition(false);
 	colorLayer->setPositionZ(-Director::getInstance()->getZEye() / 5);
 	colorLayer->setGlobalZOrder(0);
-	camera->addChild(colorLayer);
+
+	colorLayer->setScale(1.5);
+	colorLayer->setPosition(VisibleSize.width / 2, VisibleSize.height / 2);
+	currentLayer->addChild(colorLayer);
 	
 	auto dialog = Layer::create();
 	dialog->setPositionX(-VisibleSize.width*0.025);
@@ -547,7 +551,9 @@ void GameMaster::showDialog()
 	dialog->ignoreAnchorPointForPosition(false);
 	dialog->setPositionZ(Director::getInstance()->getZEye() / 3);
 	dialog->setGlobalZOrder(0);
-	camera->addChild(dialog);
+
+	dialog->setPosition(VisibleSize.width * 0.45, VisibleSize.height /2);
+	currentLayer->addChild(dialog);
 
 	auto pausegame = []()
 	{
@@ -558,27 +564,9 @@ void GameMaster::showDialog()
 		}
 	};
 
-	dialog->runAction(Sequence::create(ScaleTo::create(0.5, 0.5), CallFunc::create(pausegame),NULL));
+	dialog->runAction(Sequence::create(ScaleTo::create(0.5, 0.65), CallFunc::create(pausegame),NULL));
 	uiLayer->setVisible(false);
-	//todo
-	//auto exitDialog = [dialog, colorLayer, this]()
-	//{
-	//	auto removeDialog = [dialog, colorLayer, this]()
-	//	{
-	//		dialog->removeFromParent();
-	//		colorLayer->removeFromParent();
-	//		uiLayer->setVisible(true);
-	//		for (int var = 0; var < HeroManager.size(); var++)
-	//		{
-	//			HeroManager[var]->setAIEnabled(true);
-	//		}
-	//		this->showBoss();
-	//	};
-
-	//	dialog->runAction(Sequence::create(ScaleTo::create(0.5, 0.1), CallFunc::create(removeDialog),NULL));
-	//	// Director::getInstance()->getScheduler()->unscheduleScriptEntry(scheduleid);
-	//};
-	//// scheduleid = cc.Director:getInstance():getScheduler():scheduleScriptFunc(exitDialog,3,false)
+	
 	auto removeDialog = [dialog, colorLayer, this]()
 	{
 		dialog->removeFromParent();
@@ -590,7 +578,7 @@ void GameMaster::showDialog()
 		}
 		this->showBoss();
 	};
-	dialog->runAction(Sequence::create(ScaleTo::create(0.5, 0.1), CallFunc::create(removeDialog), NULL));
+	dialog->runAction(Sequence::create(DelayTime::create(3),ScaleTo::create(0.5, 0.1), CallFunc::create(removeDialog), NULL));
 
 	Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGB565);
 }
