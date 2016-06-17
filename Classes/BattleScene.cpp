@@ -192,7 +192,7 @@ void BattleScene::specialPerspective(Actor* heroActor)
 		heroActor->getTarget()->setCascadeColorEnabled(true);//restore to the default state
 	};
 
-	//delayExecute(currentLayer, restoreTimeScale, heroActor);
+	//delayExecute(currentLayer, restoreTimeScale, heroActor);todo 
 }
 
 void BattleScene::enableTouch()
