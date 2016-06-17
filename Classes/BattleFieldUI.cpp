@@ -12,6 +12,8 @@ bool BattleFieldUI::init()
 	angrybarInit();
 	touchButtonInit();
 	timeInit();
+
+	setGlobalZOrder(10);
 	//showVictoryUI();
 	experimental::AudioEngine::stopAll();
 	AUDIO_ID.BATTLEFIELDBGM = experimental::AudioEngine::play2d(BGM_RES.BATTLEFIELDBGM, true, 0.6);
@@ -25,28 +27,34 @@ void BattleFieldUI::avatarInit()
 	MagePng = Sprite::createWithSpriteFrameName("UI-1136-640_18.png");
 	MagePng->setPosition3D(Vec3(VisibleSize.width - 60, 70, 2));
 	MagePng->setScale(scale);
+	MagePng->setGlobalZOrder(10);
 	addChild(MagePng, 2);
 	MagePngFrame = Sprite::createWithSpriteFrameName("UI-2.png");
 	MagePngFrame->setScale(scale);
 	MagePngFrame->setPosition3D(Vec3(MagePng->getPositionX() + 1, MagePng->getPositionY() - offset, 1));
+	MagePngFrame->setGlobalZOrder(10);
 	addChild(MagePngFrame, 1);
 
 	KnightPng = Sprite::createWithSpriteFrameName("UI-1136-640_03.png");
 	KnightPng->setPosition3D(Vec3(MagePng->getPositionX() - 100, MagePng->getPositionY(), 2));
 	KnightPng->setScale(scale);
+	KnightPng->setGlobalZOrder(10);
 	addChild(KnightPng, 2);
 	KnightPngFrame = Sprite::createWithSpriteFrameName("UI-2.png");
 	KnightPngFrame->setScale(scale);
 	KnightPngFrame->setPosition3D(Vec3(KnightPng->getPositionX() + 1, KnightPng->getPositionY() - offset, 1));
+	KnightPngFrame->setGlobalZOrder(10);
 	addChild(KnightPngFrame, 1);
 
 	ArcherPng = Sprite::createWithSpriteFrameName("UI-1136-640_11.png");
 	ArcherPng->setPosition3D(Vec3(KnightPng->getPositionX() - 100, KnightPng->getPositionY(), 2));
 	ArcherPng->setScale(scale);
+	ArcherPng->setGlobalZOrder(10);
 	addChild(ArcherPng, 2);
 	ArcherPngFrame = Sprite::createWithSpriteFrameName("UI-2.png");
 	ArcherPngFrame->setScale(scale);
 	ArcherPngFrame->setPosition3D(Vec3(ArcherPng->getPositionX() + 1, ArcherPng->getPositionY() - offset, 1));
+	ArcherPngFrame->setGlobalZOrder(10);
 	addChild(ArcherPngFrame, 1);
 }
 
@@ -62,6 +70,7 @@ void BattleFieldUI::bloodbarInit()
 	KnightBlood->setPercentage(100);
 	KnightBlood->setPosition3D(Vec3(KnightPng->getPositionX() - 1, KnightPng->getPositionY() - offset, 4));
 	KnightBlood->setScale(scale);
+	KnightBlood->setGlobalZOrder(10);
 	addChild(KnightBlood, 4);
 
 	KnightBloodClone = ProgressTimer::create(Sprite::createWithSpriteFrameName("UI-1136-640_36_clone.png"));
@@ -72,6 +81,7 @@ void BattleFieldUI::bloodbarInit()
 	KnightBloodClone->setPercentage(100);
 	KnightBloodClone->setPosition3D(Vec3(KnightPng->getPositionX() - 1, KnightPng->getPositionY() - offset, 3));
 	KnightBloodClone->setScale(scale);
+	KnightBloodClone->setGlobalZOrder(10);
 	addChild(KnightBloodClone, 3);
 
 	ArcherBlood = ProgressTimer::create(Sprite::createWithSpriteFrameName("UI-1136-640_36_clone.png"));
@@ -82,6 +92,7 @@ void BattleFieldUI::bloodbarInit()
 	ArcherBlood->setPercentage(100);
 	ArcherBlood->setPosition3D(Vec3(ArcherPng->getPositionX() - 1, ArcherPng->getPositionY() - offset, 4));
 	ArcherBlood->setScale(scale);
+	ArcherBlood->setGlobalZOrder(10);
 	addChild(ArcherBlood, 4);
 
 	ArcherBloodClone = ProgressTimer::create(Sprite::createWithSpriteFrameName("UI-1136-640_36_clone.png"));
@@ -92,6 +103,7 @@ void BattleFieldUI::bloodbarInit()
 	ArcherBloodClone->setPercentage(100);
 	ArcherBloodClone->setPosition3D(Vec3(ArcherPng->getPositionX() - 1, ArcherPng->getPositionY() - offset, 3));
 	ArcherBloodClone->setScale(scale);
+	ArcherBloodClone->setGlobalZOrder(10);
 	addChild(ArcherBloodClone, 3);
 
 	MageBlood = ProgressTimer::create(Sprite::createWithSpriteFrameName("UI-1136-640_36_clone.png"));
@@ -102,6 +114,7 @@ void BattleFieldUI::bloodbarInit()
 	MageBlood->setPercentage(100);
 	MageBlood->setPosition3D(Vec3(MagePng->getPositionX() - 1, MagePng->getPositionY() - offset, 4));
 	MageBlood->setScale(scale);
+	MageBlood->setGlobalZOrder(10);
 	addChild(MageBlood, 4);
 
 	MageBloodClone = ProgressTimer::create(Sprite::createWithSpriteFrameName("UI-1136-640_36_clone.png"));
@@ -112,6 +125,7 @@ void BattleFieldUI::bloodbarInit()
 	MageBloodClone->setPercentage(100);
 	MageBloodClone->setPosition3D(Vec3(MagePng->getPositionX() - 1, MagePng->getPositionY() - offset, 3));
 	MageBloodClone->setScale(scale);
+	MageBloodClone->setGlobalZOrder(10);
 	addChild(MageBloodClone, 3);
 }
 
@@ -131,6 +145,7 @@ void BattleFieldUI::angrybarInit()
 	KnightAngry->setPercentage(0);
 	KnightAngry->setPosition3D(Vec3(KnightPng->getPositionX() - 1, KnightPng->getPositionY() - offset, 4));
 	KnightAngry->setScale(0.7);
+	KnightAngry->setGlobalZOrder(10);
 	addChild(KnightAngry, 4);
 
 	KnightAngryClone = ProgressTimer::create(Sprite::createWithSpriteFrameName("UI-1136-640_36_clone.png"));
@@ -142,12 +157,14 @@ void BattleFieldUI::angrybarInit()
 	KnightAngryClone->setPosition3D(Vec3(KnightPng->getPositionX() - 1, KnightPng->getPositionY() - offset, 3));
 	KnightAngryClone->setScaleX(0.7);
 	KnightAngryClone->setScaleY(0.75);
+	KnightAngryClone->setGlobalZOrder(10);
 	addChild(KnightAngryClone, 3);
 
 	KnightAngryFullSignal = Sprite::createWithSpriteFrameName("specialLight.png");
 	KnightAngryFullSignal->setPosition3D(Vec3(KnightPng->getPositionX(), KnightPng->getPositionY() + fullAngerStarOffset, 4));
 	KnightAngryFullSignal->runAction(action);
 	KnightAngryFullSignal->setScale(1);
+	KnightAngryFullSignal->setGlobalZOrder(10);
 	addChild(KnightAngryFullSignal, 4);
 	KnightAngryFullSignal->setVisible(false);
 
@@ -159,6 +176,7 @@ void BattleFieldUI::angrybarInit()
 	ArcherAngry->setPercentage(0);
 	ArcherAngry->setPosition3D(Vec3(ArcherPng->getPositionX() - 1, ArcherPng->getPositionY() - offset, 4));
 	ArcherAngry->setScale(0.7);
+	ArcherAngry->setGlobalZOrder(10);
 	addChild(ArcherAngry, 4);
 
 	ArcherAngryClone = ProgressTimer::create(Sprite::createWithSpriteFrameName("UI-1136-640_36_clone.png"));
@@ -170,10 +188,12 @@ void BattleFieldUI::angrybarInit()
 	ArcherAngryClone->setPosition3D(Vec3(ArcherPng->getPositionX() - 1, ArcherPng->getPositionY() - offset, 3));
 	ArcherAngryClone->setScaleX(0.7);
 	ArcherAngryClone->setScaleY(0.75);
+	ArcherAngryClone->setGlobalZOrder(10);
 	addChild(ArcherAngryClone, 3);
 
 	ArcherAngryFullSignal = Sprite::createWithSpriteFrameName("specialLight.png");
 	ArcherAngryFullSignal->setPosition3D(Vec3(ArcherPng->getPositionX(), ArcherPng->getPositionY() + fullAngerStarOffset, 4));
+	ArcherAngryFullSignal->setGlobalZOrder(10);
 	addChild(ArcherAngryFullSignal, 4);
 	ArcherAngryFullSignal->runAction(action->clone());
 	ArcherAngryFullSignal->setScale(1);
@@ -187,6 +207,7 @@ void BattleFieldUI::angrybarInit()
 	MageAngry->setPercentage(0);
 	MageAngry->setPosition3D(Vec3(MagePng->getPositionX() - 1, MagePng->getPositionY() - offset, 4));
 	MageAngry->setScale(0.7);
+	MageAngry->setGlobalZOrder(10);
 	addChild(MageAngry, 4);
 
 	MageAngryClone = ProgressTimer::create(Sprite::createWithSpriteFrameName("UI-1136-640_36_clone.png"));
@@ -198,10 +219,12 @@ void BattleFieldUI::angrybarInit()
 	MageAngryClone->setPosition3D(Vec3(MagePng->getPositionX() - 1, MagePng->getPositionY() - offset, 3));
 	MageAngryClone->setScaleX(0.7);
 	MageAngryClone->setScaleY(0.75);
+	MageAngryClone->setGlobalZOrder(10);
 	addChild(MageAngryClone, 3);
 
 	MageAngryFullSignal = Sprite::createWithSpriteFrameName("specialLight.png");
 	MageAngryFullSignal->setPosition3D(Vec3(MagePng->getPositionX(), MagePng->getPositionY() + fullAngerStarOffset, 4));
+	MageAngryFullSignal->setGlobalZOrder(10);
 	addChild(MageAngryFullSignal, 4);
 	MageAngryFullSignal->runAction(action->clone());
 	MageAngryFullSignal->setScale(1);
@@ -213,29 +236,34 @@ void BattleFieldUI::touchButtonInit()
 	auto _setBtn = Sprite::createWithSpriteFrameName("UI-1136-640_06.png");
 	_setBtn->setPosition3D(Vec3(VisibleSize.width - 50, VisibleSize.height - 50, 3));
 	_setBtn->setScale(0.8);
+	_setBtn->setGlobalZOrder(10);
 	addChild(_setBtn, 3);
 
 	auto _chest = Sprite::createWithSpriteFrameName("chest.png");
 	_chest->setPosition3D(Vec3(VisibleSize.width - 100, VisibleSize.height - 50, 3));
 	_chest->setScale(0.8);
+	_chest->setGlobalZOrder(10);
 	addChild(_chest, 3);
 
 	auto _coin = Sprite::createWithSpriteFrameName("coins.png");
 	_coin->setPosition3D(Vec3(VisibleSize.width - 300, VisibleSize.height - 50, 3));
 	_coin->setScaleX(0.8);
 	_coin->setScaleY(0.8);
+	_coin->setGlobalZOrder(10);
 	addChild(_coin, 3);
 
 	auto _chestAmount = Sprite::createWithSpriteFrameName("UI-1.png");
 	_chestAmount->setPosition3D(Vec3(VisibleSize.width - 170, VisibleSize.height - 50, 3));
 	_chestAmount->setScaleX(0.8);
 	_chestAmount->setScaleY(0.7);
+	_chestAmount->setGlobalZOrder(10);
 	addChild(_chestAmount, 2);
 
 	auto _coinAmount = Sprite::createWithSpriteFrameName("UI-1.png");
 	_coinAmount->setPosition3D(Vec3(VisibleSize.width - 370, VisibleSize.height - 50, 3));
 	_coinAmount->setScaleX(0.8);
 	_coinAmount->setScaleY(0.7);
+	_coinAmount->setGlobalZOrder(10);
 	addChild(_coinAmount, 2);
 }
 
@@ -306,23 +334,23 @@ void BattleFieldUI::heroDead(Actor* hero)
 	{
 		//GreyShader:setGreyShader(KnightPng);
 		//GreyShader: setGreyShader(KnightPngFrame);
-	KnightAngryFullSignal: setVisible(false);
-	KnightAngryClone: setVisible(false);
+		KnightAngryFullSignal->setVisible(false);
+		KnightAngryClone->setVisible(false);
 	}
 
 	else if (hero->getname() == "Mage") {
 		//GreyShader: setGreyShader(MagePng);
 		//GreyShader: setGreyShader(MagePngFrame);
-	MageAngryFullSignal: setVisible(false);
-	MageAngryClone: setVisible(false);
+		MageAngryFullSignal->setVisible(false);
+		MageAngryClone->setVisible(false);
 	}
 
 	else if (hero->getname() == "Archer")
 	{
 		//GreyShader: setGreyShader(ArcherPng);
 		//GreyShader: setGreyShader(ArcherPngFrame);
-	ArcherAngryFullSignal: setVisible(false);
-	ArcherAngryClone: setVisible(false);
+		ArcherAngryFullSignal->setVisible(false);
+		ArcherAngryClone->setVisible(false);
 	}
 
 }
@@ -379,6 +407,7 @@ void BattleFieldUI::timeInit()
 	_tmlabel->setPosition3D(Vec3(G.winSize.width*0.02, G.winSize.height*0.915, 2));
 	_tmlabel->enableOutline(Color4B(0, 0, 0, 255));
 
+	_tmlabel->setGlobalZOrder(10);
 	addChild(_tmlabel, 5);
 	//time update
 	auto tmUpdate = [this](float dt)
@@ -409,7 +438,8 @@ void BattleFieldUI::showVictoryUI()
 	victory->setPosition3D(Vec3(G.winSize.width*0.5, G.winSize.height*0.5, 3));
 	victory->setScale(0.1);
 	layer->addChild(victory, 1);
-
+	layer->setGlobalZOrder(10);
+	victory->setGlobalZOrder(10);
 	//victory runaction
 	auto action = EaseElasticOut::create(ScaleTo::create(1.5, 1));
 	victory->runAction(action);
@@ -423,8 +453,8 @@ void BattleFieldUI::showVictoryUI()
 	listener->onTouchEnded = [this](Touch*, Event*)
 	{
 		//stop schedule
-		Director::getInstance()->getScheduler()->unschedule("timeSchedule", this);
-		// todo Director::getInstance()->getScheduler()->unscheduleScriptEntry(gameControllerScheduleID);
+		currentLayer->unscheduleUpdate();
+		Director::getInstance()->getScheduler()->unschedule("gameController", currentLayer);
 		//stop sound
 		experimental::AudioEngine::stop(AUDIO_ID.BATTLEFIELDBGM);
 		//replace scene
