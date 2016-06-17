@@ -538,17 +538,3 @@ struct MESSAGE_SPECIAL_PERSPECTIVE
 	Actor* target;
 };
 
-/*
-in Archer/Knight/Mage
-
-function specialAttack()
-if ret._specialAttackChance == 1 then return end
-ret._specialAttackChance = 1
-end
-
-in BatterScene
-
-MessageDispatchCenter:registerMessage(MessageDispatchCenter.MessageType.BLOOD_MINUS, bloodMinus)
-MessageDispatchCenter:registerMessage(MessageDispatchCenter.MessageType.ANGRY_CHANGE, angryChange)
-MessageDispatchCenter:registerMessage(MessageDispatchCenter.MessageType.SPECIAL_PERSPECTIVE,specialPerspective)
-*/

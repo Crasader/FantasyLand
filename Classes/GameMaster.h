@@ -31,6 +31,7 @@ public:
 	void showDialog();
 	void showVictoryUI();
 
+
 private:
 
 	float _totaltime;
