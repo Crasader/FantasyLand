@@ -350,13 +350,13 @@ void Actor::playDyingEffects()
 //attacking collision check
 void Actor::normalAttack()
 {
-	//BasicCollider::CreateWithPos(_myPos, _curFacing, _normalAttack);
+	BasicCollider::CreateWithPos(_myPos, _curFacing, _normalAttack);
 	normalAttackSoundEffects();
 }
 
 void Actor::specialAttack()
 {
-	//BasicCollider::CreateWithPos(_myPos, _curFacing, _specialAttack);
+	BasicCollider::CreateWithPos(_myPos, _curFacing, _specialAttack);
 	specialAttackSoundEffects();
 }
 
