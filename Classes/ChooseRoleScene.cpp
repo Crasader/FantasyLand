@@ -174,7 +174,7 @@ void ChooseRoleScene::addBk()
 	auto bk = Sprite::create("chooseRole/cr_bk.jpg");
 	bk->setAnchorPoint(Vec2(0.5, 0.5));
 	bk->setPosition(origin.x + VisibleSize.width / 2, origin.y + VisibleSize.height / 2);
-	//addChild(bk);
+	addChild(bk);
 }
 
 void ChooseRoleScene::createLayer()

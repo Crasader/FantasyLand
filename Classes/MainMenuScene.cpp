@@ -331,7 +331,7 @@ void MainMenuScene::addButton()
 		if (isTouchedStart)
 			return;
 		isTouchedStart = true;
-		Director::getInstance()->replaceScene(ChooseRoleScene::createScene());
+		Director::getInstance()->replaceScene(BattleScene::createScene());
 	});
 	starButton->addTouchEventListener([this](Ref*, ui::Widget::TouchEventType)
 	{
