@@ -11,7 +11,7 @@
 #include "BattleFieldUI.h"
 #include "JumpBy3D.h"
 
-int gloableZOrder = 1;
+int globalZOrder = 1;
 int EXIST_MIN_MONSTER = 4;
 unsigned int scheduleid;
 int stage = 0;
@@ -482,6 +482,7 @@ void GameMaster::jumpInto(Actor* obj, bool isFront)
 void GameMaster::showWarning()
 {
 	Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::AUTO);
+
 	auto warning = Layer::create();
 	auto warning_logo = Sprite::createWithSpriteFrameName("caution.png");
 	Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGB565);
@@ -495,7 +496,7 @@ void GameMaster::showWarning()
 		experimental::AudioEngine::play2d("audios/effects/boss/boss.mp3", false, 1);
 	};
 
-	warning_logo->runAction(Sequence::create(DelayTime::create(0.5), EaseSineOut::create(Blink::create(1, 5)), CallFunc::create(showdialog),NULL));
+	warning_logo->runAction(Sequence::create(DelayTime::create(0.5), EaseSineOut::create(Blink::create(1, 5)),/* CallFunc::create(showdialog),*/NULL));
 	warning->addChild(warning_logo);
 
 	warning->setScale(0.5);
