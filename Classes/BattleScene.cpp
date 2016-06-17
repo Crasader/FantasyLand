@@ -177,11 +177,11 @@ void BattleScene::angryChange(Actor* heroActor)
 
 void BattleScene::specialPerspective(Actor* heroActor)
 {
-	if (specialCamera->getName() == "on")
-		return;
+	//if (specialCamera->getName() == "on")
+	//	return;
 
-	specialCamera->setPosition(heroActor->getPosition());
-	specialCamera->setName("on");
+	//specialCamera->setPosition(heroActor->getPosition());
+	//specialCamera->setName("on");
 	currentLayer->setColor(Color3B(125, 125, 125));//deep grey
 
 	auto restoreTimeScale = [this, heroActor]()
@@ -191,8 +191,15 @@ void BattleScene::specialPerspective(Actor* heroActor)
 		Director::getInstance()->getScheduler()->setTimeScale(1.0);
 		heroActor->getTarget()->setCascadeColorEnabled(true);//restore to the default state
 	};
-
-	//delayExecute(currentLayer, restoreTimeScale, heroActor);todo 
+//void delayExecute(Actor* target, void(*func)(), float delay)
+//	{
+//		auto wait = DelayTime::create(delay);
+//		target->runAction(Sequence::create(wait, CallFunc::create(func), NULL));
+//	}
+//	delayExecute(currentLayer, restoreTimeScale, heroActor); 
+//	auto wait = DelayTime::create(delay);
+//	target->runAction(Sequence::create(wait, CallFunc::create(func), NULL));
+	
 }
 
 void BattleScene::enableTouch()
