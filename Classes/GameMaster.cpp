@@ -496,7 +496,7 @@ void GameMaster::showWarning()
 		experimental::AudioEngine::play2d("audios/effects/boss/boss.mp3", false, 1);
 	};
 
-	warning_logo->runAction(Sequence::create(DelayTime::create(0.5), EaseSineOut::create(Blink::create(1, 5)),/* CallFunc::create(showdialog),*/NULL));
+	warning_logo->runAction(Sequence::create(DelayTime::create(0.5), EaseSineOut::create(Blink::create(1, 5)), CallFunc::create(showdialog),NULL));
 	warning->addChild(warning_logo);
 
 	warning->setScale(0.5);
