@@ -418,6 +418,7 @@ void GameMaster::showBoss()
 	boss->setMyPos(Vec2(apperPos.x,apperPos.y));
 	boss->setFacing(180);
 	boss->setGoRight(false);
+
 	auto enableAI = [boss]()
 	{
 		boss->setAIEnabled(true);
@@ -500,7 +501,7 @@ void GameMaster::showWarning()
 	warning->setScale(0.5);
 	warning->setPositionZ(-Director::getInstance()->getZEye() / 2);
 	warning->ignoreAnchorPointForPosition(false);
-	warning->setZOrder(999);
+	warning->setLocalZOrder(999); 
 	camera->addChild(warning, 2);
 }
 
@@ -590,7 +591,6 @@ void GameMaster::showDialog()
 	};
 	dialog->runAction(Sequence::create(ScaleTo::create(0.5, 0.1), CallFunc::create(removeDialog), NULL));
 
-	
 	Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGB565);
 }
 

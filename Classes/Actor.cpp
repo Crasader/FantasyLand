@@ -90,7 +90,7 @@ void Actor::initPuff()
 {
 	auto valueMap = ParticleManager::getInstance()->getPlistData("walkpuff");
 	auto puff = ParticleSystemQuad::create(valueMap);
-	//***ParticleSystem should be BillboardParticleSystem;
+	//ParticleSystem should be BillboardParticleSystem;
 	auto puffFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName("walkingPuff.png");
 	puff->setTextureWithRect(puffFrame->getTexture(), puffFrame->getRect());
 	puff->setScale(1.5);
@@ -98,18 +98,21 @@ void Actor::initPuff()
 	puff->setPositionZ(10);
 	_puff = puff;
 	_effectNode->addChild(puff);
-	//this->addChild(puff);
+	this->addChild(puff);
 }
 
 void Actor::initShadow()
 {
 	_circle = Sprite::createWithSpriteFrameName("shadow.png");
+	this->addChild(_circle);
+
 	//use Shadow size for aesthetic, use radius to see collision size
 	_circle->setScale(_shadowSize / 16);
 	//_circle->setGlobalZOrder(_sprite3d->getGlobalZOrder()+1);
 	_circle->setOpacity(255 * 0.7);
-	this->addChild(_circle);
-	_sprite3d->setGlobalZOrder(1);
+	//_circle->setGlobalZOrder(-getPositionZ() + FXZorder);
+
+	_sprite3d->setGlobalZOrder(0.01);
 }
 
 void Actor::playAnimation(std::string name, bool loop) 
@@ -331,6 +334,7 @@ float Actor::hurt(BasicCollider* collider, bool dirKnockMode)
 			dyingMode(getPosTable(collider), knock);
 		}
 		auto blood = _hpCounter->showBloodLossNum(damage, this, critical);
+		blood->setCameraMask(2);
 		//auto str = blood->getString();
 		//log("%s", str);
 		//blood->setCameraMask(7);
@@ -365,13 +369,13 @@ void Actor::playDyingEffects()
 //attacking collision check
 void Actor::normalAttack()
 {
-	//BasicCollider::CreateWithPos(_myPos, _curFacing, _normalAttack);
+	BasicCollider::CreateWithPos(_myPos, _curFacing, _normalAttack);
 	normalAttackSoundEffects();
 }
 
 void Actor::specialAttack()
 {
-	//BasicCollider::CreateWithPos(_myPos, _curFacing, _specialAttack);
+	BasicCollider::CreateWithPos(_myPos, _curFacing, _specialAttack);
 	specialAttackSoundEffects();
 }
 
@@ -424,6 +428,7 @@ void Actor::dyingMode(Vec2 knockSource, int knockAmount)
 		_angry = 0;
 		struct MESSAGE_ANGRY_CHANGE angryChange = { _name, _angry, _angryMax };
 		MessageDispatchCenter::getInstance()->dispatchMessage(ANGRY_CHANGE, this);
+		log("%d,%d", _angry, _angryMax);
 //		MDC->dispatchMessage(MessageType::ANGRY_CHANGE, angryChange);
         //CallFunc::create(recycle)
 	}
@@ -435,7 +440,12 @@ void Actor::dyingMode(Vec2 knockSource, int knockAmount)
 			setVisible(false);
 			getPoolByName(_name).push_back(this);	
 		};
+		auto recycleShadow = [&]()
+		{
+			_circle->setVisible(false);
+		};
 		runAction(Sequence::create(DelayTime::create(3),
+			CallFunc::create(recycleShadow),
 			MoveBy::create(1.0, Vec3(0, 0, -50)),
 			CallFunc::create(recycle), NULL));
 	}

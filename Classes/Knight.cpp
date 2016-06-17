@@ -125,6 +125,7 @@ void Knight::specialAttack()
 	_angry = ActorCommonValues._angry;
 	struct MESSAGE_ANGRY_CHANGE angryChange = { _name, _angry, _angryMax };
 	MessageDispatchCenter::getInstance()->dispatchMessage(ANGRY_CHANGE, this);
+	log("Knight::specialAttack,%f,%f",_angry, _angryMax);
 //	MDC->dispatchMessage(MessageType::ANGRY_CHANGE, angryChange);
 
 	//knight will create 2 attacks one by one  
@@ -143,7 +144,9 @@ void Knight::specialAttack()
 	auto punch = [&]() {
 		KnightNormalAttack::CreateWithPos(pos, _curFacing, _specialAttack, this);
 	};
-	//delayExecute(this, punch, 0.2); todo
+	//delayExecute(this, punch, 0.2); //todo 不传参直接写？
+	auto wait = DelayTime::create(0.2);
+	this->runAction(Sequence::create(wait, CallFunc::create(punch), NULL));
 }
 
 void Knight::initAttackEffect()
@@ -334,7 +337,7 @@ float Knight::hurt(BasicCollider* collider, bool dirKnockMode)
 
 		/* 这里需要修改 */
 		auto blood = _hpCounter->showBloodLossNum(damage, this, critical);
-		//blood->setCameraMask(995);
+		blood->setCameraMask(2);
 		addEffect(blood);
 
 		struct MESSAGE_BLOOD_MINUS bloodMinus = { _name, _maxhp, _hp, _bloodBar, _bloodBarClone, _avatar };
@@ -343,6 +346,7 @@ float Knight::hurt(BasicCollider* collider, bool dirKnockMode)
 		//MDC->dispatchMessage(MessageType::BLOOD_MINUS, bloodMinus);
 		struct MESSAGE_ANGRY_CHANGE angryChange = { _name, _angry,_angryMax };
 		MessageDispatchCenter::getInstance()->dispatchMessage(ANGRY_CHANGE, this);
+		log("knight hurt %f,%f", _angry, _angryMax);
 
 		//MDC->dispatchMessage(MessageType::ANGRY_CHANGE, angryChange);
 		_angry += damage;

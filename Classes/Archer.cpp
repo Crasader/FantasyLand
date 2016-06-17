@@ -130,6 +130,7 @@ void Archer::specialAttack()
 
 	struct MESSAGE_ANGRY_CHANGE angryChange = { _name, _angry, _angryMax };
 	MessageDispatchCenter::getInstance()->dispatchMessage(ANGRY_CHANGE, this);
+	log("Archer Special Attack %f,%f",_angry, _angryMax);
 //	MDC->dispatchMessage(MessageType::ANGRY_CHANGE, angryChange);
 
 	experimental::AudioEngine::play2d(Archerproperty.specialAttackShout, false, 1);
@@ -158,6 +159,12 @@ void Archer::specialAttack()
 
 	//delayExecute(this, spike2, 0.2); todo
 	//delayExecute(this, spike3, 0.4); todo
+
+	auto wait2 = DelayTime::create(0.2);
+	this->runAction(Sequence::create(wait2, CallFunc::create(spike2), NULL));
+
+	auto wait3 = DelayTime::create(0.4);
+	this->runAction(Sequence::create(wait3, CallFunc::create(spike3), NULL));
 
 }
 
@@ -313,47 +320,52 @@ int Archer::getHelmetID()
 
 float Archer::hurt(BasicCollider* collider, bool dirKnockMode)
 {
-	//TODO add sound effect
-	auto damage = collider->getDamage();
-	//calculate the real damage
-	bool critical = false;
-	auto knock = collider->getKnock();
-	if (CCRANDOM_0_1() < collider->getCriticalChance()) {
-		damage *= 1.5;
-		critical = true;
-		knock *= 2;
-	}
-	damage = damage + damage * CCRANDOM_MINUS1_1() * 0.15 - _defense;
-	damage = floor(damage);
-	if (damage <= 0) damage = 1;
-	_hp -= damage;
-	if (_hp > 0) {
-		if (critical == true) {
-			knockMode(collider, dirKnockMode);
-			hurtSoundEffects();
+	if (_isalive) {
+		//TODO add sound effect
+		auto damage = collider->getDamage();
+		//calculate the real damage
+		bool critical = false;
+		auto knock = collider->getKnock();
+		if (CCRANDOM_0_1() < collider->getCriticalChance()) {
+			damage *= 1.5;
+			critical = true;
+			knock *= 2;
 		}
-		else hurtSoundEffects();
+		damage = damage + damage * CCRANDOM_MINUS1_1() * 0.15 - _defense;
+		damage = floor(damage);
+		if (damage <= 0) damage = 1;
+		_hp -= damage;
+		if (_hp > 0) {
+			if (critical == true) {
+				knockMode(collider, dirKnockMode);
+				hurtSoundEffects();
+			}
+			else hurtSoundEffects();
+		}
+		else {
+			_hp = 0;
+			_isalive = false;
+			dyingMode(getPosTable(collider), knock);
+		}
+
+		//three param judge if crit
+
+		/* 这里需要修改 */
+		auto blood = _hpCounter->showBloodLossNum(damage, this, critical);
+		blood->setCameraMask(2);
+		if (_name == "Rat")
+			blood->setPositionZ(Director::getInstance()->getVisibleSize().height * 0.25);
+		addEffect(blood);
+
+		struct MESSAGE_BLOOD_MINUS bloodMinus = { _name, _maxhp, _hp, _bloodBar, _bloodBarClone, _avatar };
+		MessageDispatchCenter::getInstance()->dispatchMessage(BLOOD_MINUS, this);
+		//MDC->dispatchMessage(MessageType::BLOOD_MINUS, bloodMinus);
+		struct MESSAGE_ANGRY_CHANGE angryChange = { _name, _angry,_angryMax };
+		MessageDispatchCenter::getInstance()->dispatchMessage(ANGRY_CHANGE, this);
+		log("Archer hurt %f,%f", _angry, _angryMax);
+		//	MDC->dispatchMessage(MessageType::ANGRY_CHANGE, angryChange);
+		_angry += damage;
+		return damage;
 	}
-	else {
-		_hp = 0;
-		_isalive = false;
-		dyingMode(getPosTable(collider), knock);
-	}
-
-	//three param judge if crit
-
-	/* 这里需要修改 */
-	auto blood = _hpCounter->showBloodLossNum(damage, this, critical);
-	//blood->setCameraMask(995);
-	if (_name == "Rat")
-		blood->setPositionZ(Director::getInstance()->getVisibleSize().height * 0.25);
-	addEffect(blood);
-
-	struct MESSAGE_BLOOD_MINUS bloodMinus = { _name, _maxhp, _hp, _bloodBar, _bloodBarClone, _avatar };
-	MessageDispatchCenter::getInstance()->dispatchMessage(BLOOD_MINUS, this);
-	//MDC->dispatchMessage(MessageType::BLOOD_MINUS, bloodMinus);
-	struct MESSAGE_ANGRY_CHANGE angryChange = { _name, _angry,_angryMax };
-	MessageDispatchCenter::getInstance()->dispatchMessage(ANGRY_CHANGE, this);
-//	MDC->dispatchMessage(MessageType::ANGRY_CHANGE, angryChange);
-	return damage;
+	return 0;
 }

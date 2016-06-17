@@ -156,7 +156,7 @@ protected:
 
 	float _attackRange;	//distance the actor will stop and commence attack
 	//attack collider info, it can be customized
-	struct attack_d _normalAttack;
+	struct attack_d _normalAttack, _specialAttack;
 };
 
 struct ActorCommonValues;

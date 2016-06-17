@@ -104,8 +104,8 @@ void Rat::init3D()
 	_sprite3d->setScale(20);
 	//_sprite3d->addEffect(Vec3(0, 0, 0), CelLine, -1);
 	addChild(_sprite3d);
-	_sprite3d->setRotation3D(Vec3(90, 0, 0));
-	_sprite3d->setRotation(-90);
+	setRotation3D(Vec3(-90, 0, 0));
+	setRotation(-90);
 	initShadow();
 }
 
@@ -143,7 +143,14 @@ void Rat::dyingMode(Vec2 knockSource, int knockAmount)
 			}
 		}
 	};
-	runAction(Sequence::create(DelayTime::create(3), CallFunc::create(disableHeroAI), MoveBy::create(1.0, Vec3(0, 0, -50)), CallFunc::create(recycle), NULL));
+	auto recycleShadow = [&]()
+	{
+		_circle->setVisible(false);
+	};
+	runAction(Sequence::create(DelayTime::create(3), 
+		CallFunc::create(disableHeroAI), CallFunc::create(recycleShadow),
+		MoveBy::create(1.0, Vec3(0, 0, -50)), 
+		CallFunc::create(recycle), NULL));
 	
 	if (knockAmount) {
 		auto p = _myPos;
@@ -186,7 +193,7 @@ float Rat::hurt(BasicCollider* collider, bool dirKnockMode)
 
 		//three param judge if crit
 		auto blood = _hpCounter->showBloodLossNum(damage, this, critical);
-		//blood->setCameraMask(995);
+		blood->setCameraMask(2);
 		blood->setPositionZ(Director::getInstance()->getVisibleSize().height * 0.25);
 		addEffect(blood);
 		return damage;

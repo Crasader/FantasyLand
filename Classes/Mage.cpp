@@ -122,6 +122,7 @@ void Mage::specialAttack()
 	_angry = ActorCommonValues._angry;
 	struct MESSAGE_ANGRY_CHANGE angryChange = { _name, _angry, _angryMax };
 	MessageDispatchCenter::getInstance()->dispatchMessage(ANGRY_CHANGE, this);
+	log("mage special attack %f,%f", _angry, _angryMax);
 	//MDC->dispatchMessage(MessageType::ANGRY_CHANGE, angryChange);
 
 	//mage will create 3 ice spikes on the ground
@@ -149,6 +150,11 @@ void Mage::specialAttack()
 
 	//delayExecute(this, spike2, 0.25);
 	//delayExecute(this, spike3, 0.5);
+	auto wait2 = DelayTime::create(0.25);
+	this->runAction(Sequence::create(wait2, CallFunc::create(spike2), NULL));
+
+	auto wait3 = DelayTime::create(0.5);
+	this->runAction(Sequence::create(wait3, CallFunc::create(spike3), NULL));
 }
 
 void Mage::init3D()
@@ -305,7 +311,7 @@ float Mage::hurt(BasicCollider* collider, bool dirKnockMode)
 		//three param judge if crit
 
 		auto blood = _hpCounter->showBloodLossNum(damage, this, critical);
-		//blood->setCameraMask(995);
+		blood->setCameraMask(2);
 		if (_name == "Rat")
 			blood->setPositionZ(Director::getInstance()->getVisibleSize().height * 0.25);
 		addEffect(blood);
@@ -316,7 +322,8 @@ float Mage::hurt(BasicCollider* collider, bool dirKnockMode)
 //		MDC->dispatchMessage(MessageType::BLOOD_MINUS, bloodMinus);
 		struct MESSAGE_ANGRY_CHANGE angryChange = { _name, _angry,_angryMax };
 		MessageDispatchCenter::getInstance()->dispatchMessage(ANGRY_CHANGE, this);
-
+		log("Mage hurt %f,%f", _angry, _angryMax);
+		_angry += damage;
 	//	MDC->dispatchMessage(MessageType::ANGRY_CHANGE, angryChange);
 		return damage;
 	}
