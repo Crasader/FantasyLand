@@ -4,6 +4,7 @@
 #include "BattleScene.h"
 #include <ui/CocosGUI.h>
 #include "SimpleAudioEngine.h"
+#include "ChooseRoleScene.h"
 
 Scene* MainMenuScene::createScene()
 {
@@ -330,7 +331,7 @@ void MainMenuScene::addButton()
 		if (isTouchedStart)
 			return;
 		isTouchedStart = true;
-		Director::getInstance()->replaceScene(BattleScene::createScene());
+		Director::getInstance()->replaceScene(ChooseRoleScene::createScene());
 	});
 	starButton->addTouchEventListener([this](Ref*, ui::Widget::TouchEventType)
 	{

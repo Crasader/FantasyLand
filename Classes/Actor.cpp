@@ -230,6 +230,21 @@ float Actor::getAngry() {
 	return _angry;
 }
 
+int Actor::getWeaponID()
+{
+	return _useWeaponId;
+}
+
+int Actor::getArmourID()
+{
+	return _useArmourId;
+}
+
+int Actor::getHelmetID()
+{
+	return _useHelmetId;
+}
+
 float Actor::getAngryMax() {
 	return _angryMax;
 }
@@ -280,6 +295,7 @@ void Actor::setSpecialAttackChance(float chance)
 {
 	_specialAttackChance = 1;
 }
+
 
 float Actor::hurt(BasicCollider* collider, bool dirKnockMode)
 {
