@@ -39,7 +39,7 @@ private:
 };
 
 
-extern int gloableZOrder ;
+extern int globalZOrder ;
 extern int EXIST_MIN_MONSTER;
 extern unsigned int scheduleid;
 extern int stage;

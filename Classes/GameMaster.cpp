@@ -11,7 +11,7 @@
 #include "BattleFieldUI.h"
 #include "JumpBy3D.h"
 
-int globleZOrder = 1;
+int globalZOrder = 1;
 int EXIST_MIN_MONSTER = 4;
 unsigned int scheduleid;
 int stage = 0;
@@ -189,10 +189,6 @@ void GameMaster::logicUpdate()
 			stage = 9;
 		}
 	}
-	//if (stage == 1) {
-	//	showWarning();
-	//	stage = 2;
-	//}
 }
 
 void GameMaster::AddHeros()
@@ -415,7 +411,6 @@ void GameMaster::showBoss()
 {
 	auto boss = Rat::create();
 	currentLayer->addChild(boss);
-	boss->setCameraMask(2);
 	boss->reset();
 
 	auto apperPos = Vec3(500, 200, 300);
@@ -423,7 +418,6 @@ void GameMaster::showBoss()
 	boss->setMyPos(Vec2(apperPos.x,apperPos.y));
 	boss->setFacing(180);
 	boss->setGoRight(false);
-	boss->setRotation3D(Vec3(-90, 0, 0));
 
 	auto enableAI = [boss]()
 	{
@@ -488,6 +482,7 @@ void GameMaster::jumpInto(Actor* obj, bool isFront)
 void GameMaster::showWarning()
 {
 	Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::AUTO);
+
 	auto warning = Layer::create();
 	auto warning_logo = Sprite::createWithSpriteFrameName("caution.png");
 	Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGB565);
@@ -505,11 +500,9 @@ void GameMaster::showWarning()
 	warning->addChild(warning_logo);
 
 	warning->setScale(0.5);
-	//warning->setPositionZ(-Director::getInstance()->getZEye() / 2);
+	warning->setPositionZ(-Director::getInstance()->getZEye() / 2);
 	warning->ignoreAnchorPointForPosition(false);
-	warning->setGlobalZOrder(5000);
-	//warning->setLocalZOrder(999); 
-	//uiLayer->addChild(warning);
+	warning->setLocalZOrder(999); 
 	camera->addChild(warning, 2);
 }
 
