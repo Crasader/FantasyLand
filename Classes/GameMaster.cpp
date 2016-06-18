@@ -13,7 +13,6 @@
 
 int globalZOrder = 1;
 int EXIST_MIN_MONSTER = 4;
-unsigned int scheduleid;
 int stage = 0;
 int battleSiteX[3] = { -2800,-1800,-800 };
 int frontDistanceWithHeroX = 600;
@@ -21,6 +20,9 @@ int backwardDistanceWithHeroX = 800;
 int distanceWithHeroX = 150;
 int distanceWithHeroY = 150;
 struct monsterCount_d monsterCount;
+
+GameMaster * GameMaster::instance = nullptr;
+
 
 bool GameMaster::init()
 {
@@ -36,6 +38,15 @@ bool GameMaster::init()
 
 	stage = 1;
 	return true;
+}
+
+GameMaster* GameMaster::getInstance()
+{
+	if(instance == nullptr)
+	{
+		instance = new GameMaster();
+	}
+	return instance;
 }
 
 GameMaster::GameMaster()
@@ -500,11 +511,13 @@ void GameMaster::showWarning()
 	warning_logo->runAction(Sequence::create(DelayTime::create(0.5), EaseSineOut::create(Blink::create(1, 5)), CallFunc::create(showdialog),NULL));
 	warning->addChild(warning_logo);
 
-	warning->setScale(0.5);
+	warning->setScale(1.5);
 	warning->setPositionZ(-Director::getInstance()->getZEye() / 2);
 	warning->ignoreAnchorPointForPosition(false);
 	warning->setLocalZOrder(999); 
-	camera->addChild(warning, 2);
+	warning->setPosition(VisibleSize.width / 2, VisibleSize.height / 2);
+
+	currentLayer->addChild(warning);
 }
 
 void GameMaster::showDialog()

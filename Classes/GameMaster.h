@@ -2,11 +2,13 @@
 #include "GlobalVariables.h"
 
 USING_NS_CC;
-
 class Actor;
+
 class GameMaster
 {
 public:
+	static GameMaster* getInstance();
+
 	GameMaster();
 	bool init();
 	void update(float dt);
@@ -34,6 +36,7 @@ public:
 
 private:
 
+	static GameMaster* instance;
 	float _totaltime;
 	float _logicFrq;
 };
@@ -41,7 +44,6 @@ private:
 
 extern int globalZOrder ;
 extern int EXIST_MIN_MONSTER;
-extern unsigned int scheduleid;
 extern int stage;
 extern int battleSiteX[3];
 extern int frontDistanceWithHeroX;

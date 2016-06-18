@@ -130,8 +130,8 @@ void Rat::dyingMode(Vec2 knockSource, int knockAmount)
 	
 	auto recycle = [&]() {
 		removeFromParent();
-		if (gameMaster != NULL)
-			gameMaster->showVictoryUI();
+		if (GameMaster::getInstance() != NULL)
+			GameMaster::getInstance()->showVictoryUI();
 	};
 
 	auto disableHeroAI = [&]() {

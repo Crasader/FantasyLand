@@ -29,7 +29,7 @@ bool BattleScene::init()
 		addChild(camera);
 		controlCamera();
 
-		gameMaster = new GameMaster();
+		//gameMaster = new GameMaster();
 		//add background
 		auto battlefield = Sprite3D::create("battleScene/changjing.c3b");
 		battlefield->setCameraMask(2);
@@ -53,7 +53,8 @@ bool BattleScene::init()
 	enableTouch();
 	createBackground();
 	initUILayer();
-	gameMaster = new GameMaster();
+	//gameMaster = new GameMaster();
+	GameMaster::getInstance();
 	setCamera();
 	//scheduler->schedule(gameController, this, 0, false, "gameController");
 
@@ -149,7 +150,7 @@ void BattleScene::setCamera()
 
 void BattleScene::gameController(float dt)
 {
-	gameMaster->update(dt);
+	GameMaster::getInstance()->update(dt);
 	collisionDetect(dt);
 	solveAttacks(dt);
 	moveCamera(dt);
