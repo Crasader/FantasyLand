@@ -607,3 +607,8 @@ void GameMaster::showVictoryUI()
 	uiLayer->showVictoryUI();
 }
 
+void GameMaster::showGameOverUI()
+{
+	uiLayer->showGameOverUI();
+}
+

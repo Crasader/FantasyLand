@@ -56,8 +56,8 @@ void Rat::copyData_Rat()
 	_radius = 70;
 	_mass = 990;
 	_shadowSize = 90;
-	_hp = 2800;
-	_maxhp = 2800;
+	_hp = 28000;
+	_maxhp = 28000;
 	_defense = 200;
 	_attackFrequency = 3.0;
 	_recoverTime = 0.4;

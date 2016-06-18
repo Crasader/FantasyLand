@@ -87,6 +87,7 @@ void Actor::addEffect(Node* effect)
 void Actor::initShadow()
 {
 	_circle = Sprite::createWithSpriteFrameName("shadow.png");
+	//_circle = Sprite::create("battlefieldUI/gameover.png");
 	this->addChild(_circle);
 	_circle->setScale(_shadowSize / 16);
 	_circle->setOpacity(255 * 0.7);
@@ -387,7 +388,7 @@ void Actor::knockMode(BasicCollider* collider, bool dirKnockMode)
 
 void Actor::dyingMode(Vec2 knockSource, int knockAmount)
 {
-	setStateType(EnumStateType::DEAD);
+	setStateType(EnumStateType::DYING);
 	playAnimation("dead", false);
 	playDyingEffects();
 
@@ -404,7 +405,10 @@ void Actor::dyingMode(Vec2 knockSource, int knockAmount)
 
 		_angry = 0;
 		struct MESSAGE_ANGRY_CHANGE angryChange = { _name, _angry, _angryMax };
-		MessageDispatchCenter::getInstance()->dispatchMessage(ANGRY_CHANGE, this);		
+		MessageDispatchCenter::getInstance()->dispatchMessage(ANGRY_CHANGE, this);
+
+		if (HeroManager.size() == 0 && GameMaster::getInstance() != NULL)
+			GameMaster::getInstance()->showGameOverUI();
 	}
 	else 
 	{
@@ -414,7 +418,7 @@ void Actor::dyingMode(Vec2 knockSource, int knockAmount)
 
 		auto recycle = [&]() {
 			setVisible(false);
-			getPoolByName(_name).push_back(this);	
+			getPoolByName(_name).push_back(this);
 		};
 		auto recycleShadow = [&]()
 		{

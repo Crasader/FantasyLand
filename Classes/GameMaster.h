@@ -33,6 +33,7 @@ public:
 	void showWarning();
 	void showDialog();
 	void showVictoryUI();
+	void showGameOverUI();
 
 
 private:

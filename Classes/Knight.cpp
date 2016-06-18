@@ -182,12 +182,14 @@ void Knight::initAttackEffect()
 void Knight::init3D()
 {
 	_sprite3d = Sprite3D::create(file);
+	auto gameOver = Sprite::create("battlefieldUI/gameover.png");
 	_sprite3d->setScale(25);
 	addChild(_sprite3d);
 	_sprite3d->setRotation3D(Vec3(90, 0, 0));
 	_sprite3d->setRotation(-90);
 	setDefaultEqt();
 	initShadow();
+	
 }
 
 void Knight::initActions()
