@@ -9,16 +9,18 @@ class BasicCollider : public Node
 public:
 	BasicCollider();
 	static BasicCollider* CreateWithPos(Vec2 pos, float facing, struct attack_d attackInfo);
+	void initData(Vec2 pos, float facing, struct attack_d attackInfo);
 	CREATE_FUNC(BasicCollider);
 	virtual bool init();
-	virtual void onTimeOut();
-	virtual void playHitAudio();
-	virtual void hurtEffect(Actor* target);
-	virtual void onCollide(Actor* target);
-	virtual void onUpdate(float dt);
-	void initData(Vec2 pos, float facing, struct attack_d attackInfo);
 
-	//set & get
+	virtual void onTimeOut();	//hit missed
+	virtual void playHitAudio();
+	virtual void hurtEffect(Actor* target);	//play hurt effect
+	virtual void onCollide(Actor* target);	//hit enemy successfully
+	virtual void onUpdate(float dt);	//move the attack
+	
+
+	//seter & geter
 	float getDamage();
 	void setDamage(float damage);
 	float getKnock();
@@ -36,22 +38,21 @@ public:
 	void setCurDuration(float curDuration);
 
 protected:
-	float _minRange;	//the min radius of the fan
-	float _maxRange;	//the max radius of the fan
-	float _angle;	//arc of attack, in radians
-	float _knock;	//default knock;
-	int _mask;	//1 is Heroes, 2 is enemy, 3 ??
+	float _minRange;	//the min radius of the attack
+	float _maxRange;	//the max radius of the attack
+	float _angle;	//arc of attack, in rads
+	float _knock;
+	int _mask;	//1 is heroes, 2 is enemy
 	float _damage;
-	float _facing;	//this is radians
-	float _curFacing;
-	float _duration;
+	float _facing;	//the enemy direction, in rads
+	float _curFacing;	//the current attack movement direction at the moment, in rads
+	float _duration;	//the attack max duration
 	float _curDuration;
 	float _speed;	//traveling speed;
 	float _criticalChance;
 	float _curDOTTime;
 	float _DOTTimer;
 	bool _DOTApplied;
-	Sprite* _spritey;
 };
 
 class KnightNormalAttack : public BasicCollider
@@ -74,6 +75,7 @@ public:
 	static MageNormalAttack* CreateWithPos(Vec2 pos, float facing, struct attack_d attackInfo, Actor* target, Actor* owner);
 	CREATE_FUNC(MageNormalAttack);
 	virtual bool init();
+
 	void onTimeOut();
 	void playHitAudio();
 	void onCollide(Actor* target);
@@ -93,6 +95,7 @@ public:
 	static MageIceSpikes* CreateWithPos(Vec2 pos, float facing, struct attack_d attackInfo, Actor* owner);
 	CREATE_FUNC(MageIceSpikes);
 	virtual bool init();
+
 	void playHitAudio();
 	void onTimeOut();
 	void onCollide(Actor* target);
@@ -112,6 +115,7 @@ public:
 	static ArcherNormalAttack* CreateWithPos(Vec2 pos, float facing, struct attack_d attackInfo, Actor* owner);
 	CREATE_FUNC(ArcherNormalAttack);
 	virtual bool init();
+
 	void onTimeOut();
 	void onCollide(Actor* target);
 	void onUpdate(float dt);
@@ -128,6 +132,7 @@ public:
 	static ArcherSpecialAttack* CreateWithPos(Vec2 pos, float facing, struct attack_d attackInfo, Actor* owner);
 	CREATE_FUNC(ArcherSpecialAttack);
 	virtual bool init();
+
 	void onTimeOut();
 	void onCollide(Actor* target);
 	void onUpdate(float dt);
@@ -144,6 +149,7 @@ public:
 	static Nova* CreateWithPos(Vec2 pos, float facing);
 	CREATE_FUNC(Nova);
 	virtual bool init();
+
 	void onTimeOut();
 	void onCollide(Actor* target);
 	void onUpdate(float dt);
@@ -159,6 +165,7 @@ public:
 	static DragonAttack* CreateWithPos(Vec2 pos, float facing, struct attack_d attackInfo);
 	CREATE_FUNC(DragonAttack);
 	virtual bool init();
+
 	void playHitAudio();
 	void onTimeOut();
 	void onCollide(Actor* target);
@@ -175,6 +182,7 @@ public:
 	static BossNormal* CreateWithPos(Vec2 pos, float facing, struct attack_d attackInfo);
 	CREATE_FUNC(BossNormal);
 	virtual bool init();
+
 	void playHitAudio();
 	void onTimeOut();
 	void onCollide(Actor* target);
@@ -191,6 +199,7 @@ public:
 	static BossSuper* CreateWithPos(Vec2 pos, float facing, struct attack_d attackInfo);
 	CREATE_FUNC(BossSuper);
 	virtual bool init();
+
 	void playHitAudio();
 	void onTimeOut();
 	void onCollide(Actor* target);

@@ -7,33 +7,36 @@ struct ArcherValues;
 
 Archer::Archer()
 {
-	//this update do not do AI	
-	//auto specialAttack = [&]() {
-	//	if (_specialAttackChance == 1)
-	//		return;
-	//	_specialAttackChance = 1;
-	//};
 };
 
 bool Archer::init()
 {
 	Actor::init();
+
+	//init equipment
 	_useWeaponId = ReSkin.archer.weapon;
 	_useArmourId = ReSkin.archer.armour;
 	_useHelmetId = ReSkin.archer.helmet;
+
+	//init data
 	copyData_Archer();
+
+	//init UI
 	if (uiLayer != NULL) {
 		_bloodBar = uiLayer->ArcherBlood;
 		_bloodBarClone = uiLayer->ArcherBloodClone;
 		_avatar = uiLayer->ArcherPng;
 	}
 
+	//init image
 	init3D();
 	initActions();    
 	
+	//init state machine
 	idleMode();
 	_AIEnabled = true;
 	scheduleUpdateWithPriority(0);
+
 	MessageDispatchCenter::getInstance()->registerMessage(SPECIAL_ARCHER, [](Actor * data)
 	{
 		if (data->getSpecialAttackChance() == 1)
@@ -45,6 +48,7 @@ bool Archer::init()
 
 void Archer::copyData_Archer()
 {
+	//actor common values
 	_aliveTime = 0,
     _curSpeed = 0;
 	_curAnimation = "";
@@ -63,7 +67,7 @@ void Archer::copyData_Archer()
 	_myPos = ccp(0, 0);
 	_angry = 0;
 	_angryMax = 500;
-
+	//archer default values
 	_racetype = HERO;
 	_name = "Archer";
 	_radius = 50;
@@ -90,6 +94,8 @@ void Archer::update(float dt)
 	movementUpdate(dt);
 }
 
+//call by AttackCommand.cpp
+//create arrow when create ArcherNormalAttack or ArcherSpecialAttack
 Sprite3D* Archer::createArrow()
 {
 	auto sprite3d = Sprite3D::create("model/archer/arrow.obj");
@@ -131,16 +137,13 @@ void Archer::specialAttack()
 	struct MESSAGE_ANGRY_CHANGE angryChange = { _name, _angry, _angryMax };
 	MessageDispatchCenter::getInstance()->dispatchMessage(ANGRY_CHANGE, this);
 	log("Archer Special Attack %f,%f",_angry, _angryMax);
-//	MDC->dispatchMessage(MessageType::ANGRY_CHANGE, angryChange);
 
 	experimental::AudioEngine::play2d(Archerproperty.specialAttackShout, false, 1);
-
 	AUDIO_ID.ARCHERATTACK = experimental::AudioEngine::play2d(Archerproperty.attack1, false, 1);
 	experimental::AudioEngine::setFinishCallback(AUDIO_ID.ARCHERATTACK, ArcherlAttackCallback);
 
 	auto attack = _specialAttack;
 	attack.knock = 80;
-
 	auto pos1 = getPosTable(this);
 	pos1 = ccpRotateByAngle(pos1, _myPos, _curFacing);
 	auto pos2 = pos1;
@@ -156,24 +159,16 @@ void Archer::specialAttack()
 		AUDIO_ID.ARCHERATTACK = experimental::AudioEngine::play2d(Archerproperty.attack1, false, 1);
 		experimental::AudioEngine::setFinishCallback(AUDIO_ID.ARCHERATTACK, ArcherlAttackCallback);
 	};
-
-	//delayExecute(this, spike2, 0.2); todo
-	//delayExecute(this, spike3, 0.4); todo
-
 	auto wait2 = DelayTime::create(0.2);
 	this->runAction(Sequence::create(wait2, CallFunc::create(spike2), NULL));
-
 	auto wait3 = DelayTime::create(0.4);
 	this->runAction(Sequence::create(wait3, CallFunc::create(spike3), NULL));
-
 }
 
 void Archer::init3D()
 {
-	//initShadow();
 	_sprite3d = Sprite3D::create(file);
 	_sprite3d->setScale(1.6);
-	//_sprite3d->addEffect(Vec3(0, 0, 0), CelLine, -1);
 	addChild(_sprite3d);
 	_sprite3d->setRotation3D(Vec3(90, 0, 0));
 	_sprite3d->setRotation(-90);
@@ -251,7 +246,7 @@ void Archer::updateArmour()
 	}
 }
 
-//switth weapon
+//switch weapon
 void Archer::switchWeapon()
 {
 	_useWeaponId++;
@@ -278,9 +273,9 @@ void Archer::switchArmour()
 	updateArmour();
 }
 
-//show/hide arrow
-//isShow: true : Show false : Hide
-//type: 0 : show / hide all 1 : show / hide 1 2 : show / hide 2
+//show or hide arrow
+//isShow true:Show,  false:Hide
+//type 0:show/hide all, 1:show /hide 1,  2:show/hide 2
 void Archer::showOrHideArrow(bool isShow, int arrowType)
 {
 	if (arrowType == 0) {
@@ -320,7 +315,6 @@ int Archer::getHelmetID()
 float Archer::hurt(BasicCollider* collider, bool dirKnockMode)
 {
 	if (_isalive) {
-		//TODO add sound effect
 		auto damage = collider->getDamage();
 		//calculate the real damage
 		bool critical = false;
@@ -347,8 +341,6 @@ float Archer::hurt(BasicCollider* collider, bool dirKnockMode)
 			dyingMode(getPosTable(collider), knock);
 		}
 
-		//three param judge if crit
-
 		auto blood = _hpCounter->showBloodLossNum(damage, this, critical);
 		blood->setCameraMask(2);
 		if (_name == "Rat")
@@ -357,11 +349,9 @@ float Archer::hurt(BasicCollider* collider, bool dirKnockMode)
 
 		struct MESSAGE_BLOOD_MINUS bloodMinus = { _name, _maxhp, _hp, _bloodBar, _bloodBarClone, _avatar };
 		MessageDispatchCenter::getInstance()->dispatchMessage(BLOOD_MINUS, this);
-		//MDC->dispatchMessage(MessageType::BLOOD_MINUS, bloodMinus);
 		struct MESSAGE_ANGRY_CHANGE angryChange = { _name, _angry, _angryMax };
 		MessageDispatchCenter::getInstance()->dispatchMessage(ANGRY_CHANGE, this);
 		log("Archer hurt %f,%f", _angry, _angryMax);
-		//	MDC->dispatchMessage(MessageType::ANGRY_CHANGE, angryChange);
 		_angry += damage;
 		return damage;
 	}

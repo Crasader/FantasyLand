@@ -10,13 +10,16 @@ public:
 	void reset();
 	void copyData_Slime();
 	virtual void update(float dt);
+
 	void play3DAnim();
 	void playAnimation(std::string name, bool loop);
 	void init3D();
+
 	void walkMode();
 	void attackMode();
 	void idleMode();
 	void knockMode(BasicCollider* collider, bool dirKnockMode = false);
+
 	void angryFace(bool trueFalse);
 	void initActions();
 

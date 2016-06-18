@@ -7,8 +7,6 @@ Dragon::Dragon()
 bool Dragon::init()
 {
 	Actor::init();
-	//copyTable(ActorCommonValues, this);
-	//copyTable(DragonValues, this);
 	copyData_Dragon();
 	init3D();
 	initActions();
@@ -21,6 +19,7 @@ bool Dragon::init()
 
 void Dragon::copyData_Dragon()
 {
+	//Actor Common Values
 	_aliveTime = 0,
 	_curSpeed = 0;
 	_curAnimation = "";
@@ -39,7 +38,7 @@ void Dragon::copyData_Dragon()
 	_myPos = ccp(0, 0);
 	_angry = 0;
 	_angryMax = 500;
-
+	//Dragon Default Values
 	_racetype = EnumRaceType::MONSTER;
 	_name = "Dragon";
 	_radius = 50;
@@ -77,19 +76,16 @@ void Dragon::dyingMode(Vec2 knockSource, int knockAmount)
 {
 	setStateType(EnumStateType::DYING);
 	playAnimation("dead");
-	playDyingEffects();//todo
-	//Twice play in order to inhance the sounds,
-	//todo:zijian.
-	//ccexp.AudioEngine : play2d(MonsterDragonValues.dead, false, 1)
+	playDyingEffects();
 
 	if (knockAmount){
 		auto p = getPosTable(this);
 		auto angle = ccpToAngle(ccpSub(p, knockSource));
 		auto newPos = ccpRotateByAngle(ccpAdd(Vec2(knockAmount, 0), p), p, angle);
-		//runAction(EaseCubicActionInOut::create(MoveTo::create(_action.at("knocked")->getDuration() * 3, newPos)));
 	}
 	_AIEnabled = false;
 
+	//erase this from MonsterManager
 	std::vector<Actor *>::iterator it = std::find(MonsterManager.begin(), MonsterManager.end(), this);
 	MonsterManager.erase(it);
 
@@ -115,7 +111,6 @@ void Dragon::normalAttackSoundEffects()
 void Dragon::playDyingEffects()
 {
 	experimental::AudioEngine::play2d(MonsterDragonValues.dead, false, 1);
-	log("yeah");
 }
 
 void Dragon::hurtSoundEffects()
@@ -131,10 +126,8 @@ void Dragon::normalAttack()
 
 void Dragon::init3D()
 {
-	//initShadow();
 	_sprite3d = Sprite3D::create(file);
 	_sprite3d->setScale(10);
-	//_sprite3d->addEffect(Vec3(0, 0, 0), CelLine, -1);
 	addChild(_sprite3d);
 	_sprite3d->setRotation3D(Vec3(90, 0, 0));
 	_sprite3d->setRotation(-90);

@@ -9,13 +9,19 @@ public:
 	virtual bool init();
 	virtual void update(float dt);
 	void copyData_Mage();
+
+	//hurt and attack
+	float hurt(BasicCollider* collider, bool dirKnockMode = false);
 	void playDyingEffects();
 	void hurtSoundEffects();
 	void normalAttack();
 	void specialAttack();
+
 	void init3D();
 	void initActions();
 	void setDefaultEqt();
+
+	//Equipment event
 	void updateWeapon();
 	void updateHelmet();
 	void updateArmour();
@@ -25,9 +31,8 @@ public:
 	int getWeaponID();
 	int getHelmetID();
 	int getArmourID();
-	float hurt(BasicCollider* collider, bool dirKnockMode = false);
+	
 
 private:
-	struct attack_d _specialAttack;
 	std::string file = "model/mage/mage.c3b";
 };

@@ -10,53 +10,55 @@ std::vector<BasicCollider*> AttackManager;
 
 void solveAttacks(float dt)
 {
-	//for (auto val = AttackManager.begin(); val != AttackManager.end() && AttackManager.size() != 0; ++val) {
+	//traversal attacks in AttackManager
 	for (int i = AttackManager.size() - 1; i >= 0; --i) {
-		//if (AttackManager[i] == nullptr) continue;
 		auto attack = AttackManager[i];
 		auto apos = getPosTable(attack);
+
+        //if heroes attack, then lets check monsters
 		if (attack->getMask() == EnumRaceType::HERO) {
-			//if heroes attack, then lets check monsters
+			//tarveral monsters in MonsterManager
 			int mmSize = MonsterManager.size();
 			if (mmSize >= 1)
-			for (int j = mmSize - 1; j >= 0; --j) {
-			//for (auto mkey = MonsterManager.rbegin(); mkey != MonsterManager.rend(); ++mkey) {
-				//check distance first
-				auto monster = MonsterManager[j];
-				Vec2 mpos = monster->getMyPos();
-				auto dist = ccpDistance(apos, mpos);
-				if (dist < (attack->getMaxRange() + monster->getRadius()) && (dist > attack->getMinRange())) {
-					//range test passed, now angle test
-					auto angle = radNormalize(ccpToAngle(ccpSub(mpos, apos)));
-					auto afacing = radNormalize(attack->getFacing());
-					if (afacing + attack->getAngle() / 2 > angle && angle > afacing - attack->getAngle() / 2)
-						attack->onCollide(monster);
-				}
-			}
+				for (int j = mmSize - 1; j >= 0; --j) {
+					//check distance first
+					auto monster = MonsterManager[j];
+					Vec2 mpos = monster->getMyPos();
+					auto dist = ccpDistance(apos, mpos);
+					//is in range?
+					if (dist < (attack->getMaxRange() + monster->getRadius()) && (dist > attack->getMinRange())) {
+						//set attack facing
+						auto angle = radNormalize(ccpToAngle(ccpSub(mpos, apos)));
+						auto afacing = radNormalize(attack->getFacing());
+						if (afacing + attack->getAngle() / 2 > angle && angle > afacing - attack->getAngle() / 2)
+							attack->onCollide(monster);
+					}
+			    }
 		}
+		//if heroes attack, then lets check monsters
 		else if (attack->getMask() == EnumRaceType::MONSTER) {
-			//if heroes attack, then lets check monsters
+			//travesal heroes in HeroManager
 			int hmSize = HeroManager.size();
 			if (hmSize >= 1)
-			for (int k = hmSize - 1; k >= 0; --k) {
-			//for (auto hkey = HeroManager.end(); hkey != HeroManager.begin(); --hkey) {
-				//check distance first
-				auto hero = HeroManager[k];
-				Vec2 hpos = hero->getMyPos();
-				auto dist = ccpDistance(getPosTable(attack), hpos);
-				if (dist < (attack->getMaxRange() + hero->getRadius()) && (dist > attack->getMinRange())) {
-					//range test passed, now angle test
-					auto angle = radNormalize(ccpToAngle(ccpSub(hpos, getPosTable(attack))));
-					auto afacing = radNormalize(attack->getFacing());
-					if (afacing + attack->getAngle() / 2 > angle && angle > afacing - attack->getAngle() / 2)
-						attack->onCollide(hero);
+				for (int k = hmSize - 1; k >= 0; --k) {
+					//check distance first
+					auto hero = HeroManager[k];
+					Vec2 hpos = hero->getMyPos();
+					auto dist = ccpDistance(getPosTable(attack), hpos);
+					//is in range?
+					if (dist < (attack->getMaxRange() + hero->getRadius()) && (dist > attack->getMinRange())) {
+						//set attack facing
+						auto angle = radNormalize(ccpToAngle(ccpSub(hpos, getPosTable(attack))));
+						auto afacing = radNormalize(attack->getFacing());
+						if (afacing + attack->getAngle() / 2 > angle && angle > afacing - attack->getAngle() / 2)
+							attack->onCollide(hero);
+					}
 				}
-			}
 		}
 		attack->setCurDuration(attack->getCurDuration() + dt);
 		if (attack->getCurDuration() > attack->getDuration()) {
 			attack->onTimeOut();
-			//AttackManager.erase(val);
+			//the attack is running, then remove it from AttackManager
 			AttackManager.erase(AttackManager.begin() + i);
 		}
 		else
@@ -66,16 +68,16 @@ void solveAttacks(float dt)
 
 BasicCollider::BasicCollider()
 {
-	_minRange = 0;	//the min radius of the fan
-	_maxRange = 150;	//the max radius of the fan
-	_angle = 120;	//arc of attack, in radians
-	_knock = 150;	//default knock, knocks 150 units
-	_mask = 1;	//1 is Heroes, 2 is enemy, 3 ? ?
+	_minRange = 0;	//the min radius of the attack
+	_maxRange = 150;	//the max radius of the attack
+	_angle = 120;	//arc of attack, in rads
+	_knock = 150;
+	_mask = 1;	//1 is Heroes, 2 is enemy
 	_damage = 100;
-	_facing = 0;	//this is radians
+	_facing = 0;
 	_duration = 0;
 	_curDuration = 0;
-	_speed = 0;	//travel speed
+	_speed = 0;
 	_criticalChance = 0;
 
 	
@@ -84,24 +86,10 @@ BasicCollider::BasicCollider()
 BasicCollider* BasicCollider::CreateWithPos(Vec2 pos, float facing, struct attack_d attackInfo)
 {
 	BasicCollider* newBasicCollider = BasicCollider::create();
-	//newBasicCollider->_minRange = 0;	//the min radius of the fan
-	//newBasicCollider->_maxRange = 150;	//the max radius of the fan
-	//newBasicCollider->_angle = 120;	//arc of attack, in radians
-	//newBasicCollider->_knock = 150;	//default knock, knocks 150 units
-	//newBasicCollider->_mask = 1;	//1 is Heroes, 2 is enemy, 3 ? ?
-	//newBasicCollider->_damage = 100;
-	//newBasicCollider->_facing = 0;	//this is radians
-	//newBasicCollider->_duration = 0;
-	//newBasicCollider->_curDuration = 0;
-	//newBasicCollider->_speed = 0;	//travel speed
-	//newBasicCollider->_criticalChance = 0;
 	newBasicCollider->initData(pos, facing, attackInfo);
 	return newBasicCollider;
 }
 
-//callback when the collider has being solved by the attack manager,
-//make sure you delete it from node tree
-//if say you have an effect attached to the collider node.
 bool BasicCollider::init()
 {
 	return true;
@@ -126,7 +114,6 @@ void BasicCollider::hurtEffect(Actor* target)
 	hurtEffect->setPosition3D(Vec3(0, 0, 50));
 	hurtEffect->setCameraMask(2);
 	target->addChild(hurtEffect);
-	//log("Animation played");
 }
 
 void BasicCollider::onCollide(Actor* target)
@@ -138,12 +125,13 @@ void BasicCollider::onCollide(Actor* target)
 
 void BasicCollider::onUpdate(float dt)
 {
-	//implement this function if this is a projectile
+	//to override
 }
 
 void BasicCollider::initData(Vec2 pos, float facing, struct attack_d attackInfo)
 {
 	setCascadeColorEnabled(true);
+
 	_minRange = attackInfo.minRange;
 	_maxRange = attackInfo.maxRange;
 	_angle = attackInfo.angle;
@@ -156,18 +144,12 @@ void BasicCollider::initData(Vec2 pos, float facing, struct attack_d attackInfo)
 	_DOTTimer = attackInfo.DOTTimer;
 	_curDOTTime = attackInfo.curDOTTime;
 	_DOTApplied = attackInfo.DOTApplied;
+
 	if (facing != 0)
 		_facing = facing;
 	AttackManager.push_back(this);	
 	setPosition(pos);
     currentLayer->addChild(this, -10);
-	//this->setGlobalZOrder(100);
-
-	//_spritey = Sprite::create("img.jpg");
-	//currentLayer->addChild(this);
-	//this->addChild(_spritey);
-	//setCameraMask(2);
-	//_spritey->setPosition3D(Vec3(0,0,0));
 }
 
 void BasicCollider::setDamage(float damage) {
@@ -233,7 +215,6 @@ void BasicCollider::setCurDuration(float curDuration) {
 
 KnightNormalAttack::KnightNormalAttack()
 {
-
 }
 
 KnightNormalAttack* KnightNormalAttack::CreateWithPos(Vec2 pos, float facing, struct attack_d attackInfo, Actor* knight)
@@ -267,12 +248,9 @@ MageNormalAttack* MageNormalAttack::CreateWithPos(Vec2 pos, float facing, struct
 	newMageNormalAttack->_owner = owner;
 	newMageNormalAttack->_sp = BillBoard::create("FX/FX.png", RECTS.iceBolt);
 	newMageNormalAttack->_sp->setCameraMask(2);
-	//owner->addChild(newMageNormalAttack);	
 	newMageNormalAttack->_sp->setPosition3D(Vec3(0, 0, 50));
 	newMageNormalAttack->_sp->setScale(2);
 	newMageNormalAttack->addChild(newMageNormalAttack->_sp);
-
-
 
 	auto pm = ParticleManager::getInstance()->getPlistData("iceTrail");
 	auto smoke = ParticleSystemQuad::create(pm);
@@ -322,7 +300,6 @@ void MageNormalAttack::onTimeOut()
 	magic->setPositionZ(0);
 
 	_sp->setTextureRect(RECTS.iceSpike);
-	//_sp->setCameraMask(943);
 	_sp->runAction(FadeOut::create(1));
 	_sp->setScale(4);
 }
@@ -343,8 +320,8 @@ void MageNormalAttack::onCollide(Actor* target)
 	struct MESSAGE_ANGRY_CHANGE angryChange = { MageValues._name, _owner->getAngry(), _owner->getAngryMax() };
 	MessageDispatchCenter::getInstance()->dispatchMessage(ANGRY_CHANGE, _owner);
 	log("MageNormalAttack %f,%f", _owner->getAngry(), _owner->getAngryMax());
-	//    _owner->MDC->dispatchMessage(MessageType::ANGRY_CHANGE, angryChange);
-		//set cur duration to its max duration, so it will be removed when checking time out
+	
+	//set cur duration to its max duration, so it will be removed when checking time out
 	_curDuration++;
 }
 
@@ -411,7 +388,6 @@ MageIceSpikes* MageIceSpikes::CreateWithPos(Vec2 pos, float facing, struct attac
 	auto magic = ParticleSystemQuad::create(pm);
 	auto magicf = SpriteFrameCache::getInstance()->getSpriteFrameByName("particle.png");
 	magic->setTextureWithRect(magicf->getTexture(), magicf->getRect());
-	//magic->setCameraMask(943);
 	magic->setScale(1.5);
 	ret->addChild(magic);
 	magic->setGlobalZOrder(-ret->getPositionY() * 2 + FXZorder);
@@ -431,7 +407,6 @@ void MageIceSpikes::onTimeOut()
 	_spikes->setVisible(false);
 	auto pm = ParticleManager::getInstance()->getPlistData("puffRing");
 	auto puff = ParticleSystemQuad::create(pm);
-	// puff = ParticleSystemQuad : create("FX/puffRing.plist")
 	auto puffFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName("puff.png");
 	puff->setTextureWithRect(puffFrame->getTexture(), puffFrame->getRect());
 	puff->setCameraMask(2);
@@ -442,11 +417,9 @@ void MageIceSpikes::onTimeOut()
 
 	auto pmf = ParticleManager::getInstance()->getPlistData("magic");
 	auto magic = ParticleSystemQuad::create(pmf);
-	// puff = ParticleSystemQuad : create("FX/puffRing.plist")
 	auto magicf = SpriteFrameCache::getInstance()->getSpriteFrameByName("particle.png");
 	magic->setTextureWithRect(magicf->getTexture(), magicf->getRect());
 	magic->setCameraMask(2);
-	//magic->setCamera(camera);
 	magic->setScale(1.5);
 	addChild(magic);
 	puff->setGlobalZOrder(-getPositionY() + FXZorder);
@@ -468,16 +441,12 @@ void MageIceSpikes::onCollide(Actor* target)
 		log("NORMAL HURT %f", hurt);
 		struct MESSAGE_ANGRY_CHANGE  angryChange = { MageValues._name, _owner->getAngry(), _owner->getAngryMax() };
 		MessageDispatchCenter::getInstance()->dispatchMessage(ANGRY_CHANGE, _owner);
-		log("MageIceSpikes %f,%f", _owner->getAngry(), _owner->getAngryMax());
-
-		//		_owner->MDC->dispatchMessage(MessageType::ANGRY_CHANGE, angryChange);
 		_DOTApplied = true;
 	}
 }
 
 void MageIceSpikes::onUpdate(float dt)
 {
-	//implement this function if this is a projectile
 	_curDOTTime += dt;
 	if (_DOTApplied) {
 		_DOTApplied = false;
@@ -487,7 +456,6 @@ void MageIceSpikes::onUpdate(float dt)
 
 ArcherNormalAttack::ArcherNormalAttack()
 {
-
 }
 
 ArcherNormalAttack* ArcherNormalAttack::CreateWithPos(Vec2 pos, float facing, struct attack_d attackInfo, Actor* owner)
@@ -495,12 +463,10 @@ ArcherNormalAttack* ArcherNormalAttack::CreateWithPos(Vec2 pos, float facing, st
 	auto ret = ArcherNormalAttack::create();
 	ret->initData(pos, facing, attackInfo);
 	ret->_owner = owner;
-	//ret->_sp = Archer::createArrow();
 	ret->_sp = Archer::createArrow();
 	ret->_sp->setRotation(RADIANS_TO_DEGREES(-facing) - 90);
 	ret->_sp->setCameraMask(2);
 	ret->addChild(ret->_sp);
-
 	return ret;
 }
 
@@ -521,10 +487,6 @@ void ArcherNormalAttack::onCollide(Actor* target)
 	_owner->setAngry(_owner->getAngry() + target->hurt(this, true) * 0.3);
 	struct MESSAGE_ANGRY_CHANGE angryChange = { ArcherValues._name, _owner->getAngry(),  _owner->getAngryMax() };
 	MessageDispatchCenter::getInstance()->dispatchMessage(ANGRY_CHANGE, _owner);
-	log("ArcherNormalAttack %f,%f",_owner->getAngry(), _owner->getAngryMax());
-
-	//	_owner->MDC->dispatchMessage(MessageType::ANGRY_CHANGE, angryChange);
-		//set cur duration to its max duration, so it will be removed when checking time out
 	_curDuration = _duration + 1;
 }
 
@@ -569,9 +531,6 @@ void ArcherSpecialAttack::onCollide(Actor* target)
 		_owner->setAngry(_owner->getAngry() + target->hurt(this, true) * 0.3);
 		struct MESSAGE_ANGRY_CHANGE angryChange = { ArcherValues._name, _owner->getAngry(), _owner->getAngryMax() };
 		MessageDispatchCenter::getInstance()->dispatchMessage(ANGRY_CHANGE, _owner);
-		log("ArcherSpecialAttack %f,%f", _owner->getAngry(), _owner->getAngryMax());
-
-		//MessageDispatchCenter::dispatchMessage(MessageDispatchCenter::MessageType::ANGRY_CHANGE, angryChange);*/
 		_DOTApplied = true;
 	}
 }
@@ -590,7 +549,6 @@ void ArcherSpecialAttack::onUpdate(float dt)
 
 Nova::Nova()
 {
-
 }
 
 Nova* Nova::CreateWithPos(Vec2 pos, float facing)
@@ -610,7 +568,6 @@ Nova* Nova::CreateWithPos(Vec2 pos, float facing)
 
 bool Nova::init()
 {
-
 	return true;
 }
 
@@ -631,7 +588,6 @@ void Nova::onCollide(Actor* target)
 
 void Nova::onUpdate(float dt)
 {
-	//implement this function if this is a projectile
 	if (_DOTApplied) {
 		_DOTApplied = false;
 		_curDOTTime = 0;
@@ -690,6 +646,7 @@ void DragonAttack::onCollide(Actor* target)
 	hurtEffect(target);
 	playHitAudio();
 	target->hurt(this);
+
 	//set cur duration to its max duration, so it will be removed when checking time out
 	_curDuration = _duration + 1;
 }
@@ -703,7 +660,6 @@ void DragonAttack::onUpdate(float dt)
 
 BossNormal::BossNormal()
 {
-
 }
 
 BossNormal* BossNormal::CreateWithPos(Vec2 pos, float facing, struct attack_d attackInfo)
@@ -790,7 +746,6 @@ void BossSuper::onTimeOut()
 	auto magic = ParticleSystemQuad::create(pm);
 	auto magicf = SpriteFrameCache::getInstance()->getSpriteFrameByName("particle.png");
 	magic->setTextureWithRect(magicf->getTexture(), magicf->getRect());
-	//magic->setCameraMask(943);
 	magic->setScale(1.5);
 	magic->setRotation3D(Vec3(90, 0, 0));
 	addChild(magic);

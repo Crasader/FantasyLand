@@ -3,14 +3,11 @@
 
 Slime::Slime()
 {
-	
 }
 
 bool Slime::init()
 {
 	Actor::init();
-	//copyTable(ActorCommonValues, this);
-	//copyTable(SlimeValues, this);
 	copyData_Slime();
 	_angryFace = false;
 	init3D();
@@ -23,8 +20,6 @@ bool Slime::init()
 
 void Slime::reset()
 {
-	//copyTable(ActorCommonValues, this);
-	//copyTable(SlimeValues, this);
 	copyData_Slime();
 	bool allDead;
 	findEnemy(_racetype, allDead);
@@ -34,6 +29,7 @@ void Slime::reset()
 
 void Slime::copyData_Slime()
 {
+	//Actor Common Values
 	_aliveTime = 0,
 	_curSpeed = 0;
 	_curAnimation = "";
@@ -52,6 +48,7 @@ void Slime::copyData_Slime()
 	_myPos = ccp(0, 0);
 	_angry = 0;
 	_angryMax = 500;
+	//Slime Default Value
 	_racetype = MONSTER;
 	_name = "Slime";
 	_radius = 35;
@@ -68,7 +65,6 @@ void Slime::copyData_Slime()
 	_speed = 150;
 	_acceleration = 9999;
 	_decceleration = 9999;
-	//_normalAttack = SlimeValues._normalAttack;
 	_normalAttack =
 	{
 		0 , 50 , DEGREES_TO_RADIANS(360) ,
@@ -90,7 +86,7 @@ void Slime::play3DAnim()
 
 void Slime::playAnimation(std::string name, bool loop)
 {
-	if (_curAnimation != name) {	//--using name to check which animation is playing
+	if (_curAnimation != name) {
 		_sprite3d->stopAction(_curAnimation3d);
 		if (loop)
 			_curAnimation3d = RepeatForever::create(_action.at(name)->clone());
@@ -104,17 +100,13 @@ void Slime::playAnimation(std::string name, bool loop)
 }
 
 void Slime::init3D()
-{
-	//initShadow();
-	
+{	
 	_sprite3d = Sprite3D::create(file);
 	_sprite3d->setTexture("model/slime/baozi.jpg");
 	_sprite3d->setScale(17);
-	//_sprite3d->addEffect(Vec3(0, 0, 0), CelLine, -1);
 	addChild(_sprite3d);
 	_sprite3d->setRotation3D(Vec3(90, 0, 0));
 	_sprite3d->setRotation(-90);
-	
 	initShadow();
 };
 
@@ -122,7 +114,6 @@ void Slime::walkMode()
 {
 	angryFace(false);
 	Actor::walkMode();
-
 };
 
 void Slime::attackMode()
