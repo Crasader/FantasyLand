@@ -404,7 +404,7 @@ void BattleFieldUI::timeInit()
 	ttfconfig.fontFilePath = "fonts/britanic bold.ttf";
 	_tmlabel = Label::createWithTTF(ttfconfig, tm);
 	_tmlabel->setAnchorPoint(Vec2(0, 0));
-	_tmlabel->setPosition3D(Vec3(G.winSize.width*0.02, G.winSize.height*0.915, 2));
+	_tmlabel->setPosition3D(Vec3(VisibleSize.width*0.02, VisibleSize.height*0.915, 2));
 	_tmlabel->enableOutline(Color4B(0, 0, 0, 255));
 
 	_tmlabel->setGlobalZOrder(10);
@@ -432,10 +432,10 @@ void BattleFieldUI::showVictoryUI()
 	//color layer
 	auto layer = LayerColor::create(Color4B(10, 10, 10, 150));
 	layer->ignoreAnchorPointForPosition(false);
-	layer->setPosition3D(Vec3(G.winSize.width*0.5, G.winSize.height*0.5, 0));
+	layer->setPosition3D(Vec3(VisibleSize.width*0.5, VisibleSize.height*0.5, 0));
 	//add victory
 	auto victory = Sprite::createWithSpriteFrameName("victory.png");
-	victory->setPosition3D(Vec3(G.winSize.width*0.5, G.winSize.height*0.5, 3));
+	victory->setPosition3D(Vec3(VisibleSize.width*0.5, VisibleSize.height*0.5, 3));
 	victory->setScale(0.1);
 	layer->addChild(victory, 1);
 	layer->setGlobalZOrder(100);
@@ -487,11 +487,11 @@ void BattleFieldUI::showGameOverUI()
 	//color layer
 	auto layer = LayerColor::create(Color4B(255, 10, 10, 150));
 	layer->ignoreAnchorPointForPosition(false);
-	layer->setPosition3D(Vec3(G.winSize.width*0.5, G.winSize.height*0.5, 0));
+	layer->setPosition3D(Vec3(VisibleSize.width*0.5, VisibleSize.height*0.5, 0));
 	//add victory
 
 	auto gameOver = Sprite::create("battlefieldUI/gameover.png");
-	gameOver->setPosition3D(Vec3(G.winSize.width*0.5, G.winSize.height*0.5, 3));
+	gameOver->setPosition3D(Vec3(VisibleSize.width*0.5, VisibleSize.height*0.5, 3));
 	gameOver->setScale(0.001);
 	layer->addChild(gameOver, 1);
 	layer->setGlobalZOrder(100);

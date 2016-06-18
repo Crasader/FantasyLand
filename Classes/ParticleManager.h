@@ -12,6 +12,8 @@ public:
 	ValueMap getPlistData(std::string keyname);
 
 private:
+	static ParticleManager* _instance;
+
 	std::map<std::string,ValueMap> _plistMap;
 };
 

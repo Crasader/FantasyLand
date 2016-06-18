@@ -71,7 +71,6 @@ struct RECTS_d
 
 struct G_d
 {
-	Size winSize = Director::getInstance()->getWinSize();
 	float bloodPercentDropSpeed = 2;
 
 	struct activearea

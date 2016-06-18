@@ -1,10 +1,14 @@
 ﻿#include "ParticleManager.h"
 
+ParticleManager* ParticleManager::_instance = nullptr;
 
 ParticleManager* ParticleManager::getInstance()
 {
-	static  ParticleManager instance ;
-	return &instance;
+	if(_instance == nullptr)
+	{
+		_instance = new ParticleManager();
+	}
+	return _instance;
 }
 
 void ParticleManager::AddPlistData(std::string fileName, std::string keyName)

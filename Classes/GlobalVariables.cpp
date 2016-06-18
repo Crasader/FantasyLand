@@ -65,9 +65,6 @@ void initGlobalVariables()
 	RECTS.fireBall = SpriteFrameCache::getInstance()->getSpriteFrameByName("fireball1.png")->getRect();
 	RECTS.thunderBall = SpriteFrameCache::getInstance()->getSpriteFrameByName("thunderball.png")->getRect();
 
-	G.winSize = Director::getInstance()->getWinSize();
-
 	VisibleSize = Director::getInstance()->getWinSize();
 	resolutionRate = VisibleSize.width / VisibleSize.height;
-	
 }
