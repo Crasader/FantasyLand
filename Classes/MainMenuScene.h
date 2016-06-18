@@ -16,7 +16,7 @@ private:
 	ui::Button *_start;
 	ui::Button *_setting;
 
-	bool isTouchedStart;
+	bool _isSceneReplaced;
 	Layer *_aboutLayer;
 
 	void addBackground();

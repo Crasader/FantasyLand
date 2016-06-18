@@ -29,14 +29,13 @@ bool LoadingScene::init()
 	addLoadingBar();
 
 	//update
-	schedule(schedule_selector(LoadingScene::update), 0.1);
-
+	schedule(schedule_selector(LoadingScene::update), 0.05);
 	return true;
 }
 
 void LoadingScene::update(float dt)
 {
-	_loadedResourceNum = _loadedResourceNum - 1;
+	--_loadedResourceNum;
 	_loadingBar->setPercent(100 * (_totalResourceNum - _loadedResourceNum) / _totalResourceNum);
 
 	//all loaded,enter mainMenuScene
