@@ -11,6 +11,8 @@ std::vector<Actor *> PigletPool;
 std::vector<Actor *> HeroManager;
 std::vector<Actor *> MonsterManager;
 
+//Scheduler* scheduler = Director::getInstance()->getScheduler();
+
 void solveCollision(Actor* object1, Actor* object2)
 {
 	auto miniDistance = object1->getRadius() + object2->getRadius();
@@ -21,7 +23,7 @@ void solveCollision(Actor* object1, Actor* object2)
 	if( tempDistance < miniDistance )
 	{
 		auto angle = ccpToAngle(ccpSub(obj1Pos, obj2Pos));
-		auto distance = miniDistance - tempDistance + 1;//Add extra 1 to avoid 'tempDistance < miniDistance' is always true
+		auto distance = miniDistance - tempDistance + 1;
 		auto distance1 = (1 - object1->getMass() / (object1->getMass() + object2->getMass())) * distance;
 		auto distance2 = distance - distance1;
 
@@ -105,7 +107,7 @@ void collisionDetect(float dt)
 		}
 		else
 		{
-			//delete MonsterManager[val];
+			delete MonsterManager[val];
 			MonsterManager.erase(MonsterManager.begin() + val);
 		}
 	}
@@ -128,16 +130,18 @@ Vec2 getFocusPointOfHeros()
 	return ptFocus;
 }
 
-void PushBackPoolByName(std::string name,Actor *target)
+std::vector<Actor *> getPoolByName(std::string name)
 {
 	if (name == "Piglet")
-		PigletPool.push_back(target);
+		return PigletPool;
 	else if (name == "Slime")
-		SlimePool.push_back(target);
+		return SlimePool;
 	else if (name == "Rat")
-		RatPool.push_back(target);
+		return RatPool;
 	else if (name == "Dragon")
-		DragonPool.push_back(target);
+		return DragonPool;
+	else if (name == "Boss")
+		return BossPool;
 	else
-		BossPool.push_back(target);
+		return HeroPool;
 }

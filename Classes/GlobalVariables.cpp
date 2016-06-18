@@ -2,9 +2,11 @@
 #include "GameMaster.h"
 
 Layer * currentLayer;
+//GameMaster *gameMaster;
 class BattleFieldUI *uiLayer;
 
 float FXZorder = 1999;
+float CelLine = 0.009;
 std::string BossTaunt = "How dare you???";
 Size VisibleSize;
 float resolutionRate; 
@@ -40,7 +42,6 @@ void initGlobalVariables()
 {
 	camera = Camera::create();
 
-	//hurtEffect
 	animationCache = AnimationCache::getInstance();
 	Animation * hurtAnimation = Animation::create();
 	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("FX/FX.plist");

@@ -5,11 +5,13 @@
 class GameMaster;
 
 extern Layer *currentLayer;
+//extern GameMaster *gameMaster;
 extern class BattleFieldUI *uiLayer;
 
 void initGlobalVariables();
 
 extern float FXZorder;
+extern float CelLine;
 extern std::string BossTaunt;
 extern AnimationCache *animationCache ;
 extern float resolutionRate;
@@ -41,7 +43,7 @@ extern struct ReSkin_d ReSkin;
 
 
 
-struct attack_d				//data for normal attack{	float minRange;       //collider inner radius	float maxRange;		//collider outer radius	float angle;		//collider angle, 360 for full circle, other wise, a fan shape is created	float knock;		//attack knock back distance	float damage;		//attack damage	enum EnumRaceType mask;//who created this attack collider	float duration;        // 0 duration means it will be removed upon calculation	float speed;          //speed the collider is traveling	float criticalChance;	float DOTTimer;         //it will be able to hurt every 0.5 seconds	float curDOTTime;	bool DOTApplied;};
+struct attack_d   {	float minRange;	float maxRange;	float angle;	float knock;	float damage;	enum EnumRaceType mask;	float duration;	float speed;	float criticalChance;	float DOTTimer;	float curDOTTime;	bool DOTApplied;};
 
 enum EnumRaceType
 {
@@ -82,7 +84,6 @@ struct G_d
 	}activearea;
 };
 
-//Audios
 struct BGM_RES_d
 {
 	std::string MAINMENUBGM = "audios/01 Beast Hunt.mp3";
@@ -91,7 +92,6 @@ struct BGM_RES_d
 	std::string CHOOSEROLESCENEBGM = "audios/Imminent Threat Beat B FULL Loop.mp3";
 };
 
-//play2d id
 struct AUDIO_ID_d
 {
 	int MAINMENUBGM;
@@ -102,29 +102,27 @@ struct AUDIO_ID_d
 	int ARCHERATTACK;
 };
 
-//common value is used to reset an actor
 struct ActorCommonValues_d
 {
-	float _aliveTime = 0,   //time the actor is alive in seconds
-		_curSpeed = 0;       //current speed the actor is traveling in units/seconds
+	float _aliveTime = 0,
+		_curSpeed = 0;
 	Animation * _curAnimation = NULL;
 	Animation3D* _curAnimation3d = NULL;
 
-	//runtime modified values
-	float _curFacing = 0;	//current direction the actor is facing, in radians, 0 is to the right
+
+	float _curFacing = 0;
 	bool _isalive = true;
-	float _AITimer = 0;    //accumulated timer before AI will execute, in seconds
-	bool _AIEnabled = false; //if false, AI will not run
-	float _attackTimer = 0;	//accumulated timer to decide when to attack, in seconds
-	float _timeKnocked = 0;  //accumulated timer to recover from knock, in seconds
-	bool _cooldown = false;  //if its true, then you are currently playing attacking animation,
-	float _hp = 1000;      //current hit point
+	float _AITimer = 0;
+	bool _AIEnabled = false;
+	float _attackTimer = 0;
+	float _timeKnocked = 0;
+	bool _cooldown = false;
+	float _hp = 1000;
 	bool _goRight = true;
 
-	//target variables
-	float _targetFacing = 0; //direction the actor Wants to turn to
+	float _targetFacing = 0;
 
-	Actor *_target = NULL; //the enemy actor 
+	Actor *_target = NULL;
 
 	Vec2 _myPos = ccp(0, 0);
 
@@ -134,32 +132,31 @@ struct ActorCommonValues_d
 
 struct ActorDefaultValues_d
 {
-	enum EnumRaceType _racetype = HERO; //type of the actor
-	enum EnumStateType _statetype ;    //AI state machine
-	Sprite3D * _sprite3d = NULL;    //place to hold 3d model
+	enum EnumRaceType _racetype = HERO;
+	enum EnumStateType _statetype ;
+	Sprite3D * _sprite3d = NULL;
 
-	float _radius = 50;       //actor collider size
-	float _mass = 100;			//weight of the role, it affects collision
-	float _shadowSize = 70;  //the size of the shadow under the actor
+	float _radius = 50;
+	float _mass = 100;
+	float _shadowSize = 70;
 
-	//character strength
-	float _maxhp = 1000;     
+
+	float _maxhp = 1000;
 	float _defense = 100;
 	float _specialAttackChance = 0;
-	float _recoverTime = 0.8;   //time takes to recover from knock, in seconds
+	float _recoverTime = 0.8;
 
-	float _speed = 500;       //actor maximum movement speed in units/seconds
-	float _turnSpeed = DEGREES_TO_RADIANS(225);//actor turning speed in radians/seconds
-	float _acceleration = 750;//actor movement acceleration, in units/seconds
-	float _decceleration = 750 * 1.7;//actor movement decceleration, in units/seconds
+	float _speed = 500;
+	float _turnSpeed = DEGREES_TO_RADIANS(225);
+	float _acceleration = 750;
+	float _decceleration = 750 * 1.7;
 
-	float _AIFrequency = 1.0;					//how often AI executes in seconds
-	float _attackFrequency = 0.01;				//an attack move every few seconds
-	float _searchDistance = 5000;				//distance which enemy can be found
+	float _AIFrequency = 1.0;
+	float _attackFrequency = 0.01;
+	float _searchDistance = 5000;
 
-	float _attackRange = 100;//distance the actor will stop and commence attack
+	float _attackRange = 100;
 
-	//attack collider info, it can be customized
 	struct attack_d _normalAttack = 
 	{
 		0 , 130 , DEGREES_TO_RADIANS(30),

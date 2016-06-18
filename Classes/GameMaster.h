@@ -33,6 +33,7 @@ public:
 	void showWarning();
 	void showDialog();
 	void showVictoryUI();
+	void showGameOverUI();
 
 
 private:
@@ -58,5 +59,5 @@ struct monsterCount_d
 	int dragon = 1;
 	int slime = 7;
 	int piglet = 2;
-	int rat = 0;       //rat is boss so it is 0
+	int rat = 0;
 };

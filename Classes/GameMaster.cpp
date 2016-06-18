@@ -74,6 +74,7 @@ void GameMaster::logicUpdate()
 {
 	if (stage == 1)
 	{
+		//showGameOverUI();
 		if (MonsterManager.size() < EXIST_MIN_MONSTER)
 		{
 			srand(time(NULL));
@@ -591,7 +592,6 @@ void GameMaster::showDialog()
 		dialog->removeFromParent();
 		colorLayer->removeFromParent();
 		uiLayer->setVisible(true);
-		
 		for (int var = 0; var < HeroManager.size(); var++)
 		{
 			HeroManager[var]->setAIEnabled(true);
@@ -606,5 +606,10 @@ void GameMaster::showDialog()
 void GameMaster::showVictoryUI()
 {
 	uiLayer->showVictoryUI();
+}
+
+void GameMaster::showGameOverUI()
+{
+	uiLayer->showGameOverUI();
 }
 

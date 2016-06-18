@@ -480,6 +480,61 @@ void BattleFieldUI::showVictoryUI()
 	addChild(layer);
 }
 
+
+void BattleFieldUI::showGameOverUI()
+{
+	//diable AI
+
+	//color layer
+	auto layer = LayerColor::create(Color4B(255, 10, 10, 150));
+	layer->ignoreAnchorPointForPosition(false);
+	layer->setPosition3D(Vec3(G.winSize.width*0.5, G.winSize.height*0.5, 0));
+	//add victory
+	auto gameOver = Sprite::create("battlefieldUI/gameover.png");
+	gameOver->setPosition3D(Vec3(G.winSize.width*0.5, G.winSize.height*0.5, 3));
+	gameOver->setScale(0.1);
+	layer->addChild(gameOver, 1);
+	layer->setGlobalZOrder(10);
+	gameOver->setGlobalZOrder(10);
+	//victory runaction
+	auto action = EaseElasticOut::create(ScaleTo::create(1.5, 1));
+	gameOver->runAction(action);
+
+	auto listener = EventListenerTouchOneByOne::create();
+	//touch event
+	listener->onTouchBegan = [](Touch*, Event*)
+	{
+		return true;
+	};
+	listener->onTouchEnded = [this](Touch*, Event*)
+	{
+		//clear GlobalVaribals
+		HeroPool.clear();
+		DragonPool.clear();
+		SlimePool.clear();
+		RatPool.clear();
+		BossPool.clear();
+		PigletPool.clear();
+
+		HeroManager.clear();
+		MonsterManager.clear();
+		GameMaster::reset();
+
+		//stop schedule
+		currentLayer->unscheduleUpdate();
+		Director::getInstance()->getScheduler()->unschedule("gameController", currentLayer);
+		//stop sound
+		experimental::AudioEngine::stop(AUDIO_ID.BATTLEFIELDBGM);
+		//replace scene
+		Director::getInstance()->replaceScene(ChooseRoleScene::createScene());
+	};
+	gameOver->setCameraMask(2);
+	auto eventDispatcher = layer->getEventDispatcher();
+	eventDispatcher->addEventListenerWithSceneGraphPriority(listener, layer);
+
+	addChild(layer);
+}
+
 void BattleFieldUI::setGreyShader(Sprite * s)
 {
 

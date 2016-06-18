@@ -91,7 +91,7 @@ void Dragon::dyingMode(Vec2 knockSource, int knockAmount)
 
 	auto recycle = [&]() {
 		setVisible(false);
-		PushBackPoolByName(_name,this);
+		getPoolByName(_name).push_back(this);
 	};
 	auto recycleShadow = [&]()
 	{
