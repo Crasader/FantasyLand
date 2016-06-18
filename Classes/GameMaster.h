@@ -12,6 +12,7 @@ public:
 	GameMaster();
 	bool init();
 	void update(float dt);
+	static void reset();
 
 	void logicUpdate();
 	void AddHeros();

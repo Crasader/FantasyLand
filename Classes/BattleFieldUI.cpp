@@ -463,6 +463,7 @@ void BattleFieldUI::showVictoryUI()
 
 		HeroManager.clear();
 		MonsterManager.clear();
+		GameMaster::reset();
 
 		//stop schedule
 		currentLayer->unscheduleUpdate();

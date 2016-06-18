@@ -31,7 +31,7 @@ bool GameMaster::init()
 	AddHeros();
 	addMonsters();
 	stage = 0;
-	
+
 	srand(time(NULL));
 	for (int i = 1; i <= 4; i++)
 		randomshowMonster(true);
@@ -42,7 +42,7 @@ bool GameMaster::init()
 
 GameMaster* GameMaster::getInstance()
 {
-	if(_instance == nullptr)
+	if (_instance == nullptr)
 	{
 		_instance = new GameMaster();
 	}
@@ -57,11 +57,17 @@ GameMaster::GameMaster()
 void GameMaster::update(float dt)
 {
 	_totaltime += dt;
-	if( _totaltime > _logicFrq)
+	if (_totaltime > _logicFrq)
 	{
 		_totaltime = _totaltime - +_logicFrq;
 		logicUpdate();
 	}
+}
+
+void GameMaster::reset()
+{
+	delete _instance;
+	_instance = nullptr;
 }
 
 void GameMaster::logicUpdate()
@@ -99,7 +105,7 @@ void GameMaster::logicUpdate()
 				auto hero = HeroManager[i];
 				if (hero != NULL)
 				{
-					hero->setGoRight(true) ;
+					hero->setGoRight(true);
 				}
 			}
 			stage = 4;
@@ -209,7 +215,7 @@ void GameMaster::AddHeros()
 	currentLayer->addChild(knight);
 	knight->idleMode();
 	HeroManager.push_back(knight);
-	
+
 	auto mage = Mage::create();
 	mage->setPosition(battleSiteX[1], 100);
 	currentLayer->addChild(mage);
@@ -233,7 +239,7 @@ void GameMaster::addMonsters()
 
 void GameMaster::addDragon()
 {
-	for (int var = 1; var <= monsterCount.dragon ; var++)
+	for (int var = 1; var <= monsterCount.dragon; var++)
 	{
 		auto dragon = Dragon::create();
 		currentLayer->addChild(dragon);
@@ -245,7 +251,7 @@ void GameMaster::addDragon()
 
 void GameMaster::addSlime()
 {
-	for (int i = 1; i <= monsterCount.slime ; i++)
+	for (int i = 1; i <= monsterCount.slime; i++)
 	{
 		auto slime = Slime::create();
 		currentLayer->addChild(slime);
@@ -257,7 +263,7 @@ void GameMaster::addSlime()
 
 void GameMaster::addPiglet()
 {
-	for (int i = 1; i <= monsterCount.piglet ; i++)
+	for (int i = 1; i <= monsterCount.piglet; i++)
 	{
 		auto piglet = Piglet::create();
 		currentLayer->addChild(piglet);
@@ -281,23 +287,23 @@ void GameMaster::addRat()
 
 void GameMaster::showDragon(bool isFront)
 {
-	if(DragonPool.size() != 0 )
+	if (DragonPool.size() != 0)
 	{
-		Dragon * dragon = dynamic_cast<Dragon* >(DragonPool[0]);
+		Dragon * dragon = dynamic_cast<Dragon*>(DragonPool[0]);
 		DragonPool.erase(DragonPool.begin());
 		dragon->reset();
 
 		auto appearPos = getFocusPointOfHeros();
 		auto randomvarX = CCRANDOM_0_1()*0.2 + 1;
 
-		if( stage == 0 )
+		if (stage == 0)
 		{
 			appearPos.x = appearPos.x + frontDistanceWithHeroX * randomvarX;
 			dragon->setFacing(180);
 		}
 		else
 		{
-			if( isFront )
+			if (isFront)
 			{
 				appearPos.x = appearPos.x + frontDistanceWithHeroX*1.8*randomvarX;
 				dragon->setFacing(180);
@@ -322,7 +328,7 @@ void GameMaster::showDragon(bool isFront)
 
 void GameMaster::showPiglet(bool isFront)
 {
-	if( PigletPool.size() != 0 )
+	if (PigletPool.size() != 0)
 	{
 		Piglet * piglet = dynamic_cast<Piglet*> (PigletPool[0]);
 		PigletPool.erase(PigletPool.begin());
@@ -355,7 +361,7 @@ void GameMaster::showPiglet(bool isFront)
 		piglet->setPosition(appearPos);
 		piglet->getMyPos() = appearPos;
 		piglet->setVisible(true);
-		piglet->setGoRight(false) ;
+		piglet->setGoRight(false);
 		piglet->setAIEnabled(true);
 		MonsterManager.push_back(piglet);
 	}
@@ -363,12 +369,12 @@ void GameMaster::showPiglet(bool isFront)
 
 void GameMaster::showSlime(bool isFront)
 {
-	if( SlimePool.size() != 0 )
+	if (SlimePool.size() != 0)
 	{
 		Slime * cslime = dynamic_cast<Slime *> (SlimePool[0]);
 		SlimePool.erase(SlimePool.begin());
 		cslime->reset();
-		cslime->setGoRight(false) ;
+		cslime->setGoRight(false);
 		jumpInto(cslime, isFront);
 		MonsterManager.push_back(cslime);
 	}
@@ -378,7 +384,7 @@ void GameMaster::showRat(bool isFront)
 {
 	if (RatPool.size() != 0)
 	{
-		Rat * crat =dynamic_cast<Rat *> (RatPool[0]);
+		Rat * crat = dynamic_cast<Rat *> (RatPool[0]);
 
 		RatPool.erase(RatPool.begin());
 		crat->reset();
@@ -393,16 +399,16 @@ void GameMaster::randomshowMonster(bool isFront)
 {
 	auto random_var = CCRANDOM_0_1();
 
-	if( random_var < 0.15 )
+	if (random_var < 0.15)
 	{
-		if (DragonPool.size() != 0 )
+		if (DragonPool.size() != 0)
 			showDragon(isFront);
 		else
 			randomshowMonster(isFront);
 	}
-	else if(random_var < 0.3)
+	else if (random_var < 0.3)
 	{
-		if (RatPool.size() != 0 )
+		if (RatPool.size() != 0)
 			showRat(isFront);
 		else
 			randomshowMonster(isFront);
@@ -426,7 +432,7 @@ void GameMaster::showBoss()
 
 	auto apperPos = Vec3(1000, 200, 300);
 	boss->setPosition3D(apperPos);
-	boss->setMyPos(Vec2(apperPos.x,apperPos.y));
+	boss->setMyPos(Vec2(apperPos.x, apperPos.y));
 	boss->setFacing(180);
 	boss->setGoRight(false);
 	boss->setCameraMask(2);
@@ -435,8 +441,8 @@ void GameMaster::showBoss()
 	{
 		boss->setAIEnabled(true);
 	};
-	boss->runAction(Sequence::create(EaseBounceOut::create(MoveBy::create(0.5, Vec3(0, 0, -300))), CallFunc::create(enableAI),NULL));
-	MonsterManager.push_back(boss); 
+	boss->runAction(Sequence::create(EaseBounceOut::create(MoveBy::create(0.5, Vec3(0, 0, -300))), CallFunc::create(enableAI), NULL));
+	MonsterManager.push_back(boss);
 }
 
 void GameMaster::jumpInto(Actor* obj, bool isFront)
@@ -457,7 +463,7 @@ void GameMaster::jumpInto(Actor* obj, bool isFront)
 	obj->setPosition(appearPos);
 	obj->setMyPos(appearPos);
 
-	auto enableAI = [obj]() 
+	auto enableAI = [obj]()
 	{
 		obj->setAIEnabled(true);
 	};
@@ -467,25 +473,25 @@ void GameMaster::jumpInto(Actor* obj, bool isFront)
 		obj->setVisible(true);
 	};
 
-	if ( stage == 0 )
+	if (stage == 0)
 	{
 		obj->setAIEnabled(true);
 		obj->runAction(JumpBy3D::create(0.5, Vec3(-200 * (CCRANDOM_0_1()*0.6 + 0.7), -400 * (CCRANDOM_0_1()*0.4 + 0.8), 0), 150, 1));
 		obj->runAction(DelayTime::create(CCRANDOM_0_1()));
 		obj->setVisible(true);
-		obj->runAction(Sequence::create(DelayTime::create(CCRANDOM_0_1()), CallFunc::create(visibleMonster), JumpBy3D::create(0.5, Vec3(-200 * (CCRANDOM_0_1()*0.6 + 0.7), -400 * (CCRANDOM_0_1()*0.4 + 0.8), 0), 150, 1), CallFunc::create(enableAI),NULL));
+		obj->runAction(Sequence::create(DelayTime::create(CCRANDOM_0_1()), CallFunc::create(visibleMonster), JumpBy3D::create(0.5, Vec3(-200 * (CCRANDOM_0_1()*0.6 + 0.7), -400 * (CCRANDOM_0_1()*0.4 + 0.8), 0), 150, 1), CallFunc::create(enableAI), NULL));
 		obj->setFacing(135);
 	}
 	else
 	{
 		if (isFront)
 		{
-			obj->runAction(Sequence::create(DelayTime::create(CCRANDOM_0_1()), CallFunc::create(visibleMonster), JumpBy3D::create(0.5, Vec3(0, -400 * (rand()*0.4 + 0.8), 0), 150, 1), CallFunc::create(enableAI),NULL));
+			obj->runAction(Sequence::create(DelayTime::create(CCRANDOM_0_1()), CallFunc::create(visibleMonster), JumpBy3D::create(0.5, Vec3(0, -400 * (rand()*0.4 + 0.8), 0), 150, 1), CallFunc::create(enableAI), NULL));
 			obj->setFacing(135);
 		}
 		else
 		{
-			obj->runAction(Sequence::create(DelayTime::create(CCRANDOM_0_1()), CallFunc::create(visibleMonster), JumpBy3D::create(0.5, Vec3((200 * rand()*0.6 + 0.7), -400 * (rand()*0.4 + 0.8), 0), 150, 1), CallFunc::create(enableAI),NULL));
+			obj->runAction(Sequence::create(DelayTime::create(CCRANDOM_0_1()), CallFunc::create(visibleMonster), JumpBy3D::create(0.5, Vec3((200 * rand()*0.6 + 0.7), -400 * (rand()*0.4 + 0.8), 0), 150, 1), CallFunc::create(enableAI), NULL));
 			obj->setFacing(45);
 		}
 	}
@@ -501,20 +507,20 @@ void GameMaster::showWarning()
 	warning_logo->setPosition(VisibleSize.width*0.5, VisibleSize.height*0.5);
 	warning_logo->setPositionZ(1);
 
-	auto showdialog = [warning,this]()
+	auto showdialog = [warning, this]()
 	{
 		warning->removeFromParent();
 		this->showDialog();
 		experimental::AudioEngine::play2d("audios/effects/boss/boss.mp3", false, 1);
 	};
 
-	warning_logo->runAction(Sequence::create(DelayTime::create(0.5), EaseSineOut::create(Blink::create(1, 5)), CallFunc::create(showdialog),NULL));
+	warning_logo->runAction(Sequence::create(DelayTime::create(0.5), EaseSineOut::create(Blink::create(1, 5)), CallFunc::create(showdialog), NULL));
 	warning->addChild(warning_logo);
 
 	warning->setScale(1.5);
 	warning->setPositionZ(-Director::getInstance()->getZEye() / 2);
 	warning->ignoreAnchorPointForPosition(false);
-	warning->setLocalZOrder(999); 
+	warning->setLocalZOrder(999);
 	warning->setPosition(VisibleSize.width / 2, VisibleSize.height / 2);
 
 	currentLayer->addChild(warning);
@@ -531,7 +537,7 @@ void GameMaster::showDialog()
 	colorLayer->setScale(1.5);
 	colorLayer->setPosition(VisibleSize.width / 2, VisibleSize.height / 2);
 	currentLayer->addChild(colorLayer);
-	
+
 	auto dialog = Layer::create();
 	dialog->setPositionX(-VisibleSize.width*0.025);
 
@@ -565,7 +571,7 @@ void GameMaster::showDialog()
 	dialog->setPositionZ(Director::getInstance()->getZEye() / 3);
 	dialog->setGlobalZOrder(0);
 
-	dialog->setPosition(VisibleSize.width * 0.45, VisibleSize.height /2);
+	dialog->setPosition(VisibleSize.width * 0.45, VisibleSize.height / 2);
 	currentLayer->addChild(dialog);
 
 	auto pausegame = []()
@@ -577,9 +583,9 @@ void GameMaster::showDialog()
 		}
 	};
 
-	dialog->runAction(Sequence::create(ScaleTo::create(0.5, 0.65), CallFunc::create(pausegame),NULL));
+	dialog->runAction(Sequence::create(ScaleTo::create(0.5, 0.65), CallFunc::create(pausegame), NULL));
 	uiLayer->setVisible(false);
-	
+
 	auto removeDialog = [dialog, colorLayer, this]()
 	{
 		dialog->removeFromParent();
@@ -591,7 +597,7 @@ void GameMaster::showDialog()
 		}
 		this->showBoss();
 	};
-	dialog->runAction(Sequence::create(DelayTime::create(3),ScaleTo::create(0.5, 0.1), CallFunc::create(removeDialog), NULL));
+	dialog->runAction(Sequence::create(DelayTime::create(3), ScaleTo::create(0.5, 0.1), CallFunc::create(removeDialog), NULL));
 
 	Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGB565);
 }
