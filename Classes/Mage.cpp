@@ -14,16 +14,18 @@ bool Mage::init()
 	_useWeaponId = ReSkin.mage.weapon;
 	_useArmourId = ReSkin.mage.armour;
 	_useHelmetId = ReSkin.mage.helmet;
-	//copyTable(ActorCommonValues, this);
-	//copyTable(MageValues, this);
+
+	//init data
 	copyData_Mage();
 
+	//init bloodbar and avatar
 	if (uiLayer != NULL) {
 		_bloodBar = uiLayer->MageBlood;
 		_bloodBarClone = uiLayer->MageBloodClone;
 		_avatar = uiLayer->MagePng;
 	}
 
+	//init image
 	init3D();
 	initActions();
 	
@@ -34,6 +36,7 @@ bool Mage::init()
 			return;
 		_specialAttackChance = 1;
 	};
+
 	MessageDispatchCenter::getInstance()->registerMessage(MessageType::SPECIAL_MAGE, [](Actor* data)
 	{
 		if (data->getSpecialAttackChance() == 1)
@@ -46,6 +49,7 @@ bool Mage::init()
 
 void Mage::copyData_Mage()
 {
+	//Actor Common Values
 	_aliveTime = 0,
 	_curSpeed = 0;
 	_curAnimation = "";
@@ -64,6 +68,8 @@ void Mage::copyData_Mage()
 	_myPos = ccp(0, 0);
 	_angry = 0;
 	_angryMax = 500;
+
+	//Mage Default Values
 	_racetype = EnumRaceType::HERO;
 	_name = "Mage";
 	_radius = 50;
@@ -78,14 +84,6 @@ void Mage::copyData_Mage()
 	_attackRange = 400;
 	_specialAttackChance = 0;
 	_specialSlowTime = 0.67;
- //   struct attack_d _normalAttack = 
-	//{
-	//	0, 50,DEGREES_TO_RADIANS(360),10 , 280,EnumRaceType::HERO,2,400,0.05
-	//};
-	//struct attack_d _specialAttack =
-	//{
-	//	0, 140,DEGREES_TO_RADIANS(360),75, 250,EnumRaceType::HERO,4.5,0,0.05,0.75,0.75,false
-	//};
 	_normalAttack = MageValues._normalAttack;
 	_specialAttack = MageValues._specialAttack;
 
@@ -122,14 +120,11 @@ void Mage::specialAttack()
 	_angry = ActorCommonValues._angry;
 	struct MESSAGE_ANGRY_CHANGE angryChange = { _name, _angry, _angryMax };
 	MessageDispatchCenter::getInstance()->dispatchMessage(ANGRY_CHANGE, this);
-	log("mage special attack %f,%f", _angry, _angryMax);
-	//MDC->dispatchMessage(MessageType::ANGRY_CHANGE, angryChange);
-
-	//mage will create 3 ice spikes on the ground
-	//get 3 positions
+	
 	experimental::AudioEngine::play2d(MageProperty.specialAttackShout, false, 0.5);
 	experimental::AudioEngine::play2d(MageProperty.ice_special, false, 1);
-	
+
+	//mage will create 3 ice spikes on the ground
 	auto pos1 = getPosTable(this);
 	auto pos2 = getPosTable(this);
 	auto pos3 = getPosTable(this);
@@ -140,30 +135,22 @@ void Mage::specialAttack()
 	pos2 = ccpRotateByAngle(pos2, _myPos, _curFacing);
 	pos3 = ccpRotateByAngle(pos3, _myPos, _curFacing);
 	MageIceSpikes::CreateWithPos(pos1, _curFacing, _specialAttack, this);
-
 	auto spike2 = [&]() {
 		MageIceSpikes::CreateWithPos(pos2, _curFacing, _specialAttack, this);
 	};
 	auto spike3 = [&]() {
 		MageIceSpikes::CreateWithPos(pos3, _curFacing, _specialAttack, this);
 	};
-
-	//delayExecute(this, spike2, 0.25);
-	//delayExecute(this, spike3, 0.5);
 	auto wait2 = DelayTime::create(0.25);
 	this->runAction(Sequence::create(wait2, CallFunc::create(spike2), NULL));
-
 	auto wait3 = DelayTime::create(0.5);
 	this->runAction(Sequence::create(wait3, CallFunc::create(spike3), NULL));
 }
 
 void Mage::init3D()
 {
-	//initShadow();
-	initPuff();
 	_sprite3d = Sprite3D::create(file);
 	_sprite3d->setScale(1.9);
-	//_sprite3d->addEffect(Vec3(0, 0, 0), CelLine, -1);
 	addChild(_sprite3d);
 	_sprite3d->setRotation3D(Vec3(90, 0, 0));
 	_sprite3d->setRotation(-90);
@@ -281,7 +268,6 @@ int Mage::getArmourID()
 float Mage::hurt(BasicCollider* collider, bool dirKnockMode)
 {
 	if (_isalive == true) {
-		//TODO add sound effect
 		auto damage = collider->getDamage();
 		//calculate the real damage
 		bool critical = false;
@@ -308,23 +294,18 @@ float Mage::hurt(BasicCollider* collider, bool dirKnockMode)
 			dyingMode(getPosTable(collider), knock);
 		}
 
-		//three param judge if crit
-
 		auto blood = _hpCounter->showBloodLossNum(damage, this, critical);
 		blood->setCameraMask(2);
 		if (_name == "Rat")
 			blood->setPositionZ(Director::getInstance()->getVisibleSize().height * 0.25);
 		addEffect(blood);
-
+		//Transfer data to UILayer
 		struct MESSAGE_BLOOD_MINUS  bloodMinus = { _name, _maxhp, _hp, _bloodBar, _bloodBarClone, _avatar };
 		MessageDispatchCenter::getInstance()->dispatchMessage(BLOOD_MINUS, this);
-
-//		MDC->dispatchMessage(MessageType::BLOOD_MINUS, bloodMinus);
 		struct MESSAGE_ANGRY_CHANGE angryChange = { _name, _angry,_angryMax };
 		MessageDispatchCenter::getInstance()->dispatchMessage(ANGRY_CHANGE, this);
-		log("Mage hurt %f,%f", _angry, _angryMax);
+
 		_angry += damage;
-	//	MDC->dispatchMessage(MessageType::ANGRY_CHANGE, angryChange);
 		return damage;
 	}
 	return 0;

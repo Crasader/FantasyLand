@@ -18,7 +18,6 @@ public:
 	virtual bool init();
 	void addEffect(Node* effect);
 	void copyData();
-	void initPuff();
 	void initShadow();
 	virtual void playAnimation(std::string name, bool loop = false);
 
@@ -53,7 +52,6 @@ public:
 	void setGoRight(bool goRight);
 	bool getGoRight();
 	Node* getEffectNode();
-	ParticleSystem* getPuff();
 	float getSpecialAttackChance();
 	void setSpecialAttackChance(float chance);
 
@@ -76,7 +74,7 @@ public:
 
 	//Base Update Functions
 	void stateMachineUpdate(float dt);
-	Actor* _findEnemy(EnumRaceType HeroOrMonster, bool &allDead);
+	Actor* findEnemy(EnumRaceType HeroOrMonster, bool &allDead);
 	bool _inRange();
 
 	//AI function does not run every tick
@@ -118,7 +116,6 @@ protected:
 	Node* _effectNode;
 	int _monsterHeight;
 	int _heroHeight;
-	ParticleSystem* _puff = nullptr;
 	Sprite* _circle;
 	Map<std::string, ActionInterval*> _action;
 

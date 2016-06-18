@@ -74,6 +74,7 @@ void Actor::copyData()
 
 void Actor::addEffect(Node* effect)
 {
+	//Play effect when being hurted
 	effect->setPosition(ccpAdd(getPosTable(this), getPosTable(effect)));
 	if (_racetype != EnumRaceType::MONSTER)
 		effect->setPositionZ(this->getPositionZ() + _heroHeight);
@@ -83,41 +84,18 @@ void Actor::addEffect(Node* effect)
 	currentLayer->addChild(effect);
 }
 
-void Actor::initPuff()
-{
-	auto valueMap = ParticleManager::getInstance()->getPlistData("walkpuff");
-	auto puff = ParticleSystemQuad::create(valueMap);
-	auto puffFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName("walkingPuff.png");
-	puff->setTextureWithRect(puffFrame->getTexture(), puffFrame->getRect());
-	puff->setScale(1500);
-	puff->setPosition(VisibleSize.width*0.5, VisibleSize.height*0.5);
-	//puff->setGlobalZOrder(-this->getPositionY() + FXZorder);
-	puff->setPositionZ(10);
-	//puff->setPosition(0, 0);
-	//_puff = puff;
-	//_effectNode->addChild(puff);
-	puff->setEmissionRate(5);
-	//puff->setCameraMask(2);
-	currentLayer->addChild(puff);
-}
-
 void Actor::initShadow()
 {
 	_circle = Sprite::createWithSpriteFrameName("shadow.png");
 	this->addChild(_circle);
-
-	//use Shadow size for aesthetic, use radius to see collision size
 	_circle->setScale(_shadowSize / 16);
-	//_circle->setGlobalZOrder(_sprite3d->getGlobalZOrder()+1);
 	_circle->setOpacity(255 * 0.7);
-	//_circle->setGlobalZOrder(-getPositionZ() + FXZorder);
-
 	_sprite3d->setGlobalZOrder(0.01);
 }
 
 void Actor::playAnimation(std::string name, bool loop) 
 {
-	if (_curAnimation != name)	//using name to check which animation is playing
+	if (_curAnimation != name)
 	{
 		_sprite3d->stopAllActions();
 		if (loop)
@@ -128,6 +106,8 @@ void Actor::playAnimation(std::string name, bool loop)
 		_curAnimation = name;
 	}
 }
+
+//getter & setter
 
 float Actor::getHP()
 {
@@ -164,9 +144,6 @@ void Actor::setname(std::string name)
 	_name = name;
 }
 
-//getter & setter
-
-//get hero type
 EnumRaceType Actor::getRaceType()
 {
 	return _racetype;
@@ -185,6 +162,7 @@ float Actor::getRadius()
 float Actor::getMass() {
 	return _mass;
 }
+
 EnumStateType Actor::getStateType()
 {
 	return _statetype;
@@ -193,13 +171,6 @@ EnumStateType Actor::getStateType()
 void Actor::setStateType(EnumStateType type)
 {
 	_statetype = type;
-	//add puff particle
-	//if (_puff != nullptr) {
-	//	if (type == EnumStateType::WALKING)
-	//		_puff->setEmissionRate(5);
-	//	else
-	//		_puff->setEmissionRate(0);
-	//}
 }
 
 void Actor::setTarget(Actor* target)
@@ -208,6 +179,7 @@ void Actor::setTarget(Actor* target)
 		_target = target;
 }
 
+//rotate the actor
 void Actor::setFacing(float degrees)
 {
 	_curFacing = DEGREES_TO_RADIANS(degrees);
@@ -220,6 +192,7 @@ bool Actor::getAIEnabled()
 	return _AIEnabled;
 }
 
+//turn on/off AI machine
 void Actor::setAIEnabled(bool enable)
 {
 	_AIEnabled = enable;
@@ -284,11 +257,6 @@ Node* Actor::getEffectNode() {
 	return _effectNode;
 }
 
-ParticleSystem* Actor::getPuff()
-{
-	return _puff;
-}
-
 float Actor::getSpecialAttackChance()
 {
 	return _specialAttackChance;
@@ -299,28 +267,30 @@ void Actor::setSpecialAttackChance(float chance)
 	_specialAttackChance = 1;
 }
 
-
+//call the function when being hurted
 float Actor::hurt(BasicCollider* collider, bool dirKnockMode)
 {
-	//log("A actor is hurted");
 	if (_isalive == true) {
-		//TODO add sound effect
 		auto damage = collider->getDamage();
 		auto critical = false;
 		auto knock = collider->getKnock();
+
+		//randomly generated critical attack
 		if (CCRANDOM_0_1() < collider->getCriticalChance()) {
 			damage *= 1.5;
 			critical = true;
 			knock *= 2;
 		}
+
+		//calculate the damage
 		damage = damage + damage * CCRANDOM_MINUS1_1() * 0.15;
 		damage -= _defense;
 		damage = floor(damage);
 		if (damage <= 0)
 			damage = 1;
-
 		_hp -= damage;
-		if (_hp > 0) {
+
+		if (_hp > 0) {	//if ailive
 			if (collider->getKnock() && damage != 1) {
 				knockMode(collider, dirKnockMode);
 				hurtSoundEffects();
@@ -328,19 +298,18 @@ float Actor::hurt(BasicCollider* collider, bool dirKnockMode)
 			else
 				hurtSoundEffects();
 		}
-		else {
+		else {	// if dead
 			_hp = 0;
 			_isalive = false;
 			dyingMode(getPosTable(collider), knock);
 		}
+
+		//add blood-loss effect
 		auto blood = _hpCounter->showBloodLossNum(damage, this, critical);
 		blood->setCameraMask(2);
-		//auto str = blood->getString();
-		//log("%s", str);
-		//blood->setCameraMask(7);
 		addEffect(blood);
-		return damage;
 
+		return damage;
 	}
 	return 0;
 }
@@ -380,26 +349,31 @@ void Actor::specialAttack()
 }
 
 
-//State Machine switching functions
-void Actor::idleMode()	//switch into idle mode
+//state machine switching functions
+
+//switch into idle mode
+void Actor::idleMode()	
 {
 	setStateType(EnumStateType::IDLE);
 	playAnimation("idle", true);
 }
 
-void Actor::walkMode()	//switch into walk mode
+//switch into walk mode
+void Actor::walkMode()
 {
 	setStateType(EnumStateType::WALKING);
 	playAnimation("walk", true);
 }
 
-void Actor::attackMode()	//switch into walk mode
+//switch into walk mode
+void Actor::attackMode()	
 {
 	setStateType(EnumStateType::ATTACKING);
 	playAnimation("idle", true);
 	_attackTimer = _attackFrequency * 3 / 4;
 }
 
+//switch into knock mode
 void Actor::knockMode(BasicCollider* collider, bool dirKnockMode)
 {
 	setStateType(EnumStateType::KNOCKING);
@@ -409,7 +383,6 @@ void Actor::knockMode(BasicCollider* collider, bool dirKnockMode)
 	auto angle = dirKnockMode?collider->getFacing():ccpToAngle(ccpSub(p, getPosTable(collider)));
 	auto newPos = ccpRotateByAngle(ccpAdd(Vec2(collider->getKnock(), 0), p), p, angle);
 	runAction(EaseCubicActionOut::create(MoveTo::create(_action.at("knocked")->getDuration() * 3, newPos)));
-	////self:setCascadeColorEnabled(true)--if special attack is interrupted then change the value to true
 }
 
 void Actor::dyingMode(Vec2 knockSource, int knockAmount)
@@ -417,25 +390,28 @@ void Actor::dyingMode(Vec2 knockSource, int knockAmount)
 	setStateType(EnumStateType::DEAD);
 	playAnimation("dead", false);
 	playDyingEffects();
+
 	if (_racetype == EnumRaceType::HERO) {
 		uiLayer->heroDead(this);
 
+		//Erase the hero from HeroManager
 		std::vector<Actor *>::iterator it = std::find(HeroManager.begin(), HeroManager.end(), this);
 		HeroManager.erase(it);
+
 		runAction(Sequence::create(DelayTime::create(3), 
 			MoveBy::create(1.0, Vec3(0, 0, -50)), 
 			RemoveSelf::create(), NULL));
+
 		_angry = 0;
 		struct MESSAGE_ANGRY_CHANGE angryChange = { _name, _angry, _angryMax };
-		MessageDispatchCenter::getInstance()->dispatchMessage(ANGRY_CHANGE, this);
-		log("%d,%d", _angry, _angryMax);
-//		MDC->dispatchMessage(MessageType::ANGRY_CHANGE, angryChange);
-        //CallFunc::create(recycle)
+		MessageDispatchCenter::getInstance()->dispatchMessage(ANGRY_CHANGE, this);		
 	}
 	else 
 	{
+		//Erase the hero from MonsterManager
 		std::vector<Actor *>::iterator it = std::find(MonsterManager.begin(), MonsterManager.end(), this);
 	    MonsterManager.erase(it);
+
 		auto recycle = [&]() {
 			setVisible(false);
 			getPoolByName(_name).push_back(this);	
@@ -467,31 +443,25 @@ void Actor::stateMachineUpdate(float dt)
 	if (state == EnumStateType::WALKING)
 		walkUpdate(dt);
 	else if (state == EnumStateType::IDLE)
-		;
-	//do nothing
+		;	//do nothing
 	else if (state == EnumStateType::ATTACKING)
-		//I am attacking someone, I probably has a target
 		attackUpdate(dt);
 	else if (state == EnumStateType::DEFENDING)
-		;
-		//I am trying to defend form an attack, I need to finish my defending animation
-		//TODO: update for defending
+		;	//trying to defend from an attack, so I need to finish my defending animation
 	else if (state == EnumStateType::KNOCKING)
-		knockingUpdate(dt);
-	//I got knocked from an attack, I need time to recover
+		knockingUpdate(dt);	//being knocked from an attack, so I need time to recover
 	else if (state == EnumStateType::DYING)
-		;
-		//I am dying.. there is not much I can do right?
+		;	//I am dying.. Can you help me do something???
 
 }
 
-Actor* Actor::_findEnemy(EnumRaceType HeroOrMonster, bool &allDead)
+//find the closest enemy actor
+Actor* Actor::findEnemy(EnumRaceType HeroOrMonster, bool &allDead)
 {
 	auto shortest = _searchDistance;
 	allDead = true;
 	Actor* target = nullptr;
 	std::vector<Actor*>* manager;
-	//error in delaration in Manager.h
 	if (HeroOrMonster == EnumRaceType::MONSTER)
 		manager = &HeroManager;
 	else
@@ -523,45 +493,43 @@ bool Actor::_inRange()
 	return false;
 }
 
-
-//AI function does not run every tick
+//AI function(a FSM)
 void Actor::AI()
 {
 	if (_isalive) {
 		auto state = getStateType();
 		bool allDead;
-		_target = _findEnemy(_racetype, allDead);
+		_target = findEnemy(_racetype, allDead);
+
 		//if I can find a target
 		if (_target) {
 			auto p1 = _myPos;
 			auto p2 = _target->_myPos;
 			_targetFacing = ccpToAngle(ccpSub(p2, p1));
 			auto isInRange = _inRange();
+
 			//if I'm (not attacking, or not walking) and my target is not in range
 			if ((!_cooldown || state != EnumStateType::WALKING) && !isInRange) {
 				walkMode();
 				return;
 			}
+			//if I'm able to attack the enemy, why not attack him at once?
 			else if (isInRange&&state != EnumStateType::ATTACKING) {
 				attackMode();
 				return;
-				//else
-				//Since im attacking, I cant just switch to another mode immediately
-				//print(_name, "says : what should I do?", _statetype)	
 			}
 		}
+        //I did not find a target, and I'm not attacking or not already idle
 		else if (_statetype != EnumStateType::WALKING && _goRight == true) {
 			walkMode();
-			return;
-			//I did not find a target, and I'm not attacking or not already idle
+			return;	
 		}
+		//So the only thing I can do is waiting...
 		else if (!_cooldown || state != EnumStateType::IDLE) {
 			idleMode();
 			return;
 		}
 	}
-	else
-		;//logic when I'm dead
 }
 
 void Actor::baseUpdate(float dt)
@@ -600,11 +568,13 @@ void Actor::attackUpdate(float dt)
 		};
 		//time for an attack, which attack should I do ?
 		float random_special = CCRANDOM_0_1();
+		
+		//Just create a normal attack
 		if (random_special > _specialAttackChance) {
 			auto createCol = [&]() {
 				normalAttack();
 			};
-			auto attackAction =Sequence::create(_action.at("attack1")->clone(), 
+			auto attackAction = Sequence::create(_action.at("attack1")->clone(),
 				CallFunc::create(createCol), _action.at("attack2")->clone(),
 				CallFunc::create(playIdle), NULL);
 			_sprite3d->stopAction(_curAnimation3d);
@@ -612,6 +582,7 @@ void Actor::attackUpdate(float dt)
 			_curAnimation = "attack1";
 			_cooldown = true;
 		}
+		//create a special attack
 		else {
 			setCascadeColorEnabled(false);
 			auto createCol = [&]() {
@@ -619,7 +590,6 @@ void Actor::attackUpdate(float dt)
 			};
 			struct MESSAGE_SPECIAL_PERSPECTIVE messageParam = {0.2, _myPos, _specialSlowTime, this};
 			MessageDispatchCenter::getInstance()->dispatchMessage(SPECIAL_PERSPECTIVE, this);
-//			MDC->dispatchMessage(MessageType::SPECIAL_PERSPECTIVE, messageParam);
 			auto attackAction = Sequence::create(_action.at("attack1")->clone(),
 				CallFunc::create(createCol), _action.at("attack2")->clone(),
 				CallFunc::create(playIdle), NULL);
@@ -634,7 +604,7 @@ void Actor::attackUpdate(float dt)
 void Actor::walkUpdate(float dt) 
 {
 	//Walking state, switch to attack state when target in range
-	if (_target&&_target->_isalive) 
+	if (_target && _target->_isalive) 
 	{
 		auto attackDistance = _attackRange + _target->_radius - 1;
 		auto p1 = _myPos;
@@ -654,21 +624,22 @@ void Actor::walkUpdate(float dt)
 
 void Actor::movementUpdate(float dt)
 {
+	//If my facing is incorrent, then rotate myself
 	if (_curFacing != _targetFacing) {
 		auto angleDt = _curFacing - _targetFacing;
 		angleDt = angleDt - int(angleDt / (MATH_PIOVER2 * 4)) * (MATH_PIOVER2 * 4);
 		auto turnleft = (angleDt - MATH_PIOVER2 * 2) < 0;
 		auto turnby = _turnSpeed * dt;
 
-		//right
 		if (turnby > angleDt)
 			_curFacing = _targetFacing;
-		else if (turnleft)
+		else if (turnleft)	//trun left
 			_curFacing -= turnby;
-		else //left
+		else //turn right
 			_curFacing += turnby;
 		setRotation(-RADIANS_TO_DEGREES(_curFacing));
 	}
+
 	//position update
 	if (getStateType() != EnumStateType::WALKING)
 		//If I am not walking, I need to slow down;
