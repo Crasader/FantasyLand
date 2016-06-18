@@ -11,8 +11,6 @@ std::vector<Actor *> PigletPool;
 std::vector<Actor *> HeroManager;
 std::vector<Actor *> MonsterManager;
 
-//Scheduler* scheduler = Director::getInstance()->getScheduler();
-
 void solveCollision(Actor* object1, Actor* object2)
 {
 	auto miniDistance = object1->getRadius() + object2->getRadius();
@@ -23,7 +21,7 @@ void solveCollision(Actor* object1, Actor* object2)
 	if( tempDistance < miniDistance )
 	{
 		auto angle = ccpToAngle(ccpSub(obj1Pos, obj2Pos));
-		auto distance = miniDistance - tempDistance + 1;
+		auto distance = miniDistance - tempDistance + 1;//Add extra 1 to avoid 'tempDistance < miniDistance' is always true
 		auto distance1 = (1 - object1->getMass() / (object1->getMass() + object2->getMass())) * distance;
 		auto distance2 = distance - distance1;
 

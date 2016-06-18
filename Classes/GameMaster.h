@@ -58,9 +58,5 @@ struct monsterCount_d
 	int dragon = 1;
 	int slime = 7;
 	int piglet = 2;
-	int rat = 0;
-	/*int dragon = 10;
-	int slime = 70;
-	int piglet = 20;
-	int rat = 0;*/
+	int rat = 0;       //rat is boss so it is 0
 };
