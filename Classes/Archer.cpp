@@ -171,7 +171,6 @@ void Archer::specialAttack()
 void Archer::init3D()
 {
 	//initShadow();
-	initPuff();
 	_sprite3d = Sprite3D::create(file);
 	_sprite3d->setScale(1.6);
 	//_sprite3d->addEffect(Vec3(0, 0, 0), CelLine, -1);

@@ -138,13 +138,6 @@ void BattleScene::setCamera()
 	camera->setGlobalZOrder(10);
 	camera->setCameraFlag(CameraFlag::USER1);
 	currentLayer->addChild(camera);
-
-	for (auto it : HeroManager)
-	{
-		if (it->getPuff() != nullptr)
-			it->getPuff()->setCameraMask(2);// sprite._puff:setCamera(camera)
-	}
-
 	camera->addChild(uiLayer);
 }
 

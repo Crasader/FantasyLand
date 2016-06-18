@@ -67,7 +67,7 @@ void Piglet::reset()
 {
 	copyData_Piglet();
 	bool allDead;
-	_findEnemy(_racetype, allDead);
+	findEnemy(_racetype, allDead);
 	walkMode();
 	setPositionZ(0);
 }

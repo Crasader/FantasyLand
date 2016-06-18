@@ -27,7 +27,7 @@ void Slime::reset()
 	//copyTable(SlimeValues, this);
 	copyData_Slime();
 	bool allDead;
-	_findEnemy(_racetype, allDead);
+	findEnemy(_racetype, allDead);
 	walkMode();
 	setPositionZ(0);
 }
