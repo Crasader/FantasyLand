@@ -20,7 +20,7 @@ public:
 	void angryChange(Actor *heroActor);
 	void timeInit();
 	void showVictoryUI();
-
+	void setGreyShader(Sprite * s);
 //杜：此处修改过，因为我要访问这些东西
 	ProgressTimer* MageBlood;
 	ProgressTimer* MageAngry;

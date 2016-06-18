@@ -333,23 +333,23 @@ void BattleFieldUI::heroDead(Actor* hero)
 
 	if (hero->getname() == "Knight")
 	{
-		//GreyShader:setGreyShader(KnightPng);
-		//GreyShader: setGreyShader(KnightPngFrame);
+		setGreyShader(KnightPng);
+		setGreyShader(KnightPngFrame);
 		KnightAngryFullSignal->setVisible(false);
 		KnightAngryClone->setVisible(false);
 	}
 
 	else if (hero->getname() == "Mage") {
-		//GreyShader: setGreyShader(MagePng);
-		//GreyShader: setGreyShader(MagePngFrame);
+		setGreyShader(MagePng);
+		setGreyShader(MagePngFrame);
 		MageAngryFullSignal->setVisible(false);
 		MageAngryClone->setVisible(false);
 	}
 
 	else if (hero->getname() == "Archer")
 	{
-		//GreyShader: setGreyShader(ArcherPng);
-		//GreyShader: setGreyShader(ArcherPngFrame);
+		setGreyShader(ArcherPng);
+		setGreyShader(ArcherPngFrame);
 		ArcherAngryFullSignal->setVisible(false);
 		ArcherAngryClone->setVisible(false);
 	}
@@ -478,4 +478,15 @@ void BattleFieldUI::showVictoryUI()
 	eventDispatcher->addEventListenerWithSceneGraphPriority(listener, layer);
 
 	addChild(layer);
+}
+
+void BattleFieldUI::setGreyShader(Sprite * s)
+{
+
+	auto fileUtiles = FileUtils::getInstance();
+	auto fragmentFullPath = fileUtiles->fullPathForFilename("shader3D/greyScale.fsh");
+	auto fragSource = fileUtiles->getStringFromFile(fragmentFullPath);
+	auto glprogram = cocos2d::GLProgram::createWithByteArrays(ccPositionTextureColor_noMVP_vert, fragSource.c_str());
+	auto glprogramstate = cocos2d::GLProgramState::getOrCreateWithGLProgram(glprogram);
+	s->setGLProgramState(glprogramstate);
 }
