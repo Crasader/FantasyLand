@@ -11,7 +11,6 @@ std::vector<Actor *> PigletPool;
 std::vector<Actor *> HeroManager;
 std::vector<Actor *> MonsterManager;
 
-//Scheduler* scheduler = Director::getInstance()->getScheduler();
 
 void solveCollision(Actor* object1, Actor* object2)
 {
@@ -130,18 +129,16 @@ Vec2 getFocusPointOfHeros()
 	return ptFocus;
 }
 
-std::vector<Actor *> getPoolByName(std::string name)
+void PushBackPoolByName(std::string name, Actor * target)
 {
 	if (name == "Piglet")
-		return PigletPool;
+		PigletPool.push_back(target);
 	else if (name == "Slime")
-		return SlimePool;
+		SlimePool.push_back(target);
 	else if (name == "Rat")
-		return RatPool;
+		RatPool.push_back(target);
 	else if (name == "Dragon")
-		return DragonPool;
-	else if (name == "Boss")
-		return BossPool;
-	else
-		return HeroPool;
+	    DragonPool.push_back(target);
+	else  
+	    BossPool.push_back(target);
 }

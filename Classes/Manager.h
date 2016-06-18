@@ -10,11 +10,9 @@ extern std::vector<Actor *> PigletPool;
 extern std::vector<Actor *> HeroManager;
 extern std::vector<Actor *> MonsterManager;
 
-//extern Scheduler* scheduler;
-
 void solveCollision(Actor *object1,Actor * object2);
 void collision(Actor* object);
 void isOutOfBound(Actor *object);
 void collisionDetect(float dt);
 Vec2 getFocusPointOfHeros();
-std::vector<Actor *> getPoolByName(std::string name);
+void PushBackPoolByName(std::string name , Actor * targrt);
