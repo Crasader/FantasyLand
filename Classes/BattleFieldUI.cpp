@@ -493,7 +493,7 @@ void BattleFieldUI::showGameOverUI()
 
 	auto gameOver = Sprite::create("battlefieldUI/gameover.png");
 	gameOver->setPosition3D(Vec3(G.winSize.width*0.5, G.winSize.height*0.5, 3));
-	gameOver->setScale(0.1);
+	gameOver->setScale(0.001);
 	layer->addChild(gameOver, 1);
 	layer->setGlobalZOrder(10);
 	gameOver->setGlobalZOrder(10);
