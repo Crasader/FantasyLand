@@ -438,8 +438,8 @@ void BattleFieldUI::showVictoryUI()
 	victory->setPosition3D(Vec3(G.winSize.width*0.5, G.winSize.height*0.5, 3));
 	victory->setScale(0.1);
 	layer->addChild(victory, 1);
-	layer->setGlobalZOrder(10);
-	victory->setGlobalZOrder(10);
+	layer->setGlobalZOrder(100);
+	victory->setGlobalZOrder(100);
 	//victory runaction
 	auto action = EaseElasticOut::create(ScaleTo::create(1.5, 1));
 	victory->runAction(action);
@@ -494,8 +494,8 @@ void BattleFieldUI::showGameOverUI()
 	gameOver->setPosition3D(Vec3(G.winSize.width*0.5, G.winSize.height*0.5, 3));
 	gameOver->setScale(0.001);
 	layer->addChild(gameOver, 1);
-	layer->setGlobalZOrder(10);
-	gameOver->setGlobalZOrder(10);
+	layer->setGlobalZOrder(100);
+	gameOver->setGlobalZOrder(100);
 	//victory runaction
 	auto action = Sequence::create(DelayTime::create(3), EaseElasticOut::create(ScaleTo::create(1.5, 1)), NULL);
 	gameOver->runAction(action);

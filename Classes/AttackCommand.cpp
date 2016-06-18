@@ -353,13 +353,6 @@ MageIceSpikes* MageIceSpikes::CreateWithPos(Vec2 pos, float facing, struct attac
 	ret->initData(pos, facing, attackInfo);
 	ret->_owner = owner;
 	ret->setCameraMask(2);
-	ret->_sp = Sprite::createWithSpriteFrameName("shadow.png");
-	ret->_sp->setGlobalZOrder(-ret->getPositionY() + FXZorder);
-	ret->_sp->setOpacity(100);
-	ret->_sp->setCameraMask(2);
-	ret->_sp->setPosition3D(Vec3(0, 0, 1));
-	ret->_sp->setScale(ret->getMaxRange() / 12);
-	ret->addChild(ret->_sp);
 
 	//create 3 spikes
 	auto x = Node::create();
@@ -398,6 +391,14 @@ MageIceSpikes* MageIceSpikes::CreateWithPos(Vec2 pos, float facing, struct attac
 	magic->setGlobalZOrder(-ret->getPositionY() * 2 + FXZorder);
 	magic->setPositionZ(0);
 
+	ret->_sp = Sprite::createWithSpriteFrameName("shadow.png");
+	ret->_sp->setGlobalZOrder(-ret->getPositionY() + FXZorder);
+	ret->_sp->setOpacity(100);
+	ret->_sp->setCameraMask(2);
+	ret->_sp->setPosition3D(Vec3(0, 0, 1));
+	ret->_sp->setScale(ret->getMaxRange() / 12);
+	ret->addChild(ret->_sp);
+
 	return ret;
 }
 
@@ -410,6 +411,7 @@ bool MageIceSpikes::init()
 void MageIceSpikes::onTimeOut()
 {
 	_spikes->setVisible(false);
+	_sp->setVisible(false);
 	auto pm = ParticleManager::getInstance()->getPlistData("puffRing");
 	auto puff = ParticleSystemQuad::create(pm);
 	auto puffFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName("puff.png");
@@ -443,7 +445,6 @@ void MageIceSpikes::onCollide(Actor* target)
 		playHitAudio();
 		auto hurt = target->hurt(this);
 		_owner->setAngry(_owner->getAngry() + hurt * 0.1);
-		log("NORMAL HURT %f", hurt);
 		struct MESSAGE_ANGRY_CHANGE  angryChange = { MageValues._name, _owner->getAngry(), _owner->getAngryMax() };
 		MessageDispatchCenter::getInstance()->dispatchMessage(ANGRY_CHANGE, _owner);
 		_DOTApplied = true;
@@ -514,6 +515,7 @@ ArcherSpecialAttack* ArcherSpecialAttack::CreateWithPos(Vec2 pos, float facing, 
 	ret->_sp = Archer::createArrow();
 	ret->_sp->setRotation(RADIANS_TO_DEGREES(-facing) - 90);
 	ret->_sp->setCameraMask(2);
+	ret->_sp->setScale(5);
 	ret->addChild(ret->_sp);
 	return ret;
 }
