@@ -591,6 +591,7 @@ void GameMaster::showDialog()
 		dialog->removeFromParent();
 		colorLayer->removeFromParent();
 		uiLayer->setVisible(true);
+		
 		for (int var = 0; var < HeroManager.size(); var++)
 		{
 			HeroManager[var]->setAIEnabled(true);

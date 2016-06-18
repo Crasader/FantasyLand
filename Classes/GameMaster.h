@@ -59,4 +59,8 @@ struct monsterCount_d
 	int slime = 7;
 	int piglet = 2;
 	int rat = 0;
+	/*int dragon = 10;
+	int slime = 70;
+	int piglet = 20;
+	int rat = 0;*/
 };

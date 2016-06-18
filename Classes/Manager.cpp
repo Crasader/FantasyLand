@@ -107,7 +107,7 @@ void collisionDetect(float dt)
 		}
 		else
 		{
-			delete MonsterManager[val];
+			//delete MonsterManager[val];
 			MonsterManager.erase(MonsterManager.begin() + val);
 		}
 	}
@@ -130,18 +130,16 @@ Vec2 getFocusPointOfHeros()
 	return ptFocus;
 }
 
-std::vector<Actor *> getPoolByName(std::string name)
+void PushBackPoolByName(std::string name,Actor *target)
 {
 	if (name == "Piglet")
-		return PigletPool;
+		PigletPool.push_back(target);
 	else if (name == "Slime")
-		return SlimePool;
+		SlimePool.push_back(target);
 	else if (name == "Rat")
-		return RatPool;
+		RatPool.push_back(target);
 	else if (name == "Dragon")
-		return DragonPool;
-	else if (name == "Boss")
-		return BossPool;
+		DragonPool.push_back(target);
 	else
-		return HeroPool;
+		BossPool.push_back(target);
 }

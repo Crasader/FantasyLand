@@ -17,4 +17,4 @@ void collision(Actor* object);
 void isOutOfBound(Actor *object);
 void collisionDetect(float dt);
 Vec2 getFocusPointOfHeros();
-std::vector<Actor *> getPoolByName(std::string name);
+void PushBackPoolByName(std::string name, Actor * target);
