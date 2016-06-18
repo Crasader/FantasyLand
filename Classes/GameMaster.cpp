@@ -19,6 +19,7 @@ const int frontDistanceWithHeroX = 600;
 const int backwardDistanceWithHeroX = 800;
 const int distanceWithHeroX = 150;
 const int distanceWithHeroY = 150;
+
 struct monsterCount_d monsterCount;
 
 GameMaster * GameMaster::_instance = nullptr;
@@ -562,7 +563,7 @@ void GameMaster::showDialog()
 	bosslogo->setScale(0.74*resolutionRate);
 	dialog->addChild(bosslogo);
 
-	auto text = Label::createWithTTF(BossTaunt, "fonts/britanic bold.ttf", 24);
+	auto text = Label::createWithTTF("How dare you???", "fonts/britanic bold.ttf", 24);
 	text->setPosition(VisibleSize.width*0.68, VisibleSize.height*0.27);
 	dialog->addChild(text);
 
