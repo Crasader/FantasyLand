@@ -424,7 +424,7 @@ void GameMaster::showBoss()
 	currentLayer->addChild(boss);
 	boss->reset();
 
-	auto apperPos = Vec3(500, 200, 300);
+	auto apperPos = Vec3(1000, 200, 300);
 	boss->setPosition3D(apperPos);
 	boss->setMyPos(Vec2(apperPos.x,apperPos.y));
 	boss->setFacing(180);

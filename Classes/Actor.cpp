@@ -9,28 +9,29 @@
 bool Actor::init() 
 {
 	Node::init();
-
 	this->setCascadeColorEnabled(true);
+
+	//reset Actor
 	_action.clear();
 	copyData();
 
+	//load HPCounter
 	_hpCounter = HPCounter::create();
 	addChild(_hpCounter);
 
+	//load effectNode
 	_effectNode = Node::create();
-
 	_monsterHeight = 70;
 	_heroHeight = 150;
-	//setCameraMask(2);
 
-
-	//if (uiLayer != nullptr) todo
+	if (uiLayer != nullptr)
 		currentLayer->addChild(_effectNode);
 	return true;
 }
 
 void Actor::copyData()
 {
+	//Actor Common Values
 	_aliveTime = 0,
 	_curSpeed = 0;
 	_curAnimation = "";
@@ -49,10 +50,10 @@ void Actor::copyData()
 	_myPos = ccp(0, 0);
 	_angry = 0;
 	_angryMax = 500;
-	//Default
+
+	//Actor Default Values
 	_racetype = EnumRaceType::HERO;
 	_statetype = EnumStateType::IDLE;
-	//_sprite3d = nil;
 	_radius = 50;
 	_mass = 100;
 	_shadowSize = 70;
@@ -68,10 +69,6 @@ void Actor::copyData()
 	_attackFrequency = 0.01;
 	_searchDistance = 5000;
 	_attackRange = 100;
-	//_normalAttack =
-	//{
-	//	0.0f,130.0f, DEGREES_TO_RADIANS(30), 50.0f, 800.0f, EnumRaceType::HERO, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, false
-	//};
 	_normalAttack = ActorDefaultValues._normalAttack;
 }
 
@@ -90,15 +87,18 @@ void Actor::initPuff()
 {
 	auto valueMap = ParticleManager::getInstance()->getPlistData("walkpuff");
 	auto puff = ParticleSystemQuad::create(valueMap);
-	//ParticleSystem should be BillboardParticleSystem;
 	auto puffFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName("walkingPuff.png");
 	puff->setTextureWithRect(puffFrame->getTexture(), puffFrame->getRect());
-	puff->setScale(1.5);
-	puff->setGlobalZOrder(-getPositionZ() + FXZorder);
+	puff->setScale(1500);
+	puff->setPosition(VisibleSize.width*0.5, VisibleSize.height*0.5);
+	//puff->setGlobalZOrder(-this->getPositionY() + FXZorder);
 	puff->setPositionZ(10);
-	_puff = puff;
-	_effectNode->addChild(puff);
-	this->addChild(puff);
+	//puff->setPosition(0, 0);
+	//_puff = puff;
+	//_effectNode->addChild(puff);
+	puff->setEmissionRate(5);
+	//puff->setCameraMask(2);
+	currentLayer->addChild(puff);
 }
 
 void Actor::initShadow()
@@ -194,12 +194,12 @@ void Actor::setStateType(EnumStateType type)
 {
 	_statetype = type;
 	//add puff particle
-	if (_puff != nullptr) {
-		if (type == EnumStateType::WALKING)
-			_puff->setEmissionRate(5);
-		else
-			_puff->setEmissionRate(0);
-	}
+	//if (_puff != nullptr) {
+	//	if (type == EnumStateType::WALKING)
+	//		_puff->setEmissionRate(5);
+	//	else
+	//		_puff->setEmissionRate(0);
+	//}
 }
 
 void Actor::setTarget(Actor* target)
