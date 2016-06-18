@@ -5,7 +5,6 @@ Layer * currentLayer;
 class BattleFieldUI *uiLayer;
 
 const float FXZorder = 1999;
-std::string BossTaunt = "How dare you???";
 Size VisibleSize;
 float resolutionRate; 
 AnimationCache *animationCache;

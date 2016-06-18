@@ -10,7 +10,6 @@ extern Layer *currentLayer;
 extern class BattleFieldUI *uiLayer;
 
 extern const float FXZorder;
-extern std::string BossTaunt;
 extern AnimationCache *animationCache ;
 extern float resolutionRate;
 extern Size VisibleSize;

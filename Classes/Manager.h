@@ -7,6 +7,7 @@ extern std::vector<Actor *> SlimePool;
 extern std::vector<Actor *> RatPool;
 extern std::vector<Actor *> BossPool;
 extern std::vector<Actor *> PigletPool;
+
 extern std::vector<Actor *> HeroManager;
 extern std::vector<Actor *> MonsterManager;
 
