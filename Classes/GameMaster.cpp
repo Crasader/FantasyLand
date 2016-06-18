@@ -11,14 +11,14 @@
 #include "BattleFieldUI.h"
 #include "JumpBy3D.h"
 
-int globalZOrder = 1;
-int EXIST_MIN_MONSTER = 4;
+
 int stage = 0;
-int battleSiteX[3] = { -2800,-1800,-800 };
-int frontDistanceWithHeroX = 600;
-int backwardDistanceWithHeroX = 800;
-int distanceWithHeroX = 150;
-int distanceWithHeroY = 150;
+const int EXIST_MIN_MONSTER = 4;
+const int battleSiteX[3] = { -2800,-1800,-800 };
+const int frontDistanceWithHeroX = 600;
+const int backwardDistanceWithHeroX = 800;
+const int distanceWithHeroX = 150;
+const int distanceWithHeroY = 150;
 struct monsterCount_d monsterCount;
 
 GameMaster * GameMaster::_instance = nullptr;
@@ -74,7 +74,6 @@ void GameMaster::logicUpdate()
 {
 	if (stage == 1)
 	{
-		//showGameOverUI();
 		if (MonsterManager.size() < EXIST_MIN_MONSTER)
 		{
 			srand(time(NULL));

@@ -5,13 +5,11 @@
 class GameMaster;
 
 extern Layer *currentLayer;
-//extern GameMaster *gameMaster;
 extern class BattleFieldUI *uiLayer;
 
 void initGlobalVariables();
 
-extern float FXZorder;
-extern float CelLine;
+extern const float FXZorder;
 extern std::string BossTaunt;
 extern AnimationCache *animationCache ;
 extern float resolutionRate;

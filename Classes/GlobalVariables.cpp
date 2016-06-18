@@ -2,11 +2,9 @@
 #include "GameMaster.h"
 
 Layer * currentLayer;
-//GameMaster *gameMaster;
 class BattleFieldUI *uiLayer;
 
-float FXZorder = 1999;
-float CelLine = 0.009;
+const float FXZorder = 1999;
 std::string BossTaunt = "How dare you???";
 Size VisibleSize;
 float resolutionRate; 

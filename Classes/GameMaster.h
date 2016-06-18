@@ -43,15 +43,13 @@ private:
 	float _logicFrq;
 };
 
-
-extern int globalZOrder ;
-extern int EXIST_MIN_MONSTER;
 extern int stage;
-extern int battleSiteX[3];
-extern int frontDistanceWithHeroX;
-extern int backwardDistanceWithHeroX;
-extern int distanceWithHeroX;
-extern int distanceWithHeroY;
+extern const int EXIST_MIN_MONSTER;
+extern const int battleSiteX[3];
+extern const int frontDistanceWithHeroX;
+extern const int backwardDistanceWithHeroX;
+extern const int distanceWithHeroX;
+extern const int distanceWithHeroY;
 extern struct monsterCount_d monsterCount;
 
 struct monsterCount_d

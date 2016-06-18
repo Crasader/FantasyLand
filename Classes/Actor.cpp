@@ -404,7 +404,7 @@ void Actor::dyingMode(Vec2 knockSource, int knockAmount)
 			RemoveSelf::create(), NULL));
 
 		_angry = 0;
-		struct MESSAGE_ANGRY_CHANGE angryChange = { _name, _angry, _angryMax };
+	//	struct MESSAGE_ANGRY_CHANGE angryChange = { _name, _angry, _angryMax };
 		MessageDispatchCenter::getInstance()->dispatchMessage(ANGRY_CHANGE, this);
 
 		if (HeroManager.size() == 0 && GameMaster::getInstance() != NULL)
@@ -418,7 +418,7 @@ void Actor::dyingMode(Vec2 knockSource, int knockAmount)
 
 		auto recycle = [&]() {
 			setVisible(false);
-			getPoolByName(_name).push_back(this);
+			PushBackPoolByName(_name,this);
 		};
 		auto recycleShadow = [&]()
 		{
