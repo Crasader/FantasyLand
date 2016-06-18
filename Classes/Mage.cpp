@@ -126,8 +126,8 @@ void Mage::specialAttack()
 
 	//mage will create 3 ice spikes on the ground
 	auto pos1 = getPosTable(this);
-	auto pos2 = getPosTable(this);
-	auto pos3 = getPosTable(this);
+	auto pos2 = pos1;
+	auto pos3 = pos2;
 	pos1.x += 130;
 	pos2.x += 330;
 	pos3.x += 530;
@@ -136,15 +136,16 @@ void Mage::specialAttack()
 	pos3 = ccpRotateByAngle(pos3, _myPos, _curFacing);
 	MageIceSpikes::CreateWithPos(pos1, _curFacing, _specialAttack, this);
 	auto spike2 = [&]() {
+		experimental::AudioEngine::play2d(MageProperty.specialAttackShout, false, 0.5);
 		MageIceSpikes::CreateWithPos(pos2, _curFacing, _specialAttack, this);
 	};
 	auto spike3 = [&]() {
+		experimental::AudioEngine::play2d(MageProperty.specialAttackShout, false, 0.5);
 		MageIceSpikes::CreateWithPos(pos3, _curFacing, _specialAttack, this);
 	};
 	auto wait2 = DelayTime::create(0.25);
-	this->runAction(Sequence::create(wait2, CallFunc::create(spike2), NULL));
-	auto wait3 = DelayTime::create(0.5);
-	this->runAction(Sequence::create(wait3, CallFunc::create(spike3), NULL));
+	this->runAction(Sequence::create(wait2, CallFunc::create(spike2), wait2->clone(), CallFunc::create(spike3), NULL));
+	//this->runAction(Sequence::create(wait3, CallFunc::create(spike3), NULL));
 }
 
 void Mage::init3D()

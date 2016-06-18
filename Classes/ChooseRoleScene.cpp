@@ -33,14 +33,11 @@ bool ChooseRoleScene::init()
 	AUDIO_ID.CHOOSEROLECHAPTERBGM = experimental::AudioEngine::play2d(BGM_RES.CHOOSEROLESCENEBGM, true, 1);
 
 	//create bk
-	addBk();
-
+	addBackground();
 	//create heros
 	addHeros();
-
 	//create arrow
 	addButton();
-
 	//create bag
 	addBag();
 
@@ -56,26 +53,26 @@ Sprite* ChooseRoleScene::addBag()
 	switchTextWhenRotate();
 
 	auto bagSize = bag->getContentSize();
-	weapon_item_pos = Vec2(bagSize.width*0.36, bagSize.height*0.4);
-	armour_item_pos = Vec2(bagSize.width*0.54, bagSize.height*0.4);
-	helmet_item_pos = Vec2(bagSize.width*0.72, bagSize.height*0.4);
+	weaponItemPosition = Vec2(bagSize.width*0.36, bagSize.height*0.4);
+	armourItemPosition = Vec2(bagSize.width*0.54, bagSize.height*0.4);
+	helmetItemPosition = Vec2(bagSize.width*0.72, bagSize.height*0.4);
 
 	_weaponItem = Sprite::createWithSpriteFrameName("knight_w_1.png");
 	_weaponItem->setTag(11);
 	_weaponItem->setScale(1);
-	_weaponItem->setPosition(weapon_item_pos);
+	_weaponItem->setPosition(weaponItemPosition);
 	bag->addChild(_weaponItem, 2);
 
 	_armourItem = Sprite::createWithSpriteFrameName("knight_a_1.png");
 	_armourItem->setTag(12);
 	_armourItem->setScale(1);
-	_armourItem->setPosition(armour_item_pos);
+	_armourItem->setPosition(armourItemPosition);
 	bag->addChild(_armourItem, 2);
 
 	_helmetItem = Sprite::createWithSpriteFrameName("knight_h_1.png");
 	_helmetItem->setTag(13);
 	_helmetItem->setScale(1);
-	_helmetItem->setPosition(helmet_item_pos);
+	_helmetItem->setPosition(helmetItemPosition);
 	bag->addChild(_helmetItem, 2);
 
 	bag->setPosition(Vec2(VisibleSize.width* 0.75, VisibleSize.height *0.5));
@@ -161,13 +158,13 @@ void ChooseRoleScene::addHeros()
 	auto rotate = 0.5;
 	auto  hero_rotate = [this, rotate](float dt)
 	{
-		auto rotation = getChildByTag(sortorder[1])->getRotation3D();
-		getChildByTag(sortorder[1])->setRotation3D(Vec3(rotation.x, rotation.y + rotate, 0));
+		auto rotation = getChildByTag(sortOrder[1])->getRotation3D();
+		getChildByTag(sortOrder[1])->setRotation3D(Vec3(rotation.x, rotation.y + rotate, 0));
 	};
 	Director::getInstance()->getScheduler()->schedule(hero_rotate, this, 0, -1, "hero_rotate");
 }
 
-void ChooseRoleScene::addBk()
+void ChooseRoleScene::addBackground()
 {
 	bk = Sprite::create("chooseRole/cr_bk.jpg");
 	bk->setAnchorPoint(Vec2(0.5, 0.5));
@@ -175,56 +172,40 @@ void ChooseRoleScene::addBk()
 	addChild(bk);
 }
 
-void ChooseRoleScene::createLayer()
-{
-	//create bk
-	addBk();
-
-	//create heros
-	addHeros();
-
-	//create arrow
-	addButton();
-
-	//create bag
-	addBag();
-
-}
-
 void ChooseRoleScene::initTouchDispatcher()
 {
-	isRotateavaliable = false;
-	isWeaponItemavaliable = false;
-	isArmourItemavaliable = false;
-	isHelmetItemavaliable = false;
+	isRotateAvaliable = false;
+	isWeaponItemAvaliable = false;
+	isArmourItemAvaliable = false;
+	isHelmetItemAvaliable = false;
 	auto listenner = EventListenerTouchOneByOne::create();
 	listenner->setSwallowTouches(true);
 	listenner->onTouchBegan = [this](Touch*touch, Event*)
 	{
-		touchbeginPt = touch->getLocation();
-		if (heroSize.containsPoint(touchbeginPt)) //rotate
+		touchBeginPoint = touch->getLocation();
+		if (heroSize.containsPoint(touchBeginPoint)) //rotate
 		{
-			isRotateavaliable = true;
+			isRotateAvaliable = true;
 			return true;
 		}
-		touchbeginPt = _bag->convertToNodeSpace(touchbeginPt);
-		if (_weaponItem->getBoundingBox().containsPoint(touchbeginPt))  //weapon
+		touchBeginPoint = _bag->convertToNodeSpace(touchBeginPoint);
+		if (_weaponItem->getBoundingBox().containsPoint(touchBeginPoint))  //weapon
 		{
-			isWeaponItemavaliable = true;
+			isWeaponItemAvaliable = true;
 			_weaponItem->setScale(1.7);
 			_weaponItem->setOpacity(150);
 		}
 
-		else if (_armourItem->getBoundingBox().containsPoint(touchbeginPt))  //armour
+		else if (_armourItem->getBoundingBox().containsPoint(touchBeginPoint))  //armour
 		{
-			isArmourItemavaliable = true;
+			isArmourItemAvaliable = true;
 			_armourItem->setScale(1.7);
 			_armourItem->setOpacity(150);
 		}
 
-		else if (_helmetItem->getBoundingBox().containsPoint(touchbeginPt))  //helmet
+		else if (_helmetItem->getBoundingBox().containsPoint(touchBeginPoint))  //helmet
 		{
-			isHelmetItemavaliable = true;
+			isHelmetItemAvaliable = true;
 			_helmetItem->setScale(1.7);
 			_helmetItem->setOpacity(150);
 		}
@@ -233,40 +214,40 @@ void ChooseRoleScene::initTouchDispatcher()
 	};
 	listenner->onTouchMoved = [this](Touch*touch, Event*)
 	{
-		if (isRotateavaliable == true && isMoving == false)  //rotate
+		if (isRotateAvaliable == true && isMoving == false)  //rotate
 		{
-			auto dist = touch->getLocation().x - touchbeginPt.x;
+			auto dist = touch->getLocation().x - touchBeginPoint.x;
 			if (dist > 50)
 			{
 				//right
 				rotate3Heroes(true);
-				isRotateavaliable = false;
+				isRotateAvaliable = false;
 			}
 
 			else if (dist < -50)
 			{
 				//left
 				rotate3Heroes(false);
-				isRotateavaliable = false;
+				isRotateAvaliable = false;
 			}
 		}
-		else if (isWeaponItemavaliable)  //weapon
+		else if (isWeaponItemAvaliable)  //weapon
 			_weaponItem->setPosition(_bag->convertToNodeSpace(touch->getLocation()));
-		else if (isArmourItemavaliable)  //armour
+		else if (isArmourItemAvaliable)  //armour
 			_armourItem->setPosition(_bag->convertToNodeSpace(touch->getLocation()));
-		else if (isHelmetItemavaliable)  //helmet
+		else if (isHelmetItemAvaliable)  //helmet
 			_helmetItem->setPosition(_bag->convertToNodeSpace(touch->getLocation()));
 	};
 	listenner->onTouchEnded = [this](Touch*touch, Event*)
 	{
-		auto hero = (Actor*)getChildByTag(sortorder[1]);
+		auto hero = (Actor*)getChildByTag(sortOrder[1]);
 		auto heroName = hero->getname();
-		if (isRotateavaliable) //rotate
-			isRotateavaliable = false;
-		else if (isWeaponItemavaliable)
+		if (isRotateAvaliable) //rotate
+			isRotateAvaliable = false;
+		else if (isWeaponItemAvaliable)
 		{
-			isWeaponItemavaliable = false;
-			_weaponItem->setPosition(weapon_item_pos);
+			isWeaponItemAvaliable = false;
+			_weaponItem->setPosition(weaponItemPosition);
 			_weaponItem->setScale(1);
 			_weaponItem->setOpacity(255);
 			if (heroName == "Archer")
@@ -278,10 +259,10 @@ void ChooseRoleScene::initTouchDispatcher()
 			_weaponItem->setSpriteFrame(getWeaponTextureName());
 		}
 
-		else if (isArmourItemavaliable)
+		else if (isArmourItemAvaliable)
 		{
-			isArmourItemavaliable = false;
-			_armourItem->setPosition(armour_item_pos);
+			isArmourItemAvaliable = false;
+			_armourItem->setPosition(armourItemPosition);
 			_armourItem->setScale(1);
 			_armourItem->setOpacity(255);
 			if (heroName == "Archer")
@@ -293,10 +274,10 @@ void ChooseRoleScene::initTouchDispatcher()
 			_armourItem->setSpriteFrame(getArmourTextureName());
 		}
 
-		else if (isHelmetItemavaliable)
+		else if (isHelmetItemAvaliable)
 		{
-			isHelmetItemavaliable = false;
-			_helmetItem->setPosition(helmet_item_pos);
+			isHelmetItemAvaliable = false;
+			_helmetItem->setPosition(helmetItemPosition);
 			_helmetItem->setScale(1);
 			_helmetItem->setOpacity(255);
 			if (heroName == "Archer")
@@ -316,14 +297,14 @@ void ChooseRoleScene::rotate3Heroes(bool isRight)
 {
 	//stop hero rotate
 	if (isRight)
-		getChildByTag(sortorder[1])->runAction(RotateTo::create(0.1, rtt[2]));
+		getChildByTag(sortOrder[1])->runAction(RotateTo::create(0.1, rtt[2]));
 	else
-		getChildByTag(sortorder[1])->runAction(RotateTo::create(0.1, rtt[0]));
+		getChildByTag(sortOrder[1])->runAction(RotateTo::create(0.1, rtt[0]));
 
 	auto rotatetime = 0.6;
 	if (isRight)
 	{
-		auto middle = getChildByTag(sortorder[1]);
+		auto middle = getChildByTag(sortOrder[1]);
 		middle->runAction(Sequence::create(
 			CallFunc::create([this]()
 		{
@@ -337,19 +318,19 @@ void ChooseRoleScene::rotate3Heroes(bool isRight)
 
 		}),
 			NULL));
-		auto left = getChildByTag(sortorder[0]);
+		auto left = getChildByTag(sortOrder[0]);
 		left->runAction(EaseCircleActionInOut::create(MoveTo::create(rotatetime, pos[1])));
-		auto right = getChildByTag(sortorder[2]);
+		auto right = getChildByTag(sortOrder[2]);
 		right->runAction(EaseCircleActionInOut::create(MoveTo::create(rotatetime, pos[0])));
-		auto t = sortorder[2];
-		sortorder[2] = sortorder[1];
-		sortorder[1] = sortorder[0];
-		sortorder[0] = t;
+		auto t = sortOrder[2];
+		sortOrder[2] = sortOrder[1];
+		sortOrder[1] = sortOrder[0];
+		sortOrder[0] = t;
 	}
 
 	else
 	{
-		auto middle = getChildByTag(sortorder[1]);
+		auto middle = getChildByTag(sortOrder[1]);
 		middle->runAction(Sequence::create(
 			CallFunc::create([this]()
 		{
@@ -363,14 +344,14 @@ void ChooseRoleScene::rotate3Heroes(bool isRight)
 			playAudioWhenRotate();
 		}),
 			NULL));
-		auto left = getChildByTag(sortorder[0]);
+		auto left = getChildByTag(sortOrder[0]);
 		left->runAction(EaseCircleActionInOut::create(MoveTo::create(rotatetime, pos[2])));
-		auto right = getChildByTag(sortorder[2]);
+		auto right = getChildByTag(sortOrder[2]);
 		right->runAction(EaseCircleActionInOut::create(MoveTo::create(rotatetime, pos[1])));
-		auto t = sortorder[0];
-		sortorder[0] = sortorder[1];
-		sortorder[1] = sortorder[2];
-		sortorder[2] = t;
+		auto t = sortOrder[0];
+		sortOrder[0] = sortOrder[1];
+		sortOrder[1] = sortOrder[2];
+		sortOrder[2] = t;
 	}
 
 	switchItemtextureWhenRotate();
@@ -379,7 +360,7 @@ void ChooseRoleScene::rotate3Heroes(bool isRight)
 
 string ChooseRoleScene::getWeaponTextureName()
 {
-	auto hero = static_cast<Actor*>(getChildByTag(sortorder[1]));
+	auto hero = static_cast<Actor*>(getChildByTag(sortOrder[1]));
 	if (hero->getname() == "Knight")  //warriors
 	{
 		if (hero->getHelmetID() == 0)
@@ -407,7 +388,7 @@ string ChooseRoleScene::getWeaponTextureName()
 
 string ChooseRoleScene::getArmourTextureName()
 {
-	auto hero = static_cast<Actor*>(getChildByTag(sortorder[1]));
+	auto hero = static_cast<Actor*>(getChildByTag(sortOrder[1]));
 	if (hero->getname() == "Knight")  //warriors
 	{
 		if (hero->getHelmetID() == 0)
@@ -435,7 +416,7 @@ string ChooseRoleScene::getArmourTextureName()
 
 string  ChooseRoleScene::getHelmetTextureName()
 {
-	auto hero = static_cast<Actor*>(getChildByTag(sortorder[1]));
+	auto hero = static_cast<Actor*>(getChildByTag(sortOrder[1]));
 	if (hero->getname() == "Knight")  //warriors
 	{
 		if (hero->getHelmetID() == 0)
@@ -463,8 +444,8 @@ string  ChooseRoleScene::getHelmetTextureName()
 
 void ChooseRoleScene::switchItemtextureWhenRotate()
 {
-	auto hero = static_cast<Actor*>(getChildByTag(sortorder[1]));
-	auto xxx = sortorder[1];
+	auto hero = static_cast<Actor*>(getChildByTag(sortOrder[1]));
+	auto xxx = sortOrder[1];
 	auto type = hero->getRaceType();
 
 	string  weaponTexture;
@@ -527,7 +508,7 @@ void ChooseRoleScene::switchItemtextureWhenRotate()
 void ChooseRoleScene::switchTextWhenRotate()
 {
 	//get hero type
-	auto hero = static_cast<Actor*>(getChildByTag(sortorder[1]));
+	auto hero = static_cast<Actor*>(getChildByTag(sortOrder[1]));
 	auto type = hero->getRaceType();
 	//get bag, bagSize and judge if has child
 	auto bag = _bag;
@@ -603,7 +584,7 @@ void ChooseRoleScene::switchTextWhenRotate()
 
 void ChooseRoleScene::playAudioWhenRotate()
 {
-	auto hero = static_cast<Actor*>(getChildByTag(sortorder[1]));
+	auto hero = static_cast<Actor*>(getChildByTag(sortOrder[1]));
 	auto type = hero->getRaceType();
 	if (hero->getname() == "Knight")
 		experimental::AudioEngine::play2d(WarriorProperty.kickit, false, 1);

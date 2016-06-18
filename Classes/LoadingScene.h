@@ -14,25 +14,12 @@ public:
 	virtual bool init();
 	void update(float dt) override;
 
-	void addBackground();
-	void addLoadingText();
-	void addLoadingIcon();
-	void addLoadingBar();
-
-	void cachedParticleRes();
-	void cachedTextureRes();
-
 private:
-	int _num;
-	int _totalResource;
-	Size size;
-	ParticleManager *_pm;
-
-	Label **_loading;
+	int _loadedResourceNum;
+	int _totalResourceNum;
 	ui::LoadingBar *_loadingBar;
 
-
-	String particleRes[6][2] = {
+	String _particleResource[6][2] = {
 		{ "FX/iceTrail.plist","iceTrail" },
 		{ "FX/magic.plist","magic" },
 		{ "FX/pixi.plist","pixi" },
@@ -40,11 +27,18 @@ private:
 		{ "FX/puffRing2.plist","puffRing2" },
 		{ "FX/walkingPuff.plist","walkpuff" },
 	};
-
-	String spriteFrameRes[4] = {
+	String _spriteFrameResource[4] = {
 		"FX/FX.plist",
 		"chooseRole/chooserole.plist",
 		"battlefieldUI/battleFieldUI.plist",
 		"mainmenuscene/mainmenuscene.plist",
 	};
+
+	void addBackground();
+	void addLoadingText();
+	void addLoadingIcon();
+	void addLoadingBar();
+
+	void cachedParticleRes();
+	void cachedTextureRes();
 };

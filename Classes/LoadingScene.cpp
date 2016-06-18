@@ -16,20 +16,15 @@ bool LoadingScene::init()
 	Layer::init();
 	currentLayer = this;
 
-	_num = 10;//=num(particleRes)+num(spriteFrameRes)
-	_totalResource = _num;
-	size = Director::getInstance()->getWinSize();
-	_pm = ParticleManager::getInstance();
+	_loadedResourceNum = 10;//=num(_particleResource)+num(_spriteFrameResource)
+	_totalResourceNum = _loadedResourceNum;
 
 	//add background
 	addBackground();
-
 	//add loadingText;
 	addLoadingText();
-
 	//add loadingIcon
 	addLoadingIcon();
-
 	//add loadingBar
 	addLoadingBar();
 
@@ -41,11 +36,11 @@ bool LoadingScene::init()
 
 void LoadingScene::update(float dt)
 {
-	_num = _num - 1;
-	_loadingBar->setPercent(100 * (_totalResource - _num) / _totalResource);
+	_loadedResourceNum = _loadedResourceNum - 1;
+	_loadingBar->setPercent(100 * (_totalResourceNum - _loadedResourceNum) / _totalResourceNum);
 
 	//all loaded,enter mainMenuScene
-	if (_num == -1)
+	if (_loadedResourceNum == -1)
 	{
 		unschedule(schedule_selector(LoadingScene::update));
 		Director::getInstance()->replaceScene(MainMenuScene::createScene());
@@ -53,7 +48,7 @@ void LoadingScene::update(float dt)
 	}
 
 	//load resource
-	if (_totalResource - _num > 6)
+	if (_totalResourceNum - _loadedResourceNum > 6)
 		cachedTextureRes();
 	else
 		cachedParticleRes();
@@ -62,7 +57,7 @@ void LoadingScene::update(float dt)
 void LoadingScene::addBackground()
 {
 	auto background = Sprite::create("loadingscene/bg.jpg");
-	background->setPosition(size / 2);
+	background->setPosition(VisibleSize / 2);
 	addChild(background);
 }
 
@@ -80,19 +75,19 @@ void LoadingScene::addLoadingBar()
 {
 	_loadingBar = ui::LoadingBar::create("loadingscene/sliderProgress.png");
 	_loadingBar->setDirection(ui::LoadingBarTypeLeft);
-	_loadingBar->setPosition(Vec2(size.width / 2, size.height / 5));
+	_loadingBar->setPosition(Vec2(VisibleSize.width / 2, VisibleSize.height / 5));
 	_loadingBar->setScale(2);
 	addChild(_loadingBar);
 }
 
 void LoadingScene::cachedParticleRes()
 {
-	_pm->AddPlistData(particleRes[_totalResource - _num][1]._string, particleRes[_totalResource - _num][2]._string);
+	ParticleManager::getInstance()->AddPlistData(_particleResource[_totalResourceNum - _loadedResourceNum][1]._string, _particleResource[_totalResourceNum - _loadedResourceNum][2]._string);
 }
 
 void LoadingScene::cachedTextureRes()
 {
-	if (_num == 0)
+	if (_loadedResourceNum == 0)
 		return;
-	SpriteFrameCache::getInstance()->addSpriteFramesWithFile(spriteFrameRes[_totalResource - _num - 6/*num(particleRes)*/]._string);
+	SpriteFrameCache::getInstance()->addSpriteFramesWithFile(_spriteFrameResource[_totalResourceNum - _loadedResourceNum - 6/*num(_particleResource)*/]._string);
 }
