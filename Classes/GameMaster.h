@@ -36,7 +36,7 @@ public:
 
 private:
 
-	static GameMaster* instance;
+	static GameMaster* _instance;
 	float _totaltime;
 	float _logicFrq;
 };

@@ -30,6 +30,6 @@ public:
 	void dispatchMessage(enum MessageType messageType, Actor * param);
 
 private:
-	std::map< enum MessageType, std::vector<std::function<void(Actor*) > > > MessageQue;
-	static MessageDispatchCenter* instance;
+	std::map< enum MessageType, std::vector<std::function<void(Actor*) > > > _MessageQue;
+	static MessageDispatchCenter* _instance;
 };

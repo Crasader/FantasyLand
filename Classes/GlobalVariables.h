@@ -8,7 +8,7 @@ extern Layer *currentLayer;
 //extern GameMaster *gameMaster;
 extern class BattleFieldUI *uiLayer;
 
-void init_globalvariables();
+void initGlobalVariables();
 
 extern float FXZorder;
 extern float CelLine;

@@ -11,7 +11,7 @@ std::vector<Actor *> PigletPool;
 std::vector<Actor *> HeroManager;
 std::vector<Actor *> MonsterManager;
 
-Scheduler* scheduler = Director::getInstance()->getScheduler();
+//Scheduler* scheduler = Director::getInstance()->getScheduler();
 
 void solveCollision(Actor* object1, Actor* object2)
 {

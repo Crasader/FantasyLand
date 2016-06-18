@@ -38,7 +38,7 @@ struct ReSkin_d ReSkin;
 
 
 
-void init_globalvariables()
+void initGlobalVariables()
 {
 	camera = Camera::create();
 

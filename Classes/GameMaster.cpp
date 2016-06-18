@@ -21,7 +21,7 @@ int distanceWithHeroX = 150;
 int distanceWithHeroY = 150;
 struct monsterCount_d monsterCount;
 
-GameMaster * GameMaster::instance = nullptr;
+GameMaster * GameMaster::_instance = nullptr;
 
 
 bool GameMaster::init()
@@ -42,11 +42,11 @@ bool GameMaster::init()
 
 GameMaster* GameMaster::getInstance()
 {
-	if(instance == nullptr)
+	if(_instance == nullptr)
 	{
-		instance = new GameMaster();
+		_instance = new GameMaster();
 	}
-	return instance;
+	return _instance;
 }
 
 GameMaster::GameMaster()
