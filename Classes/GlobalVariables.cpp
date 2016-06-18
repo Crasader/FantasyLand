@@ -2,7 +2,7 @@
 #include "GameMaster.h"
 
 Layer * currentLayer;
-GameMaster *gameMaster;
+//GameMaster *gameMaster;
 class BattleFieldUI *uiLayer;
 
 float FXZorder = 1999;
