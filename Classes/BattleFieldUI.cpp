@@ -535,13 +535,12 @@ void BattleFieldUI::showGameOverUI()
 	addChild(layer);
 }
 
-void BattleFieldUI::setGreyShader(Sprite * s)
+void BattleFieldUI::setGreyShader(Sprite *avatar)
 {
-
 	auto fileUtiles = FileUtils::getInstance();
 	auto fragmentFullPath = fileUtiles->fullPathForFilename("shader3D/greyScale.fsh");
 	auto fragSource = fileUtiles->getStringFromFile(fragmentFullPath);
 	auto glprogram = cocos2d::GLProgram::createWithByteArrays(ccPositionTextureColor_noMVP_vert, fragSource.c_str());
 	auto glprogramstate = cocos2d::GLProgramState::getOrCreateWithGLProgram(glprogram);
-	s->setGLProgramState(glprogramstate);
+	avatar->setGLProgramState(glprogramstate);
 }

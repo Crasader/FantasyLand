@@ -18,30 +18,6 @@ bool BattleScene::init()
 	Layer::init();
 	currentLayer = this;
 
-	isDebug = false;
-	if (isDebug)
-	{
-		//add camera
-		camera = Camera::createPerspective(60, VisibleSize.width / VisibleSize.height, 10, 4000);
-		camera->setGlobalZOrder(10);
-		camera->setPosition3D(Vec3(-500, 80, 0));
-		camera->setCameraFlag(CameraFlag::USER1);
-		addChild(camera);
-		controlCamera();
-
-		//gameMaster = new GameMaster();
-		//add background
-		auto battlefield = Sprite3D::create("battleScene/changjing.c3b");
-		battlefield->setCameraMask(2);
-		battlefield->setPosition3D(Vec3(-2300, -1000, 0));
-		battlefield->setRotation3D(Vec3(90, 0, 0));
-		addChild(battlefield);
-
-		scheduleUpdate();
-		setCameraMask(2, true);
-		return true;
-	}
-
 	//specialCamera
 	scheduler = Director::getInstance()->getScheduler();
 	cameraOffset = { 150, 0, 0 };
@@ -53,10 +29,8 @@ bool BattleScene::init()
 	enableTouch();
 	createBackground();
 	initUILayer();
-	//gameMaster = new GameMaster();
 	GameMaster::getInstance();
 	setCamera();
-	//scheduler->schedule(gameController, this, 0, false, "gameController");
 
 	MessageDispatchCenter::getInstance()->registerMessage(MessageType::BLOOD_MINUS, [](Actor * heroActor)
 	{
@@ -74,15 +48,12 @@ bool BattleScene::init()
 	controlCamera();
 	setCameraMask(2);
 	scheduleUpdate();
-	//gameController(0.1);
 	return true;
 }
 
 void BattleScene::update(float dt)
 {
 	camera->setPosition3D(camera->getPosition3D() + cameraVelocity * 5);
-	auto i = camera->getPosition3D();
-	//camera->setPosition(camera->getPosition() + cameraVelocity);
 	gameController(dt);
 }
 
@@ -94,13 +65,8 @@ void BattleScene::moveCamera(float dt)
 
 	auto cameraPosition = getPosTable(camera);
 	auto focusPoint = getFocusPointOfHeros();
-	//if (specialCamera->isBrushValid()/*?*/)
-	//{
-	//	auto position = ccpLerp(cameraPosition, ccp(specialCamera->getPosition().x, (cameraOffset.y + focusPoint.y - VisibleSize.height * 3 / 4)*0.5), 5 * dt);
-	//	camera->setPosition(position);
-	//	camera->lookAt(Vec3(position.x, specialCamera->getPosition().y, 50.0), Vec3(0.0, 1.0, 0.0));
-	//}
-	/*else */if (HeroManager.size() > 0)
+	
+	if (HeroManager.size() > 0)
 	{
 		auto temp = ccpLerp(cameraPosition, ccp(focusPoint.x + cameraOffset.x, cameraOffset.y + focusPoint.y - VisibleSize.height * 3 / 4), 2 * dt);
 		auto position = Vec3(temp.x, temp.y, VisibleSize.height / 2 - 100);
@@ -129,7 +95,6 @@ void BattleScene::createBackground()
 	spriteBg->setPosition3D(Vec3(-2300, -1000, 0));
 	spriteBg->setRotation3D(Vec3(90, 0, 0));
 	spriteBg->setCameraMask(2);
-	//No Water
 }
 
 void BattleScene::setCamera()
@@ -169,32 +134,6 @@ void BattleScene::angryChange(Actor* heroActor)
 	uiLayer->angryChange(heroActor);
 }
 
-void BattleScene::specialPerspective(Actor* heroActor)
-{
-	//if (specialCamera->getName() == "on")
-	//	return;
-
-	//specialCamera->setPosition(heroActor->getPosition());
-	//specialCamera->setName("on");
-	currentLayer->setColor(Color3B(125, 125, 125));//deep grey
-
-	auto restoreTimeScale = [this, heroActor]()
-	{
-		specialCamera->setName("off");
-		currentLayer->setColor(Color3B(255, 255, 255));//default white
-		Director::getInstance()->getScheduler()->setTimeScale(1.0);
-		heroActor->getTarget()->setCascadeColorEnabled(true);//restore to the default state
-	};
-//void delayExecute(Actor* target, void(*func)(), float delay)
-//	{
-//		auto wait = DelayTime::create(delay);
-//		target->runAction(Sequence::create(wait, CallFunc::create(func), NULL));
-//	}
-//	delayExecute(currentLayer, restoreTimeScale, heroActor); 
-//	auto wait = DelayTime::create(delay);
-//	target->runAction(Sequence::create(wait, CallFunc::create(func), NULL));
-	
-}
 
 void BattleScene::enableTouch()
 {

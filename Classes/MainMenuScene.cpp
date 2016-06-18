@@ -48,12 +48,12 @@ void MainMenuScene::addButton()
 	settingButton->setPosition(Vec2(VisibleSize.width - 100, VisibleSize.height - 50));
 	exitButton->setPosition(Vec2(VisibleSize.width - 50, VisibleSize.height - 50));
 
-	isTouchedStart = false;
+	_isSceneReplaced = false;
 	startButton->addTouchEventListener([startButton,this](Ref*, ui::Widget::TouchEventType)
 	{
-		if (isTouchedStart)
+		if (_isSceneReplaced)
 			return;
-		isTouchedStart = true;
+		_isSceneReplaced = true;
 		Director::getInstance()->replaceScene(ChooseRoleScene::createScene());
 	});
 	starButton->addTouchEventListener([this](Ref*, ui::Widget::TouchEventType)
