@@ -5,8 +5,6 @@
 
 Knight::Knight()
 {
-	
-	//MDC->registerMessage(MessageDispatchCenter::MessageType::SPECIAL_KNIGHT, specialAttack);
 }
 
 bool Knight::init()
@@ -15,22 +13,24 @@ bool Knight::init()
 	_useWeaponId = ReSkin.knight.weapon;
 	_useArmourId = ReSkin.knight.armour;
 	_useHelmetId = ReSkin.knight.helmet;
-	//copyTable(ActorCommonValues, this);
-	//copyTable(KnightValues, this);
+
 	copyData_Knight();
+
+	//init UI
 	if (uiLayer != NULL) {
 		_bloodBar = uiLayer->KnightBlood;
 		_bloodBarClone = uiLayer->KnightBloodClone;
 		_avatar = uiLayer->KnightPng;
 	}
 
+	//init image
 	init3D();
 	initActions();
-	
 	idleMode();
 	_AIEnabled = true;
 	scheduleUpdateWithPriority(0);
 
+	//register special attack event
 	auto specialAttack = [&]() {
 		if (_specialAttackChance == 1)
 			return;
@@ -42,11 +42,13 @@ bool Knight::init()
 			return;
 		data->setSpecialAttackChance(1);
 	});
+
 	return true;
 }
 
 void Knight::copyData_Knight()
 {
+	//actor common values
 	_aliveTime = 0,
 	_curSpeed = 0;
 	_curAnimation = "";
@@ -64,6 +66,8 @@ void Knight::copyData_Knight()
 	_target = NULL;
 	_myPos = ccp(0, 0);
 	_angryMax = 500;
+
+	//knight default values
 	_racetype = HERO;
 	_name = "Knight";
 	_radius = 50;
@@ -114,7 +118,6 @@ void Knight::normalAttack()
 {
 	experimental::AudioEngine::play2d(WarriorProperty.normalAttackShout, false, 1);
 	KnightNormalAttack::CreateWithPos(getPosTable(this), _curFacing, _normalAttack, this);
-	//_sprite:runAction(_action.attackEffect:clone()) 
 	AUDIO_ID.KNIGHTNORMALATTACK = experimental::AudioEngine::play2d(WarriorProperty.normalAttack1, false, 1);
 	experimental::AudioEngine::setFinishCallback(AUDIO_ID.KNIGHTNORMALATTACK, KnightNormalAttackCallback);
 }
@@ -125,10 +128,8 @@ void Knight::specialAttack()
 	_angry = ActorCommonValues._angry;
 	struct MESSAGE_ANGRY_CHANGE angryChange = { _name, _angry, _angryMax };
 	MessageDispatchCenter::getInstance()->dispatchMessage(ANGRY_CHANGE, this);
-	log("Knight::specialAttack,%f,%f",_angry, _angryMax);
-//	MDC->dispatchMessage(MessageType::ANGRY_CHANGE, angryChange);
 
-	//knight will create 2 attacks one by one  
+	//knight will create double attacks
 	experimental::AudioEngine::play2d(WarriorProperty.specialAttackShout, false, 0.7);
 	auto attack = _specialAttack;
 	attack.knock = 0;
@@ -144,20 +145,19 @@ void Knight::specialAttack()
 	auto punch = [&]() {
 		KnightNormalAttack::CreateWithPos(pos, _curFacing, _specialAttack, this);
 	};
-	//delayExecute(this, punch, 0.2); //todo 不传参直接写？
 	auto wait = DelayTime::create(0.2);
 	this->runAction(Sequence::create(wait, CallFunc::create(punch), NULL));
 }
 
 void Knight::initAttackEffect()
 {
+	//init attack effect
 	auto speed = 0.15;
 	auto startRotate = 145;
 	auto rotate = -60;
 	auto scale = 0.01;
 	auto sprite = Sprite::createWithSpriteFrameName("specialAttack.jpg");
 	sprite->setVisible(false);
-	//sprite->setBlendFunc(gl.ONE, gl.ONE); todo
 	sprite->setScaleX(scale);
 	sprite->setRotation(startRotate);
 	sprite->setOpacity(0);
@@ -165,16 +165,15 @@ void Knight::initAttackEffect()
 	sprite->setPosition3D(Vec3(10, 0, 50));
 	addChild(sprite);
 
+	//add actions to attack effect
 	auto scaleAction = ScaleTo::create(speed, 2.5, 2.5);
 	auto rotateAction = RotateBy::create(speed, rotate);
 	auto fadeAction = FadeIn::create(0);
 	auto attack = Sequence::create(scaleAction, rotateAction, fadeAction, NULL);
-    
 	auto fadeAction2 = FadeOut::create(0.5);
 	auto scaleAction2 = ScaleTo::create(0, scale, 2.5);
 	auto rotateAction2 = RotateBy::create(0, startRotate);
 	auto restore = Sequence::create(fadeAction2, rotateAction2, scaleAction2, NULL);
-
 	_sprite = sprite;
 	_action.insert("attackEffect", Sequence::create(Show::create(), attack, restore, NULL));
 	_action.at("attackEffect")->retain();
@@ -182,10 +181,8 @@ void Knight::initAttackEffect()
 
 void Knight::init3D()
 {
-	//initShadow();
 	_sprite3d = Sprite3D::create(file);
 	_sprite3d->setScale(25);
-	//_sprite3d->addEffect(Vec3(0, 0, 0), CelLine, -1);
 	addChild(_sprite3d);
 	_sprite3d->setRotation3D(Vec3(90, 0, 0));
 	_sprite3d->setRotation(-90);
@@ -305,7 +302,6 @@ float Knight::hurt(BasicCollider* collider, bool dirKnockMode)
 {
 	log("I am hurted");
 	if (isAlive()) {
-		//TODO add sound effect
 		auto damage = collider->getDamage();
 		//calculate the real damage
 		bool critical = false;
@@ -332,22 +328,14 @@ float Knight::hurt(BasicCollider* collider, bool dirKnockMode)
 			dyingMode(getPosTable(collider), knock);
 		}
 
-		//three param judge if crit
-
-		/* 这里需要修改 */
 		auto blood = _hpCounter->showBloodLossNum(damage, this, critical);
 		blood->setCameraMask(2);
 		addEffect(blood);
 
 		struct MESSAGE_BLOOD_MINUS bloodMinus = { _name, _maxhp, _hp, _bloodBar, _bloodBarClone, _avatar };
 		MessageDispatchCenter::getInstance()->dispatchMessage(BLOOD_MINUS, this);
-
-		//MDC->dispatchMessage(MessageType::BLOOD_MINUS, bloodMinus);
 		struct MESSAGE_ANGRY_CHANGE angryChange = { _name, _angry,_angryMax };
 		MessageDispatchCenter::getInstance()->dispatchMessage(ANGRY_CHANGE, this);
-		log("knight hurt %f,%f", _angry, _angryMax);
-
-		//MDC->dispatchMessage(MessageType::ANGRY_CHANGE, angryChange);
 		_angry += damage;
 		return damage;
 	}

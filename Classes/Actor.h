@@ -55,6 +55,7 @@ public:
 	float getSpecialAttackChance();
 	void setSpecialAttackChance(float chance);
 
+	//Hurt and attack
 	virtual float hurt(BasicCollider* collider, bool dirKnockMode = false);
 	virtual void hurtSoundEffects();
 	virtual void normalAttackSoundEffects();
@@ -77,7 +78,7 @@ public:
 	Actor* findEnemy(EnumRaceType HeroOrMonster, bool &allDead);
 	bool _inRange();
 
-	//AI function does not run every tick
+	//AI Functions
 	void AI();
 	void baseUpdate(float dt);
 	void knockingUpdate(float dt);
@@ -87,13 +88,13 @@ public:
 
 protected:
 	float _aliveTime;	//time the actor is alive in seconds
-	float _curSpeed;	//current speed the actor is traveling in units/seconds
+	float _curSpeed;	//current speed the actor is traveling in px/s
 	std::string _curAnimation;
-	Action* _curAnimation3d = nullptr;
-
+	Action* _curAnimation3d = nullptr;	//effect playing
 	std::string _name;
 
 	//runtime modified values
+
 	float _curFacing;	//current direction the actor is facing, in radians, 0 is to the right
 	bool _isalive;
 	float _AITimer;	//accumulated timer before AI will execute, in seconds
@@ -105,7 +106,7 @@ protected:
 	bool _goRight;
 	
 	//target variables
-	float _targetFacing;//direction the actor Wants to turn to
+	float _targetFacing;//direction the actor wants to turn to
 	Actor* _target;	//the enemy actor;
 	Vec2 _myPos;
 	float _angry;
@@ -116,17 +117,17 @@ protected:
 	Node* _effectNode;
 	int _monsterHeight;
 	int _heroHeight;
-	Sprite* _circle;
-	Map<std::string, ActionInterval*> _action;
+	Sprite* _circle;	//shadow
+	Map<std::string, ActionInterval*> _action;	//store the animation of evert states
 
-	int _useWeaponId;
+	int _useWeaponId;	
 	int _useArmourId;
 	int _useHelmetId;
 	ProgressTimer* _bloodBar;
 	ProgressTimer* _bloodBarClone;
 	Sprite* _avatar;
 
-	//
+	//Actor Common Variables
 	enum EnumRaceType _racetype;	//type of the actor
 	enum EnumStateType _statetype;	//AI state machine
 	Sprite* _sprite;
@@ -142,17 +143,17 @@ protected:
 	float _specialSlowTime;
 	float _recoverTime;	//time takes to recover from knock, in seconds
 
-	float _speed; //actor maximum movement speed in units/seconds
-	float _turnSpeed;	//actor turning speed in radians/seconds
-	float _acceleration;	//actor movement acceleration, in units/seconds
-	float _decceleration;	//actor movement decceleration, in units/seconds
+	float _speed; //actor maximum movement speed in px/s
+	float _turnSpeed;	//actor turning speed in rad/s
+	float _acceleration;	//actor movement acceleration, in px/s
+	float _decceleration;	//actor movement decceleration, in px/s
 
 	float _AIFrequency;	//how often AI executes in seconds
 	float _attackFrequency;	//an attack move every few seconds
 	float _searchDistance;	//distance which enemy can be found
-
 	float _attackRange;	//distance the actor will stop and commence attack
-	//attack collider info, it can be customized
+
+	//attack collider info
 	struct attack_d _normalAttack, _specialAttack;
 };
 

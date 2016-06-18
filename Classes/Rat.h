@@ -10,13 +10,15 @@ public:
 	void reset();
 	void copyData_Rat();
 	virtual void update(float dt);
+
 	void playDyingEffects();
 	void hurtSoundEffects();
 	void normalAttackSoundEffects();
+	void dyingMode(Vec2 knockSource, int knockAmount);
+	float hurt(BasicCollider* collider, bool dirKnockMode = false);	
+	
 	void init3D();
 	void initActions();
-	void dyingMode(Vec2 knockSource, int knockAmount);
-	float hurt(BasicCollider* collider, bool dirKnockMode = false);
 
 private:
 	std::string file = "model/rat/rat.c3b";

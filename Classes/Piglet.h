@@ -9,10 +9,12 @@ public:
 	virtual bool init();
 	void reset();
 	void copyData_Piglet();
+
 	virtual void update(float dt);
 	void playDyingEffects();
 	void hurtSoundEffects();
 	void normalAttackSoundEffects();
+
 	void init3D();
 	void initActions();
 

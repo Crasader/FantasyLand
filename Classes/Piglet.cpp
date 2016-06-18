@@ -8,11 +8,13 @@ Piglet::Piglet()
 bool Piglet::init()
 {
 	Actor::init();
-	_useWeaponId = ReSkin.mage.weapon;
-	_useArmourId = ReSkin.mage.armour;
-	//copyTable(ActorCommonValues, this);
-	//copyTable(PigletValues, this);
+	_useWeaponId = 0;
+	_useArmourId = 0;
+
+	//init Data
 	copyData_Piglet();
+
+	//init image
 	init3D();
 	initActions();
 	
@@ -24,6 +26,7 @@ bool Piglet::init()
 
 void Piglet::copyData_Piglet()
 {
+	//Actor Common Value
 	_aliveTime = 0,
 	_curSpeed = 0;
 	_curAnimation = "";
@@ -42,6 +45,7 @@ void Piglet::copyData_Piglet()
 	_myPos = ccp(0, 0);
 	_angry = 0;
 	_angryMax = 500;
+	//Piglet Default Value
 	_racetype = MONSTER;
 	_name = "Piglet";
 	_radius = 50;
@@ -105,11 +109,9 @@ void Piglet::normalAttackSoundEffects()
 
 void Piglet::init3D()
 {
-	//initShadow();
 	_sprite3d = Sprite3D::create(file);
 	_sprite3d->setTexture("model/piglet/zhu0928.jpg");
 	_sprite3d->setScale(1.3);
-	//_sprite3d->addEffect(Vec3(0, 0, 0), CelLine, -1);
 	addChild(_sprite3d);
 	_sprite3d->setRotation3D(Vec3(90, 0, 0));
 	_sprite3d->setRotation(-90);

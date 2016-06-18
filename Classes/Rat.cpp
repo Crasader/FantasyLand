@@ -99,10 +99,8 @@ void Rat::normalAttackSoundEffects()
 
 void Rat::init3D()
 {
-	//initShadow();
 	_sprite3d = Sprite3D::create(file);
 	_sprite3d->setScale(20);
-	//_sprite3d->addEffect(Vec3(0, 0, 0), CelLine, -1);
 	addChild(_sprite3d);
 	_sprite3d->setRotation3D(Vec3(90, 0, 0));
 	_sprite3d->setRotation(-90);
@@ -125,6 +123,7 @@ void Rat::dyingMode(Vec2 knockSource, int knockAmount)
 	playAnimation("dead");
 	playDyingEffects();
 
+	//Erase this from MonsterManager
 	std::vector<Actor *>::iterator it = std::find(MonsterManager.begin(), MonsterManager.end(), this);
 	MonsterManager.erase(it);
 	
@@ -164,8 +163,8 @@ void Rat::dyingMode(Vec2 knockSource, int knockAmount)
 float Rat::hurt(BasicCollider* collider, bool dirKnockMode)
 {
 	if (_isalive == true) {
-		//TODO add sound effect
 		auto damage = collider->getDamage();
+
 		//calculate the real damage
 		bool critical = false;
 		auto knock = collider->getKnock();
@@ -191,7 +190,6 @@ float Rat::hurt(BasicCollider* collider, bool dirKnockMode)
 			dyingMode(getPosTable(collider), knock);
 		}
 
-		//three param judge if crit
 		auto blood = _hpCounter->showBloodLossNum(damage, this, critical);
 		blood->setCameraMask(2);
 		blood->setPositionZ(Director::getInstance()->getVisibleSize().height * 0.25);
