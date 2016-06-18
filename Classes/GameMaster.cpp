@@ -74,6 +74,7 @@ void GameMaster::logicUpdate()
 {
 	if (stage == 1)
 	{
+		//showGameOverUI();
 		if (MonsterManager.size() < EXIST_MIN_MONSTER)
 		{
 			srand(time(NULL));
