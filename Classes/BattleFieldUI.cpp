@@ -15,7 +15,6 @@ bool BattleFieldUI::init()
 
 	setGlobalZOrder(10);
 	setCameraMask(2);
-	//showVictoryUI();
 	experimental::AudioEngine::stopAll();
 	AUDIO_ID.BATTLEFIELDBGM = experimental::AudioEngine::play2d(BGM_RES.BATTLEFIELDBGM, true, 0.6);
 	return true;
