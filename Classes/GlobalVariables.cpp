@@ -39,7 +39,8 @@ struct ReSkin_d ReSkin;
 void initGlobalVariables()
 {
 	camera = Camera::create();
-
+	
+	//hurtEffect
 	animationCache = AnimationCache::getInstance();
 	Animation * hurtAnimation = Animation::create();
 	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("FX/FX.plist");
