@@ -33,7 +33,7 @@ void BattleFieldUI::avatarInit()
 	MagePngFrame = Sprite::createWithSpriteFrameName("UI-2.png");
 	MagePngFrame->setScale(scale);
 	MagePngFrame->setPosition3D(Vec3(MagePng->getPositionX() + 1, MagePng->getPositionY() - offset, 1));
-	MagePngFrame->setGlobalZOrder(10);
+	MagePngFrame->setGlobalZOrder(8);
 	addChild(MagePngFrame, 1);
 
 	KnightPng = Sprite::createWithSpriteFrameName("UI-1136-640_03.png");
@@ -44,7 +44,7 @@ void BattleFieldUI::avatarInit()
 	KnightPngFrame = Sprite::createWithSpriteFrameName("UI-2.png");
 	KnightPngFrame->setScale(scale);
 	KnightPngFrame->setPosition3D(Vec3(KnightPng->getPositionX() + 1, KnightPng->getPositionY() - offset, 1));
-	KnightPngFrame->setGlobalZOrder(10);
+	KnightPngFrame->setGlobalZOrder(8);
 	addChild(KnightPngFrame, 1);
 
 	ArcherPng = Sprite::createWithSpriteFrameName("UI-1136-640_11.png");
@@ -55,7 +55,7 @@ void BattleFieldUI::avatarInit()
 	ArcherPngFrame = Sprite::createWithSpriteFrameName("UI-2.png");
 	ArcherPngFrame->setScale(scale);
 	ArcherPngFrame->setPosition3D(Vec3(ArcherPng->getPositionX() + 1, ArcherPng->getPositionY() - offset, 1));
-	ArcherPngFrame->setGlobalZOrder(10);
+	ArcherPngFrame->setGlobalZOrder(8);
 	addChild(ArcherPngFrame, 1);
 }
 
@@ -82,7 +82,7 @@ void BattleFieldUI::bloodbarInit()
 	KnightBloodClone->setPercentage(100);
 	KnightBloodClone->setPosition3D(Vec3(KnightPng->getPositionX() - 1, KnightPng->getPositionY() - offset, 3));
 	KnightBloodClone->setScale(scale);
-	KnightBloodClone->setGlobalZOrder(10);
+	KnightBloodClone->setGlobalZOrder(9);
 	addChild(KnightBloodClone, 3);
 
 	ArcherBlood = ProgressTimer::create(Sprite::createWithSpriteFrameName("UI-1136-640_36_clone.png"));
@@ -104,7 +104,7 @@ void BattleFieldUI::bloodbarInit()
 	ArcherBloodClone->setPercentage(100);
 	ArcherBloodClone->setPosition3D(Vec3(ArcherPng->getPositionX() - 1, ArcherPng->getPositionY() - offset, 3));
 	ArcherBloodClone->setScale(scale);
-	ArcherBloodClone->setGlobalZOrder(10);
+	ArcherBloodClone->setGlobalZOrder(9);
 	addChild(ArcherBloodClone, 3);
 
 	MageBlood = ProgressTimer::create(Sprite::createWithSpriteFrameName("UI-1136-640_36_clone.png"));
@@ -126,7 +126,7 @@ void BattleFieldUI::bloodbarInit()
 	MageBloodClone->setPercentage(100);
 	MageBloodClone->setPosition3D(Vec3(MagePng->getPositionX() - 1, MagePng->getPositionY() - offset, 3));
 	MageBloodClone->setScale(scale);
-	MageBloodClone->setGlobalZOrder(10);
+	MageBloodClone->setGlobalZOrder(9);
 	addChild(MageBloodClone, 3);
 }
 
@@ -158,7 +158,7 @@ void BattleFieldUI::angrybarInit()
 	KnightAngryClone->setPosition3D(Vec3(KnightPng->getPositionX() - 1, KnightPng->getPositionY() - offset, 3));
 	KnightAngryClone->setScaleX(0.7);
 	KnightAngryClone->setScaleY(0.75);
-	KnightAngryClone->setGlobalZOrder(10);
+	KnightAngryClone->setGlobalZOrder(9);
 	addChild(KnightAngryClone, 3);
 
 	KnightAngryFullSignal = Sprite::createWithSpriteFrameName("specialLight.png");
@@ -189,7 +189,7 @@ void BattleFieldUI::angrybarInit()
 	ArcherAngryClone->setPosition3D(Vec3(ArcherPng->getPositionX() - 1, ArcherPng->getPositionY() - offset, 3));
 	ArcherAngryClone->setScaleX(0.7);
 	ArcherAngryClone->setScaleY(0.75);
-	ArcherAngryClone->setGlobalZOrder(10);
+	ArcherAngryClone->setGlobalZOrder(9);
 	addChild(ArcherAngryClone, 3);
 
 	ArcherAngryFullSignal = Sprite::createWithSpriteFrameName("specialLight.png");
@@ -220,7 +220,7 @@ void BattleFieldUI::angrybarInit()
 	MageAngryClone->setPosition3D(Vec3(MagePng->getPositionX() - 1, MagePng->getPositionY() - offset, 3));
 	MageAngryClone->setScaleX(0.7);
 	MageAngryClone->setScaleY(0.75);
-	MageAngryClone->setGlobalZOrder(10);
+	MageAngryClone->setGlobalZOrder(9);
 	addChild(MageAngryClone, 3);
 
 	MageAngryFullSignal = Sprite::createWithSpriteFrameName("specialLight.png");
@@ -257,14 +257,14 @@ void BattleFieldUI::touchButtonInit()
 	_chestAmount->setPosition3D(Vec3(VisibleSize.width - 170, VisibleSize.height - 50, 3));
 	_chestAmount->setScaleX(0.8);
 	_chestAmount->setScaleY(0.7);
-	_chestAmount->setGlobalZOrder(10);
+	_chestAmount->setGlobalZOrder(9);
 	addChild(_chestAmount, 2);
 
 	auto _coinAmount = Sprite::createWithSpriteFrameName("UI-1.png");
 	_coinAmount->setPosition3D(Vec3(VisibleSize.width - 370, VisibleSize.height - 50, 3));
 	_coinAmount->setScaleX(0.8);
 	_coinAmount->setScaleY(0.7);
-	_coinAmount->setGlobalZOrder(10);
+	_coinAmount->setGlobalZOrder(9);
 	addChild(_coinAmount, 2);
 }
 

@@ -269,6 +269,7 @@ MageNormalAttack* MageNormalAttack::CreateWithPos(Vec2 pos, float facing, struct
 	pixi->setTextureWithRect(pixif->getTexture(), pixif->getRect());
 	pixi->setScale(2);
 	pixi->addChild(smoke);
+	pixi->setCameraMask(2);
 	newMageNormalAttack->addChild(pixi);
 	pixi->setRotation3D(Vec3(90, 0, 0));
 	pixi->setGlobalZOrder(-newMageNormalAttack->getPositionY() * 2 + FXZorder);
@@ -351,6 +352,7 @@ MageIceSpikes* MageIceSpikes::CreateWithPos(Vec2 pos, float facing, struct attac
 	auto ret = MageIceSpikes::create();
 	ret->initData(pos, facing, attackInfo);
 	ret->_owner = owner;
+	ret->setCameraMask(2);
 	ret->_sp = Sprite::createWithSpriteFrameName("shadow.png");
 	ret->_sp->setGlobalZOrder(-ret->getPositionY() + FXZorder);
 	ret->_sp->setOpacity(100);
@@ -361,6 +363,7 @@ MageIceSpikes* MageIceSpikes::CreateWithPos(Vec2 pos, float facing, struct attac
 
 	//create 3 spikes
 	auto x = Node::create();
+	x->setCameraMask(2);
 	ret->_spikes = x;
 	ret->addChild(x);
 	for (int var = 0; var <= 10; var++) {
@@ -369,6 +372,7 @@ MageIceSpikes* MageIceSpikes::CreateWithPos(Vec2 pos, float facing, struct attac
 		auto spike = Sprite::createWithSpriteFrameName(spriteFrameName);
 		spike->setAnchorPoint(Vec2(0.5, 0));
 		spike->setRotation3D(Vec3(90, 0, 0));
+		spike->setCameraMask(2);
 		x->addChild(spike);
 		if (rand == 3)
 			spike->setScale(1.5);
@@ -389,6 +393,7 @@ MageIceSpikes* MageIceSpikes::CreateWithPos(Vec2 pos, float facing, struct attac
 	auto magicf = SpriteFrameCache::getInstance()->getSpriteFrameByName("particle.png");
 	magic->setTextureWithRect(magicf->getTexture(), magicf->getRect());
 	magic->setScale(1.5);
+	magic->setCameraMask(2);
 	ret->addChild(magic);
 	magic->setGlobalZOrder(-ret->getPositionY() * 2 + FXZorder);
 	magic->setPositionZ(0);
