@@ -70,8 +70,8 @@ void MainMenuScene::addButton()
 	});
 
 	addChild(startButton);
-	addChild(starButton);
-	addChild(settingButton);
+	//addChild(starButton);
+	//addChild(settingButton);
 	addChild(exitButton);
 }
 
