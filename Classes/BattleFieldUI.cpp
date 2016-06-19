@@ -488,19 +488,17 @@ void BattleFieldUI::showGameOverUI()
 	auto layer = LayerColor::create(Color4B(255, 10, 10, 150));
 	layer->ignoreAnchorPointForPosition(false);
 	layer->setPosition3D(Vec3(G.winSize.width*0.5, G.winSize.height*0.5, 0));
-	//add victory
 
-	auto gameOver = Sprite::create("battlefieldUI/gameover.png");
+	//add gameover
+    auto gameOver = Sprite::create("battlefieldUI/gameover.png");
 	gameOver->setPosition3D(Vec3(G.winSize.width*0.5, G.winSize.height*0.5, 3));
 	gameOver->setScale(0.001);
 	layer->addChild(gameOver, 1);
 	layer->setGlobalZOrder(100);
 	gameOver->setGlobalZOrder(100);
-	//victory runaction
-	auto action = Sequence::create(DelayTime::create(3), EaseElasticOut::create(ScaleTo::create(1.5, 1)), NULL);
-	gameOver->runAction(action);
 
 	auto listener = EventListenerTouchOneByOne::create();
+
 	//touch event
 	listener->onTouchBegan = [](Touch*, Event*)
 	{
@@ -531,6 +529,15 @@ void BattleFieldUI::showGameOverUI()
 	gameOver->setCameraMask(2);
 	auto eventDispatcher = layer->getEventDispatcher();
 	eventDispatcher->addEventListenerWithSceneGraphPriority(listener, layer);
+
+	listener->setEnabled(false);
+	auto enableListener = [=]()
+	{
+		listener->setEnabled(true);
+	};
+	//runaction
+	auto action = Sequence::create(DelayTime::create(3),  EaseElasticOut::create(ScaleTo::create(1.5, 1)), CallFunc::create(enableListener),NULL);
+	gameOver->runAction(action);
 
 	addChild(layer);
 }
