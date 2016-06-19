@@ -625,6 +625,28 @@ void GameMaster::showGameOverUI()
 void GameMaster::playerControl(Vec2 positionOf3DWorld, float angleOf3DWorld)
 {
 	getPlayer()->setPosition(positionOf3DWorld);
+	auto monster = getTouchedMonster(positionOf3DWorld, angleOf3DWorld);
+
+}
+
+Actor* GameMaster::getTouchedMonster(Vec2 positionOf3DWorld, float angleOf3DWorld)
+{
+	auto monsterManger = MonsterManager;
+	auto getPositionY = [](Actor*monster1, Actor*monster2)
+	{
+		return monster1->getPositionY() < monster2->getPositionY();
+	};
+	std::sort(monsterManger.begin(), monsterManger.end(), getPositionY);
+
+	auto width = 200;
+	auto depth = 200;
+	for (auto it : monsterManger)
+	{
+		if (it->getPositionX() < positionOf3DWorld.x + width / 2 && it->getPositionX() > positionOf3DWorld.x - width / 2
+			&& it->getPositionY() < positionOf3DWorld.y + depth / 2 && it->getPositionY() > positionOf3DWorld.y - depth / 2)
+			return it;
+	}
+	return nullptr;
 }
 
 void GameMaster::setPlayer(std::string playerName)
