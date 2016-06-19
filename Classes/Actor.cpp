@@ -636,11 +636,11 @@ void Actor::walkUpdate(float dt)
 	}
 	else if (_isPlayer && _target == nullptr)
 	{
-		auto decDistance = _speed;
+		auto decDistance = _curSpeed * _curSpeed / 2 / _decceleration;
 		auto curPos = _myPos;
 		auto tarPos = _targetPos;
 		_targetFacing = ccpToAngle(ccpSub(tarPos, curPos));
-		if (ccpDistance(curPos, tarPos) < attackDistance)
+		if (ccpDistance(curPos, tarPos) < decDistance)
 			idleMode();
 	}
 	else {

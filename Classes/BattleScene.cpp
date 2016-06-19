@@ -54,7 +54,9 @@ void BattleScene::moveCamera(float dt)
 	if (camera == nullptr)
 		return;
 	auto cameraPosition = camera->getPosition();
-	auto focusPoint = GameMaster::getPlayer()->getPosition();
+	Vec2 focusPoint;
+	if (GameMaster::getPlayer() != nullptr) {
+	    focusPoint = GameMaster::getPlayer()->getPosition();
 
 	if (HeroManager.size() > 0)
 	{
@@ -63,6 +65,7 @@ void BattleScene::moveCamera(float dt)
 		camera->setPosition3D(position);
 		camera->lookAt(Vec3(position.x, focusPoint.y, 50.0), Vec3(0.0, 0.0, 1.0));
 	}
+
 }
 
 void BattleScene::updateParticlePos()
