@@ -43,8 +43,6 @@ bool BattleScene::init()
 void BattleScene::update(float dt)
 {
 	camera->setPosition3D(camera->getPosition3D() + _cameraVelocity * 5);
-	if (GameMaster::getPlayer()->getStateType() == EnumStateType::WALKING)
-		auto i = 1;
 	gameController(dt);
 }
 
@@ -55,7 +53,10 @@ void BattleScene::moveCamera(float dt)
 		return;
 	auto cameraPosition = camera->getPosition();
 	Vec2 focusPoint;
-	focusPoint = GameMaster::getPlayer()->getPosition();
+	if (GameMaster::getPlayer() != nullptr)
+		focusPoint = GameMaster::getPlayer()->getPosition();
+	else
+		focusPoint = getFocusPointOfHeros();
 
 	if (HeroManager.size() > 0)
 	{
@@ -167,7 +168,8 @@ void BattleScene::enableTouch()
 			auto positionOf3DWorld = Vec2(camera->getPositionX() + touchPosition.x - VisibleSize.width / 2,
 				positionYOf3DWorld + 100);
 			//enter player control
-			GameMaster::getInstance()->playerControl(positionOf3DWorld, angleOf3DWorld);
+			if (GameMaster::getPlayer() != nullptr)
+				GameMaster::getInstance()->playerControl(positionOf3DWorld, angleOf3DWorld);
 		}
 	};
 
