@@ -557,10 +557,12 @@ void Actor::baseUpdate(float dt)
 
 void Actor::knockingUpdate(float dt)
 {
-	if (_aliveTime - _timeKnocked > _recoverTime) {
+	if (!_AIEnabled)
+		idleMode();
+	else if (_aliveTime - _timeKnocked > _recoverTime) {
 		//I've recovered from a knock
 		_timeKnocked = NULL;
-		if (_AIEnabled&&_inRange())
+		if (_inRange())
 			attackMode();
 		else
 			walkMode();
