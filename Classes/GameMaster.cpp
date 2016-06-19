@@ -626,9 +626,14 @@ void GameMaster::playerControl(Vec2 positionOf3DWorld, float angleOf3DWorld)
 {
 	//getPlayer()->setPosition(positionOf3DWorld);
 	auto monster = getTouchedMonster(positionOf3DWorld, angleOf3DWorld);
-
-	getPlayer()->setTargetPos(positionOf3DWorld);
-	getPlayer()->walkMode();
+	if (monster != nullptr)
+	{
+		getPlayer()->setTarget(monster);
+	}
+	else {
+		getPlayer()->setTargetPos(positionOf3DWorld);
+		getPlayer()->walkMode();
+	}
 }
 
 Actor* GameMaster::getTouchedMonster(Vec2 positionOf3DWorld, float angleOf3DWorld)
