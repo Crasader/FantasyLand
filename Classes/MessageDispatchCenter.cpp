@@ -30,7 +30,7 @@ void MessageDispatchCenter::registerMessage(enum MessageType messageType, std::f
 
 void MessageDispatchCenter::removeMessage(enum MessageType messageType, std::function<void(Actor*)> callfunc)
 {
-	//暂时用不到
+	
 }
 
 void MessageDispatchCenter::dispatchMessage(enum MessageType messageType, Actor* param)

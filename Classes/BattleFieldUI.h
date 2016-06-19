@@ -52,6 +52,6 @@ private:
 	void bloodbarInit();
 	void angrybarInit();
 	void touchButtonInit();
-	void setGreyShader(Sprite *avatar);
+	void setGrayShader(Sprite *avatar);
 	Repeat* shakeAvatar();
 };
