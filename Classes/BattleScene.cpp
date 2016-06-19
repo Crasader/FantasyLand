@@ -55,7 +55,6 @@ void BattleScene::moveCamera(float dt)
 		return;
 	auto cameraPosition = camera->getPosition();
 	Vec2 focusPoint;
-
 	focusPoint = GameMaster::getPlayer()->getPosition();
 
 	if (HeroManager.size() > 0)

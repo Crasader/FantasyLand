@@ -621,6 +621,8 @@ void Actor::attackUpdate(float dt)
 			_curAnimation = "specialAttack1";
 			_cooldown = true;
 		}
+		if (_isPlayer)
+			_target = nullptr;
 	}
 }
 

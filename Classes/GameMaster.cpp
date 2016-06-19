@@ -678,6 +678,12 @@ void GameMaster::setPlayer(std::string playerName)
 		_playerName = "Archer";
 		_player = HeroManager.at(2);
 	}
+	if(playerName=="")
+	{
+		_playerName = "";
+		_player = nullptr;
+		return;
+	}
 	getPlayer()->setPlayer();
 }
 
