@@ -5,7 +5,6 @@ Layer * currentLayer;
 class BattleFieldUI *uiLayer;
 
 const float FXZorder = 1999;
-std::string BossTaunt = "How dare you???";
 Size VisibleSize;
 float resolutionRate; 
 AnimationCache *animationCache;
@@ -39,7 +38,8 @@ struct ReSkin_d ReSkin;
 void initGlobalVariables()
 {
 	camera = Camera::create();
-
+	
+	//hurtEffect
 	animationCache = AnimationCache::getInstance();
 	Animation * hurtAnimation = Animation::create();
 	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("FX/FX.plist");
@@ -64,9 +64,6 @@ void initGlobalVariables()
 	RECTS.fireBall = SpriteFrameCache::getInstance()->getSpriteFrameByName("fireball1.png")->getRect();
 	RECTS.thunderBall = SpriteFrameCache::getInstance()->getSpriteFrameByName("thunderball.png")->getRect();
 
-	G.winSize = Director::getInstance()->getWinSize();
-
 	VisibleSize = Director::getInstance()->getWinSize();
 	resolutionRate = VisibleSize.width / VisibleSize.height;
-	
 }

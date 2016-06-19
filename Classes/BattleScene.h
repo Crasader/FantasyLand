@@ -13,28 +13,21 @@ public:
 	virtual bool init();
 	void update(float dt) override;
 
-	void moveCamera(float dt);
-	void updateParticlePos();
-	void createBackground();
-	void setCamera();
-	void gameController(float dt);
-	void initUILayer();
-	void bloodMinus(Actor *heroActor);
-	void angryChange(Actor *heroActor/*angry @lua*/);
-	void specialPerspective(Actor *heroActor/*param @lua*/);
-	void enableTouch();
-	MessageType UIcontainsPoint(Vec2 position/*position @lua*/);
-
-	void controlCamera();
 private:
-	Camera *specialCamera;
-	Scheduler * scheduler;
-	Vec3 cameraOffset;
-	Vec2 cameraOffsetMin;
-	Vec2 cameraOffsetMax;
+	Vec3 _cameraOffset{ 150, 0, 0 };
+	Vec2 _lastTouchPosition;
+	Vec2 _cameraAngularVelocity;
+	Vec3 _cameraVelocity;
 
-	bool isDebug;
-	Vec2 lastTouchPosition;
-	Vec2 cameraAngularVelocity;
-	Vec3 cameraVelocity;
+	void setCamera();
+	void controlCamera();
+	void moveCamera(float dt);
+	void createBackground();
+	void initUILayer();
+	void enableTouch();
+	void updateParticlePos();
+	void gameController(float dt);
+	void bloodMinus(Actor *heroActor);
+	void angryChange(Actor *heroActor);
+	MessageType UIcontainsPoint(Vec2 position);
 };

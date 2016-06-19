@@ -10,19 +10,12 @@ public:
 	CREATE_FUNC(BattleFieldUI);
 	virtual bool init();
 
-	void avatarInit();
-	void bloodbarInit();
-	void angrybarInit();
-	void touchButtonInit();
-	Repeat* shakeAvatar();
 	void bloodDrop(Actor *heroActor);
 	void heroDead(Actor *heroActor);
 	void angryChange(Actor *heroActor);
-	void timeInit();
 	void showVictoryUI();
 	void showGameOverUI();
-	void setGreyShader(Sprite * s);
-//杜：此处修改过，因为我要访问这些东西
+
 	ProgressTimer* MageBlood;
 	ProgressTimer* MageAngry;
 	ProgressTimer* MageBloodClone;
@@ -41,7 +34,6 @@ public:
 	Sprite *ArcherPng;
 	Sprite *ArcherPngFrame;
 
-
 	Label *_tmlabel;
 	unsigned int _tmSchedule;
 	Sprite* KnightAngryFullSignal;
@@ -51,7 +43,14 @@ public:
 
 	unsigned time;
 
-	void controlPng();
 	Vec3 pngVelocity;
 	Vec2 lastTouchPosition;
+private:
+	void timeInit();
+	void avatarInit();
+	void bloodbarInit();
+	void angrybarInit();
+	void touchButtonInit();
+	void setGreyShader(Sprite *avatar);
+	Repeat* shakeAvatar();
 };

@@ -84,7 +84,7 @@ Label *HPCounter::showBloodLossNum(float dmage, Actor *racetype, bool atack)
 			critleAttack->runAction(getAction());
 			critleAttack->setRotation3D(Vec3(90, 0, 0));
 			if (racetype->getname() == "Rat")
-				critleAttack->setPositionZ(G.winSize.height*0.25);
+				critleAttack->setPositionZ(VisibleSize.height*0.25);
 			racetype->addEffect(critleAttack);
 			_cirtleAttack = critleAttack;
 			pointZ = 80;
