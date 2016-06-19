@@ -21,7 +21,9 @@ bool ChooseRoleScene::init()
 	Layer::init();
 	currentLayer = this;
 
+	
 	Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::AUTO);
+	experimental::AudioEngine::stopAll();
 	AUDIO_ID.CHOOSEROLECHAPTERBGM = experimental::AudioEngine::play2d(BGM_RES.CHOOSEROLESCENEBGM, true, 1);
 
 	//create background

@@ -572,7 +572,7 @@ void GameMaster::showDialog()
 	bosslogo->setScale(0.74*ResolutionRate);
 	dialog->addChild(bosslogo);
 
-	auto text = Label::createWithTTF("How dare you →_→", "fonts/britanic bold.ttf", 24);
+	auto text = Label::createWithTTF("How dare you???", "fonts/britanic bold.ttf", 24);
 	text->setPosition(VisibleSize.width*0.68, VisibleSize.height*0.27);
 	dialog->addChild(text);
 

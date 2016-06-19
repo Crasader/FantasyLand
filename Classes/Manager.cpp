@@ -91,7 +91,7 @@ void collisionDetect(float dt)
 		}
 		else
 		{
-			delete HeroManager[val];
+			//delete HeroManager[val];
 			HeroManager.erase(HeroManager.begin() + val);
 		}
 	}
@@ -106,7 +106,7 @@ void collisionDetect(float dt)
 		}
 		else
 		{
-			delete MonsterManager[val];
+			//delete MonsterManager[val];
 			MonsterManager.erase(MonsterManager.begin() + val);
 		}
 	}
