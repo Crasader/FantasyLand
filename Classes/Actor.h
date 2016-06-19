@@ -35,6 +35,7 @@ public:
 	void setStateType(EnumStateType type);
 	void setTarget(Actor* target);
 	void setFacing(float degrees);
+	void setTargetPos(Vec2 pos);
 	bool getAIEnabled();
 	void setAIEnabled(bool enable);
 	float getRadius();
@@ -45,6 +46,7 @@ public:
 	virtual int getHelmetID();
 	Actor* getTarget();
 	void setAngry(float angry);
+	void setPlayer();
 	float getAngryMax();
 	bool isAlive();
 	Vec2 getMyPos();
@@ -108,6 +110,7 @@ protected:
 	//target variables
 	float _targetFacing;//direction the actor wants to turn to
 	Actor* _target;	//the enemy actor;
+	Vec2 _targetPos;
 	Vec2 _myPos;
 	float _angry;
 	float _angryMax;
@@ -132,6 +135,7 @@ protected:
 	enum EnumStateType _statetype;	//AI state machine
 	Sprite* _sprite;
     Sprite3D* _sprite3d;	//place to hold 3d model
+	bool _isPlayer;
 
     float _radius;	//actor collider size
 	float _shadowSize;	//weight of the role, it affects collision

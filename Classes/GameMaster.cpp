@@ -23,7 +23,7 @@ const int distanceWithHeroY = 150;
 struct monsterCount_d monsterCount;
 
 GameMaster * GameMaster::_instance = nullptr;
-Actor *GameMaster::_palyer = nullptr;
+Actor *GameMaster::_player = nullptr;
 std::string GameMaster::_playerName;
 
 
@@ -624,7 +624,9 @@ void GameMaster::showGameOverUI()
 
 void GameMaster::playerControl(Vec2 positionOf3DWorld, float angleOf3DWorld)
 {
-	getPlayer()->setPosition(positionOf3DWorld);
+	//getPlayer()->setPosition(positionOf3DWorld);
+	getPlayer()->setTargetPos(positionOf3DWorld);
+	getPlayer()->walkMode();
 }
 
 void GameMaster::setPlayer(std::string playerName)
@@ -632,25 +634,26 @@ void GameMaster::setPlayer(std::string playerName)
 	if (playerName == "Knight")
 	{
 		_playerName = "Knight";
-		_palyer = HeroManager.at(0);
-		_palyer->setAIEnabled(false);
+		_player = HeroManager.at(0);
+		_player->setAIEnabled(false);
 	}
 	if (playerName == "Mage")
 	{
 		_playerName = "Mage";
-		_palyer = HeroManager.at(1);
+		_player = HeroManager.at(1);
 	}
 	if (playerName == "Archer")
 	{
 		_playerName = "Archer";
-		_palyer = HeroManager.at(2);
+		_player = HeroManager.at(2);
 	}
+	_player->setPlayer();
 }
 
 
 Actor* GameMaster::getPlayer()
 {
-	return _palyer;
+	return _player;
 }
 
 std::string GameMaster::getPlayerName()

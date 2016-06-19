@@ -46,7 +46,7 @@ private:
 	float _totaltime;
 	float _logicFrq;
 
-	static Actor *_palyer;
+	static Actor *_player;
 	static std::string _playerName;
 };
 

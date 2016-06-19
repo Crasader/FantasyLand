@@ -242,6 +242,11 @@ Vec2 Actor::getMyPos() {
 	return _myPos;
 }
 
+void Actor::setTargetPos(Vec2 pos)
+{
+	_targetPos = pos;
+}
+
 void Actor::setMyPos(Vec2 pos)
 {
 	_myPos = pos;
@@ -259,6 +264,10 @@ void Actor::setGoRight(bool goRight)
 		_goRight = false;
 }
 
+void Actor::setPlayer()
+{
+	_isPlayer = true;
+}
 
 Node* Actor::getEffectNode() {
 	return _effectNode;
@@ -624,6 +633,15 @@ void Actor::walkUpdate(float dt)
 		_targetFacing = ccpToAngle(ccpSub(p2, p1));
 		if (ccpDistance(p1, p2) < attackDistance)
 			attackMode();
+	}
+	else if (_isPlayer && _target == nullptr)
+	{
+		auto decDistance = _speed;
+		auto curPos = _myPos;
+		auto tarPos = _targetPos;
+		_targetFacing = ccpToAngle(ccpSub(tarPos, curPos));
+		if (ccpDistance(curPos, tarPos) < attackDistance)
+			idleMode();
 	}
 	else {
 		auto cur = this->getPosition();
