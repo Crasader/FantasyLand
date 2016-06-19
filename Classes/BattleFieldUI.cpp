@@ -21,7 +21,7 @@ bool BattleFieldUI::init()
 }
 
 void BattleFieldUI::avatarInit()
-{
+{//init three avatar of three heroes
 	auto offset = 8;
 	auto scale = 0.7;
 	MagePng = Sprite::createWithSpriteFrameName("UI-1136-640_18.png");
@@ -59,7 +59,7 @@ void BattleFieldUI::avatarInit()
 }
 
 void BattleFieldUI::bloodbarInit()
-{
+{//it is the blood bar below the avatar
 	auto offset = 45;
 	auto scale = 0.7;
 	KnightBlood = ProgressTimer::create(Sprite::createWithSpriteFrameName("UI-1136-640_36_clone.png"));
@@ -130,7 +130,7 @@ void BattleFieldUI::bloodbarInit()
 }
 
 void BattleFieldUI::angrybarInit()
-{
+{//it is the angry bar below the avatar
 	auto offset = 53;
 	auto fullAngerStarOffset = 70;
 	auto yellow = Color3B(255, 255, 0);
@@ -232,7 +232,7 @@ void BattleFieldUI::angrybarInit()
 }
 
 void BattleFieldUI::touchButtonInit()
-{
+{//init touch buttons 
 	auto _setBtn = Sprite::createWithSpriteFrameName("UI-1136-640_06.png");
 	_setBtn->setPosition3D(Vec3(VisibleSize.width - 50, VisibleSize.height - 50, 3));
 	_setBtn->setScale(0.8);
@@ -268,7 +268,7 @@ void BattleFieldUI::touchButtonInit()
 }
 
 Repeat* BattleFieldUI::shakeAvatar()
-{
+{//the shake animation of avatar
 	auto repead = Repeat::create(Spawn::create(Sequence::create(ScaleTo::create(0.075, 0.75),
 		ScaleTo::create(0.075, 0.7), NULL),
 		Sequence::create(MoveBy::create(0.05, { 6.5, 0 }),
@@ -279,7 +279,7 @@ Repeat* BattleFieldUI::shakeAvatar()
 }
 
 void BattleFieldUI::bloodDrop(Actor* heroActor)
-{
+{//show the effect of blood drop
 	TintTo* tintTo;
 	FiniteTimeAction* progressTo;
 	Action* progressToClone;
@@ -328,27 +328,26 @@ void BattleFieldUI::bloodDrop(Actor* heroActor)
 }
 
 void BattleFieldUI::heroDead(Actor* hero)
-{
-
+{//show effect when hero dead
 	if (hero->getname() == "Knight")
 	{
-		setGreyShader(KnightPng);
-		setGreyShader(KnightPngFrame);
+		setGrayShader(KnightPng);
+		setGrayShader(KnightPngFrame);
 		KnightAngryFullSignal->setVisible(false);
 		KnightAngryClone->setVisible(false);
 	}
 
 	else if (hero->getname() == "Mage") {
-		setGreyShader(MagePng);
-		setGreyShader(MagePngFrame);
+		setGrayShader(MagePng);
+		setGrayShader(MagePngFrame);
 		MageAngryFullSignal->setVisible(false);
 		MageAngryClone->setVisible(false);
 	}
 
 	else if (hero->getname() == "Archer")
 	{
-		setGreyShader(ArcherPng);
-		setGreyShader(ArcherPngFrame);
+		setGrayShader(ArcherPng);
+		setGrayShader(ArcherPngFrame);
 		ArcherAngryFullSignal->setVisible(false);
 		ArcherAngryClone->setVisible(false);
 	}
@@ -356,7 +355,7 @@ void BattleFieldUI::heroDead(Actor* hero)
 }
 
 void BattleFieldUI::angryChange(Actor* angry)
-{
+{//show the effect when angry change
 	auto percent = angry->getAngry() / angry->getAngryMax() * 100;
 	auto progressTo = ProgressTo::create(0.3, percent);
 	auto progressToClone = ProgressTo::create(1, percent + 2);
@@ -370,7 +369,6 @@ void BattleFieldUI::angryChange(Actor* angry)
 		else if (percent == 0)
 			KnightAngryFullSignal->setVisible(false);
 	}
-
 	else if (angry->getname() == ArcherValues._name)
 	{
 		bar = ArcherAngry;
@@ -379,7 +377,6 @@ void BattleFieldUI::angryChange(Actor* angry)
 		else if (percent == 0)
 			ArcherAngryFullSignal->setVisible(false);
 	}
-
 	else if (angry->getname() == MageValues._name)
 	{
 		bar = MageAngry;
@@ -388,12 +385,11 @@ void BattleFieldUI::angryChange(Actor* angry)
 		else if (percent == 0)
 			MageAngryFullSignal->setVisible(false);
 	}
-
 	bar->runAction(progressTo);
 }
 
 void BattleFieldUI::timeInit()
-{
+{//init the time label on the left-up
 	time = 0;
 	auto tm = "00:00";
 	//tm = table.concat(tm, ":")
@@ -426,7 +422,7 @@ void BattleFieldUI::timeInit()
 }
 
 void BattleFieldUI::showVictoryUI()
-{
+{//show the victory UI when win
 	//diable AI
 
 	//color layer
@@ -481,7 +477,7 @@ void BattleFieldUI::showVictoryUI()
 
 
 void BattleFieldUI::showGameOverUI()
-{
+{//show the gameover UI when loss
 	//diable AI
 
 	//color layer
@@ -544,9 +540,8 @@ void BattleFieldUI::showGameOverUI()
 	addChild(layer);
 }
 
-void BattleFieldUI::setGreyShader(Sprite * avatar)
-{
-
+void BattleFieldUI::setGrayShader(Sprite * avatar)
+{//to turn the pictrue gray
 	auto fileUtiles = FileUtils::getInstance();
 	auto fragmentFullPath = fileUtiles->fullPathForFilename("shader3D/greyScale.fsh");
 	auto fragSource = fileUtiles->getStringFromFile(fragmentFullPath);
