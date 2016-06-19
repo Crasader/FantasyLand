@@ -636,7 +636,9 @@ void GameMaster::playerControl(Vec2 positionOf3DWorld, float angleOf3DWorld)
 	else {
 		getPlayer()->setTargetPos(positionOf3DWorld);
 		getPlayer()->setTarget(nullptr);
-		getPlayer()->walkMode();
+		auto state = getPlayer()->getStateType();
+		if (state == EnumStateType::IDLE)
+		    getPlayer()->walkMode();
 	}
 }
 
