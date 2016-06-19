@@ -30,4 +30,5 @@ private:
 	void bloodMinus(Actor *heroActor);
 	void angryChange(Actor *heroActor);
 	MessageType UIcontainsPoint(Vec2 position);
+	Vec2 getPositionOf3DWorld(Vec2 touchPosition);
 };

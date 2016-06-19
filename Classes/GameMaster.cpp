@@ -620,6 +620,11 @@ void GameMaster::showGameOverUI()
 	uiLayer->showGameOverUI();
 }
 
+void GameMaster::playerControl(Vec2 position)
+{
+	getPlayer()->setPosition(position);
+}
+
 void GameMaster::setPlayer(std::string playerName)
 {
 	if (playerName == "Knight")

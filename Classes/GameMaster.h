@@ -38,6 +38,8 @@ public:
 	void showVictoryUI();
 	void showGameOverUI();
 
+	void playerControl(Vec2 position);
+
 private:
 
 	static GameMaster* _instance;

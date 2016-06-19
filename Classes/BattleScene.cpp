@@ -155,6 +155,8 @@ void BattleScene::enableTouch()
 			hero = getHeroByName("Mage");
 		if (message != MessageType::NullMessageType)
 			MessageDispatchCenter::getInstance()->dispatchMessage(message, hero);
+		else
+			GameMaster::getInstance()->playerControl(getPositionOf3DWorld(touch->getLocation()));
 	};
 
 	currentLayer->getEventDispatcher()->addEventListenerWithSceneGraphPriority(touchEventListener, currentLayer);
@@ -177,6 +179,17 @@ MessageType BattleScene::UIcontainsPoint(Vec2 position)
 	else
 		return MessageType::NullMessageType;
 	return message;
+}
+
+Vec2 BattleScene::getPositionOf3DWorld(Vec2 touchPosition)
+{
+	auto angleOfCamera = atan(-_cameraOffset.y / _cameraOffset.z);
+	auto angleOfScreen = atan((touchPosition.y - VisibleSize.height / 2) / (sqrt(3) / 2 * VisibleSize.height));
+	auto angleOf3DWorld = angleOfCamera + angleOfScreen;
+	auto positionYOf3DWorld = _cameraOffset.z*tan(angleOf3DWorld) + camera->getPositionY();
+
+	return Vec2(camera->getPositionX() + touchPosition.x - VisibleSize.width / 2,
+		positionYOf3DWorld);
 }
 
 void BattleScene::controlCamera()
