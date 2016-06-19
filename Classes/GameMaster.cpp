@@ -23,6 +23,8 @@ const int distanceWithHeroY = 150;
 struct monsterCount_d monsterCount;
 
 GameMaster * GameMaster::_instance = nullptr;
+Actor *GameMaster::_palyer = nullptr;
+std::string GameMaster::_playerName;
 
 
 bool GameMaster::init()
@@ -645,8 +647,6 @@ void GameMaster::setPlayer(std::string playerName)
 	}
 }
 
-Actor *GameMaster::_palyer;
-std::string GameMaster::_playerName;
 
 Actor* GameMaster::getPlayer()
 {
