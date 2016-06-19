@@ -577,7 +577,7 @@ void Actor::knockingUpdate(float dt)
 		_timeKnocked = NULL;
 		if (_isPlayer)
 			idleMode();
-		else if (_inRange())
+		if (_inRange())
 			attackMode();
 		else
 			walkMode();
@@ -587,8 +587,13 @@ void Actor::knockingUpdate(float dt)
 void Actor::attackUpdate(float dt)
 {
 	_attackTimer += dt;
-	if ((_attackTimer > _attackFrequency && !_isPlayer) || (_isPlayer && _target != nullptr)) {
+	//if ((_attackTimer > _attackFrequency && !_isPlayer) || (_isPlayer && _target != nullptr)) {
+	if (_attackTimer > _attackFrequency) {
 		_attackTimer -= _attackFrequency;
+
+		if (_isPlayer && _target == nullptr)
+			idleMode();
+
 		auto playIdle = [&]() {
 			playAnimation("idle", true);
 			_cooldown = false;
@@ -625,8 +630,9 @@ void Actor::attackUpdate(float dt)
 			_curAnimation = "specialAttack1";
 			_cooldown = true;
 		}
-		if (_isPlayer)
+		if (_isPlayer) {
 			_target = nullptr;
+		}
 	}
 }
 
