@@ -23,7 +23,7 @@ const int distanceWithHeroY = 150;
 struct monsterCount_d monsterCount;
 
 GameMaster * GameMaster::_instance = nullptr;
-Actor *GameMaster::_player = nullptr;
+Actor *GameMaster::_palyer = nullptr;
 std::string GameMaster::_playerName;
 
 
@@ -624,9 +624,29 @@ void GameMaster::showGameOverUI()
 
 void GameMaster::playerControl(Vec2 positionOf3DWorld, float angleOf3DWorld)
 {
-	//getPlayer()->setPosition(positionOf3DWorld);
-	getPlayer()->setTargetPos(positionOf3DWorld);
-	getPlayer()->walkMode();
+	getPlayer()->setPosition(positionOf3DWorld);
+	auto monster = getTouchedMonster(positionOf3DWorld, angleOf3DWorld);
+
+}
+
+Actor* GameMaster::getTouchedMonster(Vec2 positionOf3DWorld, float angleOf3DWorld)
+{
+	auto monsterManger = MonsterManager;
+	auto getPositionY = [](Actor*monster1, Actor*monster2)
+	{
+		return monster1->getPositionY() < monster2->getPositionY();
+	};
+	std::sort(monsterManger.begin(), monsterManger.end(), getPositionY);
+
+	auto width = 200;
+	auto depth = 200;
+	for (auto it : monsterManger)
+	{
+		if (it->getPositionX() < positionOf3DWorld.x + width / 2 && it->getPositionX() > positionOf3DWorld.x - width / 2
+			&& it->getPositionY() < positionOf3DWorld.y + depth / 2 && it->getPositionY() > positionOf3DWorld.y - depth / 2)
+			return it;
+	}
+	return nullptr;
 }
 
 void GameMaster::setPlayer(std::string playerName)
@@ -634,26 +654,25 @@ void GameMaster::setPlayer(std::string playerName)
 	if (playerName == "Knight")
 	{
 		_playerName = "Knight";
-		_player = HeroManager.at(0);
-		_player->setAIEnabled(false);
+		_palyer = HeroManager.at(0);
+		_palyer->setAIEnabled(false);
 	}
 	if (playerName == "Mage")
 	{
 		_playerName = "Mage";
-		_player = HeroManager.at(1);
+		_palyer = HeroManager.at(1);
 	}
 	if (playerName == "Archer")
 	{
 		_playerName = "Archer";
-		_player = HeroManager.at(2);
+		_palyer = HeroManager.at(2);
 	}
-	_player->setPlayer();
 }
 
 
 Actor* GameMaster::getPlayer()
 {
-	return _player;
+	return _palyer;
 }
 
 std::string GameMaster::getPlayerName()

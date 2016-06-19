@@ -48,6 +48,7 @@ private:
 
 	static Actor *_player;
 	static std::string _playerName;
+	Actor *getTouchedMonster(Vec2 positionOf3DWorld, float angleOf3DWorld);
 };
 
 extern int stage;

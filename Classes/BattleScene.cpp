@@ -164,7 +164,7 @@ void BattleScene::enableTouch()
 			auto angleOf3DWorld = angleOfCamera + angleOfScreen;
 			auto positionYOf3DWorld = _cameraOffset.z*tan(angleOf3DWorld) + camera->getPositionY();
 			auto positionOf3DWorld = Vec2(camera->getPositionX() + touchPosition.x - VisibleSize.width / 2,
-				positionYOf3DWorld);
+				positionYOf3DWorld + 100);
 			//enter player control
 			GameMaster::getInstance()->playerControl(positionOf3DWorld, angleOf3DWorld);
 		}
