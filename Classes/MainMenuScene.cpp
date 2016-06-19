@@ -32,7 +32,7 @@ void MainMenuScene::addBackground()
 
 	auto logo = Sprite::create("mainMenuScene/logo.png");
 	logo->setPosition(VisibleSize.width / 2, VisibleSize.height * 2 / 3);
-	logo->setScale(0.5);
+	logo->setScale(0.75);
 	addChild(logo);
 }
 
