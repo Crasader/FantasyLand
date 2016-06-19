@@ -212,18 +212,21 @@ void GameMaster::logicUpdate()
 void GameMaster::AddHeros()
 {
 	auto knight = Knight::create();
+	knight->setCameraMask(2);
 	knight->setPosition(battleSiteX[1], 10);
 	currentLayer->addChild(knight);
 	knight->idleMode();
 	HeroManager.push_back(knight);
 
 	auto mage = Mage::create();
+	mage->setCameraMask(2);
 	mage->setPosition(battleSiteX[1], 100);
 	currentLayer->addChild(mage);
 	mage->idleMode();
 	HeroManager.push_back(mage);
 
 	auto archer = Archer::create();
+	archer->setCameraMask(2);
 	archer->setPosition(battleSiteX[1], -80);
 	currentLayer->addChild(archer);
 	archer->idleMode();
@@ -243,6 +246,7 @@ void GameMaster::addDragon()
 	for (int var = 1; var <= monsterCount.dragon; var++)
 	{
 		auto dragon = Dragon::create();
+		dragon->setCameraMask(2);
 		currentLayer->addChild(dragon);
 		dragon->setVisible(false);
 		dragon->setAIEnabled(false);
@@ -255,6 +259,7 @@ void GameMaster::addSlime()
 	for (int i = 1; i <= monsterCount.slime; i++)
 	{
 		auto slime = Slime::create();
+		slime->setCameraMask(2);
 		currentLayer->addChild(slime);
 		slime->setVisible(false);
 		slime->setAIEnabled(false);
@@ -267,6 +272,7 @@ void GameMaster::addPiglet()
 	for (int i = 1; i <= monsterCount.piglet; i++)
 	{
 		auto piglet = Piglet::create();
+		piglet->setCameraMask(2);
 		currentLayer->addChild(piglet);
 		piglet->setVisible(false);
 		piglet->setAIEnabled(false);
@@ -279,6 +285,7 @@ void GameMaster::addRat()
 	for (int i = 1; i <= monsterCount.rat; i++)
 	{
 		auto rat = Rat::create();
+		rat->setCameraMask(2);
 		currentLayer->addChild(rat);
 		rat->setVisible(false);
 		rat->setAIEnabled(false);

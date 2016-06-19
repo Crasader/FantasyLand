@@ -105,7 +105,7 @@ void BattleScene::initUILayer()
 	uiLayer->setPositionZ(-Director::getInstance()->getZEye() / 4);
 	uiLayer->setScale(0.25);
 	uiLayer->ignoreAnchorPointForPosition(false);
-	uiLayer->setGlobalZOrder(3000);
+	uiLayer->setGlobalZOrder(10);
 	camera->addChild(uiLayer);
 }
 
