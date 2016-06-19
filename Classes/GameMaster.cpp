@@ -43,12 +43,17 @@ bool GameMaster::init()
 	return true;
 }
 
-GameMaster* GameMaster::getInstance()
+GameMaster* GameMaster::create()
 {
 	if (_instance == nullptr)
 	{
 		_instance = new GameMaster();
 	}
+	return _instance;
+}
+
+GameMaster* GameMaster::getInstance()
+{
 	return _instance;
 }
 

@@ -425,7 +425,7 @@ void Actor::dyingMode(Vec2 knockSource, int knockAmount)
 		//	struct MESSAGE_ANGRY_CHANGE angryChange = { _name, _angry, _angryMax };
 		MessageDispatchCenter::getInstance()->dispatchMessage(ANGRY_CHANGE, this);
 
-		if (HeroManager.size() == 0 && GameMaster::getInstance() != NULL)
+		if (HeroManager.size() == 0 && GameMaster::getInstance() != nullptr)
 			GameMaster::getInstance()->showGameOverUI();
 	}
 	else

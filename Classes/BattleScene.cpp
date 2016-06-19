@@ -25,7 +25,7 @@ bool BattleScene::init()
 	createBackground();
 	enableTouch();
 	initUILayer();
-	GameMaster::getInstance();
+	GameMaster::create();
 
 	MessageDispatchCenter::getInstance()->registerMessage(MessageType::BLOOD_MINUS, [](Actor * heroActor)
 	{
@@ -174,7 +174,7 @@ void BattleScene::enableTouch()
 			auto positionOf3DWorld = Vec2(camera->getPositionX() + touchPosition.x - VisibleSize.width / 2,
 				positionYOf3DWorld + 100);
 			//enter player control
-			if (GameMaster::getPlayer() != nullptr)
+			if (GameMaster::getPlayer() != nullptr&&GameMaster::getInstance() != nullptr)
 				GameMaster::getInstance()->playerControl(positionOf3DWorld, angleOf3DWorld);
 		}
 	};

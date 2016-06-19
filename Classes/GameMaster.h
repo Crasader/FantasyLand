@@ -7,6 +7,7 @@ class Actor;
 class GameMaster
 {
 public:
+	static GameMaster* create();
 	static GameMaster* getInstance();
 	static void setPlayer(std::string playerName);
 	static Actor *getPlayer();

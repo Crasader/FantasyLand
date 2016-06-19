@@ -129,7 +129,7 @@ void Rat::dyingMode(Vec2 knockSource, int knockAmount)
 	
 	auto recycle = [&]() {
 		removeFromParent();
-		if (GameMaster::getInstance() != NULL)
+		if (GameMaster::getInstance() != nullptr)
 			GameMaster::getInstance()->showVictoryUI();
 	};
 
