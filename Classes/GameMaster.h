@@ -35,12 +35,15 @@ public:
 	void showVictoryUI();
 	void showGameOverUI();
 
-
+	void setPlayer(std::string playerName);
 private:
 
 	static GameMaster* _instance;
 	float _totaltime;
 	float _logicFrq;
+
+	Actor *_palyer;
+	Actor *_playerName;
 };
 
 extern int stage;

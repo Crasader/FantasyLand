@@ -14,7 +14,7 @@ public:
 	void update(float dt) override;
 
 private:
-	Vec3 _cameraOffset{ 150, 0, 0 };
+	Vec3 _cameraOffset{ 150, -480, 220 };
 	Vec2 _lastTouchPosition;
 	Vec2 _cameraAngularVelocity;
 	Vec3 _cameraVelocity;

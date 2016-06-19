@@ -620,3 +620,7 @@ void GameMaster::showGameOverUI()
 	uiLayer->showGameOverUI();
 }
 
+void GameMaster::setPlayer(std::string playerName)
+{
+
+}

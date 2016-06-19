@@ -1,6 +1,7 @@
 ﻿#include "ChooseRoleScene.h"
 #include "ui/CocosGUI.h"
 #include "BattleScene.h"
+#include "GameMaster.h"
 #include "Archer.h"
 #include "Knight.h"
 #include "Mage.h"
@@ -94,9 +95,11 @@ void ChooseRoleScene::addButtons()
 
 			auto playid = experimental::AudioEngine::play2d(BGM_RES.MAINMENUSTART, false, 1);
 
-			//stop schedule && enter next scene
+			//stop schedule && set player && enter next scene
 			Director::getInstance()->getScheduler()->unschedule("hero_rotate", this);
-			Director::getInstance()->replaceScene(BattleScene::createScene());
+			auto battleScene = BattleScene::createScene();
+			GameMaster::getInstance()->setPlayer(dynamic_cast<Actor*>(getChildByTag(_sortOrder[1]))->getname());
+			Director::getInstance()->replaceScene(battleScene);
 		}
 	};
 

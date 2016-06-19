@@ -53,11 +53,11 @@ void BattleScene::moveCamera(float dt)
 		return;
 	auto cameraPosition = getPosTable(camera);
 	auto focusPoint = getFocusPointOfHeros();
-	
+
 	if (HeroManager.size() > 0)
 	{
-		auto temp = ccpLerp(cameraPosition, ccp(focusPoint.x + _cameraOffset.x, _cameraOffset.y + focusPoint.y - VisibleSize.height * 3 / 4), 2 * dt);
-		auto position = Vec3(temp.x, temp.y, VisibleSize.height / 2 - 100);
+		auto temp = ccpLerp(cameraPosition, ccp(focusPoint.x + _cameraOffset.x, focusPoint.y + _cameraOffset.y), 2 * dt);
+		auto position = Vec3(temp.x, temp.y, _cameraOffset.z);
 		camera->setPosition3D(position);
 		camera->lookAt(Vec3(position.x, focusPoint.y, 50.0), Vec3(0.0, 0.0, 1.0));
 	}
@@ -120,7 +120,7 @@ void BattleScene::angryChange(Actor* heroActor)
 }
 
 void BattleScene::enableTouch()
-{
+{//to enable the touch
 	auto touchEventListener = EventListenerTouchOneByOne::create();
 
 	touchEventListener->onTouchBegan = [this](Touch *touch, Event*)
@@ -178,7 +178,7 @@ MessageType BattleScene::UIcontainsPoint(Vec2 position)
 }
 
 void BattleScene::controlCamera()
-{
+{//control the camera by arrow keys
 	auto touchListener = EventListenerTouchOneByOne::create();
 	touchListener->onTouchBegan = [this](Touch* touch, Event*)
 	{
@@ -205,7 +205,7 @@ void BattleScene::controlCamera()
 		case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:++_cameraVelocity.x; break;
 		case EventKeyboard::KeyCode::KEY_PG_UP:--_cameraVelocity.z; break;
 		case EventKeyboard::KeyCode::KEY_PG_DOWN:++_cameraVelocity.z; break;
-		case EventKeyboard::KeyCode::KEY_K:MessageDispatchCenter::getInstance()->dispatchMessage(MessageType::SPECIAL_KNIGHT, HeroManager[0]);break;
+		case EventKeyboard::KeyCode::KEY_K:MessageDispatchCenter::getInstance()->dispatchMessage(MessageType::SPECIAL_KNIGHT, HeroManager[0]); break;
 		case EventKeyboard::KeyCode::KEY_M:MessageDispatchCenter::getInstance()->dispatchMessage(MessageType::SPECIAL_MAGE, HeroManager[1]); break;
 		case EventKeyboard::KeyCode::KEY_A:MessageDispatchCenter::getInstance()->dispatchMessage(MessageType::SPECIAL_ARCHER, HeroManager[2]); break;
 		}
