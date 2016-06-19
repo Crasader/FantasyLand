@@ -587,7 +587,6 @@ void Actor::knockingUpdate(float dt)
 void Actor::attackUpdate(float dt)
 {
 	_attackTimer += dt;
-	//if ((_attackTimer > _attackFrequency && !_isPlayer) || (_isPlayer && _target != nullptr)) {
 	if (_attackTimer > _attackFrequency) {
 		_attackTimer -= _attackFrequency;
 
