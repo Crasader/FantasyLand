@@ -408,6 +408,8 @@ void Actor::dyingMode(Vec2 knockSource, int knockAmount)
 	playAnimation("dead", false);
 	playDyingEffects();
 
+	if (GameMaster::getPlayerName() == _name)
+		GameMaster::setPlayer("");
 	if (_racetype == EnumRaceType::HERO) {
 		uiLayer->heroDead(this);
 
