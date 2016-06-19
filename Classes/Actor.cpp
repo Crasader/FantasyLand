@@ -575,7 +575,9 @@ void Actor::knockingUpdate(float dt)
 	else if (_aliveTime - _timeKnocked > _recoverTime) {
 		//I've recovered from a knock
 		_timeKnocked = NULL;
-		if (_inRange())
+		if (_isPlayer)
+			idleMode();
+		else if (_inRange())
 			attackMode();
 		else
 			walkMode();
@@ -585,7 +587,7 @@ void Actor::knockingUpdate(float dt)
 void Actor::attackUpdate(float dt)
 {
 	_attackTimer += dt;
-	if (_attackTimer > _attackFrequency) {
+	if ((_attackTimer > _attackFrequency && !_isPlayer) || (_isPlayer && _target != nullptr)) {
 		_attackTimer -= _attackFrequency;
 		auto playIdle = [&]() {
 			playAnimation("idle", true);
