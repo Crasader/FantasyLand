@@ -149,12 +149,18 @@ void BattleScene::enableTouch()
 
 		auto  message = UIcontainsPoint(touch->getLocation());
 		Actor *hero;
-		if (message == SPECIAL_KNIGHT)
+		if (message == SPECIAL_KNIGHT) {
 			hero = getHeroByName("Knight");
-		else if (message == SPECIAL_ARCHER)
+			uiLayer->KnightAngryFullSignal->setVisible(false);
+		}
+		else if (message == SPECIAL_ARCHER) {
 			hero = getHeroByName("Archer");
-		else if (message == SPECIAL_MAGE)
+			uiLayer->ArcherAngryFullSignal->setVisible(false);
+		}
+		else if (message == SPECIAL_MAGE) {
 			hero = getHeroByName("Mage");
+			uiLayer->MageAngryFullSignal->setVisible(false);
+		}
 		if (message != MessageType::NullMessageType)
 			MessageDispatchCenter::getInstance()->dispatchMessage(message, hero);
 		else

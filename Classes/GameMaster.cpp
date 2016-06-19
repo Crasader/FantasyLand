@@ -630,14 +630,14 @@ void GameMaster::playerControl(Vec2 positionOf3DWorld, float angleOf3DWorld)
 	{
 		auto state = getPlayer()->getStateType();
 		getPlayer()->setTarget(monster);
-		if (state == EnumStateType::IDLE)
+		if (state == EnumStateType::IDLE || state == EnumStateType::KNOCKING)
 		    getPlayer()->walkMode();
 	}
 	else {
 		getPlayer()->setTargetPos(positionOf3DWorld);
 		getPlayer()->setTarget(nullptr);
 		auto state = getPlayer()->getStateType();
-		if (state == EnumStateType::IDLE)
+		if (state == EnumStateType::IDLE || state == EnumStateType::KNOCKING)
 		    getPlayer()->walkMode();
 	}
 }
