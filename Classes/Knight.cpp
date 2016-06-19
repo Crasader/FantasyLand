@@ -183,6 +183,7 @@ void Knight::init3D()
 {
 	_sprite3d = Sprite3D::create(file);
 	auto gameOver = Sprite::create("battlefieldUI/gameover.png");
+	auto playerLabel = Sprite::create("battlefieldUI/playerLabel.png");
 	_sprite3d->setScale(25);
 	addChild(_sprite3d);
 	_sprite3d->setRotation3D(Vec3(90, 0, 0));

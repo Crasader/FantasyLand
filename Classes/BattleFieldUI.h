@@ -33,6 +33,7 @@ public:
 	Sprite *KnightPngFrame;
 	Sprite *ArcherPng;
 	Sprite *ArcherPngFrame;
+	Sprite *PlayerLabel;
 
 	Label *_tmlabel;
 	unsigned int _tmSchedule;

@@ -56,6 +56,12 @@ void BattleFieldUI::avatarInit()
 	ArcherPngFrame->setPosition3D(Vec3(ArcherPng->getPositionX() + 1, ArcherPng->getPositionY() - offset, 1));
 	ArcherPngFrame->setGlobalZOrder(8);
 	addChild(ArcherPngFrame, 1);
+
+	PlayerLabel = Sprite::create("battlefieldUI/playerLabel.png");
+	PlayerLabel->setScale(1.5);
+	PlayerLabel->setGlobalZOrder(20);
+	PlayerLabel->setCameraMask(2);
+	addChild(PlayerLabel, 3);
 }
 
 void BattleFieldUI::bloodbarInit()
