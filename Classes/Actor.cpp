@@ -6,7 +6,7 @@
 #include "HPCounter.h"
 #include "MessageDispatchCenter.h"
 
-bool Actor::init() 
+bool Actor::init()
 {
 	Node::init();
 	this->setCascadeColorEnabled(true);
@@ -33,7 +33,7 @@ void Actor::copyData()
 {
 	//Actor Common Values
 	_aliveTime = 0,
-	_curSpeed = 0;
+		_curSpeed = 0;
 	_curAnimation = "";
 	_curAnimation3d = NULL;
 	_curFacing = 0;
@@ -94,7 +94,7 @@ void Actor::initShadow()
 	_sprite3d->setGlobalZOrder(0.01);
 }
 
-void Actor::playAnimation(std::string name, bool loop) 
+void Actor::playAnimation(std::string name, bool loop)
 {
 	if (_curAnimation != name)
 	{
@@ -155,7 +155,7 @@ void Actor::setRaceType(EnumRaceType type)
 	_racetype = type;
 }
 
-float Actor::getRadius() 
+float Actor::getRadius()
 {
 	return _radius;
 }
@@ -172,6 +172,8 @@ EnumStateType Actor::getStateType()
 void Actor::setStateType(EnumStateType type)
 {
 	_statetype = type;
+	if (_name == GameMaster::getPlayerName())
+		int i = 1;
 }
 
 void Actor::setTarget(Actor* target)
@@ -197,6 +199,8 @@ bool Actor::getAIEnabled()
 void Actor::setAIEnabled(bool enable)
 {
 	_AIEnabled = enable;
+	if (_name == GameMaster::getPlayerName())
+		_AIEnabled = false;
 }
 
 void Actor::setAngry(float angry) {
@@ -251,6 +255,8 @@ bool Actor::getGoRight()
 void Actor::setGoRight(bool goRight)
 {
 	_goRight = goRight;
+	if (_name == GameMaster::getPlayerName())
+		_goRight = false;
 }
 
 
@@ -353,7 +359,7 @@ void Actor::specialAttack()
 //state machine switching functions
 
 //switch into idle mode
-void Actor::idleMode()	
+void Actor::idleMode()
 {
 	setStateType(EnumStateType::IDLE);
 	playAnimation("idle", true);
@@ -367,7 +373,7 @@ void Actor::walkMode()
 }
 
 //switch into walk mode
-void Actor::attackMode()	
+void Actor::attackMode()
 {
 	setStateType(EnumStateType::ATTACKING);
 	playAnimation("idle", true);
@@ -381,7 +387,7 @@ void Actor::knockMode(BasicCollider* collider, bool dirKnockMode)
 	playAnimation("knocked", false);
 	_timeKnocked = _aliveTime;
 	auto p = _myPos;
-	auto angle = dirKnockMode?collider->getFacing():ccpToAngle(ccpSub(p, getPosTable(collider)));
+	auto angle = dirKnockMode ? collider->getFacing() : ccpToAngle(ccpSub(p, getPosTable(collider)));
 	auto newPos = ccpRotateByAngle(ccpAdd(Vec2(collider->getKnock(), 0), p), p, angle);
 	runAction(EaseCubicActionOut::create(MoveTo::create(_action.at("knocked")->getDuration() * 3, newPos)));
 }
@@ -399,26 +405,26 @@ void Actor::dyingMode(Vec2 knockSource, int knockAmount)
 		std::vector<Actor *>::iterator it = std::find(HeroManager.begin(), HeroManager.end(), this);
 		HeroManager.erase(it);
 
-		runAction(Sequence::create(DelayTime::create(3), 
-			MoveBy::create(1.0, Vec3(0, 0, -50)), 
+		runAction(Sequence::create(DelayTime::create(3),
+			MoveBy::create(1.0, Vec3(0, 0, -50)),
 			RemoveSelf::create(), NULL));
 
 		_angry = 0;
-	//	struct MESSAGE_ANGRY_CHANGE angryChange = { _name, _angry, _angryMax };
+		//	struct MESSAGE_ANGRY_CHANGE angryChange = { _name, _angry, _angryMax };
 		MessageDispatchCenter::getInstance()->dispatchMessage(ANGRY_CHANGE, this);
 
 		if (HeroManager.size() == 0 && GameMaster::getInstance() != NULL)
 			GameMaster::getInstance()->showGameOverUI();
 	}
-	else 
+	else
 	{
 		//Erase the hero from MonsterManager
 		std::vector<Actor *>::iterator it = std::find(MonsterManager.begin(), MonsterManager.end(), this);
-	    MonsterManager.erase(it);
+		MonsterManager.erase(it);
 
 		auto recycle = [&]() {
 			setVisible(false);
-			PushBackPoolByName(_name,this);
+			PushBackPoolByName(_name, this);
 		};
 		auto recycleShadow = [&]()
 		{
@@ -484,7 +490,7 @@ Actor* Actor::findEnemy(EnumRaceType HeroOrMonster, bool &allDead)
 	return target;
 }
 
-bool Actor::_inRange() 
+bool Actor::_inRange()
 {
 	if (!_target)
 		return false;
@@ -523,10 +529,10 @@ void Actor::AI()
 				return;
 			}
 		}
-        //I did not find a target, and I'm not attacking or not already idle
+		//I did not find a target, and I'm not attacking or not already idle
 		else if (_statetype != EnumStateType::WALKING && _goRight == true) {
 			walkMode();
-			return;	
+			return;
 		}
 		//So the only thing I can do is waiting...
 		else if (!_cooldown || state != EnumStateType::IDLE) {
@@ -554,7 +560,7 @@ void Actor::knockingUpdate(float dt)
 	if (_aliveTime - _timeKnocked > _recoverTime) {
 		//I've recovered from a knock
 		_timeKnocked = NULL;
-		if (_inRange())
+		if (_AIEnabled&&_inRange())
 			attackMode();
 		else
 			walkMode();
@@ -572,7 +578,7 @@ void Actor::attackUpdate(float dt)
 		};
 		//time for an attack, which attack should I do ?
 		float random_special = CCRANDOM_0_1();
-		
+
 		//Just create a normal attack
 		if (random_special > _specialAttackChance) {
 			auto createCol = [&]() {
@@ -592,7 +598,7 @@ void Actor::attackUpdate(float dt)
 			auto createCol = [&]() {
 				specialAttack();
 			};
-			struct MESSAGE_SPECIAL_PERSPECTIVE messageParam = {0.2, _myPos, _specialSlowTime, this};
+			struct MESSAGE_SPECIAL_PERSPECTIVE messageParam = { 0.2, _myPos, _specialSlowTime, this };
 			MessageDispatchCenter::getInstance()->dispatchMessage(SPECIAL_PERSPECTIVE, this);
 			auto attackAction = Sequence::create(_action.at("attack1")->clone(),
 				CallFunc::create(createCol), _action.at("attack2")->clone(),
@@ -600,15 +606,15 @@ void Actor::attackUpdate(float dt)
 			_sprite3d->stopAction(_curAnimation3d);
 			_sprite3d->runAction(attackAction);
 			_curAnimation = "specialAttack1";
-			_cooldown = true;	
+			_cooldown = true;
 		}
 	}
 }
 
-void Actor::walkUpdate(float dt) 
+void Actor::walkUpdate(float dt)
 {
 	//Walking state, switch to attack state when target in range
-	if (_target && _target->_isalive) 
+	if (_target && _target->_isalive)
 	{
 		auto attackDistance = _attackRange + _target->_radius - 1;
 		auto p1 = _myPos;

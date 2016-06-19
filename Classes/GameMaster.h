@@ -8,6 +8,9 @@ class GameMaster
 {
 public:
 	static GameMaster* getInstance();
+	static void setPlayer(std::string playerName);
+	static Actor *getPlayer();
+	static std::string getPlayerName();
 
 	GameMaster();
 	bool init();
@@ -35,12 +38,14 @@ public:
 	void showVictoryUI();
 	void showGameOverUI();
 
-
 private:
 
 	static GameMaster* _instance;
 	float _totaltime;
 	float _logicFrq;
+
+	static Actor *_palyer;
+	static std::string _playerName;
 };
 
 extern int stage;

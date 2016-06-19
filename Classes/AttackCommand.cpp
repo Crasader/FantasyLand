@@ -257,7 +257,6 @@ MageNormalAttack* MageNormalAttack::CreateWithPos(Vec2 pos, float facing, struct
 	auto magicf = SpriteFrameCache::getInstance()->getSpriteFrameByName("puff.png");
 	smoke->setTextureWithRect(magicf->getTexture(), magicf->getRect());
 	smoke->setScale(2);
-	//smoke->setCameraMask(996);
 	newMageNormalAttack->addChild(smoke);
 	smoke->setRotation3D(Vec3(90, 0, 0));
 	smoke->setGlobalZOrder(-newMageNormalAttack->getPositionY() * 2 + FXZorder);
@@ -515,8 +514,13 @@ ArcherSpecialAttack* ArcherSpecialAttack::CreateWithPos(Vec2 pos, float facing, 
 	ret->_sp = Archer::createArrow();
 	ret->_sp->setRotation(RADIANS_TO_DEGREES(-facing) - 90);
 	ret->_sp->setCameraMask(2);
-	ret->_sp->setScale(5);
 	ret->addChild(ret->_sp);
+	ret->_spf = BillBoard::create("FX/FX.png", RECTS.fireBall);
+	ret->_spf->setPosition3D(Vec3(0, 0, 80));
+	ret->_spf->setRotation(RADIANS_TO_DEGREES(-facing) - 90);
+	ret->addChild(ret->_spf);
+	ret->_spf->setCameraMask(2);
+	ret->_spf->setScaleX(6);
 	return ret;
 }
 

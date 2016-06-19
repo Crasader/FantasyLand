@@ -14,25 +14,20 @@ public:
 	void update(float dt) override;
 
 private:
-	Camera *specialCamera;
-	Scheduler * scheduler;
-	Vec3 cameraOffset;
-	Vec2 cameraOffsetMin;
-	Vec2 cameraOffsetMax;
+	Vec3 _cameraOffset{ 150, -480, 220 };
+	Vec2 _lastTouchPosition;
+	Vec2 _cameraAngularVelocity;
+	Vec3 _cameraVelocity;
 
-	Vec2 lastTouchPosition;
-	Vec2 cameraAngularVelocity;
-	Vec3 cameraVelocity;
-
-	void moveCamera(float dt);
-	void updateParticlePos();
-	void createBackground();
 	void setCamera();
-	void gameController(float dt);
+	void controlCamera();
+	void moveCamera(float dt);
+	void createBackground();
 	void initUILayer();
+	void enableTouch();
+	void updateParticlePos();
+	void gameController(float dt);
 	void bloodMinus(Actor *heroActor);
 	void angryChange(Actor *heroActor);
-	void enableTouch();
 	MessageType UIcontainsPoint(Vec2 position);
-	void controlCamera();
 };

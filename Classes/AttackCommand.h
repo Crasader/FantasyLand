@@ -140,6 +140,7 @@ public:
 private:
 	Actor* _owner = nullptr;
 	Sprite3D* _sp = nullptr;
+	Sprite* _spf = nullptr;
 };
 
 class Nova : public BasicCollider
