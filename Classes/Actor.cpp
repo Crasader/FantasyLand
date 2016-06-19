@@ -590,6 +590,10 @@ void Actor::attackUpdate(float dt)
 	//if ((_attackTimer > _attackFrequency && !_isPlayer) || (_isPlayer && _target != nullptr)) {
 	if (_attackTimer > _attackFrequency) {
 		_attackTimer -= _attackFrequency;
+
+		if (_isPlayer && _target == nullptr)
+			idleMode();
+
 		auto playIdle = [&]() {
 			playAnimation("idle", true);
 			_cooldown = false;
