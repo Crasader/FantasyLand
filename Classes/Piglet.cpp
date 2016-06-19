@@ -73,6 +73,7 @@ void Piglet::reset()
 	bool allDead;
 	findEnemy(_racetype, allDead);
 	walkMode();
+	_circle->setVisible(true);
 	setPositionZ(0);
 }
 

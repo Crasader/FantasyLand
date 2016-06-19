@@ -107,6 +107,7 @@ void Slime::init3D()
 	addChild(_sprite3d);
 	_sprite3d->setRotation3D(Vec3(90, 0, 0));
 	_sprite3d->setRotation(-90);
+	_circle->setVisible(true);
 	initShadow();
 };
 

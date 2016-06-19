@@ -645,7 +645,11 @@ void Actor::walkUpdate(float dt)
 		if (ccpDistance(curPos, tarPos) < decDistance)
 			idleMode();
 	}
-	else {
+	else if (_isPlayer) {
+		idleMode();
+	}
+	else
+	{
 		auto cur = this->getPosition();
 		if (_goRight)
 			_targetFacing = 0;
