@@ -6,7 +6,7 @@ class BattleFieldUI *uiLayer;
 
 const float FXZorder = 1999;
 Size VisibleSize;
-float resolutionRate; 
+float ResolutionRate; 
 AnimationCache *animationCache;
 
 struct RECTS_d RECTS;
@@ -65,5 +65,5 @@ void initGlobalVariables()
 	RECTS.thunderBall = SpriteFrameCache::getInstance()->getSpriteFrameByName("thunderball.png")->getRect();
 
 	VisibleSize = Director::getInstance()->getWinSize();
-	resolutionRate = VisibleSize.width / VisibleSize.height;
+	ResolutionRate = VisibleSize.width / VisibleSize.height;
 }

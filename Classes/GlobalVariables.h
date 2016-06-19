@@ -4,14 +4,13 @@
 
 class GameMaster;
 
-
 void initGlobalVariables();
 extern Layer *currentLayer;
 extern class BattleFieldUI *uiLayer;
 
 extern const float FXZorder;
 extern AnimationCache *animationCache ;
-extern float resolutionRate;
+extern float ResolutionRate;
 extern Size VisibleSize;
 
 extern struct RECTS_d RECTS;
