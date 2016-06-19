@@ -51,8 +51,8 @@ void BattleScene::moveCamera(float dt)
 	//log("moveCamera");
 	if (camera == nullptr)
 		return;
-	auto cameraPosition = getPosTable(camera);
-	auto focusPoint = getFocusPointOfHeros();
+	auto cameraPosition = camera->getPosition();
+	auto focusPoint = GameMaster::getPlayer()->getPosition();
 
 	if (HeroManager.size() > 0)
 	{
@@ -120,7 +120,7 @@ void BattleScene::angryChange(Actor* heroActor)
 }
 
 void BattleScene::enableTouch()
-{//to enable the touch
+{//enable the touch
 	auto touchEventListener = EventListenerTouchOneByOne::create();
 
 	touchEventListener->onTouchBegan = [this](Touch *touch, Event*)

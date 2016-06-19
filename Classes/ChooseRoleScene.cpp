@@ -98,7 +98,7 @@ void ChooseRoleScene::addButtons()
 			//stop schedule && set player && enter next scene
 			Director::getInstance()->getScheduler()->unschedule("hero_rotate", this);
 			auto battleScene = BattleScene::createScene();
-			GameMaster::getInstance()->setPlayer(dynamic_cast<Actor*>(getChildByTag(_sortOrder[1]))->getname());
+			GameMaster::setPlayer(dynamic_cast<Actor*>(getChildByTag(_sortOrder[1]))->getname());
 			Director::getInstance()->replaceScene(battleScene);
 		}
 	};

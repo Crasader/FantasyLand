@@ -622,5 +622,33 @@ void GameMaster::showGameOverUI()
 
 void GameMaster::setPlayer(std::string playerName)
 {
+	if (playerName == "Knight")
+	{
+		_playerName = "Knight";
+		_palyer = HeroManager.at(0);
+		_palyer->setAIEnabled(false);
+	}
+	if (playerName == "Mage")
+	{
+		_playerName = "Mage";
+		_palyer = HeroManager.at(1);
+	}
+	if (playerName == "Archer")
+	{
+		_playerName = "Archer";
+		_palyer = HeroManager.at(2);
+	}
+}
 
+Actor *GameMaster::_palyer;
+std::string GameMaster::_playerName;
+
+Actor* GameMaster::getPlayer()
+{
+	return _palyer;
+}
+
+std::string GameMaster::getPlayerName()
+{
+	return _playerName;
 }

@@ -197,6 +197,8 @@ bool Actor::getAIEnabled()
 void Actor::setAIEnabled(bool enable)
 {
 	_AIEnabled = enable;
+	if (_name == GameMaster::getPlayerName())
+		_AIEnabled = false;
 }
 
 void Actor::setAngry(float angry) {
@@ -251,6 +253,8 @@ bool Actor::getGoRight()
 void Actor::setGoRight(bool goRight)
 {
 	_goRight = goRight;
+	if (_name == GameMaster::getPlayerName())
+		_goRight = false;
 }
 
 
