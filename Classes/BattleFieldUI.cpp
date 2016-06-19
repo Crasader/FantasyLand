@@ -534,6 +534,8 @@ void BattleFieldUI::showGameOverUI()
 	auto enableListener = [=]()
 	{
 		listener->setEnabled(true);
+		experimental::AudioEngine::stopAll();
+		experimental::AudioEngine::play2d("audios/effects/gameover.mp3");
 	};
 	//runaction
 	auto action = Sequence::create(DelayTime::create(3),  EaseElasticOut::create(ScaleTo::create(1.5, 1)), CallFunc::create(enableListener),NULL);
