@@ -67,7 +67,7 @@ void ChooseRoleScene::addBag()
 	_bag->addChild(_helmetItem, 2);
 
 	_bag->setPosition(Vec2(VisibleSize.width* 0.75, VisibleSize.height *0.5));
-	_bag->setScale(resolutionRate / 2);
+	_bag->setScale(ResolutionRate / 2);
 
 	addChild(_bag);
 }
@@ -103,7 +103,7 @@ void ChooseRoleScene::addButtons()
 	auto next_Button = ui::Button::create("button1.png", "button2.png", "", ui::TextureResType::PLIST);
 	next_Button->setTouchEnabled(true);
 	next_Button->setPosition(Vec2(VisibleSize.width*0.34, VisibleSize.height*0.13));
-	next_Button->setScale(resolutionRate / 2);
+	next_Button->setScale(ResolutionRate / 2);
 	next_Button->addTouchEventListener(touchEvent_next);
 	addChild(next_Button);
 }
