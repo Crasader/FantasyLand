@@ -47,7 +47,7 @@ void BattleScene::update(float dt)
 }
 
 void BattleScene::moveCamera(float dt)
-{
+{//auto move the camera to the heroes
 	//log("moveCamera");
 	if (camera == nullptr)
 		return;
@@ -68,7 +68,7 @@ void BattleScene::moveCamera(float dt)
 }
 
 void BattleScene::updateParticlePos()
-{
+{//update the particle position
 	//log("updateParticlePos");
 	for (auto it : HeroManager)
 	{
@@ -78,7 +78,7 @@ void BattleScene::updateParticlePos()
 }
 
 void BattleScene::createBackground()
-{
+{//create the 3d world
 	auto background3D = Sprite3D::create("model/scene/changing.c3b");
 	background3D->setScale(2.65);
 	background3D->setPosition3D(Vec3(-2300, -1000, 0));
@@ -88,15 +88,15 @@ void BattleScene::createBackground()
 }
 
 void BattleScene::setCamera()
-{
+{//set the main camera to the world
 	camera = Camera::createPerspective(60.0, VisibleSize.width / VisibleSize.height, 10.0, 4000.0);
 	camera->setGlobalZOrder(10);
-	camera->setCameraFlag(CameraFlag::USER1);
+	camera->setCameraFlag(CameraFlag::USER1);//it is very important,this camera can see objs which's cameraMask is 2
 	addChild(camera);
 }
 
 void BattleScene::gameController(float dt)
-{
+{//to drive the main logic
 	GameMaster::getInstance()->update(dt);
 	collisionDetect(dt);
 	solveAttacks(dt);
@@ -104,7 +104,7 @@ void BattleScene::gameController(float dt)
 }
 
 void BattleScene::initUILayer()
-{
+{//init the uiLayer
 	uiLayer = BattleFieldUI::create();
 	uiLayer->setPositionZ(-Director::getInstance()->getZEye() / 4);
 	uiLayer->setScale(0.25);
