@@ -62,6 +62,7 @@ void Dragon::reset()
 {
 	copyData_Dragon();
 	walkMode();
+	_circle->setVisible(true);
 	setPositionZ(0);
 }
 
