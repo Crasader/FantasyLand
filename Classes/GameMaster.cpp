@@ -23,6 +23,8 @@ const int distanceWithHeroY = 150;
 struct monsterCount_d monsterCount;
 
 GameMaster * GameMaster::_instance = nullptr;
+Actor *GameMaster::_palyer = nullptr;
+std::string GameMaster::_playerName;
 
 
 bool GameMaster::init()
@@ -620,9 +622,9 @@ void GameMaster::showGameOverUI()
 	uiLayer->showGameOverUI();
 }
 
-void GameMaster::playerControl(Vec2 position)
+void GameMaster::playerControl(Vec2 positionOf3DWorld, float angleOf3DWorld)
 {
-	getPlayer()->setPosition(position);
+	getPlayer()->setPosition(positionOf3DWorld);
 }
 
 void GameMaster::setPlayer(std::string playerName)
@@ -645,8 +647,6 @@ void GameMaster::setPlayer(std::string playerName)
 	}
 }
 
-Actor *GameMaster::_palyer;
-std::string GameMaster::_playerName;
 
 Actor* GameMaster::getPlayer()
 {

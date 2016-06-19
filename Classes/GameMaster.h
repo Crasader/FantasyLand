@@ -38,7 +38,7 @@ public:
 	void showVictoryUI();
 	void showGameOverUI();
 
-	void playerControl(Vec2 position);
+	void playerControl(Vec2 positionOf3DWorld, float angleOf3DWorld);
 
 private:
 
