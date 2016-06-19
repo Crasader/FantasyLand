@@ -620,9 +620,9 @@ void GameMaster::showGameOverUI()
 	uiLayer->showGameOverUI();
 }
 
-void GameMaster::playerControl(Vec2 position)
+void GameMaster::playerControl(Vec2 positionOf3DWorld, float angleOf3DWorld)
 {
-	getPlayer()->setPosition(position);
+	getPlayer()->setPosition(positionOf3DWorld);
 }
 
 void GameMaster::setPlayer(std::string playerName)
