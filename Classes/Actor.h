@@ -120,6 +120,9 @@ protected:
 	Node* _effectNode;
 	int _monsterHeight;
 	int _heroHeight;
+	float _height;
+	float _width;
+	float _depth;
 	Sprite* _circle;	//shadow
 	Map<std::string, ActionInterval*> _action;	//store the animation of evert states
 

@@ -21,7 +21,7 @@ bool ChooseRoleScene::init()
 	Layer::init();
 	currentLayer = this;
 
-	
+
 	Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::AUTO);
 	experimental::AudioEngine::stopAll();
 	AUDIO_ID.CHOOSEROLECHAPTERBGM = experimental::AudioEngine::play2d(BGM_RES.CHOOSEROLESCENEBGM, true, 1);
@@ -205,7 +205,7 @@ void ChooseRoleScene::initTouchDispatcher()
 				rotate3Heroes(true);
 				_isRotateAvaliable = false;
 			}
-			{
+			else if (dist < -50) {
 				//left
 				rotate3Heroes(false);
 				_isRotateAvaliable = false;
