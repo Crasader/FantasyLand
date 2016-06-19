@@ -12,7 +12,7 @@ public:
 	CREATE_FUNC(ChooseRoleScene);
 	virtual bool init();
 
-protected:
+private:
 	Sprite* _bag;
 	Sprite* _weaponItem;
 	Sprite* _armourItem;
@@ -36,7 +36,6 @@ protected:
 	Vec2 _armourItemPosition = { 916 - 300, 280 };
 	Vec2 _helmetItemPosition = { 1000 - 300, 280 };
 	Rect _heroesSize = Rect(155, 120, 465, 420);
-
 
 	void addBag();
 	void addButtons();
