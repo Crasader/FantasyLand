@@ -43,6 +43,8 @@ bool BattleScene::init()
 void BattleScene::update(float dt)
 {
 	camera->setPosition3D(camera->getPosition3D() + _cameraVelocity * 5);
+	if (GameMaster::getPlayer()->getStateType() == EnumStateType::WALKING)
+		auto i = 1;
 	gameController(dt);
 }
 
