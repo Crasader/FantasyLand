@@ -636,14 +636,14 @@ void GameMaster::playerControl(Vec2 positionOf3DWorld, float angleOf3DWorld)
 		auto state = getPlayer()->getStateType();
 		getPlayer()->setTarget(monster);
 		if (state == EnumStateType::IDLE || state == EnumStateType::KNOCKING)
-		    getPlayer()->walkMode();
+			getPlayer()->walkMode();
 	}
 	else {
 		getPlayer()->setTargetPos(positionOf3DWorld);
 		getPlayer()->setTarget(nullptr);
 		auto state = getPlayer()->getStateType();
 		if (state == EnumStateType::IDLE || state == EnumStateType::KNOCKING)
-		    getPlayer()->walkMode();
+			getPlayer()->walkMode();
 	}
 }
 
@@ -661,7 +661,7 @@ Actor* GameMaster::getTouchedMonster(Vec2 positionOf3DWorld, float angleOf3DWorl
 	for (auto it : monsterManger)
 	{
 		if (it->getPositionX() < positionOf3DWorld.x + width / 2 && it->getPositionX() > positionOf3DWorld.x - width / 2
-			&& it->getPositionY() < positionOf3DWorld.y + depth / 2 && it->getPositionY() > positionOf3DWorld.y - depth / 2)
+			&& it->getPositionY() < positionOf3DWorld.y + depth + 100 / 2 && it->getPositionY() > positionOf3DWorld.y - depth / 2)
 			return it;
 	}
 	return nullptr;
@@ -688,7 +688,7 @@ void GameMaster::setPlayer(std::string playerName)
 		_player = HeroManager.at(2);
 		uiLayer->PlayerLabel->setPosition(uiLayer->ArcherPng->getPosition());
 	}
-	if(playerName=="")
+	if (playerName == "")
 	{
 		_playerName = "";
 		_player = nullptr;
