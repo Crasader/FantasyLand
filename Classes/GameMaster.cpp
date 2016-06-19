@@ -628,10 +628,14 @@ void GameMaster::playerControl(Vec2 positionOf3DWorld, float angleOf3DWorld)
 	auto monster = getTouchedMonster(positionOf3DWorld, angleOf3DWorld);
 	if (monster != nullptr)
 	{
+		auto state = getPlayer()->getStateType();
 		getPlayer()->setTarget(monster);
+		if (state == EnumStateType::IDLE)
+		    getPlayer()->walkMode();
 	}
 	else {
 		getPlayer()->setTargetPos(positionOf3DWorld);
+		getPlayer()->setTarget(nullptr);
 		getPlayer()->walkMode();
 	}
 }
@@ -662,7 +666,7 @@ void GameMaster::setPlayer(std::string playerName)
 	{
 		_playerName = "Knight";
 		_player = HeroManager.at(0);
-		_player->setAIEnabled(false);
+		_player->setAIEnabled(true);
 	}
 	if (playerName == "Mage")
 	{

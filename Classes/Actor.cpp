@@ -14,6 +14,7 @@ bool Actor::init()
 	//reset Actor
 	_action.clear();
 	copyData();
+	_isPlayer = false;
 
 	//load HPCounter
 	_hpCounter = HPCounter::create();
@@ -260,8 +261,8 @@ bool Actor::getGoRight()
 void Actor::setGoRight(bool goRight)
 {
 	_goRight = goRight;
-	if (_name == GameMaster::getPlayerName())
-		_goRight = false;
+	//if (_name == GameMaster::getPlayerName())
+	//	_goRight = false;
 }
 
 void Actor::setPlayer()
@@ -518,7 +519,8 @@ void Actor::AI()
 	if (_isalive) {
 		auto state = getStateType();
 		bool allDead;
-		_target = findEnemy(_racetype, allDead);
+		if (!_isPlayer)
+		    _target = findEnemy(_racetype, allDead);
 
 		//if I can find a target
 		if (_target) {
