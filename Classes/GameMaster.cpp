@@ -680,12 +680,14 @@ void GameMaster::setPlayer(std::string playerName)
 	{
 		_playerName = "Mage";
 		_player = HeroManager.at(1);
+		_player->setAIEnabled(true);
 		uiLayer->PlayerLabel->setPosition(uiLayer->MagePng->getPosition());
 	}
 	if (playerName == "Archer")
 	{
 		_playerName = "Archer";
 		_player = HeroManager.at(2);
+		_player->setAIEnabled(true);
 		uiLayer->PlayerLabel->setPosition(uiLayer->ArcherPng->getPosition());
 	}
 	if(playerName=="")

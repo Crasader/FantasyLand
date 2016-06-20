@@ -15,6 +15,7 @@ bool Actor::init()
 	_action.clear();
 	copyData();
 	_isPlayer = false;
+	_targetPos = getPosition();
 
 	//load HPCounter
 	_hpCounter = HPCounter::create();
